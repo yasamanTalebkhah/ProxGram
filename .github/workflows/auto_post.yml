@@ -2,7 +2,7 @@ name: Hourly Proxy Poster
 
 on:
   schedule:
-    - cron: '0 * * * *' # every hour (UTC)
+    - cron: '*/10 * * * *' # every 10 minutes (UTC); GitHub may delay a few minutes under load
   workflow_dispatch: # manual runs from the Actions tab
 
 # Needed to push the updated history.txt back to main
@@ -11,7 +11,7 @@ permissions:
 
 # Prevent overlapping runs from racing on history.txt
 concurrency:
-  group: hourly-proxy-poster
+  group: proxy-poster
   cancel-in-progress: true
 
 jobs:
@@ -32,6 +32,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: python -m unittest test_main -v
 
       - name: Run ProxGram poster
         env:
