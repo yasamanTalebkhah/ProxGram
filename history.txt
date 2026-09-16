@@ -1,1 +1,2 @@
 vless://2cca8201-c93e-40eb-bd8a-fea4170c169e@185.136.12.190:443?mode=auto&path=/api/v1/&security=tls&alpn=h2&encryption=none&insecure=0&host=deu683.lackerdeu.org&fp=chrome&type=xhttp&allowInsecure=0&sni=deu683.lackerdeu.org#EPODONIOS
+141.148.158.143:1080
