@@ -89,3 +89,8 @@ https://t.me/proxy?server=shared.ddproxy.xyz&port=443&secret=eeddddddddddddddddd
 https://t.me/proxy?server=ad2.arixo.shop&port=443&secret=eed09b88cbbd4e744865b890e5a0bd26876164322e617269786f2e73686f70
 https://t.me/proxy?server=s5.postpulse.space&port=443&secret=ee846d23933361faa6211c7ac6765023be6164322e617269786f2e73686f70
 https://t.me/proxy?server=s13.assetflux.org&port=443&secret=ee3afc68787d0be6268346b66a3563001b686f66662e7275
+https://t.me/proxy?server=media.experthost.shop&port=443&secret=ee92ccb7af38638802ad9afb2153d1df336d656469612e657870657274686f73742e73686f70
+https://t.me/proxy?server=russia.its-work.ru&port=443&secret=ee368601a36ebfafec1604dd8ad6c2d1eb636c6f7564666c6172652e636f6d
+https://t.me/proxy?server=bmwx5.scarletmc.ru&port=443&secret=ee311f944e6f241ea02a855087ac79e4d4786c6e742e6f7668
+https://t.me/proxy?server=kima.rabotaet.online&port=443&secret=ee12e7e5f961f258b04af168a1cba6318a6b696d612e7261626f746165742e6f6e6c696e65
+https://t.me/proxy?server=media9.happtg.org&port=443&secret=ee2e7c3d85e469cb8f825f4678a716a363706574726f766963682e7275
