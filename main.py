@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""ProxGram — fetch fresh Telegram MTProto / Socks5 proxies from public
-aggregators, health-check them with a quick TCP connect test, and post the
-single best (lowest-latency, never-posted-before) proxy to a Telegram channel
-with a one-tap connect button.
+"""ProxGram — post the fastest censorship-resistant Telegram MTProto proxy
+(Fake-TLS / `ee` secrets only, port 443 prioritized) to a Telegram channel.
+
+Sources are Iran-oriented MTProto feeds; every candidate must carry a
+Fake-TLS secret (prefix `ee`). Plain and `dd`-prefix secrets are dropped,
+since they are trivially detectable by DPI systems used for filtering.
 
 Credentials are read from environment variables:
     TELEGRAM_BOT_TOKEN   - bot token from @BotFather
@@ -31,22 +33,16 @@ import requests
 # Configuration
 # ---------------------------------------------------------------------------
 
-# MTProto proxy feeds (t.me/proxy?server=..&port=..&secret=.. lines).
+# Iran-compatible MTProto feeds curating Fake-TLS proxies.
 MTPROTO_SOURCES = [
     "https://raw.githubusercontent.com/SoliSpirit/mtproto/master/all_proxies.txt",
-]
-
-# Socks5 feeds (host:port lines).
-SOCKS5_SOURCES = [
-    "https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt",
-    "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks5.txt",
-    "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
+    "https://raw.githubusercontent.com/Grim1313/mtproto-for-telegram/master/all_proxies.txt",
+    "https://raw.githubusercontent.com/ALIILAPRO/MTProtoProxy/main/mtproto.txt",
 ]
 
 MAX_PER_SOURCE = 40   # cap parsed proxies per source feed
-MTPROTO_CAP = 40      # guaranteed slots for MTProto candidates (priority)
 MAX_TO_TEST = 80      # cap total candidates sent through the health check
-PING_TIMEOUT = 3.0    # seconds - strict TCP connect timeout
+PING_TIMEOUT = 2.5    # seconds - strict TCP connect timeout
 MAX_WORKERS = 60      # parallel TCP tests (total wall time ~= one timeout)
 
 HISTORY_FILE = Path(__file__).resolve().parent / "history.txt"
@@ -59,6 +55,12 @@ MAX_MESSAGE_LENGTH = 4096
 
 _channel_id = os.environ.get("TELEGRAM_CHANNEL_ID", "@ChannelID")
 CHANNEL_TAG = os.environ.get("TELEGRAM_CHANNEL_TAG") or _channel_id
+
+FAKETLS_PREFIX = "ee"      # Fake-TLS secrets start with 0xEE
+PREFERRED_PORT = 443       # standard HTTPS port; bypasses port-blocking firewalls
+
+CONNECT_BUTTON_TEXT = "⚡️ اتصال مستقیم به پروکسی | Connect"
+JOIN_BUTTON_TEXT = "📢 عضویت در کانال"
 
 logger = logging.getLogger("proxgram")
 
@@ -89,19 +91,22 @@ def setup_logging() -> logging.Logger:
 
 
 # ---------------------------------------------------------------------------
-# Proxy model + Telegram deep links
+# Proxy model
 # ---------------------------------------------------------------------------
 
 class Proxy:
-    """A parsed proxy with helpers for standard Telegram deep links."""
+    """A parsed Fake-TLS MTProto proxy with a standard deep link."""
 
-    def __init__(self, protocol: str, server: str, port: int,
-                 secret: str | None = None, link: str | None = None):
-        self.protocol = protocol
+    def __init__(self, server: str, port: int, secret: str,
+                 link: str | None = None):
         self.server = str(server).strip().strip(".")
         self.port = int(port)
         self.secret = secret
         self.raw_link = link
+
+    @property
+    def protocol(self) -> str:
+        return "MTProto"
 
     @property
     def key(self) -> str:
@@ -111,19 +116,15 @@ class Proxy:
     @property
     def tg_link(self) -> str:
         """Standard deep link that opens Telegram's proxy dialog on tap."""
-        if self.protocol == "MTProto":
-            return (
-                "https://t.me/proxy"
-                f"?server={quote(self.server, safe='')}"
-                f"&port={self.port}"
-                f"&secret={quote(self.secret or '', safe='')}"
-            )
-        if self.protocol == "Socks5":
-            return f"https://t.me/socks?server={quote(self.server, safe='')}&port={self.port}"
-        return self.raw_link or ""
+        return (
+            "https://t.me/proxy"
+            f"?server={quote(self.server, safe='')}"
+            f"&port={self.port}"
+            f"&secret={quote(self.secret, safe='')}"
+        )
 
     def __repr__(self) -> str:  # pragma: no cover
-        return f"<Proxy {self.protocol} {self.key}>"
+        return f"<Proxy MTProto {self.key} FakeTLS>"
 
 
 # ---------------------------------------------------------------------------
@@ -146,7 +147,12 @@ def fetch_text(url: str) -> str | None:
 
 
 def parse_mtproto_link(line: str) -> Proxy | None:
-    """Parse a t.me/proxy or tg://proxy link. Returns None if unusable."""
+    """Parse t.me/proxy or tg://proxy links, keeping ONLY Fake-TLS secrets.
+
+    Any link whose secret does not start with `ee` (plain MTProto, `dd`
+    prefixed, garbage) is rejected outright, as are socks5/vless/vmess or
+    otherwise malformed lines.
+    """
     stripped = line.strip()
     if "t.me/proxy" not in stripped and not stripped.startswith("tg://proxy"):
         return None
@@ -158,45 +164,25 @@ def parse_mtproto_link(line: str) -> Proxy | None:
         secret = (qs.get("secret") or [""])[0].strip()
         if not server or not (0 < port < 65536) or not secret:
             return None
+        if not secret.lower().startswith(FAKETLS_PREFIX):
+            return None  # drop plain/dd/non-FakeTLS secrets immediately
     except (ValueError, IndexError):
         return None
-    return Proxy("MTProto", server, port, secret=secret, link=stripped)
+    return Proxy(server, port, secret, link=stripped)
 
 
-def parse_socks5_line(line: str) -> Proxy | None:
-    """Parse a bare host:port line into a Socks5 proxy."""
-    stripped = line.strip()
-    if ":" not in stripped or "/" in stripped or "?" in stripped:
-        return None
-    host, _, port_raw = stripped.rpartition(":")
-    host = host.strip("[]")  # tolerate [ipv6]:port
-    try:
-        port = int(port_raw)
-    except ValueError:
-        return None
-    if not host or not (0 < port < 65536):
-        return None
-    return Proxy("Socks5", host, port)
+def prioritize(proxies: list[Proxy]) -> list[Proxy]:
+    """Port 443 first (bypasses port-blocking firewalls), then feed order."""
+    return [
+        proxy for _, proxy in
+        sorted(enumerate(proxies), key=lambda t: (0 if t[1].port == PREFERRED_PORT else 1, t[0]))
+    ]
 
 
 def collect_proxies() -> list[Proxy]:
-    """Fetch every source feed and parse links, deduped by host:port.
-
-    MTProto feeds are processed first and get a guaranteed quota
-    (MTPROTO_CAP) so they are always prioritized over Socks5.
-    """
+    """Fetch every source feed and parse Fake-TLS links, deduped by host:port."""
     proxies: list[Proxy] = []
     seen: set[str] = set()
-    mtproto_count = 0
-
-    def add(proxy: Proxy) -> None:
-        nonlocal mtproto_count
-        if proxy.key in seen:
-            return
-        seen.add(proxy.key)
-        proxies.append(proxy)
-        if proxy.protocol == "MTProto":
-            mtproto_count += 1
 
     for url in MTPROTO_SOURCES:
         raw = fetch_text(url)
@@ -204,38 +190,23 @@ def collect_proxies() -> list[Proxy]:
             continue
         count = 0
         for line in raw.splitlines():
-            if count >= MTPROTO_CAP:
+            if count >= MAX_PER_SOURCE:
                 break
             proxy = parse_mtproto_link(line)
-            if proxy is None:
+            if proxy is None or proxy.key in seen:
                 continue
-            add(proxy)
+            seen.add(proxy.key)
+            proxies.append(proxy)
             count += 1
-        logger.info("Parsed %d MTProto proxies from %s", count, url)
+        logger.info("Parsed %d Fake-TLS proxies from %s", count, url)
 
-    socks5_budget = max(MAX_TO_TEST - len(proxies), 0)
-    for url in SOCKS5_SOURCES:
-        raw = fetch_text(url)
-        if raw is None:
-            continue
-        count = 0
-        for line in raw.splitlines():
-            if count >= MAX_PER_SOURCE or len(proxies) >= MAX_TO_TEST:
-                break
-            if count >= socks5_budget:
-                break
-            proxy = parse_socks5_line(line)
-            if proxy is None:
-                continue
-            add(proxy)
-            count += 1
-        logger.info("Parsed %d Socks5 proxies from %s", count, url)
-
+    prioritized = prioritize(proxies)
     logger.info(
-        "Total unique proxy candidates: %d (MTProto: %d, Socks5: %d)",
-        len(proxies), mtproto_count, len(proxies) - mtproto_count,
+        "Total unique Fake-TLS candidates: %d (port %d first: %d)",
+        len(prioritized), PREFERRED_PORT,
+        sum(1 for p in prioritized if p.port == PREFERRED_PORT),
     )
-    return proxies
+    return prioritized[:MAX_TO_TEST]
 
 
 # ---------------------------------------------------------------------------
@@ -343,14 +314,11 @@ def append_history(proxy: Proxy) -> None:
 # Message formatting (HTML parse mode)
 # ---------------------------------------------------------------------------
 
-CONNECT_BUTTON_TEXT = "⚡️ اتصال به پروکسی | Connect"
-
-
 def channel_username() -> str | None:
     """Return the channel username (without @) when the tag is a username.
 
     Numeric channel IDs cannot be turned into t.me links, so callers use
-    this to omit channel buttons/lines that Telegram would reject.
+    this to omit the join button that Telegram would reject.
     """
     tag = CHANNEL_TAG.strip()
     if tag.startswith("@") and len(tag) > 1 and all(
@@ -361,32 +329,27 @@ def channel_username() -> str | None:
 
 
 def format_message(proxy: Proxy, ping_ms: float) -> str:
-    """Build the Persian channel post (HTML entities pre-escaped)."""
-    server = html.escape(proxy.server, quote=True)
-    protocol = html.escape(proxy.protocol, quote=True)
+    """Build the Persian Fake-TLS channel post (HTML entities pre-escaped)."""
+    port = proxy.port
     link = html.escape(proxy.tg_link, quote=True)
-    channel_line = ""
-    username = channel_username()
-    if username:
-        channel_line = f"\n\n📢 <b>کانال ما:</b> @{username}"
+    tag = html.escape(CHANNEL_TAG.strip(), quote=True)
     return (
-        "🚀 <b>پروکسی پرسرعت تلگرام</b>\n"
-        "━━━━━━━━━━━━━━\n\n"
-        f"⚡️ پینگ: <b>{max(1, round(ping_ms))}</b> ms\n"
-        f"🛡️ پروتکل: <b>{protocol}</b>\n"
-        f"🌐 سرور: <code>{server}</code>\n\n"
-        "🔗 <b>لینک اتصال:</b>\n"
-        f"<code>{link}</code>"
-        f"{channel_line}"
+        "🚀 <b>پروکسی ضدفیلتر تلگرام (Fake-TLS)</b>\n\n"
+        f"⚡️ <b>پینگ:</b> <code>{max(1, round(ping_ms))} ms</code>\n"
+        "🛡 <b>نوع سکرت:</b> <code>Fake-TLS (EE)</code>\n"
+        f"🚪 <b>پورت:</b> <code>{port}</code>\n\n"
+        "🔗 <b>لینک پروکسی (جهت کپی دستی):</b>\n"
+        f"<code>{link}</code>\n\n"
+        f"🆔 {tag}"
     )
 
 
 def build_inline_keyboard(proxy: Proxy) -> list[list[dict]]:
-    """One-tap connect button + a button back to the channel (if linked)."""
+    """One-tap connect button + join-channel button (when a username exists)."""
     rows = [[{"text": CONNECT_BUTTON_TEXT, "url": proxy.tg_link}]]
     username = channel_username()
     if username:
-        rows.append([{"text": f"📢 @{username}", "url": f"https://t.me/{username}"}])
+        rows.append([{"text": JOIN_BUTTON_TEXT, "url": f"https://t.me/{username}"}])
     return rows
 
 
@@ -439,7 +402,7 @@ def post_to_telegram(token: str, channel_id: str, proxy: Proxy,
 
 
 # ---------------------------------------------------------------------------
-# Selection: first reachable, lowest-latency, not-yet-posted proxy
+# Selection: fastest reachable, not-yet-posted proxy
 # ---------------------------------------------------------------------------
 
 def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
@@ -489,7 +452,7 @@ def main() -> int:
     setup_logging()
     logger.info("=== ProxGram run started ===")
 
-    # 1. Collect proxy candidates from all sources.
+    # 1. Collect Fake-TLS candidates from all sources.
     try:
         proxies = collect_proxies()
     except Exception:
@@ -497,7 +460,7 @@ def main() -> int:
         return 1
 
     if not proxies:
-        logger.error("No proxies could be collected from any source URL.")
+        logger.error("No Fake-TLS proxies could be collected from any source.")
         return 1
 
     # 2. Health-check them and rank by latency.
@@ -524,8 +487,8 @@ def main() -> int:
     proxy, ping_ms = picked
     fresh = sum(1 for p, _ in reachable if p.key not in history) - 1
     logger.info(
-        "Selected %s proxy %s (%.0f ms); %d fresh candidates remaining",
-        proxy.protocol, proxy.key, ping_ms, fresh,
+        "Selected Fake-TLS proxy %s (port %d, %.0f ms); %d fresh candidates remaining",
+        proxy.key, proxy.port, ping_ms, fresh,
     )
 
     # 4. Read credentials from environment.
