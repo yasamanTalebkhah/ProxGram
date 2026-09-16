@@ -11,7 +11,7 @@ permissions:
 
 # Prevent overlapping runs from racing on history.txt
 concurrency:
-  group: proxy-poster
+  group: proxgram
   cancel-in-progress: true
 
 jobs:
@@ -22,6 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true # needed to push history.txt updates
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v5

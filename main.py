@@ -28,7 +28,6 @@ duplicates are never re-posted across workflow runs.
 """
 
 import concurrent.futures
-import html
 import json
 import logging
 import os
@@ -459,34 +458,30 @@ def channel_username() -> str | None:
 
 
 def format_message(proxies: list[Proxy], latencies: list[float]) -> str:
-    """Build the Persian five-proxy post (HTML entities pre-escaped)."""
-    parts = [
-        "🚀 <b>پنج پروکسی فعال تلگرام</b>\n\n"
-        "برای اتصال، یکی از گزینه‌های زیر را امتحان کنید. ممکن است عملکرد "
-        "پروکسی‌ها برای اپراتورها یا کاربران مختلف متفاوت باشد.\n"
-    ]
-    for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1):
-        ping = max(1, round(latency))
-        parts.append(
-            f"\n<b>پروکسی {fa_num(i)}</b>\n"
-            f"🖥 سرور: <code>{html.escape(proxy.server, quote=True)}</code>\n"
-            f"🚪 پورت: <code>{proxy.port}</code>\n"
-            f"⚡️ پینگ: <code>{ping} ms</code>\n"
-            f"🔗 <code>{html.escape(proxy.link, quote=True)}</code>\n"
-        )
-    parts.append("\n🛡 <b>پروتکل:</b> MTProto Fake-TLS")
-    return "".join(parts)
+    """Build the short Persian post body (HTML entities pre-escaped).
+
+    Proxy deep links live ONLY in the inline-keyboard buttons, never in the
+    message text, so the body stays short and clean. No dynamic proxy values
+    are interpolated here, so no escaping hazards exist.
+    """
+    return (
+        "🚀 <b>۵ پروکسی فعال تلگرام</b>\n\n"
+        "یکی از دکمه‌های زیر را امتحان کنید. اگر یکی وصل نشد، "
+        "گزینهٔ بعدی را امتحان کنید.\n\n"
+        "🛡 <b>پروتکل:</b> MTProto Fake-TLS\n"
+        "⏱ <b>به‌روزرسانی:</b> هر ۵ دقیقه"
+    )
 
 
 def format_message_minimal(proxies: list[Proxy], latencies: list[float]) -> str:
-    """Last-resort plaintext message keeping all five links."""
-    lines = ["پنج پروکسی فعال تلگرام"]
-    for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1):
-        lines.append(
-            f"پروکسی {i}: {proxy.server}:{proxy.port} "
-            f"({max(1, round(latency))} ms)\n{proxy.link}"
-        )
-    return "\n".join(lines)
+    """Safe plaintext twin of the short body (still link-free; the inline
+    keyboard carries all five deep links)."""
+    return (
+        "۵ پروکسی فعال تلگرام\n\n"
+        "یکی از دکمه‌های زیر را امتحان کنید. اگر یکی وصل نشد، "
+        "گزینهٔ بعدی را امتحان کنید.\n\n"
+        "پروتکل: MTProto Fake-TLS | به‌روزرسانی: هر ۵ دقیقه"
+    )
 
 
 def format_batch_message(proxies: list[Proxy], latencies: list[float]) -> str:
@@ -520,23 +515,23 @@ def build_inline_keyboard(proxies: list[Proxy],
 def send_message(token: str, chat_id: str, text: str,
                  proxies: list[Proxy] | None = None,
                  latencies: list[float] | None = None) -> bool:
-    """ONE sendMessage request with graceful degradation:
-    HTML+keyboard -> HTML only -> plaintext (links still included).
-    Returns True on any success.
+    """ONE logical sendMessage (first successful HTTP request wins) with
+    graceful degradation: HTML+keyboard -> plaintext+keyboard -> plaintext.
+    The five proxy links always reach users via the keyboard buttons; only
+    the text formatting changes between attempts. True on any success.
     """
     url = TELEGRAM_API_URL.format(token=token, method="sendMessage")
-    attempts: list[dict] = []
-    if proxies and latencies:
-        attempts.append({
-            "text": text,
-            "parse_mode": "HTML",
-            "reply_markup": {"inline_keyboard": build_inline_keyboard(proxies, latencies)},
-        })
-    attempts.append({"text": text, "parse_mode": "HTML"})
-    attempts.append({
-        "text": format_message_minimal(proxies, latencies)
-        if proxies and latencies else text,
-    })
+    keyboard = (
+        {"inline_keyboard": build_inline_keyboard(proxies, latencies)}
+        if proxies and latencies else None
+    )
+    attempts: list[dict] = [{"text": text, "parse_mode": "HTML"}]
+    attempts.append({"text": format_message_minimal(proxies, latencies)
+                     if proxies and latencies else text})
+    if keyboard:
+        attempts[0]["reply_markup"] = keyboard
+        attempts[1]["reply_markup"] = keyboard
+    attempts.append({"text": attempts[1]["text"]})  # last resort: no markup
 
     last_desc = ""
     for i, payload_base in enumerate(attempts):
@@ -663,7 +658,8 @@ def pick_batch(reachable: list[tuple[Proxy, float]],
 
 def main() -> int:
     setup_logging()
-    logger.info("=== ProxGram run started ===")
+    trigger = os.environ.get("GITHUB_EVENT_NAME", "manual/local")
+    logger.info("=== ProxGram run started (trigger: %s) ===", trigger)
 
     # 0. Credentials are required for any posting to happen.
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -696,6 +692,10 @@ def main() -> int:
     if not reachable:
         logger.error("None of the %d candidates are reachable.", len(candidates))
         return 0
+    logger.info(
+        "Distinct server hostnames available: %d",
+        len({p.server.lower() for p, _ in reachable}),
+    )
 
     # 3. Pick five fresh ones (never pad with duplicates/unverified proxies).
     try:
@@ -718,10 +718,10 @@ def main() -> int:
     proxies = [p for p, _ in picks]
     latencies = [l for _, l in picks]
     for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1):
-        logger.info("Selected #%d %s:%d (%.0f ms)",
+        logger.info("Selected #%d server=%s port=%d latency=%.0f ms",
                     i, proxy.server, proxy.port, latency)
 
-    # 4. Send exactly ONE message with all five proxies.
+    # 4. Send exactly ONE message; deep links live only in the buttons.
     message = format_batch_message(proxies, latencies)
     try:
         success = send_message(token, channel_id, message,
@@ -729,9 +729,11 @@ def main() -> int:
     except Exception:
         logger.exception("Unexpected error while posting the batch")
         return 0
+    logger.info("Telegram message sent successfully." if success
+                else "Telegram message NOT sent.")
 
     if not success:
-        logger.error("Telegram post failed; history NOT updated for this batch.")
+        logger.error("History NOT updated for this batch.")
         return 0
 
     # 5. Only after a confirmed send, record all five links.

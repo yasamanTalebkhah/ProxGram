@@ -6,10 +6,11 @@ tests run without the package installed.
 """
 
 import os
-import re
 import sys
 import types
 import unittest
+from pathlib import Path
+from unittest import mock
 from urllib.parse import urlparse
 
 # Stub `requests` before main imports it.
@@ -56,31 +57,27 @@ class SecretValidationTests(unittest.TestCase):
         # Actual format used by the configured sources (ee + b64url key + domain)
         self.assertTrue(main.is_valid_faketls_secret("eeNEgYdJvXrFGRMCIMJdCQ"))
 
-    def test_regression_fixture_mangled_link(self):
-        """User-provided fixture: a mangled double-paste of a working proxy.
-
-        bale.foltmeingop.co.uk:8880 with secret eeNEgYdJvXrFGRMCIMJdCQ is the
-        known-good proxy; the fixture link pasted its query twice. The parser
-        must tolerate duplicated params (last value wins) and the validator
-        must keep accepting the b64url secret (no hex-only assumption).
-        """
-        mangled = ("https://t.me/proxy?server=bale.foltmeingop.co.uk"
-                   "&port=8880&secret=.co.uk&port=8880&secret=GRMCIMJdCQ")
-        parsed = urlparse(mangled)
-        qs = main.parse_qs_last(parsed.query)
-        self.assertEqual(qs.get("port"), "8880")
-        self.assertEqual(qs.get("secret"), "GRMCIMJdCQ")  # last value wins
-        # The orphan fragment alone is NOT a valid secret (no ee prefix)
-        self.assertFalse(main.is_valid_faketls_secret("GRMCIMJdCQ"))
-        # The real secret from the source feed remains valid (b64url, no hex assumption)
-        self.assertTrue(main.is_valid_faketls_secret("eeNEgYdJvXrFGRMCIMJdCQ"))
-        # Full working proxy passes the whole filter chain
-        proxy = main.Proxy("bale.foltmeingop.co.uk", 8880, "eeNEgYdJvXrFGRMCIMJdCQ")
+    def test_regression_fixture_working_proxy(self):
+        """User-provided fixture: bale.foltmeingop.co.uk:8880 with the
+        base64url Fake-TLS secret must pass the whole filter chain — no
+        hex-only assumption may reject it."""
+        proxy = main.parse_plaintext_source(
+            "https://t.me/proxy?server=bale.foltmeingop.co.uk&port=8880"
+            "&secret=eeNEgYdJvXrFGRMCIMJdCQ"
+        )[0]
+        self.assertEqual(proxy.server, "bale.foltmeingop.co.uk")
+        self.assertEqual(proxy.port, 8880)
         kept, _ = main.apply_filters([proxy])
         self.assertEqual(len(kept), 1)
         self.assertEqual(kept[0].link,
                          "https://t.me/proxy?server=bale.foltmeingop.co.uk&port=8880"
                          "&secret=eeNEgYdJvXrFGRMCIMJdCQ")
+
+    def test_mangled_duplicate_params_use_last_value(self):
+        qs = main.parse_qs_last("server=x.example&port=8880&secret=.co.uk&port=8880&secret=eeAB")
+        self.assertEqual(qs["port"], "8880")
+        self.assertEqual(qs["secret"], "eeAB")
+        self.assertFalse(main.is_valid_faketls_secret("GRMCIMJdCQ"))  # orphan fragment
 
     def test_invalid_alphabet_rejected(self):
         self.assertFalse(main.is_valid_faketls_secret("ee" + "0" * 15 + "." + "0" * 16))
@@ -154,7 +151,6 @@ class BatchSelectionTests(unittest.TestCase):
         self.assertEqual(latencies, sorted(latencies))
 
     def test_rejects_duplicate_combos(self):
-        # Same server+port+secret repeated: only one may ever be picked.
         proxy = make_proxy("dup.example", 443, "eeAABBCCDDEEFF00112233")
         reachable = [(proxy, 100.0), (proxy, 100.0), (proxy, 100.0)]
         batch = main.pick_batch(reachable, set())
@@ -173,44 +169,54 @@ class BatchSelectionTests(unittest.TestCase):
         self.assertEqual([p.server for p, _ in picked], ["h6.example"])
 
     def test_prefers_distinct_hostnames(self):
-        # 1 fast proxy on hostA plus 8 slower proxies on 8 other hosts:
-        # a second hostA entry must lose to slower distinct hosts.
         hostA_fast = (make_proxy("hosta.example", 443, "eeAA" + "bb" * 8), 50.0)
         hostA_slow = (make_proxy("hosta.example", 8443, "eeCC" + "dd" * 8), 60.0)
         others = make_batch(8, prefix="other", base_latency=70.0)
         batch = main.pick_batch([hostA_fast, hostA_slow] + others, set())
-        servers = [p.server for p, _ in batch]
         self.assertEqual(len(batch), 5)
-        self.assertEqual(servers.count("hosta.example"), 1)  # one per host preferred
+        servers = [p.server for p, _ in batch]
+        self.assertEqual(servers.count("hosta.example"), 1)
 
     def test_repeats_server_only_when_distinct_pool_below_five(self):
-        """4 distinct servers exist -> batch still reaches 5 by allowing one
-        extra proxy from an already-picked server (spec's 'unless' clause)."""
         hostA1 = (make_proxy("solo.example", 443, "eeAA" + "bb" * 8), 50.0)
         hostA2 = (make_proxy("solo.example", 8443, "eeCC" + "dd" * 8), 60.0)
         others = make_batch(3, prefix="other", base_latency=70.0)
         batch = main.pick_batch([hostA1, hostA2] + others, set())
         self.assertEqual(len(batch), 5)
         servers = [p.server for p, _ in batch]
-        self.assertEqual(len(set(servers)), 4)  # solo.example appears twice
+        self.assertEqual(len(set(servers)), 4)
         self.assertEqual(servers.count("solo.example"), 2)
 
     def test_short_pool_returns_all_available(self):
         batch = main.pick_batch(make_batch(3), set())
-        self.assertEqual(len(batch), 3)  # fewer than 5 available -> no padding
+        self.assertEqual(len(batch), 3)  # fewer than 5 -> caller must skip posting
 
     def test_latency_cap_applied(self):
-        items = make_batch(6, base_latency=2400.0)  # all above 2500ms? no: 2400..2450
+        items = make_batch(6, base_latency=2400.0)
         items.append((make_proxy("tooslow.example", 443, "eeAA" + "bb" * 8), 2600.0))
         batch = main.pick_batch(items, set())
         self.assertTrue(all(l <= main.MAX_LATENCY_MS for _, l in batch))
         self.assertNotIn("tooslow.example", [p.server for p, _ in batch])
 
 
-class MessageTests(unittest.TestCase):
+class MessageAndKeyboardTests(unittest.TestCase):
     def setUp(self):
         self.proxies = [p for p, _ in make_batch(5)]
         self.latencies = [100.0, 120.0, 140.0, 160.0, 180.0]
+        self.msg = main.format_message(self.proxies, self.latencies)
+        self.minimal = main.format_message_minimal(self.proxies, self.latencies)
+        self.keyboard = main.build_inline_keyboard(self.proxies, self.latencies)
+
+    def test_body_contains_no_proxy_links(self):
+        for text in (self.msg, self.minimal):
+            self.assertNotIn("https://t.me/proxy?", text)
+
+    def test_body_is_short_with_required_lines(self):
+        self.assertIn("🚀 <b>۵ پروکسی فعال تلگرام</b>", self.msg)
+        self.assertIn("🛡 <b>پروتکل:</b> MTProto Fake-TLS", self.msg)
+        self.assertIn("⏱ <b>به‌روزرسانی:</b> هر ۵ دقیقه", self.msg)
+        self.assertLess(len(self.msg), main.MAX_MESSAGE_LENGTH)
+        self.assertNotIn("<b>", self.minimal)
 
     def test_five_valid_deep_links(self):
         for proxy in self.proxies:
@@ -220,7 +226,19 @@ class MessageTests(unittest.TestCase):
             self.assertEqual(parsed.path, "/proxy")
             self.assertIn("secret=", proxy.link)
 
-    def test_keyboard_five_buttons_plus_join(self):
+    def test_keyboard_has_five_proxy_buttons_plus_channel(self):
+        # default tag (@ChannelID) is a username, so the join row is included
+        self.assertEqual(len(self.keyboard), 6)
+        for i, row in enumerate(self.keyboard[:5], start=1):
+            self.assertIn(f"پروکسی {main.fa_num(i)}", row[0]["text"])
+            self.assertIn("ms", row[0]["text"])
+            self.assertEqual(row[0]["url"], self.proxies[i - 1].link)
+        self.assertEqual(self.keyboard[5][0]["text"], "📢 عضویت در کانال")
+        self.assertEqual(self.keyboard[5][0]["url"], "https://t.me/ChannelID")
+        # each proxy button on its own row
+        self.assertTrue(all(len(row) == 1 for row in self.keyboard))
+
+    def test_channel_button_url_has_no_at_sign(self):
         os.environ["TELEGRAM_CHANNEL_TAG"] = "@my_channel"
         import importlib
         importlib.reload(main)
@@ -229,31 +247,18 @@ class MessageTests(unittest.TestCase):
         finally:
             del os.environ["TELEGRAM_CHANNEL_TAG"]
             importlib.reload(main)
-        self.assertEqual(len(rows), 6)
-        for i, row in enumerate(rows[:5], start=1):
-            self.assertIn(f"پروکسی {main.fa_num(i)}", row[0]["text"])
-            self.assertIn("ms", row[0]["text"])
-            self.assertEqual(row[0]["url"], self.proxies[i - 1].link)
-        self.assertEqual(rows[5][0]["text"], "📢 عضویت در کانال")
-        self.assertEqual(rows[5][0]["url"], "https://t.me/my_channel")  # no extra @
+        self.assertEqual(rows[-1][0]["text"], "📢 عضویت در کانال")
+        self.assertEqual(rows[-1][0]["url"], "https://t.me/my_channel")
+        self.assertFalse(rows[-1][0]["url"].endswith("@my_channel"))
 
-    def test_message_contains_all_five_proxies(self):
-        msg = main.format_message(self.proxies, self.latencies)
-        self.assertIn("🚀 <b>پنج پروکسی فعال تلگرام</b>", msg)
-        for i, (proxy, latency) in enumerate(zip(self.proxies, self.latencies), 1):
-            self.assertIn(f"<b>پروکسی {main.fa_num(i)}</b>", msg)
-            self.assertIn(proxy.server, msg)
-            self.assertIn(f"<code>{proxy.port}</code>", msg)
-            self.assertIn(f"{max(1, round(latency))} ms", msg)
-            self.assertIn(proxy.link.replace("&", "&amp;"), msg)
-        self.assertIn("MTProto Fake-TLS", msg)
-        self.assertLess(len(msg), main.MAX_MESSAGE_LENGTH)
-
-    def test_minimal_fallback_keeps_all_five_links(self):
-        msg = main.format_message_minimal(self.proxies, self.latencies)
-        for proxy in self.proxies:
-            self.assertIn(proxy.link, msg)
-        self.assertNotIn("<b>", msg)
+    def test_keyboard_has_no_feedback_or_callback(self):
+        flat = [btn for row in self.keyboard for btn in row]
+        for btn in flat:
+            self.assertNotIn("callback_data", btn)
+            self.assertNotIn("بازخورد", btn["text"])
+            self.assertNotIn("👍", btn["text"])
+            self.assertNotIn("👎", btn["text"])
+            self.assertTrue(btn["url"].startswith("https://"))
 
     def test_exactly_one_send_message_request(self):
         calls = []
@@ -268,18 +273,25 @@ class MessageTests(unittest.TestCase):
 
         _requests.post = fake_post
         try:
-            ok = main.send_message("TOK", "@chan",
-                                   main.format_message(self.proxies, self.latencies),
+            ok = main.send_message("TOK", "@chan", self.msg,
                                    proxies=self.proxies, latencies=self.latencies)
         finally:
             _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
 
         self.assertTrue(ok)
-        self.assertEqual(len(calls), 1, "exactly ONE sendMessage request")
-        kb = calls[0]["reply_markup"]["inline_keyboard"]
+        self.assertEqual(len(calls), 1, "exactly ONE sendMessage HTTP request")
+        payload = calls[0]
+        self.assertEqual(payload["chat_id"], "@chan")
+        self.assertEqual(payload["parse_mode"], "HTML")
+        self.assertNotIn("https://t.me/proxy?", payload["text"])
+        kb = payload["reply_markup"]["inline_keyboard"]
         self.assertEqual(len(kb), 6)
+        self.assertEqual([r[0]["url"] for r in kb[:5]],
+                         [p.link for p in self.proxies])
+        self.assertNotIn("callback_data", payload)
+        self.assertNotIn("message_effect_id", payload)
 
-    def test_parse_entity_error_falls_back_in_one_flow(self):
+    def test_parse_entity_error_falls_back_gracefully(self):
         attempts = []
 
         def flaky_post(url, json=None, timeout=None):
@@ -296,47 +308,80 @@ class MessageTests(unittest.TestCase):
 
         _requests.post = flaky_post
         try:
-            ok = main.send_message("TOK", "@chan",
-                                   main.format_message(self.proxies, self.latencies),
+            ok = main.send_message("TOK", "@chan", self.msg,
                                    proxies=self.proxies, latencies=self.latencies)
         finally:
             _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
 
         self.assertTrue(ok)
-        self.assertEqual(len(attempts), 3)
-        self.assertNotIn("<code>", attempts[-1]["text"])  # final: plaintext w/ links
+        self.assertEqual(len(attempts), 2)
+        # fallback keeps the keyboard with all five links, drops HTML entities
+        self.assertNotIn("parse_mode", attempts[-1])
+        self.assertEqual(len(attempts[-1]["reply_markup"]["inline_keyboard"]), 6)
+        self.assertNotIn("<b>", attempts[-1]["text"])
 
 
 class HistoryTests(unittest.TestCase):
     def test_append_all_five_only_on_success_path(self):
         import tempfile
-        from unittest import mock
 
         batch = [p for p, _ in make_batch(5)]
         with tempfile.TemporaryDirectory() as tmp:
-            hist = os.path.join(tmp, "history.txt")
-            with mock.patch.object(main, "HISTORY_FILE", __import__("pathlib").Path(hist)):
+            hist = Path(tmp) / "history.txt"
+            with mock.patch.object(main, "HISTORY_FILE", hist):
                 self.assertTrue(main.append_history(batch))
                 loaded = main.load_history()
-                self.assertEqual(len(loaded), 5)
                 self.assertEqual(loaded, {p.link for p in batch})
-                # duplicate append would not add new lines
-                main.append_history(batch)
+                main.append_history(batch)  # idempotent file append
                 self.assertEqual(len(main.load_history()), 5)
 
 
 class WorkflowConfigTests(unittest.TestCase):
-    def test_five_minute_cron_expression(self):
-        text = open(".github/workflows/auto_post.yml", encoding="utf-8").read()
-        self.assertRegex(text, r"cron:\s*'\*/5 \* \* \* \*'")
-        self.assertIn("workflow_dispatch", text)
-        self.assertIn("cancel-in-progress: true", text)
+    """workflow YAML lives on the default branch and is validated as text."""
 
-    def test_workflow_runs_tests_before_posting(self):
-        text = open(".github/workflows/auto_post.yml", encoding="utf-8").read()
-        test_pos = text.index("Run unit tests")
-        post_pos = text.index("Run ProxGram poster")
-        self.assertLess(test_pos, post_pos)
+    @classmethod
+    def setUpClass(cls):
+        cls.text = open(".github/workflows/auto_post.yml", encoding="utf-8").read()
+
+    def test_cron_is_exactly_every_five_minutes(self):
+        self.assertIn("cron: '*/5 * * * *'", self.text)
+        self.assertNotIn("'0 * * * *'", self.text)
+
+    def test_workflow_dispatch_enabled(self):
+        self.assertIn("workflow_dispatch", self.text)
+
+    def test_concurrency_configured(self):
+        self.assertIn("group: proxgram", self.text)
+        self.assertIn("cancel-in-progress: true", self.text)
+
+    def test_permissions_contents_write(self):
+        self.assertIn("permissions:", self.text)
+        self.assertIn("contents: write", self.text)
+
+    def test_checkout_v4_full_depth_and_credentials(self):
+        self.assertIn("actions/checkout@v4", self.text)
+        self.assertIn("fetch-depth: 0", self.text)
+        self.assertIn("persist-credentials: true", self.text)
+
+    def test_git_identity_configured_before_commit(self):
+        self.assertIn("github-actions[bot]", self.text)
+        self.assertIn("41898282+github-actions[bot]@users.noreply.github.com", self.text)
+
+    def test_tests_run_before_posting(self):
+        self.assertLess(self.text.index("Run unit tests"),
+                        self.text.index("Run ProxGram poster"))
+
+    def test_yaml_syntax_valid(self):
+        try:
+            import yaml  # type: ignore
+        except ImportError:
+            self.skipTest("PyYAML not installed; structural assertions cover the rest")
+        data = yaml.safe_load(self.text)
+        self.assertTrue(data["on"]["schedule"])
+        self.assertEqual(data["on"]["schedule"][0]["cron"], "*/5 * * * *")
+        self.assertIn("workflow_dispatch", data["on"])
+        self.assertEqual(data["permissions"], {"contents": "write"})
+        self.assertEqual(data["concurrency"]["group"], "proxgram")
 
 
 class TcpPingTests(unittest.TestCase):
