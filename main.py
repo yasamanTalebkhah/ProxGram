@@ -131,6 +131,11 @@ class Proxy:
         return "MTProto"
 
     @property
+    def key(self) -> str:
+        """Legacy host:port identifier (still honored by history.txt)."""
+        return f"{self.server.lower()}:{self.port}"
+
+    @property
     def link(self) -> str:
         """Standard deep link that opens Telegram's proxy dialog on tap."""
         return (
