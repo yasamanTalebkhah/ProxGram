@@ -11,7 +11,6 @@ so duplicates are never sent twice.
 """
 
 import base64
-import html
 import logging
 import os
 import random
@@ -44,8 +43,8 @@ PROTOCOLS = ("vmess://", "vless://", "trojan://", "ss://")
 HISTORY_FILE = Path(__file__).resolve().parent / "history.txt"
 LOG_FILE = Path(__file__).resolve().parent / "proxgram.log"
 
-HTTP_TIMEOUT = 30  # seconds
-USER_AGENT = "ProxGram/1.0 (+https://github.com/yasamanTalebkhah/ProxGram)"
+HTTP_TIMEOUT = 15  # seconds - keep it snappy so dead sources don't stall the run
+USER_AGENT = "v2rayN/6.23"  # standard client UA - some aggregators treat unknown UAs differently
 TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/sendMessage"
 MAX_MESSAGE_LENGTH = 4096      # Telegram hard limit
 MAX_CONFIG_LENGTH = 3500       # leave room for the friendly message
@@ -183,10 +182,10 @@ def load_history() -> set[str]:
 
 
 def append_history(config: str) -> None:
-    """Record a posted config in history.txt."""
+    """Record a posted config in history.txt (created on first write)."""
     try:
         with HISTORY_FILE.open("a", encoding="utf-8") as fh:
-            fh.write(config + "\n")
+            fh.write(config.strip() + "\n")
     except OSError as exc:
         logger.error("Could not update history file %s: %s", HISTORY_FILE, exc)
 
@@ -204,50 +203,71 @@ PROTOCOL_LABELS = {
 
 
 def format_message(config: str) -> str:
-    """Build a neat, friendly Telegram message around the config."""
+    """Build a neat, friendly Telegram message around the config.
+
+    Uses Markdown parse_mode with a fenced ``` code block: Telegram clients
+    render it as a tappable copy-with-one-tap block, and content inside the
+    fence is not parsed as entities, so the config needs no escaping. The
+    only hazard is a stray backtick closing the fence early — stripped below.
+    """
     protocol = next(
         (label for prefix, label in PROTOCOL_LABELS.items() if config.startswith(prefix)),
         "Proxy",
     )
     tag = protocol.lower().replace(" ", "")
+    safe_config = config.replace("`", "'")
+    if safe_config != config:
+        logger.warning("Stripped backtick(s) from config to protect the code fence.")
     return (
-        "🚀 <b>Fresh free proxy config, served daily!</b>\n\n"
-        f"🔐 Protocol: <b>{protocol}</b>\n"
-        "📡 Config below — copy &amp; import into your client 👇\n\n"
-        f"<code>{html.escape(config)}</code>\n\n"
+        "🚀 *Fresh free proxy config, served daily!*\n\n"
+        f"🔐 Protocol: *{protocol}*\n"
+        "📡 Config below — copy & import into your client 👇\n\n"
+        f"```\n{safe_config}\n```\n\n"
         f"#proxy #{tag} #v2ray #vpn #free #ProxGram"
     )
 
 
 def post_to_telegram(token: str, channel_id: str, message: str) -> bool:
-    """Send the message via the Telegram Bot API. Returns True on success."""
+    """Send the message via the Telegram Bot API. Returns True on success.
+
+    Tries Markdown formatting first; if Telegram rejects the formatting
+    (HTTP 400 'can't parse entities'), retries once as plain text so a post
+    is never lost to a formatting edge case. Note: raise_for_status() is
+    intentionally NOT used here - error responses still carry a JSON body
+    with the API description we need for the retry decision.
+    """
     url = TELEGRAM_API_URL.format(token=token)
-    payload = {
-        "chat_id": channel_id,
-        "text": message,
-        "parse_mode": "HTML",
-        "disable_web_page_preview": True,
-    }
-    try:
-        resp = requests.post(url, json=payload, timeout=HTTP_TIMEOUT)
-        resp.raise_for_status()
-        data = resp.json()
-    except requests.RequestException as exc:
-        logger.error("Telegram request failed: %s", exc)
-        return False
-    except ValueError as exc:
-        logger.error("Telegram returned non-JSON response: %s", exc)
-        return False
+    for parse_mode in ("Markdown", None):
+        payload = {
+            "chat_id": channel_id,
+            "text": message,
+            "disable_web_page_preview": True,
+        }
+        if parse_mode:
+            payload["parse_mode"] = parse_mode
+        label = parse_mode or "plain"
+        try:
+            resp = requests.post(url, json=payload, timeout=HTTP_TIMEOUT)
+            data = resp.json()
+        except requests.RequestException as exc:
+            logger.error("Telegram request failed (parse_mode=%s): %s", label, exc)
+            return False
+        except ValueError as exc:
+            logger.error("Telegram returned non-JSON response: %s", exc)
+            return False
 
-    if not data.get("ok"):
-        logger.error("Telegram API error: %s", data.get("description", data))
-        return False
+        if data.get("ok"):
+            logger.info(
+                "Posted to Telegram (message_id=%s)",
+                data.get("result", {}).get("message_id", "?"),
+            )
+            return True
 
-    logger.info(
-        "Posted to Telegram (message_id=%s)",
-        data.get("result", {}).get("message_id", "?"),
-    )
-    return True
+        description = str(data.get("description", data))
+        logger.error("Telegram API error (parse_mode=%s): %s", label, description)
+        if "parse" not in description.lower():
+            return False  # non-formatting error (auth, chat not found...) - retry won't help
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -281,6 +301,11 @@ def main() -> int:
         return 1
 
     # 2. Filter out already-posted configs and select one.
+    #    Make sure history.txt exists (created empty on the very first run).
+    try:
+        HISTORY_FILE.touch(exist_ok=True)
+    except OSError as exc:
+        logger.warning("Could not create history file %s: %s", HISTORY_FILE, exc)
     history = load_history()
     config = pick_new_config(configs, history)
     if config is None:
