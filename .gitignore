@@ -1,5 +1,5 @@
-# Local run state - never commit
-history.txt
+# history.txt is tracked in git so GitHub Actions can persist
+# posted configs across scheduled runs.
 proxgram.log
 __pycache__/
 *.pyc
