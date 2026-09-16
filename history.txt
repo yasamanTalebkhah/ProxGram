@@ -7,3 +7,5 @@ vless://2cca8201-c93e-40eb-bd8a-fea4170c169e@185.136.12.190:443?mode=auto&path=/
 ir.flipme.info:8443
 https://t.me/proxy?server=yostavpn.casacam.net&port=443&secret=ee3db34d5ab674545e688abbefee52237f796f73746176706e2e6361736163616d2e6e6574
 https://t.me/proxy?server=yostavpn.casacam.net&port=443&secret=eec17adfc3591215500ff5240c48f1231a796f73746176706e2e6361736163616d2e6e6574
+https://t.me/proxy?server=t.meow-meow-fast.site&port=443&secret=eeaea279c83d92a4c4fa8a780bf10b8c4b742e6d656f772d6d656f772d666173742e73697465
+https://t.me/proxy?server=reborn.rebirthconnect.com&port=443&secret=eeabb5c5430f2510e43863f9b6284f97b37265626f726e2e72656269727468636f6e6e6563742e636f6d
