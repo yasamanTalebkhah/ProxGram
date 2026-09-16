@@ -74,3 +74,8 @@ https://t.me/proxy?server=s16.assetflux.org&port=443&secret=eea669969a1f4dabafd3
 https://t.me/proxy?server=media11.happtg.org&port=443&secret=eeebd1e4235d2f40f68b3c3610b128157a686f66662e7275
 https://t.me/proxy?server=s5.assetflux.org&port=443&secret=ee2c46ee89b4f2c79c1d8325d13091e580706574726f766963682e7275
 https://t.me/proxy?server=cdn10.cdnwave.org&port=443&secret=eeecd508d816f611bb329487809f8dac88706574726f766963682e7275
+https://t.me/proxy?server=media14.happtg.org&port=443&secret=ee4f9067589367c2ef531642d501664f43686f66662e7275
+https://t.me/proxy?server=s1.assetflux.org&port=443&secret=ee73e7d7fe41b49d9091f78c8c92c22de4766b2e7275
+https://t.me/proxy?server=mkima.davay.click&port=443&secret=ee39300be14c4d54704c92416d555fa7026d6b696d612e64617661792e636c69636b
+https://t.me/proxy?server=ykima.davay.click&port=443&secret=ee06dfdbdf271bab18c6b606484c237384796b696d612e64617661792e636c69636b
+https://t.me/proxy?server=media10.happtg.org&port=443&secret=eeecd508d816f611bb329487809f8dac88706574726f766963682e7275
