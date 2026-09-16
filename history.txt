@@ -29,3 +29,8 @@ https://t.me/proxy?server=click.zov.network&port=443&secret=eeb98e77f83bde8ca83b
 https://t.me/proxy?server=79.137.196.223&port=8443&secret=eeeeacd334a255675ccc880cb6b8c9caf07777772e636c6f7564666c6172652e636f6d
 https://t.me/proxy?server=212.193.4.172&port=8443&secret=ee828134980862470425195728452306343231322e3139332e342e313732
 https://t.me/proxy?server=87.121.82.9&port=443&secret=ee5018602bc9cb9124a5c1cb0154634ad2706c617932676f2e636c6f7564
+https://t.me/proxy?server=tg.aezakmi.org&port=443&secret=ee2d08cf6e8aaff2febda481f0a5f0cc4f74672e61657a616b6d692e6f7267
+https://t.me/proxy?server=web3.gktmfrv.sbs&port=443&secret=eebd8d8c4b9fd7a83f320e216925b881656364656b2e7275
+https://t.me/proxy?server=czproxy.kochvpn.pw&port=443&secret=eecb6a127b962be2e1354f62c9dc72ab22637a70726f78792e6b6f636876706e2e7077
+https://t.me/proxy?server=dl.fileexchange.site&port=443&secret=ee7cb69f79cafbc902e0d0806dca81abdf646c2e66696c6565786368616e67652e73697465
+https://t.me/proxy?server=2.26.85.57&port=443&secret=ee470ad979df6233ed96590c3dcde61b42706c617932676f2e636c6f7564
