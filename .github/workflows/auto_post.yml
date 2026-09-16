@@ -2,7 +2,7 @@ name: Hourly Proxy Poster
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # every 10 minutes (UTC); GitHub may delay a few minutes under load
+    - cron: '*/5 * * * *' # every 5 minutes (UTC); GitHub may delay a few minutes under load
   workflow_dispatch: # manual runs from the Actions tab
 
 # Needed to push the updated history.txt back to main
@@ -44,11 +44,14 @@ jobs:
 
       - name: Commit and push updated history.txt
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ -f history.txt ] && [ -n "$(git status --porcelain -- history.txt)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add history.txt
             git commit -m "chore: record posted proxy config in history.txt"
+            # Rebase over any history committed by a just-finished run so
+            # concurrent batches never overwrite each other's entries.
+            git pull --rebase origin main
             git push origin HEAD:main
           else
             echo "history.txt unchanged or absent - nothing to commit"

@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""ProxGram — post fast, censorship-resistant Telegram MTProto proxies
-(Fake-TLS `ee` secrets, HTTPS-compatible ports) to a Telegram channel.
+"""ProxGram — post five fast, censorship-resistant Telegram MTProto proxies
+(Fake-TLS `ee` secrets, HTTPS-compatible ports) in ONE Telegram message.
 
 Sources:
   1. Primary: handshake-verified JSON feed (dubblebyte/free-mtproto-proxies).
   2. Fallbacks: plaintext MTProto feeds (SoliSpirit, Grim1313).
 
-Every candidate must pass strict Fake-TLS validation:
-  - secret starts with `ee` (Fake-TLS; plain/dd rejected)
-  - hex-only secrets must be long enough to carry key + SNI domain
-    (bare `ee` + 32 hex = key with no domain is rejected)
-  - base64url Fake-TLS secrets must be >= 22 chars (16-byte key + domain)
-  - port in the HTTPS-compatible allow-list (443, 8443, 2053, 2083, 8880)
+Pipeline per run:
+  fetch -> parse (JSON + plaintext) -> Fake-TLS/secret + port filters ->
+  dedupe by (server, port, secret) -> TCP latency test (2.0s, <= 2500ms) ->
+  exclude history.txt -> prefer distinct hostnames -> pick best five ->
+  send ONE message with five connect buttons -> record links in history.txt.
 
-Candidates are TCP-tested (2.0s strict timeout), filtered to latency
-<= 2500 ms, sorted by latency, and the best ones (up to MAX_POSTS) that are
-not in history.txt are posted to the channel with a one-tap connect button.
+The TCP test is an availability check only. Source-level verification
+(handshake-verified feed) and Fake-TLS/secret validation remain the main
+Iran-DPI defenses; five concurrent proxies give users redundancy because
+individual proxies may still be blocked or unstable on Iranian networks.
 
 Credentials are read from environment variables:
     TELEGRAM_BOT_TOKEN   - bot token from @BotFather
@@ -55,18 +55,18 @@ PLAINTEXT_SOURCES = [
     "https://raw.githubusercontent.com/Grim1313/mtproto-for-telegram/master/all_proxies.txt",
 ]
 
-MAX_PER_SOURCE = 40   # cap parsed proxies per source feed
-MAX_TO_TEST = 60      # cap total candidates sent through the health check
+MAX_PER_SOURCE = 60   # cap parsed proxies per source feed
+MAX_TO_TEST = 90      # cap total candidates sent through the health check
 PING_TIMEOUT = 2.0    # seconds - strict TCP connect timeout
 MAX_LATENCY_MS = 2500  # discard anything slower than this
 MAX_WORKERS = 60      # parallel TCP tests (total wall time ~= one timeout)
-MAX_POSTS = 2         # post the best 1..N proxies per run
+BATCH_SIZE = 5        # proxies posted per run (exactly five or none)
 
 ALLOWED_PORTS = {443, 8443, 2053, 2083, 8880}
 
 HEX_SET = set(string.hexdigits)
 B64URL_SET = set(string.ascii_letters + string.digits + "-_")
-FAKETLS_PREFIX = "ee"      # Fake-TLS secrets start with 0xEE
+FAKETLS_PREFIX = "ee"       # Fake-TLS secrets start with 0xEE
 MIN_B64URL_SECRET_LEN = 22  # 16-byte key (b64) + at least ~10 chars of domain
 MIN_HEX_SECRET_LEN = 34     # ee + 32 hex (key only) is NOT enough - domain required
 
@@ -81,10 +81,16 @@ MAX_MESSAGE_LENGTH = 4096
 _channel_id = os.environ.get("TELEGRAM_CHANNEL_ID", "@ChannelID")
 CHANNEL_TAG = os.environ.get("TELEGRAM_CHANNEL_TAG") or _channel_id
 
-CONNECT_BUTTON_TEXT = "⚡️ اتصال مستقیم به پروکسی"
+CONNECT_BUTTON_TEXT = "⚡️ پروکسی {n} — {latency} ms"
 JOIN_BUTTON_TEXT = "📢 عضویت در کانال"
+FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 
 logger = logging.getLogger("proxgram")
+
+
+def fa_num(n: int) -> str:
+    """Latin digits -> Persian digits for user-facing labels."""
+    return str(n).translate(FA_DIGITS)
 
 
 # ---------------------------------------------------------------------------
@@ -131,6 +137,11 @@ class Proxy:
         return "MTProto"
 
     @property
+    def combo(self) -> tuple[str, int, str]:
+        """Full identity: server + port + secret."""
+        return (self.server.lower(), self.port, self.secret)
+
+    @property
     def key(self) -> str:
         """Legacy host:port identifier (still honored by history.txt)."""
         return f"{self.server.lower()}:{self.port}"
@@ -156,11 +167,13 @@ class Proxy:
 def is_valid_faketls_secret(secret: str) -> bool:
     """True when the secret is a usable Fake-TLS (ee) secret.
 
-    Two alphabets exist in the wild:
+    Two legitimate Telegram MTProto Fake-TLS alphabets exist in the wild:
       - hex-encoded: `ee` + 32 hex key + hex-encoded SNI domain; a bare
         `ee` + 32 hex (34 chars, no domain) is REJECTED.
       - base64url:   `ee` + 22-char b64 key + domain; accepted at >= 22
         chars so the key is present, with the domain following.
+    (The spec example secret eeNEgYdJvXrFGRMCIMJdCQ is base64url, which is
+    why hex-only validation would wrongly reject working proxies.)
     """
     s = (secret or "").strip()
     if not s or not s.lower().startswith(FAKETLS_PREFIX):
@@ -197,6 +210,15 @@ def fetch_text(url: str) -> str | None:
     except requests.RequestException as exc:
         logger.warning("Failed to fetch %s: %s", url, exc)
         return None
+
+
+def parse_qs_last(query: str) -> dict[str, str]:
+    """parse_qs keeping the LAST value of duplicated keys.
+
+    Tolerates mangled links like ...&secret=X&port=8880&secret=Y by using
+    the final value of each parameter (Telegram/client behavior).
+    """
+    return {k: v[-1] for k, v in parse_qs(query).items() if v}
 
 
 def parse_json_source(text: str) -> list[Proxy]:
@@ -240,10 +262,10 @@ def parse_plaintext_source(text: str) -> list[Proxy]:
             continue  # socks5/vless/vmess/unknown formats never enter the model
         try:
             parsed = urlparse(stripped)
-            qs = parse_qs(parsed.query)
-            server = (qs.get("server") or [""])[0].strip().strip(".")
-            port = int((qs.get("port") or [""])[0].strip())
-            secret = (qs.get("secret") or [""])[0].strip()
+            qs = parse_qs_last(parsed.query)
+            server = (qs.get("server") or "").strip().strip(".")
+            port = int(qs.get("port", "").strip())
+            secret = qs.get("secret", "").strip()
         except ValueError:
             continue
         if not server or not secret:
@@ -256,7 +278,7 @@ def apply_filters(proxies: list[Proxy]) -> tuple[list[Proxy], dict]:
     """Fake-TLS secret validation + allowed-port filter, keeping feed order."""
     kept: list[Proxy] = []
     stats = {"bad_secret": 0, "bad_port": 0}
-    seen: set[str] = set()
+    seen: set[tuple[str, int, str]] = set()
     for proxy in proxies:
         if not is_valid_faketls_secret(proxy.secret):
             stats["bad_secret"] += 1
@@ -264,9 +286,9 @@ def apply_filters(proxies: list[Proxy]) -> tuple[list[Proxy], dict]:
         if not is_allowed_port(proxy.port):
             stats["bad_port"] += 1
             continue
-        if proxy.link in seen:
+        if proxy.combo in seen:
             continue
-        seen.add(proxy.link)
+        seen.add(proxy.combo)
         kept.append(proxy)
     return kept, stats
 
@@ -274,21 +296,24 @@ def apply_filters(proxies: list[Proxy]) -> tuple[list[Proxy], dict]:
 def collect_candidates() -> list[Proxy]:
     """Fetch all sources, parse, filter, dedupe, and cap the test list."""
     candidates: list[Proxy] = []
-    seen: set[str] = set()
+    seen: set[tuple[str, int, str]] = set()
 
-    def add_many(parsed: list[Proxy], source_name: str) -> None:
+    def add_many(parsed: list[Proxy], source_name: str) -> int:
         fetched = len(parsed)
         kept, stats = apply_filters(parsed)
+        added = 0
         for proxy in kept:
-            if proxy.link in seen:
+            if proxy.combo in seen:
                 continue
-            seen.add(proxy.link)
+            seen.add(proxy.combo)
             candidates.append(proxy)
+            added += 1
         logger.info(
-            "%s: fetched %d, after Fake-TLS/port filtering %d "
+            "%s: fetched %d, after Fake-TLS/secret+port validation %d "
             "(rejected: %d bad secret, %d bad port)",
-            source_name, fetched, len(kept), stats["bad_secret"], stats["bad_port"],
+            source_name, fetched, added, stats["bad_secret"], stats["bad_port"],
         )
+        return added
 
     for url in JSON_SOURCES:
         raw = fetch_text(url)
@@ -307,7 +332,7 @@ def collect_candidates() -> list[Proxy]:
         add_many(parsed[:plaintext_budget * 3], f"plaintext {url.split('/')[-1]}")
         plaintext_budget = max(MAX_TO_TEST - len(candidates), 0)
 
-    logger.info("Total unique candidates after filtering: %d", len(candidates))
+    logger.info("Total unique candidates after validation: %d", len(candidates))
     return candidates[:MAX_TO_TEST]
 
 
@@ -403,13 +428,16 @@ def load_history() -> set[str]:
         return set()
 
 
-def append_history(proxy: Proxy) -> None:
-    """Record a posted proxy link in history.txt (created on first write)."""
+def append_history(proxies: list[Proxy]) -> bool:
+    """Record posted proxy links in history.txt (created on first write)."""
     try:
         with HISTORY_FILE.open("a", encoding="utf-8") as fh:
-            fh.write(proxy.link + "\n")
+            for proxy in proxies:
+                fh.write(proxy.link + "\n")
+        return True
     except OSError as exc:
         logger.error("Could not update history file %s: %s", HISTORY_FILE, exc)
+        return False
 
 
 # ---------------------------------------------------------------------------
@@ -430,36 +458,59 @@ def channel_username() -> str | None:
     return None
 
 
-def format_message(proxy: Proxy, ping_ms: float) -> str:
-    """Build the Persian channel post (HTML entities pre-escaped)."""
-    ping = max(1, round(ping_ms))
-    link = html.escape(proxy.link, quote=True)
-    server = html.escape(proxy.server, quote=True)
-    tag = html.escape(CHANNEL_TAG.strip(), quote=True)
-    return (
-        "🚀 <b>پروکسی ضدفیلتر تلگرام (Fake-TLS)</b>\n\n"
-        f"⚡️ <b>پینگ:</b> <code>{ping} ms</code>\n"
-        f"🌐 <b>سرور:</b> <code>{server}</code>\n"
-        f"🚪 <b>پورت:</b> <code>{proxy.port}</code>\n\n"
-        "🔗 <b>لینک پروکسی (جهت کپی دستی):</b>\n"
-        f"<code>{link}</code>\n\n"
-        f"🆔 {tag}"
-    )
+def format_message(proxies: list[Proxy], latencies: list[float]) -> str:
+    """Build the Persian five-proxy post (HTML entities pre-escaped)."""
+    parts = [
+        "🚀 <b>پنج پروکسی فعال تلگرام</b>\n\n"
+        "برای اتصال، یکی از گزینه‌های زیر را امتحان کنید. ممکن است عملکرد "
+        "پروکسی‌ها برای اپراتورها یا کاربران مختلف متفاوت باشد.\n"
+    ]
+    for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1):
+        ping = max(1, round(latency))
+        parts.append(
+            f"\n<b>پروکسی {fa_num(i)}</b>\n"
+            f"🖥 سرور: <code>{html.escape(proxy.server, quote=True)}</code>\n"
+            f"🚪 پورت: <code>{proxy.port}</code>\n"
+            f"⚡️ پینگ: <code>{ping} ms</code>\n"
+            f"🔗 <code>{html.escape(proxy.link, quote=True)}</code>\n"
+        )
+    parts.append("\n🛡 <b>پروتکل:</b> MTProto Fake-TLS")
+    return "".join(parts)
 
 
-def format_message_minimal(proxy: Proxy, ping_ms: float) -> str:
-    """Last-resort plaintext message used when HTML formatting fails."""
-    return (
-        "پروکسی ضدفیلتر تلگرام\n"
-        f"پینگ: {max(1, round(ping_ms))} ms | سرور: {proxy.server} "
-        f"| پورت: {proxy.port}\n"
-        f"لینک: {proxy.link}"
-    )
+def format_message_minimal(proxies: list[Proxy], latencies: list[float]) -> str:
+    """Last-resort plaintext message keeping all five links."""
+    lines = ["پنج پروکسی فعال تلگرام"]
+    for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1):
+        lines.append(
+            f"پروکسی {i}: {proxy.server}:{proxy.port} "
+            f"({max(1, round(latency))} ms)\n{proxy.link}"
+        )
+    return "\n".join(lines)
 
 
-def build_inline_keyboard(proxy: Proxy) -> list[list[dict]]:
-    """One-tap connect button + join-channel button (when a username exists)."""
-    rows = [[{"text": CONNECT_BUTTON_TEXT, "url": proxy.link}]]
+def format_batch_message(proxies: list[Proxy], latencies: list[float]) -> str:
+    """Format with HTML; on any failure return the plaintext fallback."""
+    try:
+        message = format_message(proxies, latencies)
+        if len(message) > MAX_MESSAGE_LENGTH:
+            raise ValueError("message exceeds Telegram limit")
+        return message
+    except Exception:
+        logger.exception("HTML formatting failed; using plaintext fallback")
+        return format_message_minimal(proxies, latencies)
+
+
+def build_inline_keyboard(proxies: list[Proxy],
+                          latencies: list[float]) -> list[list[dict]]:
+    """One connect button per proxy (own row) + a join-channel button."""
+    rows = [
+        [{
+            "text": CONNECT_BUTTON_TEXT.format(n=fa_num(i), latency=max(1, round(latency))),
+            "url": proxy.link,
+        }]
+        for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1)
+    ]
     username = channel_username()
     if username:
         rows.append([{"text": JOIN_BUTTON_TEXT, "url": f"https://t.me/{username}"}])
@@ -467,21 +518,25 @@ def build_inline_keyboard(proxy: Proxy) -> list[list[dict]]:
 
 
 def send_message(token: str, chat_id: str, text: str,
-                 proxy: Proxy | None = None, ping_ms: float = 0) -> bool:
-    """sendMessage with graceful degradation:
-    HTML+keyboard -> HTML only -> minimal plaintext. True on any success.
+                 proxies: list[Proxy] | None = None,
+                 latencies: list[float] | None = None) -> bool:
+    """ONE sendMessage request with graceful degradation:
+    HTML+keyboard -> HTML only -> plaintext (links still included).
+    Returns True on any success.
     """
     url = TELEGRAM_API_URL.format(token=token, method="sendMessage")
     attempts: list[dict] = []
-    if proxy is not None:
+    if proxies and latencies:
         attempts.append({
             "text": text,
             "parse_mode": "HTML",
-            "reply_markup": {"inline_keyboard": build_inline_keyboard(proxy)},
+            "reply_markup": {"inline_keyboard": build_inline_keyboard(proxies, latencies)},
         })
     attempts.append({"text": text, "parse_mode": "HTML"})
-    fallback_text = format_message_minimal(proxy, ping_ms) if proxy else text
-    attempts.append({"text": fallback_text})
+    attempts.append({
+        "text": format_message_minimal(proxies, latencies)
+        if proxies and latencies else text,
+    })
 
     last_desc = ""
     for i, payload_base in enumerate(attempts):
@@ -511,21 +566,8 @@ def send_message(token: str, chat_id: str, text: str,
     return False
 
 
-def post_to_telegram(token: str, channel_id: str, proxy: Proxy,
-                     ping_ms: float) -> bool:
-    """Format the message and send it; falls back to plaintext on errors."""
-    try:
-        message = format_message(proxy, ping_ms)
-        if len(message) > MAX_MESSAGE_LENGTH:
-            raise ValueError("message too long")
-    except Exception:
-        logger.exception("HTML formatting failed; using minimal plaintext")
-        return send_message(token, channel_id, "", proxy=proxy, ping_ms=ping_ms)
-    return send_message(token, channel_id, message, proxy=proxy, ping_ms=ping_ms)
-
-
 # ---------------------------------------------------------------------------
-# Selection: fastest reachable, not-yet-posted proxies
+# Selection: five distinct, fresh, fastest proxies
 # ---------------------------------------------------------------------------
 
 def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
@@ -560,23 +602,58 @@ def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
     return reachable
 
 
-def pick_best_proxies(reachable: list[tuple[Proxy, float]],
-                      history: set[str], limit: int = MAX_POSTS
-                      ) -> list[tuple[Proxy, float]]:
-    """Up to `limit` lowest-latency reachable proxies never posted before.
+def pick_batch(reachable: list[tuple[Proxy, float]],
+               history: set[str], size: int = BATCH_SIZE
+               ) -> list[tuple[Proxy, float]]:
+    """Select `size` fresh, fastest proxies, preferring distinct hostnames.
 
-    History entries may be full deep links (current format) or legacy
-    host:port keys from earlier versions; both are honored.
+    Rules applied in order: latency cap, history exclusion (full link or
+    legacy host:port), duplicate (server, port, secret) suppression, and at
+    most one proxy per server hostname unless fewer than `size` distinct
+    servers are reachable. Returns fewer than `size` only when the candidate
+    pool is genuinely exhausted.
     """
-    picked = []
-    for proxy, latency in reachable:
+    picked: list[tuple[Proxy, float]] = []
+    picked_combos: set[tuple[str, int, str]] = set()
+    picked_hosts: set[str] = set()
+
+    def try_take(proxy: Proxy, latency: float) -> bool:
+        if proxy.latency_ms is not None and proxy.latency_ms > MAX_LATENCY_MS:
+            return False
         if latency > MAX_LATENCY_MS:
-            continue
+            return False
         if proxy.link in history or proxy.key in history:
-            continue
+            return False
+        if proxy.combo in picked_combos:
+            return False
         picked.append((proxy, latency))
-        if len(picked) >= limit:
-            break
+        picked_combos.add(proxy.combo)
+        picked_hosts.add(proxy.server.lower())
+        return True
+
+    def fill(pool_items: list[tuple[Proxy, float]]) -> None:
+        for proxy, latency in pool_items:
+            if len(picked) >= size:
+                return
+            try_take(proxy, latency)
+
+    # Pass 1: one proxy per server hostname (best latency per host first).
+    best_per_host: dict[str, tuple[Proxy, float]] = {}
+    for proxy, latency in reachable:
+        host = proxy.server.lower()
+        if host not in best_per_host:
+            best_per_host[host] = (proxy, latency)
+    fill(list(best_per_host.values()))
+
+    # Pass 2: allow a second/third proxy from already-picked servers only if
+    # the distinct-server pool cannot fill the batch.
+    if len(picked) < size:
+        rest = [(p, l) for p, l in reachable
+                if p.server.lower() not in picked_hosts]
+        fill(rest)
+    if len(picked) < size:
+        fill(reachable)
+
     return picked
 
 
@@ -620,32 +697,47 @@ def main() -> int:
         logger.error("None of the %d candidates are reachable.", len(candidates))
         return 0
 
-    # 3. Pick the best ones not posted before; make sure history.txt exists.
+    # 3. Pick five fresh ones (never pad with duplicates/unverified proxies).
     try:
         HISTORY_FILE.touch(exist_ok=True)
     except OSError as exc:
         logger.warning("Could not create history file %s: %s", HISTORY_FILE, exc)
     history = load_history()
-    picks = pick_best_proxies(reachable, history)
-    if not picks:
-        logger.info("All fast reachable proxies were already posted. Nothing to do.")
+    after_history = [p for p, _ in reachable if p.link not in history and p.key not in history]
+    logger.info("After history filtering: %d candidates remain", len(after_history))
+    picks = pick_batch(reachable, history)
+    if len(picks) < BATCH_SIZE:
+        logger.warning(
+            "Only %d/%d fresh valid proxies available after all filters and "
+            "tests; skipping this run (no incomplete or padded posts). "
+            "Next scheduled run will retry.",
+            len(picks), BATCH_SIZE,
+        )
         return 0
 
-    # 4. Post each pick; record only successful posts.
-    posted = 0
-    for proxy, ping_ms in picks:
-        logger.info("Selected %s (%.0f ms)", proxy.link, ping_ms)
-        try:
-            success = post_to_telegram(token, channel_id, proxy, ping_ms)
-        except Exception:
-            logger.exception("Unexpected error while posting %s", proxy.link)
-            continue
-        if success:
-            append_history(proxy)
-            posted += 1
+    proxies = [p for p, _ in picks]
+    latencies = [l for _, l in picks]
+    for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1):
+        logger.info("Selected #%d %s:%d (%.0f ms)",
+                    i, proxy.server, proxy.port, latency)
 
-    logger.info("Run finished: %d/%d posts succeeded.", posted, len(picks))
-    return 0 if posted > 0 else 0  # transient Telegram failure is not fatal in CI
+    # 4. Send exactly ONE message with all five proxies.
+    message = format_batch_message(proxies, latencies)
+    try:
+        success = send_message(token, channel_id, message,
+                               proxies=proxies, latencies=latencies)
+    except Exception:
+        logger.exception("Unexpected error while posting the batch")
+        return 0
+
+    if not success:
+        logger.error("Telegram post failed; history NOT updated for this batch.")
+        return 0
+
+    # 5. Only after a confirmed send, record all five links.
+    if append_history(proxies):
+        logger.info("All %d links written to %s.", len(proxies), HISTORY_FILE.name)
+    return 0
 
 
 if __name__ == "__main__":
