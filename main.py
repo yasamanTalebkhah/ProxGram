@@ -460,16 +460,15 @@ def channel_username() -> str | None:
 def format_message(proxies: list[Proxy], latencies: list[float]) -> str:
     """Build the short Persian post body (HTML entities pre-escaped).
 
-    Proxy deep links live ONLY in the inline-keyboard buttons, never in the
-    message text, so the body stays short and clean. No dynamic proxy values
-    are interpolated here, so no escaping hazards exist.
+    Minimal and engaging: no protocol/technical metadata, no update-cadence
+    labels, and no raw proxy links — deep links live ONLY in the
+    inline-keyboard buttons. No dynamic proxy values are interpolated here,
+    so no escaping hazards exist.
     """
     return (
-        "🚀 <b>۵ پروکسی فعال تلگرام</b>\n\n"
-        "یکی از دکمه‌های زیر را امتحان کنید. اگر یکی وصل نشد، "
-        "گزینهٔ بعدی را امتحان کنید.\n\n"
-        "🛡 <b>پروتکل:</b> MTProto Fake-TLS\n"
-        "⏱ <b>به‌روزرسانی:</b> هر ۵ دقیقه"
+        "⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>\n\n"
+        "برای اتصال روی یکی از گزینه‌های زیر کلیک کنید. "
+        "در صورت عدم اتصال، دکمه بعدی را تست کنید."
     )
 
 
@@ -477,10 +476,9 @@ def format_message_minimal(proxies: list[Proxy], latencies: list[float]) -> str:
     """Safe plaintext twin of the short body (still link-free; the inline
     keyboard carries all five deep links)."""
     return (
-        "۵ پروکسی فعال تلگرام\n\n"
-        "یکی از دکمه‌های زیر را امتحان کنید. اگر یکی وصل نشد، "
-        "گزینهٔ بعدی را امتحان کنید.\n\n"
-        "پروتکل: MTProto Fake-TLS | به‌روزرسانی: هر ۵ دقیقه"
+        "⚡️ پروکسی‌های پرسرعت و پایدار تلگرام\n\n"
+        "برای اتصال روی یکی از گزینه‌های زیر کلیک کنید. "
+        "در صورت عدم اتصال، دکمه بعدی را تست کنید."
     )
 
 

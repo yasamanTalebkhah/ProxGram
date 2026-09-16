@@ -210,13 +210,22 @@ class MessageAndKeyboardTests(unittest.TestCase):
     def test_body_contains_no_proxy_links(self):
         for text in (self.msg, self.minimal):
             self.assertNotIn("https://t.me/proxy?", text)
+            self.assertNotIn("t.me/socks", text)
 
     def test_body_is_short_with_required_lines(self):
-        self.assertIn("🚀 <b>۵ پروکسی فعال تلگرام</b>", self.msg)
-        self.assertIn("🛡 <b>پروتکل:</b> MTProto Fake-TLS", self.msg)
-        self.assertIn("⏱ <b>به‌روزرسانی:</b> هر ۵ دقیقه", self.msg)
+        self.assertIn("⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>", self.msg)
+        self.assertIn("برای اتصال روی یکی از گزینه‌های زیر کلیک کنید.", self.msg)
+        self.assertIn("در صورت عدم اتصال، دکمه بعدی را تست کنید.", self.msg)
         self.assertLess(len(self.msg), main.MAX_MESSAGE_LENGTH)
         self.assertNotIn("<b>", self.minimal)
+
+    def test_body_has_no_protocol_or_cadence_metadata(self):
+        for text in (self.msg, self.minimal):
+            self.assertNotIn("MTProto", text)
+            self.assertNotIn("Fake-TLS", text)
+            self.assertNotIn("پروتکل", text)
+            self.assertNotIn("به‌روزرسانی", text)
+            self.assertNotIn("هر ۵ دقیقه", text)
 
     def test_five_valid_deep_links(self):
         for proxy in self.proxies:
