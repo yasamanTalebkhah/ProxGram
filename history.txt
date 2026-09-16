@@ -34,3 +34,8 @@ https://t.me/proxy?server=web3.gktmfrv.sbs&port=443&secret=eebd8d8c4b9fd7a83f320
 https://t.me/proxy?server=czproxy.kochvpn.pw&port=443&secret=eecb6a127b962be2e1354f62c9dc72ab22637a70726f78792e6b6f636876706e2e7077
 https://t.me/proxy?server=dl.fileexchange.site&port=443&secret=ee7cb69f79cafbc902e0d0806dca81abdf646c2e66696c6565786368616e67652e73697465
 https://t.me/proxy?server=2.26.85.57&port=443&secret=ee470ad979df6233ed96590c3dcde61b42706c617932676f2e636c6f7564
+https://t.me/proxy?server=79.137.196.223&port=443&secret=eeee525b778775d1c3b1e2beb8af08e2017777772e636c6f7564666c6172652e636f6d
+https://t.me/proxy?server=31.76.77.201&port=443&secret=ee5018602bc9cb9124a5c1cb0154634ad2706c617932676f2e636c6f7564
+https://t.me/proxy?server=ya.zaebalsya.uk&port=8443&secret=ee1104a80139ca104cdb1184484edf78c37275737369616e2d616e696d616c732e7275
+https://t.me/proxy?server=direct.mtaccess.win&port=443&secret=eedc3fb36929b7d3f26fe642ad5f8e7331636c6f7564666c6172652e636f6d
+https://t.me/proxy?server=2.26.87.69&port=443&secret=ee5018602bc9cb9124a5c1cb0154634ad2706c617932676f2e636c6f7564
