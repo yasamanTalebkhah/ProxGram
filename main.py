@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """ProxGram — fetch fresh Telegram MTProto / Socks5 proxies from public
 aggregators, health-check them with a quick TCP connect test, and post the
-single best (lowest-latency, never-posted-before) proxy to a Telegram channel.
+single best (lowest-latency, never-posted-before) proxy to a Telegram channel
+with a one-tap connect button.
 
 Credentials are read from environment variables:
     TELEGRAM_BOT_TOKEN   - bot token from @BotFather
     TELEGRAM_CHANNEL_ID  - target channel (e.g. @mychannel or -1001234567890)
-    TELEGRAM_CHANNEL_TAG - optional signature shown in the post (default @ChannelID)
+    TELEGRAM_CHANNEL_TAG - optional display tag for the post signature
+                           (defaults to TELEGRAM_CHANNEL_ID)
 
 A local history.txt file next to this script tracks already-posted proxies
 (by host:port) so duplicates are never sent twice.
@@ -21,7 +23,7 @@ import socket
 import sys
 import time
 from pathlib import Path
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, quote, urlparse
 
 import requests
 
@@ -42,6 +44,7 @@ SOCKS5_SOURCES = [
 ]
 
 MAX_PER_SOURCE = 40   # cap parsed proxies per source feed
+MTPROTO_CAP = 40      # guaranteed slots for MTProto candidates (priority)
 MAX_TO_TEST = 80      # cap total candidates sent through the health check
 PING_TIMEOUT = 3.0    # seconds - strict TCP connect timeout
 MAX_WORKERS = 60      # parallel TCP tests (total wall time ~= one timeout)
@@ -51,10 +54,11 @@ LOG_FILE = Path(__file__).resolve().parent / "proxgram.log"
 
 HTTP_TIMEOUT = 15  # seconds
 USER_AGENT = "v2rayN/6.23"  # standard client UA - aggregators treat unknown UAs differently
-TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/sendMessage"
+TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/{method}"
 MAX_MESSAGE_LENGTH = 4096
 
-CHANNEL_SIGNATURE = os.environ.get("TELEGRAM_CHANNEL_TAG") or "@ChannelID"
+_channel_id = os.environ.get("TELEGRAM_CHANNEL_ID", "@ChannelID")
+CHANNEL_TAG = os.environ.get("TELEGRAM_CHANNEL_TAG") or _channel_id
 
 logger = logging.getLogger("proxgram")
 
@@ -85,6 +89,44 @@ def setup_logging() -> logging.Logger:
 
 
 # ---------------------------------------------------------------------------
+# Proxy model + Telegram deep links
+# ---------------------------------------------------------------------------
+
+class Proxy:
+    """A parsed proxy with helpers for standard Telegram deep links."""
+
+    def __init__(self, protocol: str, server: str, port: int,
+                 secret: str | None = None, link: str | None = None):
+        self.protocol = protocol
+        self.server = str(server).strip().strip(".")
+        self.port = int(port)
+        self.secret = secret
+        self.raw_link = link
+
+    @property
+    def key(self) -> str:
+        """Stable identity used for deduplication and history."""
+        return f"{self.server.lower()}:{self.port}"
+
+    @property
+    def tg_link(self) -> str:
+        """Standard deep link that opens Telegram's proxy dialog on tap."""
+        if self.protocol == "MTProto":
+            return (
+                "https://t.me/proxy"
+                f"?server={quote(self.server, safe='')}"
+                f"&port={self.port}"
+                f"&secret={quote(self.secret or '', safe='')}"
+            )
+        if self.protocol == "Socks5":
+            return f"https://t.me/socks?server={quote(self.server, safe='')}&port={self.port}"
+        return self.raw_link or ""
+
+    def __repr__(self) -> str:  # pragma: no cover
+        return f"<Proxy {self.protocol} {self.key}>"
+
+
+# ---------------------------------------------------------------------------
 # Data collection
 # ---------------------------------------------------------------------------
 
@@ -103,13 +145,8 @@ def fetch_text(url: str) -> str | None:
         return None
 
 
-def parse_mtproto_link(line: str) -> dict | None:
-    """Parse a t.me/proxy or tg://proxy link into a proxy dict.
-
-    Returns None when the line is not a usable MTProto link. The returned
-    link is normalized to the https://t.me/proxy?... form so it is clickable
-    from every Telegram client.
-    """
+def parse_mtproto_link(line: str) -> Proxy | None:
+    """Parse a t.me/proxy or tg://proxy link. Returns None if unusable."""
     stripped = line.strip()
     if "t.me/proxy" not in stripped and not stripped.startswith("tg://proxy"):
         return None
@@ -117,24 +154,17 @@ def parse_mtproto_link(line: str) -> dict | None:
         parsed = urlparse(stripped)
         qs = parse_qs(parsed.query)
         server = (qs.get("server") or [""])[0].strip().strip(".")
-        port_raw = (qs.get("port") or [""])[0].strip()
+        port = int((qs.get("port") or [""])[0].strip())
         secret = (qs.get("secret") or [""])[0].strip()
-        port = int(port_raw)
         if not server or not (0 < port < 65536) or not secret:
             return None
     except (ValueError, IndexError):
         return None
-    return {
-        "protocol": "MTProto",
-        "server": server,
-        "port": port,
-        "secret": secret,
-        "link": f"https://t.me/proxy?server={server}&port={port}&secret={secret}",
-    }
+    return Proxy("MTProto", server, port, secret=secret, link=stripped)
 
 
-def parse_socks5_line(line: str) -> dict | None:
-    """Parse a bare host:port line into a Socks5 proxy dict."""
+def parse_socks5_line(line: str) -> Proxy | None:
+    """Parse a bare host:port line into a Socks5 proxy."""
     stripped = line.strip()
     if ":" not in stripped or "/" in stripped or "?" in stripped:
         return None
@@ -146,47 +176,66 @@ def parse_socks5_line(line: str) -> dict | None:
         return None
     if not host or not (0 < port < 65536):
         return None
-    return {
-        "protocol": "Socks5",
-        "server": host,
-        "port": port,
-        "secret": None,
-        "link": f"socks5://{host}:{port}",
-    }
+    return Proxy("Socks5", host, port)
 
 
-def collect_proxies() -> list[dict]:
-    """Fetch every source feed, parse links, dedupe by host:port.
+def collect_proxies() -> list[Proxy]:
+    """Fetch every source feed and parse links, deduped by host:port.
 
-    MTProto sources are collected first so they win dedup ties and get
-    priority when the candidate cap truncates the list.
+    MTProto feeds are processed first and get a guaranteed quota
+    (MTPROTO_CAP) so they are always prioritized over Socks5.
     """
-    proxies: list[dict] = []
+    proxies: list[Proxy] = []
     seen: set[str] = set()
+    mtproto_count = 0
 
-    jobs = [(MTPROTO_SOURCES, parse_mtproto_link), (SOCKS5_SOURCES, parse_socks5_line)]
-    for urls, parser in jobs:
-        for url in urls:
-            raw = fetch_text(url)
-            if raw is None:
+    def add(proxy: Proxy) -> None:
+        nonlocal mtproto_count
+        if proxy.key in seen:
+            return
+        seen.add(proxy.key)
+        proxies.append(proxy)
+        if proxy.protocol == "MTProto":
+            mtproto_count += 1
+
+    for url in MTPROTO_SOURCES:
+        raw = fetch_text(url)
+        if raw is None:
+            continue
+        count = 0
+        for line in raw.splitlines():
+            if count >= MTPROTO_CAP:
+                break
+            proxy = parse_mtproto_link(line)
+            if proxy is None:
                 continue
-            count = 0
-            for line in raw.splitlines():
-                if count >= MAX_PER_SOURCE:
-                    break
-                proxy = parser(line)
-                if proxy is None:
-                    continue
-                key = f"{proxy['server'].lower()}:{proxy['port']}"
-                if key in seen:
-                    continue
-                seen.add(key)
-                proxies.append(proxy)
-                count += 1
-            logger.info("Parsed %d proxies from %s", count, url)
+            add(proxy)
+            count += 1
+        logger.info("Parsed %d MTProto proxies from %s", count, url)
 
-    logger.info("Total unique proxy candidates: %d", len(proxies))
-    return proxies[:MAX_TO_TEST]
+    socks5_budget = max(MAX_TO_TEST - len(proxies), 0)
+    for url in SOCKS5_SOURCES:
+        raw = fetch_text(url)
+        if raw is None:
+            continue
+        count = 0
+        for line in raw.splitlines():
+            if count >= MAX_PER_SOURCE or len(proxies) >= MAX_TO_TEST:
+                break
+            if count >= socks5_budget:
+                break
+            proxy = parse_socks5_line(line)
+            if proxy is None:
+                continue
+            add(proxy)
+            count += 1
+        logger.info("Parsed %d Socks5 proxies from %s", count, url)
+
+    logger.info(
+        "Total unique proxy candidates: %d (MTProto: %d, Socks5: %d)",
+        len(proxies), mtproto_count, len(proxies) - mtproto_count,
+    )
+    return proxies
 
 
 # ---------------------------------------------------------------------------
@@ -281,53 +330,92 @@ def load_history() -> set[str]:
         return set()
 
 
-def append_history(proxy: dict) -> None:
+def append_history(proxy: Proxy) -> None:
     """Record a posted proxy key in history.txt (created on first write)."""
-    key = f"{proxy['server'].lower()}:{proxy['port']}"
     try:
         with HISTORY_FILE.open("a", encoding="utf-8") as fh:
-            fh.write(key + "\n")
+            fh.write(proxy.key + "\n")
     except OSError as exc:
         logger.error("Could not update history file %s: %s", HISTORY_FILE, exc)
 
 
 # ---------------------------------------------------------------------------
-# Posting
+# Message formatting (HTML parse mode)
 # ---------------------------------------------------------------------------
 
-def format_message(proxy: dict, ping_ms: float) -> str:
-    """Build the Persian channel post with ping, protocol and connect link."""
-    link = html.escape(proxy["link"], quote=True)
+CONNECT_BUTTON_TEXT = "⚡️ اتصال به پروکسی | Connect"
+
+
+def channel_username() -> str | None:
+    """Return the channel username (without @) when the tag is a username.
+
+    Numeric channel IDs cannot be turned into t.me links, so callers use
+    this to omit channel buttons/lines that Telegram would reject.
+    """
+    tag = CHANNEL_TAG.strip()
+    if tag.startswith("@") and len(tag) > 1 and all(
+        c.isalnum() or c == "_" for c in tag[1:]
+    ):
+        return tag[1:]
+    return None
+
+
+def format_message(proxy: Proxy, ping_ms: float) -> str:
+    """Build the Persian channel post (HTML entities pre-escaped)."""
+    server = html.escape(proxy.server, quote=True)
+    protocol = html.escape(proxy.protocol, quote=True)
+    link = html.escape(proxy.tg_link, quote=True)
+    channel_line = ""
+    username = channel_username()
+    if username:
+        channel_line = f"\n\n📢 <b>کانال ما:</b> @{username}"
     return (
-        "🚀 <b>پراکسی جدید تلگرام</b>\n\n"
-        f"⚡ پینگ: {max(1, round(ping_ms))} میلی‌ثانیه\n"
-        f"🛡️ پروتکل: {proxy['protocol']}\n\n"
-        "🔗 <b>جهت اتصال کلیک کنید:</b>\n"
-        f"{link}\n\n"
-        f"🆔 {CHANNEL_SIGNATURE}"
+        "🚀 <b>پروکسی پرسرعت تلگرام</b>\n"
+        "━━━━━━━━━━━━━━\n\n"
+        f"⚡️ پینگ: <b>{max(1, round(ping_ms))}</b> ms\n"
+        f"🛡️ پروتکل: <b>{protocol}</b>\n"
+        f"🌐 سرور: <code>{server}</code>\n\n"
+        "🔗 <b>لینک اتصال:</b>\n"
+        f"<code>{link}</code>"
+        f"{channel_line}"
     )
 
 
-def post_to_telegram(token: str, channel_id: str, message: str) -> bool:
+def build_inline_keyboard(proxy: Proxy) -> list[list[dict]]:
+    """One-tap connect button + a button back to the channel (if linked)."""
+    rows = [[{"text": CONNECT_BUTTON_TEXT, "url": proxy.tg_link}]]
+    username = channel_username()
+    if username:
+        rows.append([{"text": f"📢 @{username}", "url": f"https://t.me/{username}"}])
+    return rows
+
+
+def post_to_telegram(token: str, channel_id: str, proxy: Proxy,
+                     message: str) -> bool:
     """Send the message via the Telegram Bot API. Returns True on success.
 
     Tries HTML formatting first; if Telegram rejects the formatting
-    (HTTP 400 'can't parse entities'), retries once as plain text so a post
-    is never lost. raise_for_status() is intentionally NOT used here - error
+    (HTTP 400 'can't parse entities'), retries once as plain text with no
+    buttons. raise_for_status() is intentionally NOT used here - error
     responses still carry a JSON body with the description we need.
     """
-    url = TELEGRAM_API_URL.format(token=token)
-    for parse_mode in ("HTML", None):
-        payload = {
+    for parse_mode, markup in (("HTML", {"inline_keyboard": build_inline_keyboard(proxy)}), (None, None)):
+        payload: dict = {
             "chat_id": channel_id,
             "text": message,
             "disable_web_page_preview": False,
         }
         if parse_mode:
             payload["parse_mode"] = parse_mode
+        if markup:
+            payload["reply_markup"] = markup
         label = parse_mode or "plain"
         try:
-            resp = requests.post(url, json=payload, timeout=HTTP_TIMEOUT)
+            resp = requests.post(
+                TELEGRAM_API_URL.format(token=token, method="sendMessage"),
+                json=payload,
+                timeout=HTTP_TIMEOUT,
+            )
             data = resp.json()
         except requests.RequestException as exc:
             logger.error("Telegram request failed (parse_mode=%s): %s", label, exc)
@@ -354,14 +442,14 @@ def post_to_telegram(token: str, channel_id: str, message: str) -> bool:
 # Selection: first reachable, lowest-latency, not-yet-posted proxy
 # ---------------------------------------------------------------------------
 
-def rank_reachable(proxies: list[dict]) -> list[tuple[dict, float]]:
+def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
     """TCP-test candidates in parallel; return reachable ones sorted by ping."""
     if not proxies:
         return []
-    results: list[tuple[int, dict, float]] = []
+    results: list[tuple[int, Proxy, float]] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         futures = {
-            pool.submit(tcp_ping, p["server"], p["port"]): (i, p)
+            pool.submit(tcp_ping, p.server, p.port): (i, p)
             for i, p in enumerate(proxies)
         }
         for future in concurrent.futures.as_completed(futures):
@@ -369,7 +457,7 @@ def rank_reachable(proxies: list[dict]) -> list[tuple[dict, float]]:
             try:
                 latency = future.result()
             except Exception as exc:  # defensive: a worker must never kill the run
-                logger.debug("Health check crashed for %s: %s", proxy["server"], exc)
+                logger.debug("Health check crashed for %s: %s", proxy.server, exc)
                 continue
             if latency is not None:
                 results.append((index, proxy, latency))
@@ -384,11 +472,11 @@ def rank_reachable(proxies: list[dict]) -> list[tuple[dict, float]]:
     return reachable
 
 
-def pick_best_proxy(reachable: list[tuple[dict, float]], history: set[str]) -> tuple[dict, float] | None:
-    """First lowest-latency reachable proxy whose host:port was never posted."""
+def pick_best_proxy(reachable: list[tuple[Proxy, float]],
+                    history: set[str]) -> tuple[Proxy, float] | None:
+    """First lowest-latency reachable proxy whose key was never posted."""
     for proxy, latency in reachable:
-        key = f"{proxy['server'].lower()}:{proxy['port']}"
-        if key not in history:
+        if proxy.key not in history:
             return proxy, latency
     return None
 
@@ -434,11 +522,10 @@ def main() -> int:
         logger.info("All reachable proxies were already posted. Nothing to do.")
         return 0
     proxy, ping_ms = picked
+    fresh = sum(1 for p, _ in reachable if p.key not in history) - 1
     logger.info(
-        "Selected %s proxy %s:%d (%.0f ms); %d fresh candidates remaining",
-        proxy["protocol"], proxy["server"], proxy["port"], ping_ms,
-        sum(1 for p, _ in reachable
-            if f"{p['server'].lower()}:{p['port']}" not in history) - 1,
+        "Selected %s proxy %s (%.0f ms); %d fresh candidates remaining",
+        proxy.protocol, proxy.key, ping_ms, fresh,
     )
 
     # 4. Read credentials from environment.
@@ -458,7 +545,7 @@ def main() -> int:
         return 1
 
     try:
-        success = post_to_telegram(token, channel_id, message)
+        success = post_to_telegram(token, channel_id, proxy, message)
     except Exception:
         logger.exception("Unexpected error while posting to Telegram")
         return 1
