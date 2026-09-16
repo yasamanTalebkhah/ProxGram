@@ -9,3 +9,8 @@ https://t.me/proxy?server=yostavpn.casacam.net&port=443&secret=ee3db34d5ab674545
 https://t.me/proxy?server=yostavpn.casacam.net&port=443&secret=eec17adfc3591215500ff5240c48f1231a796f73746176706e2e6361736163616d2e6e6574
 https://t.me/proxy?server=t.meow-meow-fast.site&port=443&secret=eeaea279c83d92a4c4fa8a780bf10b8c4b742e6d656f772d6d656f772d666173742e73697465
 https://t.me/proxy?server=reborn.rebirthconnect.com&port=443&secret=eeabb5c5430f2510e43863f9b6284f97b37265626f726e2e72656269727468636f6e6e6563742e636f6d
+https://t.me/proxy?server=proxy.lodkirmm.ru&port=8443&secret=ee16309abd572d284b309ef26bd7a3f68570726f78792e6c6f646b69726d6d2e7275
+https://t.me/proxy?server=mt1.kurduk.store&port=443&secret=ee2c359976c0e74101ab25d285b51faf306d74312e6b757264756b2e73746f7265
+https://t.me/proxy?server=w.bestproxy.icu&port=8443&secret=ee27b0ae91a7a96aa0c1359f5fa060d1ee772e6265737470726f78792e696375
+https://t.me/proxy?server=l01.antenna-mzt.live&port=443&secret=ee5a42e3752e724f2fdae9c117e7f076fe6c30312e616e74656e6e612d6d7a742e6c697665
+https://t.me/proxy?server=static.antenna-mzt.live&port=443&secret=ee5a42e3752e724f2fdae9c117e7f076fe73746f72652e737465616d706f77657265642e636f6d
