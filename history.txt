@@ -39,3 +39,8 @@ https://t.me/proxy?server=31.76.77.201&port=443&secret=ee5018602bc9cb9124a5c1cb0
 https://t.me/proxy?server=ya.zaebalsya.uk&port=8443&secret=ee1104a80139ca104cdb1184484edf78c37275737369616e2d616e696d616c732e7275
 https://t.me/proxy?server=direct.mtaccess.win&port=443&secret=eedc3fb36929b7d3f26fe642ad5f8e7331636c6f7564666c6172652e636f6d
 https://t.me/proxy?server=2.26.87.69&port=443&secret=ee5018602bc9cb9124a5c1cb0154634ad2706c617932676f2e636c6f7564
+https://t.me/proxy?server=ardesvpn1.ru&port=8443&secret=ee05cf8e164f926f4a664b2404d276a1d6617264657376706e312e7275
+https://t.me/proxy?server=2.26.0.194&port=443&secret=ee27febab3ce002aab41231cd61b986836706c617932676f2e636c6f7564
+https://t.me/proxy?server=2.26.52.23&port=443&secret=ee5018602bc9cb9124a5c1cb0154634ad2706c617932676f2e636c6f7564
+https://t.me/proxy?server=79.137.196.223&port=2053&secret=eeee1701dff011da0ee1313d584fc565187777772e636c6f7564666c6172652e636f6d
+https://t.me/proxy?server=rf1.data-edge.fyi&port=443&secret=ee4b8b183c13a3c4b63ddf54838b7e52527275747562652e7275
