@@ -369,7 +369,7 @@ class WorkflowConfigTests(unittest.TestCase):
 
     def test_tests_run_before_posting(self):
         self.assertLess(self.text.index("Run unit tests"),
-                        self.text.index("Run ProxGram poster"))
+                        self.text.index("Run Proxy Publisher"))
 
     def test_yaml_syntax_valid(self):
         try:
