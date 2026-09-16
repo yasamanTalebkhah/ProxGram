@@ -44,3 +44,8 @@ https://t.me/proxy?server=2.26.0.194&port=443&secret=ee27febab3ce002aab41231cd61
 https://t.me/proxy?server=2.26.52.23&port=443&secret=ee5018602bc9cb9124a5c1cb0154634ad2706c617932676f2e636c6f7564
 https://t.me/proxy?server=79.137.196.223&port=2053&secret=eeee1701dff011da0ee1313d584fc565187777772e636c6f7564666c6172652e636f6d
 https://t.me/proxy?server=rf1.data-edge.fyi&port=443&secret=ee4b8b183c13a3c4b63ddf54838b7e52527275747562652e7275
+https://t.me/proxy?server=setion-two.co.uk&port=443&secret=eef0eeb0bd9adc4fd4a93994ee3b2a216b7765622e62616c652e6169
+https://t.me/proxy?server=max.yard-tg-bot.online&port=443&secret=ee526372c4f8c8ade6146df721f700c06663646e2e796172642d74672d626f742e6f6e6c696e65
+https://t.me/proxy?server=cdn14.cdnwave.org&port=443&secret=ee4f9067589367c2ef531642d501664f43686f66662e7275
+https://t.me/proxy?server=s15.assetflux.org&port=443&secret=eeea54d6ad3d5483e95301bc5eb02d3ae5706574726f766963682e7275
+https://t.me/proxy?server=s2.assetflux.org&port=443&secret=ee95aa916bd319beb312cc6ba9b2c5aef8766b2e7275
