@@ -54,3 +54,8 @@ https://t.me/proxy?server=s05.neo-trading.org&port=443&secret=eef4f43f6c7b01f2f5
 https://t.me/proxy?server=s6.postpulse.space&port=443&secret=ee179deb3806ddd388988092081a52ad766164332e617269786f2e73686f70
 https://t.me/proxy?server=fast.its-work.ru&port=443&secret=ee368601a36ebfafec1604dd8ad6c2d1eb636c6f7564666c6172652e636f6d
 https://t.me/proxy?server=mesh.eeluma.org&port=443&secret=eeaa6cb0b4a5f0726f60b57ee7548edf536d6573682e65656c756d612e6f7267
+https://t.me/proxy?server=tg.aezakmi.org&port=443&secret=eea58fd9b89abdbab2be10da11c8d324f67777772e676f6f676c652e636f6d
+https://t.me/proxy?server=s1.postpulse.space&port=443&secret=ee402900cd57c3daef160c3a2aef80a29c6164312e617269786f2e73686f70
+https://t.me/proxy?server=s04.neo-trading.org&port=443&secret=ee364a7bd5b928139fbc6b2b458e9fef9d686f66662e7275
+https://t.me/proxy?server=relay.rknsosi.shop&port=443&secret=ee93e8816b5fd5c054bc95442701329e0072656c61792e726b6e736f73692e73686f70
+https://t.me/proxy?server=cdn7.cdnwave.org&port=443&secret=ee6ec9f7e082baf2397b450727ce78447e6f7a6f6e2e7275
