@@ -1,0 +1,7 @@
+# Local run state - never commit
+history.txt
+proxgram.log
+__pycache__/
+*.pyc
+.venv/
+venv/
