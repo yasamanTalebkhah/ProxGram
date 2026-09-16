@@ -19,3 +19,8 @@ https://t.me/proxy?server=ultima.telehelp.top&port=443&secret=eedffa323b22e7ab15
 https://t.me/proxy?server=welcome.kisex.top&port=443&secret=ee7d74237b8b73c7107846198958f56ac763646e6a732e636c6f7564666c6172652e636f6d
 https://t.me/proxy?server=2.27.12.116&port=443&secret=ee19130c695cf699d93f5a31ecf380d4426d742e736b6f746f62617a2e7275
 https://t.me/proxy?server=194.59.221.90&port=8443&secret=eef4b79908a669cfe8f293941da4e388916465636174686c6f6e2e636f6d
+https://t.me/proxy?server=open.gpoint.website&port=443&secret=eec03f9d7666a41c33af662f5ba02604876f70656e2e67706f696e742e77656273697465
+https://t.me/proxy?server=tg.aezakmi.org&port=443&secret=eec000b1d98be36f6f50b7d47cf75d23747765622e61657a616b6d692e6f7267
+https://t.me/proxy?server=boost.telehelp.top&port=443&secret=eed4f42b03cae4d1a0f2e2a51454a6e0d7626f6f73742e74656c6568656c702e746f70
+https://t.me/proxy?server=rkn1.botrkn.cloud-ip.cc&port=443&secret=eef6564861f6b464d94e1acc6564428cee726b6e312e626f74726b6e2e636c6f75642d69702e6363
+https://t.me/proxy?server=god-mode-on.peachsoft.co.uk&port=443&secret=eeddff05e65a69a6a7fd1a28a28a121fff7765622e62616c652e6169
