@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-17T13:54:04",
+  "updated_at": "2026-09-17T14:10:49",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 92.3,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 144.3,
+      "last_seen": 1789654249.4190853
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.5,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 152.2,
+      "last_seen": 1789654249.4190853
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 60.5,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 92.0,
+      "last_seen": 1789654249.4190853
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.6,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 155.6,
+      "last_seen": 1789654249.4190853
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.0,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 152.5,
+      "last_seen": 1789654249.4190853
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 106.3,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 155.9,
+      "last_seen": 1789654249.4190853
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 62.0,
-      "last_seen": 1789653244.5218048
+      "latency_ms": 57.3,
+      "last_seen": 1789654249.4190853
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.4,
+      "last_seen": 1789654249.4190853
     },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
@@ -60,12 +66,6 @@
       "alive": true,
       "latency_ms": 131.0,
       "last_seen": 1789651432.008907
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.3,
-      "last_seen": 1789650308.8518279
     },
     "kostyanchekloh.lol:443": {
       "strikes": 2,
