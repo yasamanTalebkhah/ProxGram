@@ -104,8 +104,7 @@ TELEGRAM_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID", "@ChannelID")
 _channel_id = TELEGRAM_CHANNEL_ID
 CHANNEL_TAG = os.environ.get("TELEGRAM_CHANNEL_TAG") or _channel_id
 
-CONNECT_BUTTON_TEXT = "⚡️ پروکسی {n} — {latency} ms"
-JOIN_BUTTON_TEXT = "📢 عضویت در کانال"
+PROXY_BUTTON_EMOJIS = ("🚀", "⚡️", "🛡", "🌐", "🔥")  # one emoji per button row
 FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 
 logger = logging.getLogger("proxgram")
@@ -255,9 +254,20 @@ class Proxy:
 
     @property
     def link(self) -> str:
-        """Standard deep link that opens Telegram's proxy dialog on tap."""
+        """Standard https deep link (used for history dedup + storage)."""
         return (
             "https://t.me/proxy"
+            f"?server={quote(self.server, safe='')}"
+            f"&port={self.port}"
+            f"&secret={quote(self.secret, safe='')}"
+        )
+
+    @property
+    def tg_link(self) -> str:
+        """Native tg:// deep link - opens the proxy dialog in installed
+        Telegram apps without the intermediate t.me web hop."""
+        return (
+            "tg://proxy"
             f"?server={quote(self.server, safe='')}"
             f"&port={self.port}"
             f"&secret={quote(self.secret, safe='')}"
@@ -676,30 +686,25 @@ def channel_username() -> str | None:
 
 NEWS_HEADER = "📰 <b>خبر فوری:</b>"
 NEWS_HEADER_PLAIN = "📰 خبر فوری:"
-POST_HEADLINE = "⚡️ <b>پروکسی‌های فعال و ضدفیلتر تلگرام</b>"
-POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های فعال و ضدفیلتر تلگرام"
-POST_GUIDANCE = "👇 برای اتصال از دکمه‌های شیشه‌ای زیر استفاده کنید:"
+POST_HEADLINE = "⚡️ <b>پروکسی‌های آماده</b> (اگر وصل نشد، دکمهٔ بعدی)"
+POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های آماده (اگر وصل نشد، دکمهٔ بعدی)"
+
+HELP_BUTTON_TEXT = "📌 راهنما"
+HELP_URL = "https://t.me/TelegramTips"  # اگر وصل نشد، دکمه بعدی را بزنید
 
 
 def format_message(proxies: list[Proxy], latencies: list[float],
                    rates_section: str | None = None) -> str:
     """Build the Persian post body (HTML entities pre-escaped).
 
-    Minimal and engaging: no protocol/technical metadata, no update-cadence
-    labels, and no raw proxy links — deep links live ONLY in the
-    inline-keyboard buttons.
-
-    When `rates_section` is given, the market-rates block leads the post;
-    rates.py renders it (values are entity-escaped there), so
-    parse_mode=HTML is always safe.
+    Compact: the rates board (when available) leads, then the proxy
+    headline whose parenthetical carries the retry guidance. No raw proxy
+    links — deep links live ONLY in the inline-keyboard buttons.
     """
     parts: list[str] = []
     if rates_section:
         parts.append(rates_section)
-    parts.append(
-        f"{POST_HEADLINE}\n\n"
-        f"{POST_GUIDANCE}"
-    )
+    parts.append(POST_HEADLINE)
     return "\n\n".join(parts)
 
 
@@ -710,10 +715,7 @@ def format_message_minimal(proxies: list[Proxy], latencies: list[float],
     parts: list[str] = []
     if rates_section:
         parts.append(rates_section)
-    parts.append(
-        f"{POST_HEADLINE_PLAIN}\n\n"
-        f"{POST_GUIDANCE}"
-    )
+    parts.append(POST_HEADLINE_PLAIN)
     return "\n\n".join(parts)
 
 
@@ -745,18 +747,19 @@ def html_escape(text: str) -> str:
 
 def build_inline_keyboard(proxies: list[Proxy],
                           latencies: list[float]) -> list[list[dict]]:
-    """One connect button per proxy (own row) + a join-channel button."""
-    rows = [
-        [{
-            "text": CONNECT_BUTTON_TEXT.format(n=fa_num(i), latency=max(1, round(latency))),
-            "url": proxy.link,
-        }]
-        for i, (proxy, latency) in enumerate(zip(proxies, latencies), start=1)
+    """Compact 2-column keyboard: proxy connect buttons side-by-side with
+    a trailing help button (row 3: proxy 5 | help). Height stays minimal
+    regardless of batch size. Deep links use the native tg:// scheme."""
+    buttons = [
+        {
+            "text": f"{PROXY_BUTTON_EMOJIS[(i - 1) % len(PROXY_BUTTON_EMOJIS)]} "
+                    f"پروکسی {fa_num(i)}",
+            "url": proxy.tg_link,
+        }
+        for i, proxy in enumerate(proxies, start=1)
     ]
-    username = channel_username()
-    if username:
-        rows.append([{"text": JOIN_BUTTON_TEXT, "url": f"https://t.me/{username}"}])
-    return rows
+    buttons.append({"text": HELP_BUTTON_TEXT, "url": HELP_URL})
+    return [buttons[i:i + 2] for i in range(0, len(buttons), 2)]
 
 
 def send_message(token: str, chat_id: str, text: str,
@@ -1162,8 +1165,14 @@ def main() -> int:
         rates_data = None
     if rates_data:
         try:
-            rates_html = rates_module.format_section(rates_data, "html")
-            rates_plain = rates_module.format_section(rates_data, "plain")
+            rates_html = rates_module.format_board(rates_data, "html")
+            rates_plain = rates_module.format_board(rates_data, "plain")
+            omitted = [f for f, v in rates_data.items() if v is None]
+            logger.info(
+                "Rates board rendered: %d/%d fields, omitted: %s",
+                len(rates_data) - len(omitted), len(rates_data),
+                omitted or "none",
+            )
         except Exception:
             logger.exception("Failed to render rates section; posting without it")
             rates_html = rates_plain = None

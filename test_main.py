@@ -236,8 +236,11 @@ class MessageAndKeyboardTests(unittest.TestCase):
             self.assertNotIn("t.me/socks", text)
 
     def test_body_is_short_with_required_lines(self):
-        self.assertIn("⚡️ <b>پروکسی‌های فعال و ضدفیلتر تلگرام</b>", self.msg)
-        self.assertIn("برای اتصال از دکمه‌های شیشه‌ای زیر استفاده کنید", self.msg)
+        # exact final-template proxy block: headline with parenthetical
+        # guidance, no separate guidance line
+        self.assertEqual(self.msg.split("\n\n")[-1],
+                         "⚡️ <b>پروکسی‌های آماده</b> (اگر وصل نشد، دکمهٔ بعدی)")
+        self.assertNotIn("برای اتصال", self.msg)
         self.assertLess(len(self.msg), main.MAX_MESSAGE_LENGTH)
         self.assertNotIn("<b>", self.minimal)
 
@@ -257,17 +260,30 @@ class MessageAndKeyboardTests(unittest.TestCase):
             self.assertEqual(parsed.path, "/proxy")
             self.assertIn("secret=", proxy.link)
 
-    def test_keyboard_has_five_proxy_buttons_plus_channel(self):
-        # default tag (@ChannelID) is a username, so the join row is included
-        self.assertEqual(len(self.keyboard), 6)
-        for i, row in enumerate(self.keyboard[:5], start=1):
-            self.assertIn(f"پروکسی {main.fa_num(i)}", row[0]["text"])
-            self.assertIn("ms", row[0]["text"])
-            self.assertEqual(row[0]["url"], self.proxies[i - 1].link)
-        self.assertEqual(self.keyboard[5][0]["text"], "📢 عضویت در کانال")
-        self.assertEqual(self.keyboard[5][0]["url"], "https://t.me/ChannelID")
-        # each proxy button on its own row
-        self.assertTrue(all(len(row) == 1 for row in self.keyboard))
+    def test_keyboard_two_columns_with_help_button(self):
+        """5 proxy buttons + help in a 2-column grid: 3 rows, row 3 =
+        proxy 5 | help. Proxy rows must not exceed 2 buttons."""
+        self.assertEqual(len(self.keyboard), 3)
+        self.assertTrue(all(len(row) == 2 for row in self.keyboard))
+        flat = [btn for row in self.keyboard for btn in row]
+        self.assertEqual(len(flat), 6)
+        for i, btn in enumerate(flat[:5], start=1):
+            self.assertIn(f"پروکسی {main.fa_num(i)}", btn["text"])
+            self.assertEqual(btn["url"], self.proxies[i - 1].tg_link)
+            self.assertTrue(btn["url"].startswith("tg://proxy?"))
+        self.assertEqual(flat[5]["text"], main.HELP_BUTTON_TEXT)
+        self.assertEqual(flat[5]["url"], main.HELP_URL)
+        # per-row emoji variety for visual scanning
+        self.assertEqual(flat[0]["text"].startswith("🚀"), True)
+        self.assertEqual(flat[1]["text"].startswith("⚡️"), True)
+
+    def test_keyboard_small_batches_stay_two_columns(self):
+        """A 2-proxy batch renders one row of 2 + a help row."""
+        rows = main.build_inline_keyboard(self.proxies[:2], [100.0, 100.0])
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(len(rows[0]), 2)
+        self.assertEqual(len(rows[1]), 1)
+        self.assertEqual(rows[1][0]["text"], main.HELP_BUTTON_TEXT)
 
     def test_channel_button_url_has_no_at_sign(self):
         os.environ["TELEGRAM_CHANNEL_TAG"] = "@my_channel"
@@ -278,9 +294,10 @@ class MessageAndKeyboardTests(unittest.TestCase):
         finally:
             del os.environ["TELEGRAM_CHANNEL_TAG"]
             importlib.reload(main)
-        self.assertEqual(rows[-1][0]["text"], "📢 عضویت در کانال")
-        self.assertEqual(rows[-1][0]["url"], "https://t.me/my_channel")
-        self.assertFalse(rows[-1][0]["url"].endswith("@my_channel"))
+        # The join-channel button is no longer part of the compact
+        # keyboard; the help button closes it instead.
+        self.assertEqual(rows[-1][-1]["text"], main.HELP_BUTTON_TEXT)
+        self.assertNotIn("@my_channel", rows[-1][-1]["url"])
 
     def test_keyboard_has_no_feedback_or_callback(self):
         flat = [btn for row in self.keyboard for btn in row]
@@ -289,7 +306,8 @@ class MessageAndKeyboardTests(unittest.TestCase):
             self.assertNotIn("بازخورد", btn["text"])
             self.assertNotIn("👍", btn["text"])
             self.assertNotIn("👎", btn["text"])
-            self.assertTrue(btn["url"].startswith("https://"))
+            # proxy buttons use the native tg:// scheme; help uses https
+            self.assertTrue(btn["url"].startswith(("https://", "tg://")))
 
     def test_exactly_one_send_message_request(self):
         calls = []
@@ -316,9 +334,10 @@ class MessageAndKeyboardTests(unittest.TestCase):
         self.assertEqual(payload["parse_mode"], "HTML")
         self.assertNotIn("https://t.me/proxy?", payload["text"])
         kb = payload["reply_markup"]["inline_keyboard"]
-        self.assertEqual(len(kb), 6)
-        self.assertEqual([r[0]["url"] for r in kb[:5]],
-                         [p.link for p in self.proxies])
+        self.assertEqual(len(kb), 3)  # 2-column grid: 5 proxies + help
+        self.assertEqual([btn["url"] for btn in kb[0]],
+                         [self.proxies[0].tg_link, self.proxies[1].tg_link])
+        self.assertEqual(kb[2][1]["url"], main.HELP_URL)
         self.assertNotIn("callback_data", payload)
         self.assertNotIn("message_effect_id", payload)
 
@@ -346,9 +365,9 @@ class MessageAndKeyboardTests(unittest.TestCase):
 
         self.assertTrue(ok)
         self.assertEqual(len(attempts), 2)
-        # fallback keeps the keyboard with all five links, drops HTML entities
+        # fallback keeps the compact keyboard, drops HTML entities
         self.assertNotIn("parse_mode", attempts[-1])
-        self.assertEqual(len(attempts[-1]["reply_markup"]["inline_keyboard"]), 6)
+        self.assertEqual(len(attempts[-1]["reply_markup"]["inline_keyboard"]), 3)
         self.assertNotIn("<b>", attempts[-1]["text"])
 
 
@@ -763,75 +782,77 @@ class RatesFetchTests(unittest.TestCase):
             self.assertIsNone(rates.fetch_usd_nobitex())
 
 
-class RatesSectionTests(unittest.TestCase):
+class RatesBoardTests(unittest.TestCase):
+    """The compact market board: 5 segments, ━━ dividers, units outside
+    <code>, missing fields dropped cleanly (no dashes/blank lines)."""
+
     def setUp(self):
         self.data = rates.parse_tgju_bulk(_tgju_bulk())
         self.now = datetime(2026, 9, 17)  # پنج‌شنبه 26/06/1405
 
-    def test_html_section_structure(self):
-        html = rates.format_section(self.data, "html", now=self.now)
-        self.assertIn("📊 <b>تابلوی زنده قیمت طلا و ارز</b>", html)
+    def test_html_board_matches_template(self):
+        html = rates.format_board(self.data, "html", now=self.now)
+        self.assertIn("📌 <b>تابلوی سریع طلا و ارز</b>", html)
         self.assertIn("🗓 <i>پنج‌شنبه 26/06/1405</i>", html)
-        self.assertIn("─", html)  # unicode divider
-        self.assertIn("💰 <b>ارز و مبنا</b>", html)
-        self.assertIn("▫️ دلار آزاد: <code>230,500 تومان</code>", html)
-        self.assertIn("▫️ انس جهانی طلا: <code>4,306.00 $</code>", html)
-        self.assertIn("▫️ انس جهانی نقره: <code>63.81 $</code>", html)
-        self.assertIn("🪙 <b>انواع مسکوکات طلا</b>", html)
-        self.assertIn("▫️ سکه امامی: <code>234,010,000 تومان</code>", html)
-        self.assertIn("▫️ سکه بهار آزادی: <code>229,240,000 تومان</code>", html)
-        self.assertIn("▫️ نیم سکه: <code>117,800,000 تومان</code>", html)
-        self.assertIn("▫️ ربع سکه: <code>63,000,000 تومان</code>", html)
-        self.assertIn("▫️ سکه گرمی: <code>33,000,000 تومان</code>", html)
-        self.assertIn("✨ <b>طلای خام و آبشده</b>", html)
-        self.assertIn("▫️ آبشده نقدی: <code>101,853,000 تومان</code>", html)
-        self.assertIn("▫️ یک گرم طلای ۱۸: <code>23,501,300 تومان</code>", html)
-        self.assertIn("▫️ یک گرم طلای ۲۴: <code>31,334,800 تومان</code>", html)
-        self.assertIn("🔍 <b>حباب و ارزش ذاتی</b>", html)
-        self.assertIn("▫️ حباب سکه امامی: <code>4,646,700 تومان</code>", html)
-        self.assertIn("▫️ حباب آبشده: <code>", html)
-        self.assertIn("▫️ ارزش ذاتی سکه امامی: <code>229,363,300 تومان</code>", html)
+        self.assertIn("━━━━━━━━━━━━", html)
+        self.assertIn("💵 دلار: <code>230,500</code> تومان   🌍 انس طلا: <code>4,306.00</code> $",
+                      html)
+        self.assertIn("🟡 طلای ۱۸: <code>23,501,300</code> تومان", html)
+        self.assertIn("🧊 آبشده: <code>101,853,000</code> تومان   "
+                      "🪙 سکه امامی: <code>234,010,000</code> تومان", html)
+
+    def test_board_is_compact(self):
+        """Title + date + divider + 3 content rows + divider = 7 lines."""
+        html = rates.format_board(self.data, "html", now=self.now)
+        self.assertEqual(len(html.splitlines()), 7)
+        plain = rates.format_board(self.data, "plain", now=self.now)
+        self.assertEqual(len(plain.splitlines()), 7)
+
+    def test_units_live_outside_code_tags(self):
+        html = rates.format_board(self.data, "html", now=self.now)
+        for unit in ("تومان", "$"):
+            for line in html.splitlines():
+                if unit in line:
+                    self.assertNotIn(
+                        f"<code>...{unit}", line.replace("...", ""))
+        # explicit: units are not inside any <code> token
+        self.assertNotIn("تومان</code>", html.replace("</code> تومان", ""))
+        self.assertNotIn("$</code>", html.replace("</code> $", ""))
+
+    def test_no_bubble_or_intrinsic_labels_anywhere(self):
+        html = rates.format_board(self.data, "html", now=self.now)
+        for banned in ("حباب", "بدون حباب", "ارزش ذاتی", "نیم سکه",
+                       "ربع سکه", "گرمی", "بهار", "انس نقره", "گرم طلای ۲۴"):
+            self.assertNotIn(banned, html)
 
     def test_plain_twin_has_no_tags(self):
-        plain = rates.format_section(self.data, "plain", now=self.now)
+        plain = rates.format_board(self.data, "plain", now=self.now)
         self.assertNotIn("<", plain)
         self.assertNotIn(">", plain)
-        self.assertIn("📊 تابلوی زنده قیمت طلا و ارز", plain)
-        self.assertIn("▫️ دلار آزاد: 230,500 تومان", plain)
-        self.assertIn("▫️ سکه امامی: 234,010,000 تومان", plain)
-        self.assertIn("🗓 پنج‌شنبه 26/06/1405", plain)
+        self.assertIn("📌 تابلوی سریع طلا و ارز", plain)
+        self.assertIn("💵 دلار: 230,500 تومان", plain)
+        self.assertIn("🪙 سکه امامی: 234,010,000 تومان", plain)
 
-    def test_all_required_labels_present(self):
-        html = rates.format_section(self.data, "html", now=self.now)
-        for label in ("دلار آزاد", "انس جهانی طلا", "انس جهانی نقره",
-                      "سکه امامی", "سکه بهار آزادی", "نیم سکه", "ربع سکه",
-                      "سکه گرمی", "آبشده نقدی", "یک گرم طلای ۱۸",
-                      "یک گرم طلای ۲۴", "حباب سکه امامی", "حباب آبشده",
-                      "ارزش ذاتی سکه امامی"):
-            self.assertIn(label, html)
-
-    def test_all_values_carry_toman_unit_and_separators(self):
-        html = rates.format_section(self.data, "html", now=self.now)
-        # every Iranian amount is rendered with a تومان suffix
-        for amount in ("230,500", "234,010,000", "101,853,000", "23,501,300"):
-            self.assertIn(f"<code>{amount} تومان</code>", html)
-        # ounce benchmarks are dollars, never toman
-        self.assertNotIn("4,306.00 تومان", html)
-        self.assertIn("<code>4,306.00 $</code>", html)
+    def test_missing_fields_removed_cleanly(self):
+        """Absent fields vanish with their row; no dashes, no blanks."""
+        empty = {field: None for field in rates.ALL_FIELDS}
+        empty["usd"] = 230500.0
+        html = rates.format_board(empty, "html", now=self.now)
+        self.assertIn("💵 دلار: <code>230,500</code> تومان", html)
+        self.assertNotIn("—", html)
+        self.assertNotIn("N/A", html)
+        self.assertNotIn("null", html)
+        # rows 2 and 3 vanish -> only the دلار row remains
+        self.assertEqual(len(html.splitlines()), 5)
+        self.assertNotIn("  \n", html)
+        plain = rates.format_board(empty, "plain", now=self.now)
+        self.assertIn("💵 دلار: 230,500 تومان", plain)
 
     def test_thousands_separator_formatting(self):
         self.assertEqual(rates._fmt_toman(85400000), "85,400,000")
         self.assertEqual(rates._fmt_toman(1234567), "1,234,567")
-        self.assertEqual(rates._fmt_toman(None), "—")
-
-    def test_missing_fields_render_dash(self):
-        empty = {field: None for field in rates.ALL_FIELDS}
-        empty["usd"] = 230500.0
-        html = rates.format_section(empty, "html", now=self.now)
-        self.assertIn("▫️ دلار آزاد: <code>230,500 تومان</code>", html)
-        self.assertIn("—", html)
-        plain = rates.format_section(empty, "plain", now=self.now)
-        self.assertIn("▫️ دلار آزاد: 230,500 تومان", plain)
+        self.assertEqual(rates._fmt_toman(0), "0")  # formatter is honest;
+        # the caller drops zero/missing via validate + segment filtering
 
 
 class RatesValidationTests(unittest.TestCase):
@@ -861,8 +882,8 @@ class RatesCaptionTests(unittest.TestCase):
     def test_rates_section_prepended_above_proxy_block(self):
         msg = main.format_message(self.proxies, self.latencies, "📊 RATES")
         self.assertIn("📊 RATES", msg)
-        self.assertIn("⚡️ <b>پروکسی‌های فعال و ضدفیلتر تلگرام</b>", msg)
-        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های فعال"))
+        self.assertIn("⚡️ <b>پروکسی‌های آماده</b> (اگر وصل نشد، دکمهٔ بعدی)", msg)
+        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های آماده"))
 
     def test_no_rates_section_when_absent(self):
         msg = main.format_message(self.proxies, self.latencies, None)

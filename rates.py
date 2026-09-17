@@ -43,6 +43,7 @@ logger = logging.getLogger("proxgram.rates")
 # ---------------------------------------------------------------------------
 
 RATE_TIMEOUT = 3.0          # seconds - hard timeout for every market request
+RATES_STAGE_BUDGET = 3.0    # seconds - total budget for the whole rates stage
 TGJU_BULK_URL = "https://call1.tgju.org/ajax.json"
 NOBITEX_USD_URL = "https://api.nobitex.ir/market/stats?srcCurrency=usdt&dstCurrency=rls"
 RATE_USER_AGENT = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -366,13 +367,13 @@ def fetch_tgju_bulk() -> dict | None:
         return None
 
 
-def fetch_usd_nobitex() -> float | None:
+def fetch_usd_nobitex(timeout: float | None = None) -> float | None:
     """Secondary USD reference: Nobitex USDT-RLS midpoint (3s timeout)."""
     started = time.monotonic()
     try:
         resp = requests.get(
             NOBITEX_USD_URL,
-            timeout=RATE_TIMEOUT,
+            timeout=timeout or RATE_TIMEOUT,
             headers={"User-Agent": RATE_USER_AGENT},
         )
         resp.raise_for_status()
@@ -435,6 +436,7 @@ def get_rates() -> dict[str, float | None] | None:
     USD fallback if the dollar is still missing. On live success the cache
     is refreshed so future failures fall back to fresh data.
     """
+    stage_started = time.monotonic()
     cached_payload = load_cached_rates() or {}
     cached = cached_payload.get("rates") or {}
 
@@ -494,14 +496,22 @@ def get_rates() -> dict[str, float | None] | None:
         merged[field] = value
 
     if merged.get("usd") is None:
-        usd = fetch_usd_nobitex()
-        if usd is not None:
-            merged["usd"] = usd
-            save_cached_rates(merged)
+        remaining = RATES_STAGE_BUDGET - (time.monotonic() - stage_started)
+        if remaining >= 0.5:
+            usd = fetch_usd_nobitex(timeout=min(RATE_TIMEOUT, remaining))
+            if usd is not None:
+                merged["usd"] = usd
+                save_cached_rates(merged)
+            else:
+                logger.warning(
+                    "USD unavailable from both %s and %s; field omitted",
+                    TGJU_BULK_URL, NOBITEX_USD_URL,
+                )
         else:
             logger.warning(
-                "USD unavailable from both %s and %s; field renders as dash",
-                TGJU_BULK_URL, NOBITEX_USD_URL,
+                "Rates stage budget (%.1fs) exhausted; skipping Nobitex "
+                "fallback - post continues without USD",
+                RATES_STAGE_BUDGET,
             )
 
     # Loud validation: implausible live values are logged with the exact
@@ -510,55 +520,43 @@ def get_rates() -> dict[str, float | None] | None:
         logger.warning("Rates validation: %s", warning)
 
     available = sum(1 for v in merged.values() if v is not None)
+    source = "TGJU bulk + cache" if data else "cache only"
     logger.info(
-        "Market rates: %d/%d fields available (%d live, %d from cache)",
+        "Rates stage done in %.2fs: source=%s, rial->toman /10 applied to "
+        "Iranian fields, %d/%d fields available (%d live, %d from cache)",
+        time.monotonic() - stage_started, source,
         available, len(ALL_FIELDS), live_count, available - live_count,
     )
     return merged if available > 0 else None
 
 
 # ---------------------------------------------------------------------------
-# Message section (exact user template, HTML + plaintext twins)
+# Compact board (minimal height, units OUTSIDE <code>, missing fields
+# dropped cleanly - no bubbles, no dash rows, no blank lines)
 # ---------------------------------------------------------------------------
 
-RATES_TITLE_HTML = "📊 <b>تابلوی زنده قیمت طلا و ارز</b>"
-RATES_TITLE_PLAIN = "📊 تابلوی زنده قیمت طلا و ارز"
+RATES_TITLE_HTML = "📌 <b>تابلوی سریع طلا و ارز</b>"
+RATES_TITLE_PLAIN = "📌 تابلوی سریع طلا و ارز"
 
-_DIVIDER = "─" * 18
+_DIVIDER = "━━━━━━━━━━━━"
+_PAIR_GAP = "   "  # gap between the two segments of a paired line
 
-# Sectioned template: values carry the تومان/$ unit inside the <code> tag
-# so the number + unit copy as one token. USD ounce benchmarks stay in
-# dollars; every Iranian instrument is toman with thousands separators.
-_SECTION_LINES = (
-    "──────────────────",
-    "💰 <b>ارز و مبنا</b>",
-    "▫️ دلار آزاد: {usd}",
-    "▫️ انس جهانی طلا: {ons_gold}",
-    "▫️ انس جهانی نقره: {ons_silver}",
-    "",
-    "🪙 <b>انواع مسکوکات طلا</b>",
-    "▫️ سکه امامی: {emami}",
-    "▫️ سکه بهار آزادی: {bahar}",
-    "▫️ نیم سکه: {nim}",
-    "▫️ ربع سکه: {rob}",
-    "▫️ سکه گرمی: {gerami}",
-    "",
-    "✨ <b>طلای خام و آبشده</b>",
-    "▫️ آبشده نقدی: {abshodeh}",
-    "▫️ یک گرم طلای ۱۸: {gold_18}",
-    "▫️ یک گرم طلای ۲۴: {gold_24}",
-    "",
-    "🔍 <b>حباب و ارزش ذاتی</b>",
-    "▫️ حباب سکه امامی: {bubble_emami}",
-    "▫️ حباب آبشده: {bubble_abshodeh}",
-    "▫️ ارزش ذاتی سکه امامی: {value_emami}",
-    "──────────────────",
+# Board segments: (label, field, unit). Only the numeric portion is
+# wrapped in <code>; the unit stays outside so RTL/LTR runs never mix
+# inside a single markup token. A segment whose value is missing/unreliable
+# is removed entirely - never "0", "N/A", "null" or a dash placeholder.
+_SEGMENTS = (
+    ("💵 دلار", "usd", "تومان"),
+    ("🌍 انس طلا", "ons_gold", "$"),
+    ("🟡 طلای ۱۸", "gold_18", "تومان"),
+    ("🧊 آبشده", "abshodeh", "تومان"),
+    ("🪙 سکه امامی", "emami", "تومان"),
 )
 
-# Plaintext twin: same layout, tags stripped.
-_SECTION_LINES_PLAIN = tuple(
-    line.replace("<b>", "").replace("</b>", "") for line in _SECTION_LINES
-)
+# Layout rows: each row is a tuple of segment indexes; two segments share
+# a line, a single segment keeps its own line. Rows whose segments are all
+# missing vanish (no blank lines).
+_BOARD_ROWS = ((0, 1), (2,), (3, 4))
 
 
 def _html_escape(text: str) -> str:
@@ -572,42 +570,50 @@ def _html_escape(text: str) -> str:
     )
 
 
-def _fmt_toman_line(value: float | None) -> str:
-    """Display a toman amount with separators + the تومان unit."""
+def _segment_html(label: str, field: str, value: float | None,
+                  unit: str) -> str | None:
+    """One 'label: <code>number</code> unit' segment, or None if missing."""
     if value is None:
-        return "—"
-    return f"{_fmt_toman(value)} تومان"
+        return None
+    number = _fmt_usd(value) if field in USD_FIELDS else _fmt_toman(value)
+    return f"{label}: <code>{_html_escape(number)}</code> {unit}"
 
 
-def _fmt_usd_line(value: float | None) -> str:
-    """Display a dollar benchmark with 2 decimals + the $ unit."""
+def _segment_plain(label: str, field: str, value: float | None,
+                   unit: str) -> str | None:
+    """Tag-free twin of _segment_html."""
     if value is None:
-        return "—"
-    return f"{_fmt_usd(value)} $"
+        return None
+    number = _fmt_usd(value) if field in USD_FIELDS else _fmt_toman(value)
+    return f"{label}: {number} {unit}"
 
 
-def format_section(data: dict[str, float | None], mode: str = "html",
-                   now: datetime | None = None) -> str:
-    """Render the sectioned rates block (title + Jalali date + groups).
+def format_board(data: dict[str, float | None], mode: str = "html",
+                 now: datetime | None = None) -> str:
+    """Render the compact market board (title + date + 3 rows max).
 
-    mode="html" produces the <b>/<code> version for parse_mode=HTML;
-    mode="plain" the tag-free twin. Every display value is entity-escaped
-    in the HTML variant, so parse_mode=HTML is always safe.
+    mode="html" produces the <code>/<b> version for parse_mode=HTML;
+    mode="plain" the tag-free twin. Missing fields are dropped cleanly:
+    a lone survivor keeps its row, a fully-missing row disappears.
     """
     now = now or datetime.now()
-    date_line = f"🗓 <i>{persian_weekday(now)} {format_jalali_date(now)}</i>" \
-        if mode == "html" else \
-        f"🗓 {persian_weekday(now)} {format_jalali_date(now)}"
-    lines: dict[str, str] = {}
-    for field in ALL_FIELDS:
-        value = data.get(field)
-        if field in USD_FIELDS:
-            text = _fmt_usd_line(value)
-        else:
-            text = _fmt_toman_line(value)
-        lines[field] = f"<code>{_html_escape(text)}</code>" if mode == "html" else text
-    body = "\n".join(
-        _SECTION_LINES if mode == "html" else _SECTION_LINES_PLAIN
-    ).format(**lines)
-    title = RATES_TITLE_HTML if mode == "html" else RATES_TITLE_PLAIN
-    return f"{title}\n{date_line}\n{body}"
+    if mode == "html":
+        title = RATES_TITLE_HTML
+        date_line = f"🗓 <i>{persian_weekday(now)} {format_jalali_date(now)}</i>"
+        render = _segment_html
+    else:
+        title = RATES_TITLE_PLAIN
+        date_line = f"🗓 {persian_weekday(now)} {format_jalali_date(now)}"
+        render = _segment_plain
+
+    segments = [render(label, field, data.get(field), unit)
+                for label, field, unit in _SEGMENTS]
+
+    lines: list[str] = [title, date_line, _DIVIDER]
+    for row in _BOARD_ROWS:
+        cells = [segments[i] for i in row if segments[i] is not None]
+        if cells:
+            lines.append(_PAIR_GAP.join(cells))
+    lines.append(_DIVIDER)
+
+    return "\n".join(lines)
