@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-17T17:31:47",
+  "updated_at": "2026-09-17T17:46:18",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.7,
-      "last_seen": 1789666307.543009
+      "latency_ms": 156.2,
+      "last_seen": 1789667178.174124
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 82.5,
-      "last_seen": 1789666307.543009
+      "latency_ms": 89.3,
+      "last_seen": 1789667178.174124
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.8,
-      "last_seen": 1789666307.543009
+      "latency_ms": 155.7,
+      "last_seen": 1789667178.174124
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.9,
-      "last_seen": 1789666307.543009
+      "latency_ms": 169.7,
+      "last_seen": 1789667178.174124
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.5,
-      "last_seen": 1789666307.543009
+      "latency_ms": 150.7,
+      "last_seen": 1789667178.174124
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 146.4,
+      "last_seen": 1789667178.174124
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 160.9,
+      "last_seen": 1789667178.174124
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 167.5,
+      "last_seen": 1789667178.174124
     },
     "media.experthost.shop:443": {
       "strikes": 0,
@@ -37,29 +55,11 @@
       "latency_ms": 101.5,
       "last_seen": 1789666307.543009
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.1,
-      "last_seen": 1789666307.543009
-    },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 99.6,
       "last_seen": 1789666307.543009
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 105.1,
-      "last_seen": 1789665453.3543067
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 106.8,
-      "last_seen": 1789665453.3543067
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
