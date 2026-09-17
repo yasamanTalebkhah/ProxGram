@@ -35,6 +35,12 @@ jobs:
       - name: Run unit tests
         run: python -m unittest test_main -v
 
+      - name: Verify destination chat
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: python verify_chat.py
+
       - name: Run Proxy Publisher
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}

@@ -98,7 +98,10 @@ USER_AGENT = "v2rayN/6.23"  # standard client UA - aggregators treat unknown UAs
 TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/{method}"
 MAX_MESSAGE_LENGTH = 4096
 
-_channel_id = os.environ.get("TELEGRAM_CHANNEL_ID", "@ChannelID")
+# Public module-level exports (readable for diagnostics one-liners):
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID", "@ChannelID")
+_channel_id = TELEGRAM_CHANNEL_ID
 CHANNEL_TAG = os.environ.get("TELEGRAM_CHANNEL_TAG") or _channel_id
 
 CONNECT_BUTTON_TEXT = "⚡️ پروکسی {n} — {latency} ms"
