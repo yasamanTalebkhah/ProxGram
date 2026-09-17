@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-17T13:23:52",
+  "updated_at": "2026-09-17T13:40:14",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.8,
-      "last_seen": 1789651432.008907
+      "latency_ms": 129.8,
+      "last_seen": 1789652414.529342
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 111.8,
-      "last_seen": 1789651432.008907
+      "latency_ms": 110.0,
+      "last_seen": 1789652414.529342
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 81.3,
-      "last_seen": 1789651432.008907
+      "latency_ms": 89.5,
+      "last_seen": 1789652414.529342
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.0,
-      "last_seen": 1789651432.008907
+      "latency_ms": 128.4,
+      "last_seen": 1789652414.529342
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 122.7,
-      "last_seen": 1789651432.008907
+      "latency_ms": 129.0,
+      "last_seen": 1789652414.529342
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 134.5,
-      "last_seen": 1789651432.008907
+      "latency_ms": 132.0,
+      "last_seen": 1789652414.529342
     },
     "31.76.77.201:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.3,
-      "last_seen": 1789651432.008907
+      "latency_ms": 131.2,
+      "last_seen": 1789652414.529342
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 118.2,
+      "last_seen": 1789652414.529342
     },
     "2.26.0.194:443": {
       "strikes": 0,
@@ -53,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 147.3,
-      "last_seen": 1789650308.8518279
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 80.0,
       "last_seen": 1789650308.8518279
     },
     "kostyanchekloh.lol:443": {
