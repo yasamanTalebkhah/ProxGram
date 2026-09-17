@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-17T11:52:58",
+  "updated_at": "2026-09-17T12:09:19",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 138.9,
-      "last_seen": 1789645978.0973709
+      "latency_ms": 87.3,
+      "last_seen": 1789646959.1536899
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.0,
-      "last_seen": 1789645978.0973709
+      "latency_ms": 86.4,
+      "last_seen": 1789646959.1536899
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 78.0,
-      "last_seen": 1789645978.0973709
+      "latency_ms": 36.7,
+      "last_seen": 1789646959.1536899
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 159.8,
-      "last_seen": 1789645978.0973709
+      "latency_ms": 100.4,
+      "last_seen": 1789646959.1536899
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.0,
-      "last_seen": 1789645978.0973709
+      "latency_ms": 95.3,
+      "last_seen": 1789646959.1536899
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.7,
+      "last_seen": 1789646959.1536899
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.5,
+      "last_seen": 1789646959.1536899
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.6,
+      "last_seen": 1789646959.1536899
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -37,27 +55,9 @@
       "latency_ms": 83.9,
       "last_seen": 1789645978.0973709
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.3,
-      "last_seen": 1789645978.0973709
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.7,
-      "last_seen": 1789645978.0973709
-    },
     "kostyanchekloh.lol:443": {
       "strikes": 1,
       "alive": false,
-      "last_seen": 1789643133.4349117
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.1,
       "last_seen": 1789643133.4349117
     },
     "mtp.webvirt.cloud:443": {
