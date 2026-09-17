@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-09-17T15:18:29",
+  "updated_at": "2026-09-17T15:33:24",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.6,
-      "last_seen": 1789658309.9895027
+      "latency_ms": 119.4,
+      "last_seen": 1789659204.311748
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.0,
-      "last_seen": 1789658309.9895027
+      "latency_ms": 117.5,
+      "last_seen": 1789659204.311748
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 82.2,
-      "last_seen": 1789658309.9895027
+      "latency_ms": 94.6,
+      "last_seen": 1789659204.311748
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.4,
-      "last_seen": 1789658309.9895027
+      "latency_ms": 125.5,
+      "last_seen": 1789659204.311748
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 135.9,
+      "last_seen": 1789659204.311748
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 138.1,
+      "last_seen": 1789659204.311748
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 127.6,
+      "last_seen": 1789659204.311748
+    },
+    "87.121.82.9:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 128.0,
+      "last_seen": 1789659204.311748
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -66,12 +90,6 @@
       "latency_ms": 106.4,
       "last_seen": 1789653244.5218048
     },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 131.2,
-      "last_seen": 1789652414.529342
-    },
     "2.26.0.194:443": {
       "strikes": 0,
       "alive": true,
@@ -96,28 +114,10 @@
       "latency_ms": 102.0,
       "last_seen": 1789643133.4349117
     },
-    "2.26.87.69:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 130.0,
-      "last_seen": 1789641458.4034503
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 112.6,
-      "last_seen": 1789640526.9397988
-    },
     "45.146.164.117:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 147.5,
-      "last_seen": 1789640526.9397988
-    },
-    "87.121.82.9:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 156.2,
       "last_seen": 1789640526.9397988
     },
     "setion-two.co.uk:443": {
