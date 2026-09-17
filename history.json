@@ -1,41 +1,59 @@
 {
-  "updated_at": "2026-09-17T22:48:55",
+  "updated_at": "2026-09-17T22:59:40",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.9,
-      "last_seen": 1789685335.055266
+      "latency_ms": 90.6,
+      "last_seen": 1789685980.084117
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.4,
-      "last_seen": 1789685335.055266
+      "latency_ms": 80.7,
+      "last_seen": 1789685980.084117
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.3,
-      "last_seen": 1789685335.055266
+      "latency_ms": 100.5,
+      "last_seen": 1789685980.084117
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 73.1,
-      "last_seen": 1789685335.055266
+      "latency_ms": 69.8,
+      "last_seen": 1789685980.084117
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.6,
-      "last_seen": 1789685335.055266
+      "latency_ms": 100.5,
+      "last_seen": 1789685980.084117
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 117.8,
-      "last_seen": 1789685335.055266
+      "latency_ms": 94.6,
+      "last_seen": 1789685980.084117
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 85.1,
+      "last_seen": 1789685980.084117
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.6,
+      "last_seen": 1789685980.084117
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 104.4,
+      "last_seen": 1789685980.084117
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -53,18 +71,6 @@
       "strikes": 1,
       "alive": false,
       "last_seen": 1789685335.055266
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 66.0,
-      "last_seen": 1789684663.6556816
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.4,
-      "last_seen": 1789684663.6556816
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -94,12 +100,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 94.9,
-      "last_seen": 1789680722.338017
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.0,
       "last_seen": 1789680722.338017
     },
     "reborn.rebirthconnect.com:443": {
