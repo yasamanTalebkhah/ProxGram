@@ -48,11 +48,16 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ -f history.txt ] && [ -n "$(git status --porcelain -- history.txt)" ]; then
             git add history.txt
+          fi
+          if [ -f news_history.txt ] && [ -n "$(git status --porcelain -- news_history.txt)" ]; then
+            git add news_history.txt
+          fi
+          if git diff --staged --quiet; then
+            echo "No history changes to commit."
+          else
             git commit -m "chore: update history [skip ci]"
             # Rebase over any history committed by a just-finished run so
             # overlapping 5-minute runs never lose each other's entries.
             git pull --rebase origin main
             git push origin HEAD:main
-          else
-            echo "No history changes to commit."
           fi

@@ -1,11 +1,12 @@
 """Unit tests for ProxGram's five-proxy batch posting logic.
 
 Run with:  python -m unittest test_main -v
-Uses only the standard library (unittest); `requests` is stubbed so the
-tests run without the package installed.
+Uses only the standard library (unittest); `requests` and `feedparser`
+are stubbed so the tests run without the packages installed.
 """
 
 import os
+import re
 import sys
 import types
 import unittest
@@ -13,7 +14,7 @@ from pathlib import Path
 from unittest import mock
 from urllib.parse import urlparse
 
-# Stub `requests` before main imports it.
+# Stub `requests` and `feedparser` before main/news import them.
 _requests = types.ModuleType("requests")
 
 
@@ -26,7 +27,13 @@ _requests.get = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"
 _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
 sys.modules["requests"] = _requests
 
+_feedparser = types.ModuleType("feedparser")
+_feedparser.parse = lambda *a, **k: (_ for _ in ()).throw(AssertionError(
+    "feedparser.parse called outside a test that mocks it"))
+sys.modules["feedparser"] = _feedparser
+
 import main  # noqa: E402
+import news  # noqa: E402
 
 
 def make_proxy(server="s.example", port=443, secret="ee" + "ab" * 8):
@@ -380,6 +387,12 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertLess(self.text.index("Run unit tests"),
                         self.text.index("Run Proxy Publisher"))
 
+    def test_news_history_committed_alongside_history(self):
+        self.assertIn("news_history.txt", self.text)
+        self.assertIn("history.txt", self.text)
+        self.assertLess(self.text.index("git add history.txt"),
+                        self.text.index("git diff --staged --quiet"))
+
     def test_yaml_syntax_valid(self):
         try:
             import yaml  # type: ignore
@@ -391,6 +404,315 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("workflow_dispatch", data["on"])
         self.assertEqual(data["permissions"], {"contents": "write"})
         self.assertEqual(data["concurrency"]["group"], "proxgram")
+
+
+# ---------------------------------------------------------------------------
+# News integration (news.py + caption wiring)
+# ---------------------------------------------------------------------------
+
+def _fake_feed_response(text):
+    class Resp:
+        def raise_for_status(self):
+            pass
+
+    resp = Resp()
+    resp.text = text
+    resp.status_code = 200
+    resp.apparent_encoding = "utf-8"
+    resp.encoding = "utf-8"
+    return resp
+
+
+def _rss_xml(items):
+    """Minimal RSS 2.0 document builder. items: list of (title, link, pubDate, desc)."""
+    rows = []
+    for title, link, pub, desc in items:
+        desc = f"<description><![CDATA[{desc}]]></description>" if desc else ""
+        rows.append(
+            f"<item><title><![CDATA[{title}]]></title>"
+            f"<link>{link}</link>{desc}"
+            f"<pubDate>{pub}</pubDate><guid>{link}</guid></item>"
+        )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        "<rss version='2.0'><channel>" + "".join(rows) + "</channel></rss>"
+    )
+
+
+def _fake_feedparser_parse(raw):
+    """Test double for feedparser.parse: stdlib RSS parsing with dates."""
+    import xml.etree.ElementTree as ET
+    from email.utils import parsedate_to_datetime
+
+    root = ET.fromstring(raw)
+    entries = []
+    for item in root.iter("item"):
+        def txt(tag, item=item):
+            el = item.find(tag)
+            return (el.text or "").strip() if el is not None else ""
+        entry = {
+            "title": txt("title"),
+            "link": txt("link"),
+            "summary": txt("description"),
+            "id": txt("guid"),
+        }
+        pub = txt("pubDate")
+        if pub:
+            try:
+                entry["published_parsed"] = parsedate_to_datetime(pub).timetuple()
+            except (TypeError, ValueError):
+                pass
+        entries.append(entry)
+    return {"entries": entries}
+
+
+class NewsSanitizeTests(unittest.TestCase):
+    def test_strips_tags_urls_and_whitespace(self):
+        text = news.sanitize_news_text(
+            "  <b>Headline</b> details at https://bbc.in/xyz  ",
+            "<p>more\n details\t here</p>",
+        )
+        self.assertEqual(text, "Headline details at — more details here")
+        self.assertNotIn("http", text)
+        self.assertNotIn("\n", text)
+
+    def test_entity_disguised_tags_removed(self):
+        text = news.sanitize_news_text("Safe &lt;script&gt; alert(1) end", None)
+        self.assertNotIn("<", text)
+        self.assertNotIn(">", text)
+        self.assertNotIn("script", text)
+
+    def test_redundant_summary_dropped(self):
+        self.assertEqual(news.sanitize_news_text("Same", "Same"), "Same")
+
+    def test_summary_falls_back_to_title(self):
+        self.assertEqual(news.sanitize_news_text("Only title", None), "Only title")
+        self.assertIsNone(news.sanitize_news_text(None, None))
+
+    def test_truncation_to_140_chars(self):
+        self.assertEqual(news.truncate_news_text("short"), "short")
+        long_text = "x" * 150
+        out = news.truncate_news_text(long_text)
+        self.assertEqual(len(out), 143)  # 140 + "..."
+        self.assertTrue(out.endswith("..."))
+        self.assertEqual(news.truncate_news_text("y" * 140), "y" * 140)
+
+
+class NewsHistoryTests(unittest.TestCase):
+    def test_append_and_dedup_and_200_cap(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "news_history.txt"
+            with mock.patch.object(news, "NEWS_HISTORY_FILE", hist):
+                self.assertTrue(news.append_news_history("a"))
+                self.assertTrue(news.append_news_history("b"))
+                self.assertEqual(news.load_news_history(), {"a", "b"})
+                # re-appending moves the ID to the end, no duplicate line
+                news.append_news_history("a")
+                self.assertEqual(len(news.load_news_history()), 2)
+                # cap at 200
+                for i in range(250):
+                    news.append_news_history(f"id{i}")
+                loaded = news.load_news_history()
+                self.assertEqual(len(loaded), 200)
+                self.assertIn("id249", loaded)
+                self.assertNotIn("a", loaded)
+
+    def test_missing_file_returns_empty_set(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(news, "NEWS_HISTORY_FILE", Path(tmp) / "none.txt"):
+                self.assertEqual(news.load_news_history(), set())
+
+
+class NewsSelectionTests(unittest.TestCase):
+    def setUp(self):
+        # Replace the (deliberately exploding) feedparser stub with the
+        # stdlib test double for every selection test.
+        patch = mock.patch.object(news.feedparser, "parse", _fake_feedparser_parse)
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def test_fresh_item_selected_and_returned(self):
+        xml = _rss_xml([
+            ("Old news", "https://x.example/1", "Mon, 01 Sep 2025 10:00:00 GMT", "old"),
+            ("Fresh news", "https://x.example/2", "Wed, 16 Sep 2026 10:00:00 GMT", "body"),
+        ])
+        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
+                mock.patch.object(news, "_fetch_feed", return_value=xml):
+            text, entry_id = news.get_news(history=set())
+        self.assertEqual(text, "Fresh news — body")
+        self.assertEqual(entry_id, "https://x.example/2")
+
+    def test_empty_feed_returns_none(self):
+        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
+                mock.patch.object(news, "_fetch_feed", return_value=_rss_xml([])):
+            self.assertEqual(news.get_news(history=set()), (None, None))
+
+    def test_all_duplicates_returns_none(self):
+        xml = _rss_xml([("Dup", "https://x.example/1", "Wed, 16 Sep 2026 10:00:00 GMT", "")])
+        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
+                mock.patch.object(news, "_fetch_feed", return_value=xml):
+            self.assertEqual(news.get_news(history={"https://x.example/1"}), (None, None))
+
+    def test_duplicate_skipped_fresh_pick(self):
+        xml = _rss_xml([
+            ("Posted already", "https://x.example/1", "Wed, 16 Sep 2026 10:00:00 GMT", ""),
+            ("New headline", "https://x.example/2", "Tue, 15 Sep 2026 09:00:00 GMT", ""),
+        ])
+        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
+                mock.patch.object(news, "_fetch_feed", return_value=xml):
+            text, entry_id = news.get_news(history={"https://x.example/1"})
+        self.assertEqual(text, "New headline")
+        self.assertEqual(entry_id, "https://x.example/2")
+
+    def test_network_failure_falls_through_to_next_feed(self):
+        xml = _rss_xml([("Fallback news", "https://y.example/9", "Wed, 16 Sep 2026 08:00:00 GMT", "")])
+        feeds = [("A", "http://a/feed"), ("B", "http://b/feed")]
+
+        def fetch(url):
+            if url == "http://a/feed":
+                return None  # timeout / network error
+            return xml
+
+        with mock.patch.object(news, "NEWS_FEEDS", feeds), \
+                mock.patch.object(news, "_fetch_feed", side_effect=fetch):
+            text, entry_id = news.get_news(history=set())
+        self.assertEqual(text, "Fallback news")
+        self.assertEqual(entry_id, "https://y.example/9")
+
+    def test_total_outage_returns_none(self):
+        with mock.patch.object(news, "NEWS_FEEDS", [("A", "http://a/feed")]), \
+                mock.patch.object(news, "_fetch_feed", return_value=None):
+            self.assertEqual(news.get_news(history=set()), (None, None))
+
+    def test_real_feeds_constant(self):
+        urls = [u for _n, u in news.NEWS_FEEDS]
+        self.assertIn("https://feeds.bbci.co.uk/persian/rss.xml", urls)
+        self.assertIn("https://ir.voanews.com/api/z$g-m_eq_m", urls)
+        self.assertIn("https://www.iranintl.com/rss/all", urls)
+        self.assertEqual(urls[0], "https://feeds.bbci.co.uk/persian/rss.xml")  # priority
+
+
+class NewsCaptionTests(unittest.TestCase):
+    def setUp(self):
+        self.proxies = [p for p, _ in make_batch(5)]
+        self.latencies = [100.0] * 5
+
+    def test_news_section_prepended_when_present(self):
+        msg = main.format_message(self.proxies, self.latencies, "تست خبر")
+        self.assertIn("📰 <b>خبر فوری:</b>", msg)
+        self.assertIn("تست خبر", msg)
+        self.assertIn("⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>", msg)
+        # order: news first, then proxy block
+        self.assertLess(msg.index("خبر فوری"), msg.index("پروکسی‌های پرسرعت"))
+
+    def test_no_news_section_when_absent(self):
+        msg = main.format_message(self.proxies, self.latencies, None)
+        self.assertNotIn("خبر فوری", msg)
+        plain = main.format_message_minimal(self.proxies, self.latencies, None)
+        self.assertNotIn("خبر فوری", plain)
+
+    def test_news_text_html_escaped_in_caption(self):
+        msg = main.format_message(self.proxies, self.latencies,
+                                  "a<b>&amp;c")
+        self.assertIn("a&lt;b&gt;&amp;amp;c", msg)
+        plain = main.format_message_minimal(self.proxies, self.latencies, "a<b>&amp;c")
+        # plaintext mode needs no escaping - raw text renders literally
+        self.assertIn("a<b>&amp;c", plain)
+
+    def test_news_survives_formatting_fallback(self):
+        calls = []
+
+        class Resp:
+            def json(self):
+                if "parse_mode" in calls[-1] if calls else {}:
+                    return {"ok": False,
+                            "description": "Bad Request: can't parse entities"}
+                return {"ok": True, "result": {"message_id": 3}}
+
+        def flaky_post(url, json=None, timeout=None):
+            calls.append(json)
+            return Resp()
+
+        _requests.post = flaky_post
+        try:
+            ok = main.send_message("TOK", "@chan", "<b>unused</b>",
+                                   proxies=self.proxies, latencies=self.latencies,
+                                   news_text="خبر مهم")
+        finally:
+            _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
+        self.assertTrue(ok)
+        self.assertEqual(len(calls), 2)  # HTML attempt rejected, plaintext retry
+        # plaintext retry still carries the headline
+        self.assertIn("خبر فوری", calls[-1]["text"])
+        self.assertIn("خبر مهم", calls[-1]["text"])
+
+    def test_post_body_never_contains_proxy_links_even_with_news(self):
+        msg = main.format_message(self.proxies, self.latencies, "headline")
+        self.assertNotIn("t.me/proxy", msg)
+
+
+class WorkflowNewsConfigTests(unittest.TestCase):
+    def setUp(self):
+        self.text = open(".github/workflows/auto_post.yml", encoding="utf-8").read()
+
+    def test_news_history_in_commit_step(self):
+        add_idx = self.text.find("git add news_history.txt")
+        self.assertGreater(add_idx, 0)
+        commit_idx = self.text.index("git commit -m")
+        self.assertLess(add_idx, commit_idx)
+
+
+class EndToEndNewsHistoryTests(unittest.TestCase):
+    """The posting flow writes news_history.txt ONLY after a confirmed send."""
+
+    def _run_main(self, send_ok):
+        import tempfile
+
+        proxies = [
+            main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+            for i in range(1, 6)
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "history.txt"
+            nhist = Path(tmp) / "news_history.txt"
+            with \
+                    mock.patch.object(main, "HISTORY_FILE", hist), \
+                    mock.patch.object(news, "NEWS_HISTORY_FILE", nhist), \
+                    mock.patch.object(main, "collect_candidates", return_value=proxies), \
+                    mock.patch.object(main, "rank_reachable",
+                                      return_value=[(p, 100.0) for p in proxies]), \
+                    mock.patch.object(main, "send_message", return_value=send_ok), \
+                    mock.patch.object(main.news_module, "get_news",
+                                      return_value=("تیتر خبر", "https://n.example/1")), \
+                    mock.patch.dict(os.environ, {
+                        "TELEGRAM_BOT_TOKEN": "tok",
+                        "TELEGRAM_CHANNEL_ID": "@chan",
+                    }):
+                code = main.main()
+                # read inside the temp context (it vanishes on exit)
+                hist_lines = (hist.read_text(encoding="utf-8").splitlines()
+                              if hist.exists() else None)
+                nhist_lines = (nhist.read_text(encoding="utf-8").split()
+                               if nhist.exists() else None)
+        return code, hist_lines, nhist_lines
+
+    def test_history_and_news_history_written_on_success(self):
+        code, hist_lines, nhist_lines = self._run_main(send_ok=True)
+        self.assertEqual(code, 0)
+        self.assertEqual(len(hist_lines), 5)
+        self.assertEqual(nhist_lines, ["https://n.example/1"])
+
+    def test_nothing_written_when_send_fails(self):
+        code, hist_lines, nhist_lines = self._run_main(send_ok=False)
+        self.assertEqual(code, 0)
+        # history.txt may exist (created empty by the pre-send touch) but
+        # must contain zero links; news_history.txt must not exist at all.
+        self.assertEqual(hist_lines, [], "no proxy links after failed send")
+        self.assertIsNone(nhist_lines, "no news history after failed send")
 
 
 class TcpPingTests(unittest.TestCase):

@@ -24,7 +24,8 @@ Credentials are read from environment variables:
                            (defaults to TELEGRAM_CHANNEL_ID)
 
 history.txt (repo root) stores the full deep link of every posted proxy so
-duplicates are never re-posted across workflow runs.
+duplicates are never re-posted across workflow runs. news_history.txt
+(news.py) likewise records published news headline IDs.
 """
 
 import concurrent.futures
@@ -40,6 +41,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, quote, urlparse
 
 import requests
+
+import news as news_module
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -457,41 +460,75 @@ def channel_username() -> str | None:
     return None
 
 
-def format_message(proxies: list[Proxy], latencies: list[float]) -> str:
-    """Build the short Persian post body (HTML entities pre-escaped).
+NEWS_HEADER = "📰 <b>خبر فوری:</b>"
+NEWS_HEADER_PLAIN = "📰 خبر فوری:"
+POST_HEADLINE = "⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>"
+POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های پرسرعت و پایدار تلگرام"
+POST_GUIDANCE = (
+    "برای اتصال روی یکی از گزینه‌های زیر کلیک کنید. "
+    "در صورت عدم اتصال، دکمه بعدی را تست کنید."
+)
+
+
+def format_message(proxies: list[Proxy], latencies: list[float],
+                   news_text: str | None = None) -> str:
+    """Build the Persian post body (HTML entities pre-escaped).
 
     Minimal and engaging: no protocol/technical metadata, no update-cadence
     labels, and no raw proxy links — deep links live ONLY in the
-    inline-keyboard buttons. No dynamic proxy values are interpolated here,
-    so no escaping hazards exist.
+    inline-keyboard buttons.
+
+    When `news_text` is given, a sanitized breaking-news section leads the
+    post; it is HTML-escaped here (the only dynamic value in the body) so
+    parse_mode=HTML is always safe.
     """
-    return (
-        "⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>\n\n"
-        "برای اتصال روی یکی از گزینه‌های زیر کلیک کنید. "
-        "در صورت عدم اتصال، دکمه بعدی را تست کنید."
+    parts: list[str] = []
+    if news_text:
+        parts.append(f"{NEWS_HEADER}\n{html_escape(news_text)}")
+    parts.append(
+        f"{POST_HEADLINE}\n\n"
+        f"{POST_GUIDANCE}"
     )
+    return "\n\n".join(parts)
 
 
-def format_message_minimal(proxies: list[Proxy], latencies: list[float]) -> str:
-    """Safe plaintext twin of the short body (still link-free; the inline
+def format_message_minimal(proxies: list[Proxy], latencies: list[float],
+                           news_text: str | None = None) -> str:
+    """Safe plaintext twin of the body (still link-free; the inline
     keyboard carries all five deep links)."""
-    return (
-        "⚡️ پروکسی‌های پرسرعت و پایدار تلگرام\n\n"
-        "برای اتصال روی یکی از گزینه‌های زیر کلیک کنید. "
-        "در صورت عدم اتصال، دکمه بعدی را تست کنید."
+    parts: list[str] = []
+    if news_text:
+        parts.append(f"{NEWS_HEADER_PLAIN}\n{news_text}")
+    parts.append(
+        f"{POST_HEADLINE_PLAIN}\n\n"
+        f"{POST_GUIDANCE}"
     )
+    return "\n\n".join(parts)
 
 
-def format_batch_message(proxies: list[Proxy], latencies: list[float]) -> str:
+def format_batch_message(proxies: list[Proxy], latencies: list[float],
+                         news_text: str | None = None) -> str:
     """Format with HTML; on any failure return the plaintext fallback."""
     try:
-        message = format_message(proxies, latencies)
+        message = format_message(proxies, latencies, news_text)
         if len(message) > MAX_MESSAGE_LENGTH:
             raise ValueError("message exceeds Telegram limit")
         return message
     except Exception:
         logger.exception("HTML formatting failed; using plaintext fallback")
-        return format_message_minimal(proxies, latencies)
+        return format_message_minimal(proxies, latencies, news_text)
+
+
+def html_escape(text: str) -> str:
+    """Escape the five HTML-critical characters for parse_mode=HTML."""
+    return (
+        (text or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
 
 
 def build_inline_keyboard(proxies: list[Proxy],
@@ -512,11 +549,13 @@ def build_inline_keyboard(proxies: list[Proxy],
 
 def send_message(token: str, chat_id: str, text: str,
                  proxies: list[Proxy] | None = None,
-                 latencies: list[float] | None = None) -> bool:
+                 latencies: list[float] | None = None,
+                 news_text: str | None = None) -> bool:
     """ONE logical sendMessage (first successful HTTP request wins) with
     graceful degradation: HTML+keyboard -> plaintext+keyboard -> plaintext.
-    The five proxy links always reach users via the keyboard buttons; only
-    the text formatting changes between attempts. True on any success.
+    The five proxy links always reach users via the keyboard buttons; the
+    news headline (when any) survives the formatting fallback; only the
+    text formatting changes between attempts. True on any success.
     """
     url = TELEGRAM_API_URL.format(token=token, method="sendMessage")
     keyboard = (
@@ -524,7 +563,7 @@ def send_message(token: str, chat_id: str, text: str,
         if proxies and latencies else None
     )
     attempts: list[dict] = [{"text": text, "parse_mode": "HTML"}]
-    attempts.append({"text": format_message_minimal(proxies, latencies)
+    attempts.append({"text": format_message_minimal(proxies, latencies, news_text)
                      if proxies and latencies else text})
     if keyboard:
         attempts[0]["reply_markup"] = keyboard
@@ -719,11 +758,23 @@ def main() -> int:
         logger.info("Selected #%d server=%s port=%d latency=%.0f ms",
                     i, proxy.server, proxy.port, latency)
 
-    # 4. Send exactly ONE message; deep links live only in the buttons.
-    message = format_batch_message(proxies, latencies)
+    # 4. Breaking news headline (never blocks the proxy post on failure).
+    try:
+        news_text, news_id = news_module.get_news()
+    except Exception:
+        logger.exception("Unexpected news error; posting without news")
+        news_text, news_id = None, None
+    if news_text:
+        logger.info("Including news headline in the post.")
+    else:
+        logger.info("No news available; posting without the news section.")
+
+    # 5. Send exactly ONE message; deep links live only in the buttons.
+    message = format_batch_message(proxies, latencies, news_text)
     try:
         success = send_message(token, channel_id, message,
-                               proxies=proxies, latencies=latencies)
+                               proxies=proxies, latencies=latencies,
+                               news_text=news_text)
     except Exception:
         logger.exception("Unexpected error while posting the batch")
         return 0
@@ -734,9 +785,13 @@ def main() -> int:
         logger.error("History NOT updated for this batch.")
         return 0
 
-    # 5. Only after a confirmed send, record all five links.
+    # 6. Only after a confirmed send, record all five links + the news ID.
     if append_history(proxies):
         logger.info("All %d links written to %s.", len(proxies), HISTORY_FILE.name)
+    if news_id:
+        if news_module.append_news_history(news_id):
+            logger.info("News headline recorded in %s.",
+                        news_module.NEWS_HISTORY_FILE.name)
     return 0
 
 
