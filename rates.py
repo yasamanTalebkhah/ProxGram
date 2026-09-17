@@ -535,7 +535,7 @@ def get_rates() -> dict[str, float | None] | None:
 
 
 # ---------------------------------------------------------------------------
-# Full market board (compact paired rows, units OUTSIDE <code>, missing
+# Full market board (ONE ITEM PER LINE, units OUTSIDE <code>, missing
 # fields dropped cleanly - NO bubble or intrinsic-value items ever)
 # ---------------------------------------------------------------------------
 
@@ -543,7 +543,6 @@ RATES_TITLE_HTML = "📌 <b>تابلوی کامل طلا، سکه و ارز</b>"
 RATES_TITLE_PLAIN = "📌 تابلوی کامل طلا، سکه و ارز"
 
 _DIVIDER = "━━━━━━━━━━━━"
-_PAIR_GAP = " | "  # separator between the two segments of a paired line
 
 # Board segments: (label, field, unit). Only the numeric portion is
 # wrapped in <code>; the unit stays outside so RTL/LTR runs never mix
@@ -566,17 +565,14 @@ _SEGMENTS = (
     ("🪙 سکه گرمی", "gerami", "تومان"),
 )
 
-# Layout rows: each row is a tuple of segment indexes; two segments share
-# a line, a single segment keeps its own line. Rows whose segments are all
-# missing vanish (no blank lines).
-_BOARD_ROWS = (
-    (0, 1),    # دلار | یورو
-    (2, 3),    # درهم | تتر
-    (4, 5),    # انس جهانی | طلای ۱۸
-    (6,),      # آبشده
-    (7, 8),    # سکه امامی | تمام بهار
-    (9, 10),   # نیم‌سکه | ربع‌سکه
-    (11,),     # سکه گرمی
+# Layout sections: each section is a tuple of segment indexes rendered
+# one item per line, with a divider between sections. A field whose value
+# is missing drops only its own line; a fully-missing section drops its
+# divider too (never a blank or double-divider line).
+_BOARD_SECTIONS = (
+    (0, 1, 2, 3),    # دلار، یورو، درهم، تتر
+    (4, 5, 6),       # انس جهانی، طلای ۱۸، آبشده
+    (7, 8, 9, 10, 11),  # امامی، بهار، نیم، ربع، گرمی
 )
 
 
@@ -614,9 +610,10 @@ def format_board(data: dict[str, float | None], mode: str = "html",
     """Render the full market board (currencies, ounce, gold, coins).
 
     mode="html" produces the <code>/<b> version for parse_mode=HTML;
-    mode="plain" the tag-free twin. Missing fields are dropped cleanly:
-    a lone survivor keeps its row, a fully-missing row disappears, and no
-    bubble/intrinsic metric is ever rendered.
+    mode="plain" the tag-free twin. Every market item sits on its own
+    line; missing fields are dropped cleanly (only that line vanishes,
+    never a blank line, dash, or placeholder), and no bubble/intrinsic
+    metric is ever rendered.
     """
     now = now or datetime.now()
     if mode == "html":
@@ -631,11 +628,20 @@ def format_board(data: dict[str, float | None], mode: str = "html",
     segments = [render(label, field, data.get(field), unit)
                 for label, field, unit in _SEGMENTS]
 
-    lines: list[str] = [title, date_line, _DIVIDER]
-    for row in _BOARD_ROWS:
-        cells = [segments[i] for i in row if segments[i] is not None]
+    # One item per line, grouped into sections separated by dividers.
+    blocks: list[list[str]] = []
+    for section in _BOARD_SECTIONS:
+        cells = [segments[i] for i in section if segments[i] is not None]
         if cells:
-            lines.append(_PAIR_GAP.join(cells))
+            blocks.append(cells)
+
+    if not blocks:
+        return f"{title}\n{date_line}"  # nothing available: no dangling divider
+
+    lines: list[str] = [title, date_line]
+    for cells in blocks:
+        lines.append(_DIVIDER)
+        lines.extend(cells)
     lines.append(_DIVIDER)
 
     return "\n".join(lines)

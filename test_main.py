@@ -813,17 +813,17 @@ class RatesBoardTests(unittest.TestCase):
         self.assertIn("📌 <b>تابلوی کامل طلا، سکه و ارز</b>", html)
         self.assertIn("🗓 <i>پنج‌شنبه 26/06/1405</i>", html)
         self.assertIn("━━━━━━━━━━━━", html)
-        self.assertIn("💵 دلار: <code>230,500</code> تومان | 💶 یورو: <code>262,290</code> تومان",
-                      html)
-        self.assertIn("🇦🇪 درهم: <code>62,355</code> تومان | 🪙 تتر: <code>228,334</code> تومان",
-                      html)
-        self.assertIn("🌍 انس جهانی: <code>4,306.00</code> $ | "
-                      "🟡 طلای ۱۸ عیار: <code>23,501,300</code> تومان", html)
+        self.assertIn("💵 دلار: <code>230,500</code> تومان", html)
+        self.assertIn("💶 یورو: <code>262,290</code> تومان", html)
+        self.assertIn("🇦🇪 درهم: <code>62,355</code> تومان", html)
+        self.assertIn("🪙 تتر: <code>228,334</code> تومان", html)
+        self.assertIn("🌍 انس جهانی: <code>4,306.00</code> $", html)
+        self.assertIn("🟡 طلای ۱۸ عیار: <code>23,501,300</code> تومان", html)
         self.assertIn("🧊 آبشده: <code>101,853,000</code> تومان", html)
-        self.assertIn("🪙 سکه امامی: <code>234,010,000</code> تومان | "
-                      "🪙 تمام بهار: <code>229,240,000</code> تومان", html)
-        self.assertIn("🪙 نیم‌سکه: <code>117,800,000</code> تومان | "
-                      "🪙 ربع‌سکه: <code>63,000,000</code> تومان", html)
+        self.assertIn("🪙 سکه امامی: <code>234,010,000</code> تومان", html)
+        self.assertIn("🪙 تمام بهار: <code>229,240,000</code> تومان", html)
+        self.assertIn("🪙 نیم‌سکه: <code>117,800,000</code> تومان", html)
+        self.assertIn("🪙 ربع‌سکه: <code>63,000,000</code> تومان", html)
         self.assertIn("🪙 سکه گرمی: <code>33,000,000</code> تومان", html)
 
     def test_board_covers_full_market(self):
@@ -835,11 +835,60 @@ class RatesBoardTests(unittest.TestCase):
             self.assertIn(label, html, f"missing board item: {label}")
 
     def test_board_is_compact(self):
-        """Title + date + divider + 7 content rows + divider = 11 lines."""
+        """Title + date + 12 items + 4 dividers = 18 lines when all
+        fields are present (one item per line)."""
         html = rates.format_board(self.data, "html", now=self.now)
-        self.assertEqual(len(html.splitlines()), 11)
+        self.assertEqual(len(html.splitlines()), 18)
         plain = rates.format_board(self.data, "plain", now=self.now)
-        self.assertEqual(len(plain.splitlines()), 11)
+        self.assertEqual(len(plain.splitlines()), 18)
+
+    def test_every_market_item_on_its_own_line(self):
+        """Each line holds exactly one label:value pair - no pipes, no
+        side-by-side pairs; each line keeps emoji+label+code together."""
+        html = rates.format_board(self.data, "html", now=self.now)
+        self.assertNotIn(" | ", html)
+        labels = ("💵 دلار", "💶 یورو", "🇦🇪 درهم", "🪙 تتر",
+                  "🌍 انس جهانی", "🟡 طلای ۱۸ عیار", "🧊 آبشده",
+                  "🪙 سکه امامی", "🪙 تمام بهار", "🪙 نیم‌سکه",
+                  "🪙 ربع‌سکه", "🪙 سکه گرمی")
+        lines = html.splitlines()
+        for label in labels:
+            own = [ln for ln in lines if ln.startswith(label)]
+            self.assertEqual(len(own), 1, f"{label} must own exactly one line")
+            line = own[0]
+            self.assertIn("<code>", line)
+            self.assertIn("</code>", line)
+            self.assertTrue(line.endswith(("تومان", "$")), line)
+            # exactly one label on each line: no second label follows
+            self.assertFalse(any(other in line for other in labels
+                                 if other != label),
+                             f"two items share a line: {line}")
+
+    def test_full_caption_snapshot_when_all_fields_exist(self):
+        """Exact-template snapshot: all fields present -> byte-for-byte
+        match of the one-item-per-line layout (section order included)."""
+        html = rates.format_board(self.data, "html", now=self.now)
+        expected = "\n".join([
+            "📌 <b>تابلوی کامل طلا، سکه و ارز</b>",
+            "🗓 <i>پنج‌شنبه 26/06/1405</i>",
+            "━━━━━━━━━━━━",
+            "💵 دلار: <code>230,500</code> تومان",
+            "💶 یورو: <code>262,290</code> تومان",
+            "🇦🇪 درهم: <code>62,355</code> تومان",
+            "🪙 تتر: <code>228,334</code> تومان",
+            "━━━━━━━━━━━━",
+            "🌍 انس جهانی: <code>4,306.00</code> $",
+            "🟡 طلای ۱۸ عیار: <code>23,501,300</code> تومان",
+            "🧊 آبشده: <code>101,853,000</code> تومان",
+            "━━━━━━━━━━━━",
+            "🪙 سکه امامی: <code>234,010,000</code> تومان",
+            "🪙 تمام بهار: <code>229,240,000</code> تومان",
+            "🪙 نیم‌سکه: <code>117,800,000</code> تومان",
+            "🪙 ربع‌سکه: <code>63,000,000</code> تومان",
+            "🪙 سکه گرمی: <code>33,000,000</code> تومان",
+            "━━━━━━━━━━━━",
+        ])
+        self.assertEqual(html, expected)
 
     def test_no_bubble_or_intrinsic_labels_anywhere(self):
         html = rates.format_board(self.data, "html", now=self.now)
@@ -858,7 +907,8 @@ class RatesBoardTests(unittest.TestCase):
         self.assertIn("🪙 سکه امامی: 234,010,000 تومان", plain)
 
     def test_missing_fields_removed_cleanly(self):
-        """Absent fields vanish with their row; no dashes, no blanks."""
+        """An absent field drops only its own line; no dashes, blanks,
+        double dividers, or dangling pipes remain."""
         empty = {field: None for field in rates.ALL_FIELDS}
         empty["usd"] = 230500.0
         html = rates.format_board(empty, "html", now=self.now)
@@ -866,26 +916,37 @@ class RatesBoardTests(unittest.TestCase):
         self.assertNotIn("—", html)
         self.assertNotIn("N/A", html)
         self.assertNotIn("null", html)
-        # every other row vanished -> title, date, divider, دلار row,
-        # divider
+        # one section remains -> title, date, divider, دلار line, divider
         self.assertEqual(len(html.splitlines()), 5)
         self.assertNotIn("  \n", html)
         self.assertNotIn("\n\n", html)
+        self.assertNotIn("━━━\n━━━", html)  # no double dividers
         plain = rates.format_board(empty, "plain", now=self.now)
         self.assertIn("💵 دلار: 230,500 تومان", plain)
 
-    def test_partial_rows_keep_survivors_paired(self):
-        """One segment of a pair missing -> the survivor keeps its row;
-        both missing -> the row disappears entirely."""
+    def test_no_dividers_or_blank_lines_when_all_fields_missing(self):
+        """Nothing available -> title + date only (no dangling divider)."""
+        empty = {field: None for field in rates.ALL_FIELDS}
+        html = rates.format_board(empty, "html", now=self.now)
+        self.assertEqual(html.splitlines(),
+                         ["📌 <b>تابلوی کامل طلا، سکه و ارز</b>",
+                          "🗓 <i>پنج‌شنبه 26/06/1405</i>"])
+
+    def test_missing_line_drops_only_that_item(self):
+        """One segment of a section missing -> only its line vanishes;
+        section order and the other lines stay intact."""
         partial = dict(self.data)
-        partial["eur"] = None    # یورو gone -> دلار keeps row 1 alone
+        partial["eur"] = None    # یورو gone -> دلار keeps its own line
         partial["abshodeh"] = None
         html = rates.format_board(partial, "html", now=self.now)
         self.assertIn("💵 دلار: <code>230,500</code> تومان", html)
         self.assertNotIn("یورو", html)
         self.assertNotIn("آبشده", html)
-        self.assertNotIn(" | \n", html)
-        self.assertNotIn("\n | ", html)
+        self.assertNotIn(" | ", html)
+        # 18 - 2 dropped lines
+        self.assertEqual(len(html.splitlines()), 16)
+        self.assertNotIn("\n\n", html)
+        self.assertNotIn("━━━\n━━━", html)
 
     def test_thousands_separator_formatting(self):
         self.assertEqual(rates._fmt_toman(85400000), "85,400,000")
