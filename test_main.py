@@ -8,6 +8,7 @@ tests run without the package installed.
 import os
 import re
 import sys
+import time
 import types
 import unittest
 from datetime import date, datetime
@@ -161,7 +162,7 @@ class BatchSelectionTests(unittest.TestCase):
 
     def test_excludes_history_links(self):
         batch_items = make_batch(6)
-        history = {p.link for p, _ in batch_items[:5]}
+        history = {p.key for p, _ in batch_items[:5]}
         picked = main.pick_batch(batch_items, history)
         self.assertEqual([p.server for p, _ in picked], ["h6.example"])
 
@@ -170,6 +171,25 @@ class BatchSelectionTests(unittest.TestCase):
         history = {f"h{i}.example:443" for i in range(1, 6)}
         picked = main.pick_batch(batch_items, history)
         self.assertEqual([p.server for p, _ in picked], ["h6.example"])
+
+    def test_cooldown_reuse_after_24h(self):
+        """A proxy posted > REUSE_COOLDOWN ago becomes eligible again."""
+        batch_items = make_batch(6)
+        history = {p.key for p, _ in batch_items[:5]}
+        stale = time.time() - main.REUSE_COOLDOWN - 60
+        last_posted = {p.key: stale for p, _ in batch_items[:5]}
+        picked = main.pick_batch(batch_items, history, last_posted=last_posted)
+        self.assertEqual([p.server for p, _ in picked[:5]],
+                         [p.server for p, _ in batch_items[:5]],
+                         "stale entries must be reusable in latency order")
+
+    def test_cooldown_blocks_recent_entries(self):
+        batch_items = make_batch(6)
+        history = {p.key for p, _ in batch_items[:5]}
+        recent = {p.key: time.time() - 60 for p, _ in batch_items[:5]}
+        picked = main.pick_batch(batch_items, history, last_posted=recent)
+        self.assertEqual([p.server for p, _ in picked], ["h6.example"],
+                         "recently-posted proxies must stay excluded")
 
     def test_prefers_distinct_hostnames(self):
         hostA_fast = (make_proxy("hosta.example", 443, "eeAA" + "bb" * 8), 50.0)
@@ -343,9 +363,63 @@ class HistoryTests(unittest.TestCase):
             with mock.patch.object(main, "HISTORY_FILE", hist):
                 self.assertTrue(main.append_history(batch))
                 loaded = main.load_history()
-                self.assertEqual(loaded, {p.link for p in batch})
-                main.append_history(batch)  # idempotent file append
+                self.assertEqual(loaded, {p.key for p in batch})
+                main.append_history(batch)  # idempotent by identity
                 self.assertEqual(len(main.load_history()), 5)
+
+    def test_v2_timestamped_format_and_compaction(self):
+        import tempfile
+
+        batch = [p for p, _ in make_batch(7)]
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "history.txt"
+            with mock.patch.object(main, "HISTORY_FILE", hist):
+                main.append_history(batch)
+                raw = hist.read_text(encoding="utf-8").splitlines()
+                self.assertTrue(all("|" in line for line in raw))
+                self.assertEqual(len(raw), 7)
+                stamps = main.load_history_timestamps()
+                self.assertEqual(len(stamps), 7)
+                self.assertTrue(all(s > 0 for s in stamps.values()))
+
+    def test_compaction_keeps_newest_entries(self):
+        import tempfile
+
+        old = [f"old{i}.example:443" for i in range(8)]
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "history.txt"
+            hist.write_text("\n".join(
+                f"2020-01-0{i + 1}T00:00:00|{old[i]}" for i in range(8)
+            ) + "\n", encoding="utf-8")
+            with mock.patch.object(main, "HISTORY_FILE", hist), \
+                    mock.patch.object(main, "MAX_HISTORY_ENTRIES", 5):
+                main.append_history([])
+                lines = hist.read_text(encoding="utf-8").splitlines()
+                self.assertEqual(len(lines), 5)
+                self.assertNotIn("old0.example:443", main.load_history())
+                self.assertIn("old7.example:443", main.load_history())
+
+    def test_legacy_lines_migrate_with_recovery_ts(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "history.txt"
+            hist.write_text("https://t.me/proxy?server=old.example&port=443"
+                            "&secret=eeAABBCCDDEEFF001122\n", encoding="utf-8")
+            with mock.patch.object(main, "HISTORY_FILE", hist):
+                stamps = main.load_history_timestamps()
+                self.assertIn("old.example:443", stamps)
+                # legacy entries get the recovery placeholder -> reusable
+                self.assertEqual(stamps["old.example:443"],
+                                 datetime(2000, 1, 1).timestamp())
+
+    def test_extract_ident_from_deep_link_and_bare(self):
+        self.assertEqual(
+            main._extract_ident(
+                "https://t.me/proxy?server=a.example&port=443&secret=eeXX"),
+            "a.example:443")
+        self.assertEqual(main._extract_ident("b.example:8443"), "b.example:8443")
+        self.assertEqual(main._extract_ident(""), "")
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -795,52 +869,59 @@ class EndToEndRatesFlowTests(unittest.TestCase):
                 # read inside the temp context (it vanishes on exit)
                 hist_lines = (hist.read_text(encoding="utf-8").splitlines()
                               if hist.exists() else None)
-                sent_html = sm.call_args.kwargs.get("rates_section_plain") \
+                sent_text = sm.call_args.args[2] if sm.call_args else None
+                sent_plain = sm.call_args.kwargs.get("rates_section_plain") \
                     if sm.call_args else None
                 send_calls = sm.call_count
-        return code, hist_lines, send_calls, sent_html
+        return code, hist_lines, send_calls, sent_text, sent_plain
 
     def test_success_writes_history_and_sends_rates(self):
         data = {"usd": 2305000.0}
-        code, hist_lines, send_calls, sent_plain = self._run_main(
+        code, hist_lines, send_calls, sent_text, sent_plain = self._run_main(
             send_ok=True, rates_side_effect=data)
         self.assertEqual(code, 0)
         self.assertEqual(len(hist_lines), 5)
         self.assertEqual(send_calls, 1)
+        self.assertIn("دلار", sent_text)   # html body carries the rates section
         self.assertIn("دلار", sent_plain)  # plaintext rates section threaded
 
     def test_nothing_written_when_send_fails(self):
         data = {"usd": 2305000.0}
-        code, hist_lines, _calls, _plain = self._run_main(
+        code, hist_lines, _calls, _text, _plain = self._run_main(
             send_ok=False, rates_side_effect=data)
         self.assertEqual(code, 0)
         self.assertEqual(hist_lines, [], "no proxy links after failed send")
 
     def test_partial_batch_still_posts(self):
         """Fewer than 5 fresh proxies -> publish 1-4 instead of skipping."""
-        code, hist_lines, send_calls, _plain = self._run_main(
+        code, hist_lines, send_calls, _text, _plain = self._run_main(
             send_ok=True, n_proxies=3, rates_side_effect={"usd": 1.0})
         self.assertEqual(code, 0)
         self.assertEqual(send_calls, 1, "partial batch must still be posted")
         self.assertEqual(len(hist_lines), 3)
 
     def test_zero_fresh_proxies_skips_posting(self):
-        """Everything already in history -> no post, graceful exit."""
+        """Everything recently posted -> maintenance notice instead of a
+        silent exit; the tag lands in history and no batch is dispatched."""
         proxies = [
             main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
             for i in range(1, 6)
         ]
-        code, hist_lines, send_calls, _plain = self._run_main(
-            send_ok=True, history_preload=[p.link for p in proxies],
+        now_iso = datetime.now().isoformat(timespec="seconds")
+        code, hist_lines, send_calls, sent_text, _plain = self._run_main(
+            send_ok=True,
+            history_preload=[f"{now_iso}|{p.link}" for p in proxies],
             rates_side_effect={"usd": 1.0})
         self.assertEqual(code, 0)
-        self.assertEqual(send_calls, 0, "no post when nothing fresh exists")
-        self.assertEqual(hist_lines or [], [p.link for p in proxies],
-                         "history unchanged")
+        self.assertEqual(send_calls, 1,
+                         "maintenance notice must be posted, not skipped")
+        self.assertIn("به‌روزرسانی", sent_text)
+        self.assertTrue(any(main.MAINTENANCE_TAG in line for line in hist_lines))
+        self.assertEqual(len(hist_lines), 6)  # 5 preloaded + maintenance tag
 
     def test_rates_failure_never_blocks_the_post(self):
         # side_effect (not return_value) so the exception is raised
-        code, hist_lines, send_calls, sent_plain = self._run_main(
+        code, hist_lines, send_calls, _text, sent_plain = self._run_main(
             send_ok=True, rates_side_effect=RuntimeError("rates down"))
         self.assertEqual(code, 0)
         self.assertEqual(send_calls, 1, "proxy post must survive rates failure")
@@ -948,6 +1029,133 @@ class TelegramErrorHandlingTests(unittest.TestCase):
         level, msg = captured[-1]
         self.assertEqual(level, "error")
         self.assertIn("timed out", msg)
+
+
+class ReliabilityHardeningTests(unittest.TestCase):
+    """Phase 2/3 hardening: 429 retry, chat verification, POST DECISION."""
+
+    def setUp(self):
+        self.proxies = [p for p, _ in make_batch(5)]
+        self.latencies = [100.0] * 5
+        self.msg = main.format_message(self.proxies, self.latencies)
+
+    def test_429_retries_same_payload_once_then_succeeds(self):
+        calls = []
+
+        class Resp:
+            def __init__(self, body):
+                self.status_code = body.get("error_code", 200)
+                self._body = body
+
+            def json(self):
+                return self._body
+
+        def rate_limited_then_ok(url, json=None, timeout=None):
+            calls.append(json)
+            if len(calls) == 1:
+                return Resp({"ok": False, "error_code": 429,
+                             "description": "Too Many Requests: retry after 3",
+                             "parameters": {"retry_after": 3}})
+            return Resp({"ok": True, "result": {"message_id": 11}})
+
+        with mock.patch.object(main.time, "sleep") as fake_sleep:
+            _requests.post = rate_limited_then_ok
+            try:
+                ok = main.send_message("TOK", "@chan", self.msg,
+                                       proxies=self.proxies,
+                                       latencies=self.latencies)
+            finally:
+                _requests.post = lambda *a, **k: (_ for _ in ()).throw(
+                    RequestException("offline"))
+        self.assertTrue(ok)
+        self.assertEqual(len(calls), 2, "same payload retried after 429")
+        self.assertEqual(calls[0], calls[1])
+        fake_sleep.assert_called_once()
+        self.assertGreaterEqual(fake_sleep.call_args.args[0], 1.0)
+
+    def test_429_retry_cap_at_one(self):
+        class Resp:
+            status_code = 429
+
+            def json(self):
+                return {"ok": False, "error_code": 429,
+                        "description": "Too Many Requests"}
+
+        with mock.patch.object(main.time, "sleep"):
+            _requests.post = lambda *a, **k: Resp()
+            try:
+                ok = main.send_message("TOK", "@chan", self.msg,
+                                       proxies=self.proxies,
+                                       latencies=self.latencies)
+            finally:
+                _requests.post = lambda *a, **k: (_ for _ in ()).throw(
+                    RequestException("offline"))
+        self.assertFalse(ok, "second 429 must fail fast (no infinite retry)")
+
+    def test_get_chat_info_logs_destination(self):
+        class Resp:
+            status_code = 200
+
+            def json(self):
+                return {"ok": True, "result": {
+                    "id": -1001234567890, "username": "mychannel",
+                    "title": "My Channel"}}
+
+        with mock.patch.object(main.requests, "post", return_value=Resp()):
+            info = main.get_chat_info("TOK", "@mychannel")
+        self.assertEqual(info["username"], "mychannel")
+
+    def test_get_chat_info_failure_is_soft(self):
+        def boom(*a, **k):
+            raise RequestException("offline")
+
+        with mock.patch.object(main.requests, "post", side_effect=boom):
+            self.assertIsNone(main.get_chat_info("TOK", "@chan"))
+
+    def test_post_decision_line_printed(self):
+        import io
+        import contextlib
+
+        captured = io.StringIO()
+        main.setup_logging()
+        with contextlib.redirect_stdout(captured):
+            main._post_decision(True, "batch dispatched", 12, 5,
+                                "@chan", "HTML", 133)
+        out = captured.getvalue()
+        self.assertIn("POST DECISION", out)
+        self.assertIn("will_post=yes", out)
+        self.assertIn("selected_count=5", out)
+        self.assertIn("chat_id=@chan", out)
+
+    def test_maintenance_fallback_posts_and_records_tag(self):
+        import tempfile
+
+        calls = []
+
+        class Resp:
+            def json(self):
+                return {"ok": True, "result": {"message_id": 12}}
+
+        def fake_post(url, json=None, timeout=None):
+            calls.append(json)
+            return Resp()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "history.txt"
+            with mock.patch.object(main, "HISTORY_FILE", hist):
+                _requests.post = fake_post
+                try:
+                    ok = main._maintenance_fallback("TOK", "@chan")
+                finally:
+                    _requests.post = lambda *a, **k: (_ for _ in ()).throw(
+                        RequestException("offline"))
+                recorded = main.MAINTENANCE_TAG in main.load_history()
+        self.assertTrue(ok)
+        self.assertEqual(len(calls), 1)
+        self.assertNotIn("reply_markup", calls[0], "no buttons on maintenance")
+        self.assertEqual(calls[0]["text"], main.MAINTENANCE_TEXT)
+        self.assertIn("به‌روزرسانی", calls[0]["text"])
+        self.assertTrue(recorded, "maintenance tag recorded in history")
 
 
 class TimeoutAndTelemetryConfigTests(unittest.TestCase):

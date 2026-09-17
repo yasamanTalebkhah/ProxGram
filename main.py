@@ -38,6 +38,7 @@ import socket
 import string
 import sys
 import time
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import parse_qs, quote, urlparse
 
@@ -64,6 +65,21 @@ PING_TIMEOUT = 2.0    # seconds - strict TCP connect timeout
 MAX_LATENCY_MS = 2500  # discard anything slower than this
 MAX_WORKERS = 60      # parallel TCP tests (total wall time ~= one timeout)
 BATCH_SIZE = 5        # proxies posted per run (exactly five or none)
+REUSE_COOLDOWN = 24 * 3600.0  # seconds before a posted proxy may be reused
+MAX_HISTORY_ENTRIES = 2000    # history compaction cap
+GLOBAL_DEADLINE = 90          # seconds - hard budget for the entire run
+# Placeholder timestamp for legacy plain history lines (always eligible for
+# cooldown reuse so old entries can never block the pipeline forever).
+RECOVERY_TS = "2000-01-01T00:00:00"
+
+# Posted when zero proxies are fresh after cooldown-aware selection, so the
+# channel always sees activity instead of silent gaps.
+MAINTENANCE_TAG = "maintenance"
+MAINTENANCE_TEXT = (
+    "🔧 در حال به‌روزرسانی لیست پروکسی‌ها...\n\n"
+    "⚡️ به‌زودی دستهٔ جدیدی از پروکسی‌های پرسرعت منتشر می‌شود. "
+    "لطفاً چند دقیقه دیگر دوباره بررسی کنید."
+)
 
 ALLOWED_PORTS = {443, 8443, 2053, 2083, 8880}
 
@@ -511,27 +527,126 @@ def tcp_ping(host: str, port: int, timeout: float = PING_TIMEOUT) -> float | Non
 # History (duplicate prevention, link-based)
 # ---------------------------------------------------------------------------
 
-def load_history() -> set[str]:
-    """Load previously posted proxy links from history.txt."""
+def _extract_ident(line: str) -> str:
+    """Canonical identity of a history entry: host:port of a deep link.
+
+    Accepts full t.me/proxy deep links (server+port+secret combos share a
+    host:port) and legacy bare host:port lines; unmappable lines return
+    themselves so nothing is silently dropped.
+    """
+    line = (line or "").strip()
+    if not line:
+        return ""
+    if line.startswith("http") or line.startswith("tg://"):
+        try:
+            qs = parse_qs_last(urlparse(line).query)
+            host = (qs.get("server") or "").strip().strip(".").lower()
+            port = int((qs.get("port") or "0").strip())
+            if host and port:
+                return f"{host}:{port}"
+        except (ValueError, AttributeError):
+            pass
+        return line
+    return line
+
+
+def _history_entries() -> list[tuple[str, str]]:
+    """(timestamp_iso, ident) pairs from history.txt.
+
+    Plain lines (legacy format) get RECOVERY_TS so they are eligible for
+    cooldown reuse rather than blocking the pipeline forever.
+    """
     if not HISTORY_FILE.exists():
-        return set()
+        return []
     try:
-        return {
-            line.strip()
-            for line in HISTORY_FILE.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        }
+        entries: list[tuple[str, str]] = []
+        for line in HISTORY_FILE.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if len(stripped) > 19 and stripped[4] == "-" and stripped[10] in " T" and stripped[13] == ":":
+                ts, sep, rest = stripped.partition("|")
+                if sep and rest.strip():
+                    entries.append((ts.strip(), _extract_ident(rest)))
+                    continue
+            entries.append((RECOVERY_TS, _extract_ident(stripped)))
+        return [e for e in entries if e[1]]
     except OSError as exc:
         logger.error("Could not read history file %s: %s", HISTORY_FILE, exc)
-        return set()
+        return []
+
+
+def load_history() -> set[str]:
+    """Identities of previously posted proxies (legacy + v2 formats)."""
+    return {ident for _ts, ident in _history_entries()}
+
+
+def load_history_timestamps() -> dict[str, float]:
+    """ident -> last-posted epoch seconds (used for cooldown reuse)."""
+    stamps: dict[str, float] = {}
+    for ts, ident in _history_entries():
+        try:
+            when = datetime.fromisoformat(ts)
+        except ValueError:
+            when = datetime(2000, 1, 1)  # unmappable -> ancient
+        if when.tzinfo is not None:
+            when = when.astimezone().replace(tzinfo=None)
+        epoch = when.timestamp()
+        stamps[ident] = max(epoch, stamps.get(ident, 0.0))
+    return stamps
+
+
+def compact_history() -> int:
+    """Rewrite history.txt keeping only the newest MAX_HISTORY_ENTRIES.
+
+    Legacy plain lines are upgraded to the timestamped v2 format in the
+    process. Returns the number of retained entries.
+    """
+    entries = _history_entries()
+    try:
+        parsed = sorted(
+            ((datetime.fromisoformat(ts), ts, ident) for ts, ident in entries),
+            key=lambda item: item[0],
+        )
+        kept = [(ts, ident) for _dt, ts, ident in parsed[-MAX_HISTORY_ENTRIES:]]
+    except ValueError:
+        # Any unmappable timestamp: keep original order, still cap.
+        kept = entries[-MAX_HISTORY_ENTRIES:]
+    try:
+        with HISTORY_FILE.open("w", encoding="utf-8") as fh:
+            for ts, ident in kept:
+                fh.write(f"{ts}|{ident}\n")
+        return len(kept)
+    except OSError as exc:
+        logger.error("Could not compact history file %s: %s", HISTORY_FILE, exc)
+        return -1
 
 
 def append_history(proxies: list[Proxy]) -> bool:
-    """Record posted proxy links in history.txt (created on first write)."""
+    """Record posted proxies (timestamped v2) and compact to the cap."""
     try:
+        now_iso = datetime.now().isoformat(timespec="seconds")
         with HISTORY_FILE.open("a", encoding="utf-8") as fh:
             for proxy in proxies:
-                fh.write(proxy.link + "\n")
+                fh.write(f"{now_iso}|{_extract_ident(proxy.link)}\n")
+        retained = compact_history()
+        if retained >= 0:
+            logger.info("History compacted: %d entries retained", retained)
+            return True
+        return False
+    except OSError as exc:
+        logger.error("Could not update history file %s: %s", HISTORY_FILE, exc)
+        return False
+
+
+def append_history_text(lines: list[str]) -> bool:
+    """Append raw text lines to history.txt (used by the maintenance path)."""
+    try:
+        now_iso = datetime.now().isoformat(timespec="seconds")
+        with HISTORY_FILE.open("a", encoding="utf-8") as fh:
+            for line in lines:
+                fh.write(f"{now_iso}|{_extract_ident(line)}\n")
+        compact_history()
         return True
     except OSError as exc:
         logger.error("Could not update history file %s: %s", HISTORY_FILE, exc)
@@ -669,7 +784,10 @@ def send_message(token: str, chat_id: str, text: str,
     attempts.append({"text": attempts[1]["text"]})  # last resort: no markup
 
     last_desc = ""
-    for i, payload_base in enumerate(attempts):
+    rate_limited_once = False
+    i = 0
+    while i < len(attempts):
+        payload_base = attempts[i]
         payload = {"chat_id": chat_id, "disable_web_page_preview": False, **payload_base}
         logger.info(
             "Telegram dispatch attempt %d/%d: chat_id=%s parse_mode=%s "
@@ -707,8 +825,22 @@ def send_message(token: str, chat_id: str, text: str,
             "Telegram API error (attempt %d): HTTP status=%s body=%s",
             i + 1, status, data,
         )
+        # 429 rate limit: wait out retry_after once, then re-attempt the
+        # SAME payload (dispatch failure here must not lose the batch).
+        if error_code == 429 and not rate_limited_once:
+            retry_after = 1.0
+            params = data.get("parameters") or {}
+            try:
+                retry_after = min(30.0, max(1.0, float(params.get("retry_after", 1.0))))
+            except (TypeError, ValueError):
+                pass
+            logger.warning("Rate-limited; backing off %.0f s then retrying once", retry_after)
+            time.sleep(retry_after)
+            rate_limited_once = True
+            continue  # retry the same attempt index
         if "parse" in last_desc.lower() and i + 1 < len(attempts):
-            continue  # formatting error - the plaintext attempt follows
+            i += 1  # formatting error - the plaintext attempt follows
+            continue
         # Non-formatting (or final) failure: surface an actionable hint.
         hint = TG_ERROR_HINTS.get(error_code) or TG_ERROR_HINTS.get(status)
         message = f"Telegram API error {error_code or status or '?'}: {last_desc}"
@@ -725,8 +857,13 @@ def send_message(token: str, chat_id: str, text: str,
 # Selection: five distinct, fresh, fastest proxies
 # ---------------------------------------------------------------------------
 
-def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
-    """TCP-test candidates in parallel; return reachable ones sorted by ping."""
+def rank_reachable(proxies: list[Proxy],
+                   enough: int | None = None) -> list[tuple[Proxy, float]]:
+    """TCP-test candidates in parallel; return reachable ones sorted by ping.
+
+    `enough` enables early stop: probing halts once that many reachable
+    proxies exist (deadline-safe; in-flight probes are cancelled).
+    """
     if not proxies:
         return []
     started = time.monotonic()
@@ -745,6 +882,15 @@ def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
                 continue
             if latency is not None:
                 results.append((index, proxy, latency))
+                if enough is not None and len(results) >= enough:
+                    logger.info(
+                        "Early stop: %d reachable proxies found; cancelling "
+                        "%d remaining probes", len(results),
+                        sum(1 for f in futures if not f.done()),
+                    )
+                    for f in futures:
+                        f.cancel()
+                    break
 
     elapsed = time.monotonic() - started
     results.sort(key=lambda item: (item[2], item[0]))  # lowest ping first, ties by feed order
@@ -761,27 +907,34 @@ def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
 
 
 def pick_batch(reachable: list[tuple[Proxy, float]],
-               history: set[str], size: int = BATCH_SIZE
-               ) -> list[tuple[Proxy, float]]:
+               history: set[str], size: int = BATCH_SIZE,
+               last_posted: dict[str, float] | None = None) -> list[tuple[Proxy, float]]:
     """Select `size` fresh, fastest proxies, preferring distinct hostnames.
 
-    Rules applied in order: latency cap, history exclusion (full link or
-    legacy host:port), duplicate (server, port, secret) suppression, and at
-    most one proxy per server hostname unless fewer than `size` distinct
-    servers are reachable. Returns fewer than `size` only when the candidate
-    pool is genuinely exhausted.
+    Rules applied in order: latency cap, history exclusion with cooldown
+    reuse (a proxy last posted > REUSE_COOLDOWN ago becomes eligible again),
+    duplicate (server, port, secret) suppression, and at most one proxy per
+    server hostname unless fewer than `size` distinct servers are reachable.
+    Returns fewer than `size` only when the candidate pool is genuinely
+    exhausted within the cooldown window.
     """
     picked: list[tuple[Proxy, float]] = []
     picked_combos: set[tuple[str, int, str]] = set()
     picked_hosts: set[str] = set()
+    now = time.time()
+    last_posted = last_posted or {}
 
     def try_take(proxy: Proxy, latency: float) -> bool:
         if proxy.latency_ms is not None and proxy.latency_ms > MAX_LATENCY_MS:
             return False
         if latency > MAX_LATENCY_MS:
             return False
-        if proxy.link in history or proxy.key in history:
-            return False
+        if proxy.key in history:
+            if last_posted is None:
+                return False  # no cooldown data: stay conservative (old behavior)
+            stamp = last_posted.get(proxy.key)
+            if stamp is None or (now - stamp) < REUSE_COOLDOWN:
+                return False  # posted recently (or unstamped) - still cooling down
         if proxy.combo in picked_combos:
             return False
         picked.append((proxy, latency))
@@ -822,8 +975,59 @@ def pick_batch(reachable: list[tuple[Proxy, float]],
 MIN_BATCH_SIZE = 1     # post 1-4 proxies rather than skip the run entirely
 
 
+def get_chat_info(token: str, chat_id: str) -> dict | None:
+    """Resolve the destination chat (title/username/id) for the log trail."""
+    url = TELEGRAM_API_URL.format(token=token, method="getChat")
+    try:
+        resp = requests.post(url, json={"chat_id": chat_id},
+                             timeout=TELEGRAM_TIMEOUT)
+        data = resp.json()
+    except (requests.RequestException, ValueError) as exc:
+        logger.warning("getChat check failed: %s", exc)
+        return None
+    if data.get("ok"):
+        result = data.get("result") or {}
+        logger.info(
+            "Destination chat verified: id=%s username=%s title=%s",
+            result.get("id"), result.get("username") or "<none>",
+            result.get("title") or "<none>",
+        )
+        return result
+    logger.warning("getChat failed: %s", data.get("description", data))
+    return None
+
+
+def _post_decision(will_post: bool, reason: str, fresh_count: int,
+                   selected_count: int, chat_id: str,
+                   parse_mode: str, text_len: int) -> None:
+    """One always-printed line summarizing the posting decision."""
+    logger.info(
+        "POST DECISION: {will_post=%s | reason='%s' | fresh_count=%d | "
+        "selected_count=%d | chat_id=%s | parse_mode=%s | text_len=%d}",
+        "yes" if will_post else "no", reason, fresh_count,
+        selected_count, chat_id, parse_mode, text_len,
+    )
+
+
+def _maintenance_fallback(token: str, chat_id: str) -> bool:
+    """Post the maintenance notice (no rates, no buttons) and log it."""
+    logger.info("Posting maintenance notice instead of a proxy batch.")
+    try:
+        ok = send_message(token, chat_id, MAINTENANCE_TEXT,
+                          proxies=None, latencies=None,
+                          rates_section_plain=None)
+    except Exception:
+        logger.exception("Maintenance notice dispatch crashed")
+        ok = False
+    if ok:
+        append_history_text([MAINTENANCE_TAG])
+        logger.info("Maintenance tag recorded in history.")
+    return ok
+
+
 def main() -> int:
     run_started = time.monotonic()
+    deadline = run_started + GLOBAL_DEADLINE
     setup_logging()
     trigger = os.environ.get("GITHUB_EVENT_NAME", "manual/local")
     logger.info("=== ProxGram run started (trigger: %s) ===", trigger)
@@ -836,11 +1040,18 @@ def main() -> int:
         for problem in cred_problems:
             logger.error("Credential problem: %s", problem)
             gh_annotation("error", problem)
+        _post_decision(False, "missing/malformed credentials", 0, 0,
+                       channel_id or "<none>", "-", 0)
         return 2  # unrecoverable: nothing can be posted without them
     logger.info(
         "Credentials OK (token=%s channel_id=%s)",
         mask_token(token), channel_id,
     )
+    # Resolve and log the real destination chat (wrong-chat guard).
+    try:
+        get_chat_info(token, channel_id)
+    except Exception:
+        logger.exception("getChat verification crashed (non-fatal)")
 
     # 1. Collect + filter candidates.
     stage_started = time.monotonic()
@@ -856,12 +1067,14 @@ def main() -> int:
         logger.error("No valid Fake-TLS candidates from any source.")
         gh_annotation("warning",
                       "No valid Fake-TLS candidates from any source; skipping run")
+        _post_decision(False, "no valid candidates from sources", 0, 0,
+                       channel_id, "-", 0)
         return 0
 
-    # 2. Latency-test and rank.
+    # 2. Latency-test and rank (early-stop once the batch is coverable).
     stage_started = time.monotonic()
     try:
-        reachable = rank_reachable(candidates)
+        reachable = rank_reachable(candidates, enough=BATCH_SIZE + 3)
     except Exception:
         logger.exception("Unexpected error during latency tests")
         return 0
@@ -873,32 +1086,53 @@ def main() -> int:
         logger.error("None of the %d candidates are reachable.", len(candidates))
         gh_annotation("warning",
                       f"0/{len(candidates)} proxy candidates reachable; skipping run")
+        _post_decision(False, "0 candidates reachable", len(candidates), 0,
+                       channel_id, "-", 0)
         return 0
     logger.info(
         "Distinct server hostnames available: %d",
         len({p.server.lower() for p, _ in reachable}),
     )
 
-    # 3. Pick fresh proxies (never pad with duplicates/unverified ones).
+    # 3. Pick fresh proxies (cooldown-aware reuse; never pad unverified).
     stage_started = time.monotonic()
     try:
         HISTORY_FILE.touch(exist_ok=True)
     except OSError as exc:
         logger.warning("Could not create history file %s: %s", HISTORY_FILE, exc)
     history = load_history()
-    after_history = [p for p, _ in reachable if p.link not in history and p.key not in history]
-    logger.info("After history filtering: %d candidates remain", len(after_history))
-    picks = pick_batch(reachable, history)
+    last_posted = load_history_timestamps()
+    after_history = [p for p, _ in reachable
+                     if p.key not in history
+                     or (time.time() - last_posted.get(p.key, 0.0)) >= REUSE_COOLDOWN]
+    logger.info(
+        "After history filtering: %d candidates remain (history size %d, "
+        "cooldown %.0fh)",
+        len(after_history), len(history), REUSE_COOLDOWN / 3600.0,
+    )
+    picks = pick_batch(reachable, history, last_posted=last_posted)
     logger.info("[stage] selection: %d fresh proxies in %.1f s",
                 len(picks), time.monotonic() - stage_started)
     if not picks:
+        # Pool fully exhausted within the cooldown window: publish the
+        # maintenance notice instead of exiting silently.
         logger.warning(
-            "No fresh valid proxies available after all filters and tests; "
-            "skipping this run. Next scheduled run will retry."
+            "No fresh proxies within the %.0fh cooldown window; falling "
+            "back to the maintenance notice.", REUSE_COOLDOWN / 3600.0,
         )
-        gh_annotation("warning",
-                      "All reachable proxies were already posted (history "
-                      "exhausted); skipping this run")
+        gh_annotation(
+            "warning",
+            "Proxy pool exhausted within cooldown; posting maintenance notice",
+        )
+        try:
+            ok = _maintenance_fallback(token, channel_id)
+        except Exception:
+            logger.exception("Maintenance fallback crashed")
+            ok = False
+        _post_decision(ok, "pool exhausted -> maintenance notice", 0, 0,
+                       channel_id, "plain", len(MAINTENANCE_TEXT))
+        logger.info("=== ProxGram run finished (maintenance) in %.1f s ===",
+                    time.monotonic() - run_started)
         return 0
     if len(picks) < BATCH_SIZE:
         logger.warning(
@@ -947,6 +1181,8 @@ def main() -> int:
     message = format_batch_message(proxies, latencies,
                                    rates_section=rates_html,
                                    rates_section_plain=rates_plain)
+    if time.monotonic() > deadline:
+        logger.warning("Global deadline exceeded before dispatch; dispatching anyway.")
     try:
         success = send_message(token, channel_id, message,
                                proxies=proxies, latencies=latencies,
@@ -954,11 +1190,16 @@ def main() -> int:
     except Exception:
         logger.exception("Unexpected error while posting the batch")
         gh_annotation("error", "Unexpected crash while posting the batch")
+        _post_decision(False, "dispatch crashed", len(after_history),
+                       len(proxies), channel_id, "-", len(message))
         return 0
     logger.info(
         "[stage] dispatch: success=%s in %.1f s",
         success, time.monotonic() - stage_started,
     )
+    _post_decision(success, "batch dispatched" if success else "telegram rejected",
+                   len(after_history), len(proxies), channel_id,
+                   "HTML", len(message))
 
     if not success:
         logger.error("History NOT updated for this batch.")
