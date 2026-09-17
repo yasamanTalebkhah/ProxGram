@@ -1,0 +1,77 @@
+{
+  "updated_at": "2026-09-17T13:52:06",
+  "health": {
+    "2.27.12.116:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.5,
+      "last_seen": 1789640526.9397988
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 113.2,
+      "last_seen": 1789640526.9397988
+    },
+    "194.59.221.90:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 120.0,
+      "last_seen": 1789640526.9397988
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 116.6,
+      "last_seen": 1789640526.9397988
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 115.7,
+      "last_seen": 1789640526.9397988
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 112.6,
+      "last_seen": 1789640526.9397988
+    },
+    "2.26.0.194:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.1,
+      "last_seen": 1789640526.9397988
+    },
+    "45.146.164.117:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 147.5,
+      "last_seen": 1789640526.9397988
+    },
+    "87.121.82.9:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.2,
+      "last_seen": 1789640526.9397988
+    },
+    "setion-two.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 162.2,
+      "last_seen": 1789640526.9397988
+    },
+    "212.67.15.226:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 161.2,
+      "last_seen": 1789640526.9397988
+    },
+    "31.76.77.196:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.1,
+      "last_seen": 1789640526.9397988
+    }
+  }
+}

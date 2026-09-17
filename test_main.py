@@ -31,6 +31,8 @@ sys.modules["requests"] = _requests
 
 import main  # noqa: E402
 import rates  # noqa: E402
+import fetcher  # noqa: E402
+import prober  # noqa: E402
 
 
 def make_proxy(server="s.example", port=443, secret="ee" + "ab" * 8):
@@ -1288,6 +1290,214 @@ class TcpPingTests(unittest.TestCase):
     def test_invalid_inputs(self):
         self.assertIsNone(main.tcp_ping("", 443))
         self.assertIsNone(main.tcp_ping("x.example", 0))
+
+
+class MultiSourceFetcherTests(unittest.TestCase):
+    """fetcher.py: parallel fetch, normalization, strict MTProto filter."""
+
+    TEXT_FEED = (
+        "https://t.me/proxy?server=a.example&port=443"
+        "&secret=eeNEgYdJvXrFGRMCIMJdCQ\n"
+        "socks5://1.2.3.4:1080\n"
+        "vless://uuid@host:443?security=tls\n"
+        "tg://proxy?server=b.example&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ\n"
+        "  https://t.me/proxy?server=c.example&port=2053&secret=eeZZYYXXWWVVUUTTSSRR  \n"
+    )
+
+    def test_text_feed_strict_mtproto_filter(self):
+        parsed = fetcher.parse_text_feed(self.TEXT_FEED)
+        servers = {p.server for p in parsed}
+        self.assertEqual(servers, {"a.example", "b.example", "c.example"})
+        self.assertTrue(all(p.protocol == "MTProto" for p in parsed))
+
+    def test_parallel_fetch_skips_failed_sources(self):
+        sources = [
+            ("https://ok.example/feed.txt", "text"),
+            ("https://bad.example/feed.txt", "text"),
+        ]
+        with mock.patch.object(
+            fetcher, "fetch_url",
+            side_effect=lambda url, timeout=None: (
+                self.TEXT_FEED if "ok" in url else None
+            ),
+        ):
+            results = fetcher.fetch_all(sources)
+        self.assertIsNotNone(results["https://ok.example/feed.txt"])
+        self.assertIsNone(results["https://bad.example/feed.txt"])
+
+    def test_fetch_pipeline_telemetry_and_dedup(self):
+        sources = [("https://x.example/a.txt", "text")]
+        with mock.patch.object(
+            fetcher, "fetch_url", return_value=self.TEXT_FEED,
+        ), mock.patch.object(fetcher, "MAX_PER_SOURCE", 60):
+            candidates = fetcher.fetch_candidates(sources=sources, cap=90)
+        # one entry lacks a Fake-TLS secret -> c.example dropped by validate
+        keys = {p.key for p in candidates}
+        self.assertIn("a.example:443", keys)
+        self.assertIn("b.example:8880", keys)
+        self.assertNotIn("c.example:2053", keys)
+
+    def test_sources_backbone_configured(self):
+        urls = [url for url, _ in fetcher.SOURCES]
+        self.assertIn("https://raw.githubusercontent.com/hookzof/socks5_list/"
+                      "master/proxy.txt", urls)
+        self.assertIn("https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/"
+                      "master/mtproto.txt", urls)
+        self.assertIn("https://raw.githubusercontent.com/jetkai/proxy-list/"
+                      "main/online-proxies/proto.txt", urls)
+        self.assertIn("https://raw.githubusercontent.com/roosterkid/"
+                      "openproxylist/main/MTPROTO_RAW.txt", urls)
+        self.assertLessEqual(fetcher.FETCH_TIMEOUT, 5.0)
+
+    def test_main_collect_candidates_delegates(self):
+        with mock.patch.object(
+            fetcher, "fetch_candidates", return_value=[],
+        ) as fc:
+            main.collect_candidates(extra=30)
+            fc.assert_called_once_with(cap=main.MAX_TO_TEST + 30)
+
+
+class StrictProberTests(unittest.TestCase):
+    """prober.py: latency cap, two-strike TTL purge, history.json."""
+
+    def setUp(self):
+        import tempfile
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        health_file = Path(self._tmp.name) / "history.json"
+        self._patches = [
+            mock.patch.object(prober, "HISTORY_JSON_FILE", health_file),
+        ]
+        for patch in self._patches:
+            patch.start()
+            self.addCleanup(patch.stop)
+
+    def test_two_strikes_purge_from_active_list(self):
+        results = {"h1.example:443": None, "h2.example:443": 100.0}
+        purged = prober.update_health(results)
+        self.assertEqual(purged, [])
+        self.assertEqual(prober.banned_keys(), set())
+        purged = prober.update_health({"h1.example:443": None})
+        self.assertEqual(purged, ["h1.example:443"])
+        self.assertIn("h1.example:443", prober.banned_keys())
+        # ban persists in history.json (purged flag), never resurrected
+        entry = prober.load_health()["h1.example:443"]
+        self.assertTrue(entry["purged"])
+        self.assertEqual(
+            prober.load_health()["h2.example:443"]["latency_ms"], 100.0)
+
+    def test_success_resets_strikes(self):
+        prober.update_health({"h3.example:443": None})
+        prober.update_health({"h3.example:443": 150.0})
+        self.assertEqual(prober.load_health()["h3.example:443"]["strikes"], 0)
+        self.assertTrue(prober.load_health()["h3.example:443"]["alive"])
+
+    def test_probe_skips_banned_proxies(self):
+        health = prober.load_health()
+        health["banned.example:443"] = {
+            "alive": False, "strikes": 2, "purged": True,
+            "last_seen": time.time(),
+        }
+        prober.save_health(health)
+        candidates = [main.Proxy("banned.example", 443, "eeAABBCCDDEEFF001122")]
+        with mock.patch.object(prober, "tcp_ping") as ping:
+            valid = prober.probe(candidates, enough=1)
+        ping.assert_not_called()
+        self.assertEqual(valid, [])
+
+    def test_probe_enforces_latency_cap_and_records_health(self):
+        candidates = [
+            main.Proxy("fast.example", 443, "eeAABBCCDDEEFF001122"),
+            main.Proxy("slow.example", 443, "eeAABBCCDDEEFF001122"),
+        ]
+        latencies = {"fast.example": 120.0, "slow.example": 3000.0}
+        with mock.patch.object(
+            prober, "tcp_ping",
+            side_effect=lambda host, port, timeout=None:
+                latencies[host],
+        ):
+            valid = prober.probe(candidates, enough=5)
+        self.assertEqual([p.key for p, _ in valid], ["fast.example:443"])
+        self.assertEqual(
+            prober.load_health()["slow.example:443"]["strikes"], 1)
+
+    def test_health_json_compaction_cap(self):
+        health = {
+            f"h{i}.example:443": {
+                "alive": True, "strikes": 0,
+                "latency_ms": 100.0, "last_seen": float(i),
+            }
+            for i in range(prober.MAX_HEALTH_ENTRIES + 50)
+        }
+        self.assertTrue(prober.save_health(health))
+        self.assertLessEqual(len(prober.load_health()),
+                             prober.MAX_HEALTH_ENTRIES)
+        # newest (highest last_seen) retained, oldest dropped
+        self.assertIn("h1049.example:443", prober.load_health())
+        self.assertNotIn("h0.example:443", prober.load_health())
+
+    def test_main_rank_reachable_delegates(self):
+        proxies = [main.Proxy("x.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
+        with mock.patch.object(
+            prober, "probe", return_value=[],
+        ) as probe_mock:
+            main.rank_reachable(proxies, enough=7)
+            probe_mock.assert_called_once()
+
+
+class ResiliencePipelineTests(unittest.TestCase):
+    """Refresh cycle + low-maintenance mode + runtime telemetry."""
+
+    TOKEN = "123456789:" + "A" * 34
+
+    def _run_main(self, collect_results, rank_results, send_ok=True):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            hist = Path(tmp) / "history.txt"
+            with \
+                    mock.patch.object(main, "HISTORY_FILE", hist), \
+                    mock.patch.object(main, "collect_candidates",
+                                      side_effect=collect_results), \
+                    mock.patch.object(main, "rank_reachable",
+                                      side_effect=rank_results), \
+                    mock.patch.object(main, "send_message",
+                                      return_value=send_ok), \
+                    mock.patch.dict(os.environ, {
+                        "TELEGRAM_BOT_TOKEN": self.TOKEN,
+                        "TELEGRAM_CHANNEL_ID": "@chan",
+                    }):
+                code = main.main()
+        return code
+
+    def test_refresh_cycle_retries_when_pool_empty(self):
+        proxies = [main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+                   for i in range(1, 6)]
+        code = self._run_main(
+            collect_results=[[], proxies],          # 1st empty, refresh works
+            rank_results=[[(p, 100.0) for p in proxies]],
+        )
+        self.assertEqual(code, 0)  # recovered via the refresh cycle
+
+    def test_low_maintenance_below_hard_floor(self):
+        proxies = [main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
+        code = self._run_main(
+            collect_results=[proxies],
+            rank_results=[[(proxies[0], 100.0)]],   # 1 valid < floor of 3
+        )
+        self.assertEqual(code, 0)
+
+    def test_no_dead_proxies_ever_posted(self):
+        proxies = [main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
+        code = self._run_main(
+            collect_results=[proxies],
+            rank_results=[[]],                       # nothing survives probing
+        )
+        self.assertEqual(code, 0)
+
+    def test_telemetry_constants(self):
+        self.assertEqual(fetcher.FETCH_TIMEOUT, 5.0)
+        self.assertEqual(prober.STRIKE_LIMIT, 2)
+        self.assertLessEqual(fetcher.FETCH_TIMEOUT, 5.0)
 
 
 if __name__ == "__main__":

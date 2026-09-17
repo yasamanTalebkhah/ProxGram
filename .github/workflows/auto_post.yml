@@ -55,6 +55,9 @@ jobs:
           if [ -f history.txt ] && [ -n "$(git status --porcelain -- history.txt)" ]; then
             git add history.txt
           fi
+          if [ -f history.json ] && [ -n "$(git status --porcelain -- history.json)" ]; then
+            git add history.json
+          fi
           if [ -f last_rates.json ] && [ -n "$(git status --porcelain -- last_rates.json)" ]; then
             git add last_rates.json
           fi

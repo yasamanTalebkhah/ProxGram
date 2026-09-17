@@ -28,12 +28,10 @@ duplicates are never re-posted across workflow runs. last_rates.json
 (rates.py) caches the last successfully fetched market rates.
 """
 
-import concurrent.futures
 import json
 import logging
 import os
 import re
-import select
 import socket
 import string
 import sys
@@ -45,22 +43,23 @@ from urllib.parse import parse_qs, quote, urlparse
 import requests
 
 import rates as rates_module
+import fetcher as fetcher_module
+import prober as prober_module
 
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
 
-# Handshake-verified feed first; plaintext feeds as fallbacks.
-JSON_SOURCES = [
-    "https://raw.githubusercontent.com/dubblebyte/free-mtproto-proxies/main/proxies.json",
-]
-PLAINTEXT_SOURCES = [
-    "https://raw.githubusercontent.com/SoliSpirit/mtproto/master/all_proxies.txt",
-    "https://raw.githubusercontent.com/Grim1313/mtproto-for-telegram/master/all_proxies.txt",
-]
+# Multi-source backbone (parallel fetch in fetcher.py; listed here as
+# readable aliases for diagnostics and tests).
+JSON_SOURCES = [url for url, kind in fetcher_module.SOURCES if kind == "json"]
+PLAINTEXT_SOURCES = [url for url, kind in fetcher_module.SOURCES if kind == "text"]
 
-MAX_PER_SOURCE = 60   # cap parsed proxies per source feed
-MAX_TO_TEST = 90      # cap total candidates sent through the health check
+MAX_PER_SOURCE = fetcher_module.MAX_PER_SOURCE
+MAX_TO_TEST = fetcher_module.MAX_TO_TEST      # probe cap
+FETCH_TIMEOUT = fetcher_module.FETCH_TIMEOUT  # 5s per URL (parallel)
+REFRESH_EXTRA = 30   # extra candidates admitted by the refresh cycle
+STRIKE_LIMIT = prober_module.STRIKE_LIMIT     # 2 consecutive fails -> purge
 PING_TIMEOUT = 2.0    # seconds - strict TCP connect timeout
 MAX_LATENCY_MS = 2500  # discard anything slower than this
 MAX_WORKERS = 60      # parallel TCP tests (total wall time ~= one timeout)
@@ -90,6 +89,7 @@ MIN_B64URL_SECRET_LEN = 22  # 16-byte key (b64) + at least ~10 chars of domain
 MIN_HEX_SECRET_LEN = 34     # ee + 32 hex (key only) is NOT enough - domain required
 
 HISTORY_FILE = Path(__file__).resolve().parent / "history.txt"
+HISTORY_JSON_FILE = prober_module.HISTORY_JSON_FILE  # TTL health map
 LOG_FILE = Path(__file__).resolve().parent / "proxgram.log"
 
 HTTP_TIMEOUT = 10     # seconds - strict cap for every source/feed fetch
@@ -315,28 +315,8 @@ def is_allowed_port(port: int) -> bool:
 # ---------------------------------------------------------------------------
 
 def fetch_text(url: str) -> str | None:
-    """Download a text payload; return None on any network/HTTP error."""
-    started = time.monotonic()
-    try:
-        resp = requests.get(
-            url,
-            timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": USER_AGENT},
-        )
-        elapsed = (time.monotonic() - started) * 1000.0
-        resp.raise_for_status()
-        logger.info(
-            "Fetched %s: HTTP %s, %d chars in %.0f ms",
-            url, getattr(resp, "status_code", "?"), len(resp.text), elapsed,
-        )
-        return resp.text
-    except (requests.RequestException, OSError) as exc:
-        # OSError covers socket-level failures so sibling sources still load.
-        logger.warning(
-            "Failed to fetch %s after %.0f ms: %s",
-            url, (time.monotonic() - started) * 1000.0, exc,
-        )
-        return None
+    """Download a payload (delegates to the parallel fetcher)."""
+    return fetcher_module.fetch_url(url)
 
 
 def parse_qs_last(query: str) -> dict[str, str]:
@@ -420,47 +400,14 @@ def apply_filters(proxies: list[Proxy]) -> tuple[list[Proxy], dict]:
     return kept, stats
 
 
-def collect_candidates() -> list[Proxy]:
-    """Fetch all sources, parse, filter, dedupe, and cap the test list."""
-    candidates: list[Proxy] = []
-    seen: set[tuple[str, int, str]] = set()
+def collect_candidates(extra: int = 0) -> list[Proxy]:
+    """Parallel multi-source fetch via fetcher.py (dedup + strict filter).
 
-    def add_many(parsed: list[Proxy], source_name: str) -> int:
-        fetched = len(parsed)
-        kept, stats = apply_filters(parsed)
-        added = 0
-        for proxy in kept:
-            if proxy.combo in seen:
-                continue
-            seen.add(proxy.combo)
-            candidates.append(proxy)
-            added += 1
-        logger.info(
-            "%s: fetched %d, after Fake-TLS/secret+port validation %d "
-            "(rejected: %d bad secret, %d bad port)",
-            source_name, fetched, added, stats["bad_secret"], stats["bad_port"],
-        )
-        return added
-
-    for url in JSON_SOURCES:
-        raw = fetch_text(url)
-        if raw is None:
-            continue
-        add_many(parse_json_source(raw), f"JSON feed {url.split('/main/')[-1]}")
-
-    plaintext_budget = max(MAX_TO_TEST - len(candidates), 0)
-    for url in PLAINTEXT_SOURCES:
-        if plaintext_budget <= 0:
-            break
-        raw = fetch_text(url)
-        if raw is None:
-            continue
-        parsed = parse_plaintext_source(raw)
-        add_many(parsed[:plaintext_budget * 3], f"plaintext {url.split('/')[-1]}")
-        plaintext_budget = max(MAX_TO_TEST - len(candidates), 0)
-
-    logger.info("Total unique candidates after validation: %d", len(candidates))
-    return candidates[:MAX_TO_TEST]
+    `extra` raises the probe cap temporarily (refresh cycle). The returned
+    list is ordered JSON-feed-first so handshake-verified entries win.
+    """
+    cap = min(MAX_TO_TEST + max(0, extra), 200)
+    return fetcher_module.fetch_candidates(cap=cap)
 
 
 # ---------------------------------------------------------------------------
@@ -468,72 +415,8 @@ def collect_candidates() -> list[Proxy]:
 # ---------------------------------------------------------------------------
 
 def tcp_ping(host: str, port: int, timeout: float = PING_TIMEOUT) -> float | None:
-    """Non-blocking TCP connect test. Returns latency in ms, or None.
-
-    The socket is set non-blocking so a dead host burns exactly `timeout`
-    seconds, never more, and a shared per-attempt deadline covers DNS
-    resolution plus all resolved addresses.
-    """
-    host = str(host).strip().strip(".")
-    try:
-        port = int(port)
-    except (TypeError, ValueError):
-        return None
-    if not host or not (0 < port < 65536):
-        return None
-
-    deadline = time.monotonic() + timeout
-    try:
-        infos = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
-    except OSError:
-        return None  # unresolvable host
-
-    # Codes meaning "connection in progress" on Linux/macOS/Windows:
-    in_progress_codes = {
-        code for code in (
-            getattr(socket, "EINPROGRESS", None),
-            getattr(socket, "EWOULDBLOCK", None),
-            getattr(socket, "WSAEWOULDBLOCK", None),
-            10035, 115, 36,
-        )
-        if code is not None
-    }
-
-    for af, socktype, proto, _canonical, sockaddr in infos[:2]:  # v4 then v6
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            return None
-        started = time.monotonic()
-        sock = None
-        try:
-            sock = socket.socket(af, socktype, proto)
-            sock.setblocking(False)  # non-blocking: connect wins/loses fast
-            err = sock.connect_ex(sockaddr)
-            if err == 0:
-                return (time.monotonic() - started) * 1000.0
-            if err not in in_progress_codes:
-                continue  # refused/unreachable outright - try next address
-            # Wait for writability without blocking past the deadline.
-            while True:
-                left = deadline - time.monotonic()
-                if left <= 0:
-                    return None  # timed out
-                _, writable, _ = select.select([], [sock], [], left)
-                if not writable:
-                    continue  # loop re-checks the deadline
-                err = sock.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
-                if err == 0:
-                    return (time.monotonic() - started) * 1000.0
-                return None  # handshake failed (refused / unreachable)
-        except OSError:
-            continue  # try next address
-        finally:
-            if sock is not None:
-                try:
-                    sock.close()
-                except OSError:
-                    pass
-    return None
+    """Non-blocking TCP connect test (delegates to the strict prober)."""
+    return prober_module.tcp_ping(host, port, timeout)
 
 
 # ---------------------------------------------------------------------------
@@ -862,51 +745,14 @@ def send_message(token: str, chat_id: str, text: str,
 
 def rank_reachable(proxies: list[Proxy],
                    enough: int | None = None) -> list[tuple[Proxy, float]]:
-    """TCP-test candidates in parallel; return reachable ones sorted by ping.
+    """Strict parallel probe via prober.py (latency cap + TTL health).
 
-    `enough` enables early stop: probing halts once that many reachable
+    `enough` enables early stop: probing halts once that many valid
     proxies exist (deadline-safe; in-flight probes are cancelled).
     """
     if not proxies:
         return []
-    started = time.monotonic()
-    results: list[tuple[int, Proxy, float]] = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        futures = {
-            pool.submit(tcp_ping, p.server, p.port): (i, p)
-            for i, p in enumerate(proxies)
-        }
-        for future in concurrent.futures.as_completed(futures):
-            index, proxy = futures[future]
-            try:
-                latency = future.result()
-            except Exception as exc:  # defensive: a worker must never kill the run
-                logger.debug("Health check crashed for %s: %s", proxy.server, exc)
-                continue
-            if latency is not None:
-                results.append((index, proxy, latency))
-                if enough is not None and len(results) >= enough:
-                    logger.info(
-                        "Early stop: %d reachable proxies found; cancelling "
-                        "%d remaining probes", len(results),
-                        sum(1 for f in futures if not f.done()),
-                    )
-                    for f in futures:
-                        f.cancel()
-                    break
-
-    elapsed = time.monotonic() - started
-    results.sort(key=lambda item: (item[2], item[0]))  # lowest ping first, ties by feed order
-    reachable = [(proxy, latency) for _i, proxy, latency in results]
-    logger.info(
-        "Latency test: tested %d candidates in %.1f s (%d workers, timeout "
-        "%.1fs) -> %d reachable, best %.0f ms, cap %d ms",
-        len(proxies), elapsed, MAX_WORKERS, PING_TIMEOUT,
-        len(reachable),
-        reachable[0][1] if reachable else float("inf"),
-        MAX_LATENCY_MS,
-    )
-    return reachable
+    return prober_module.probe(proxies, enough=enough or (BATCH_SIZE + 3))
 
 
 def pick_batch(reachable: list[tuple[Proxy, float]],
@@ -1028,6 +874,26 @@ def _maintenance_fallback(token: str, chat_id: str) -> bool:
     return ok
 
 
+def _low_maintenance(token: str, chat_id: str, run_started: float,
+                     reason: str) -> int:
+    """Low-maintenance mode: a short notice post instead of dead proxies.
+
+    Used when the valid pool is below the hard floor (or empty after the
+    Refresh Cycle); keeps the channel alive without ever posting an
+    unverified proxy. Returns the process exit code.
+    """
+    try:
+        ok = _maintenance_fallback(token, chat_id)
+    except Exception:
+        logger.exception("Low-maintenance dispatch crashed")
+        ok = False
+    _post_decision(ok, f"low-maintenance ({reason})", 0, 0,
+                   chat_id, "plain", len(MAINTENANCE_TEXT))
+    logger.info("=== ProxGram run finished (low-maintenance) in %.1f s ===",
+                time.monotonic() - run_started)
+    return 0
+
+
 def main() -> int:
     run_started = time.monotonic()
     deadline = run_started + GLOBAL_DEADLINE
@@ -1056,10 +922,18 @@ def main() -> int:
     except Exception:
         logger.exception("getChat verification crashed (non-fatal)")
 
-    # 1. Collect + filter candidates.
+    # 1. Collect + filter candidates (parallel multi-source fetcher) with a
+    # one-shot Refresh Cycle when the pool comes back empty.
     stage_started = time.monotonic()
+    candidates: list[Proxy] = []
     try:
         candidates = collect_candidates()
+        if not candidates:
+            logger.warning(
+                "Fetch yielded 0 candidates; triggering Refresh Cycle "
+                "(+%d probe budget)", REFRESH_EXTRA,
+            )
+            candidates = collect_candidates(extra=REFRESH_EXTRA)
     except Exception:
         logger.exception("Unexpected error while collecting proxies")
         gh_annotation("error", "Proxy source collection crashed - see logs")
@@ -1069,33 +943,51 @@ def main() -> int:
     if not candidates:
         logger.error("No valid Fake-TLS candidates from any source.")
         gh_annotation("warning",
-                      "No valid Fake-TLS candidates from any source; skipping run")
-        _post_decision(False, "no valid candidates from sources", 0, 0,
-                       channel_id, "-", 0)
-        return 0
+                      "No valid Fake-TLS candidates from any source")
+        return _low_maintenance(token, channel_id, run_started,
+                                "no valid candidates from sources")
 
-    # 2. Latency-test and rank (early-stop once the batch is coverable).
+    # 2. Strict probe (latency cap + TTL health) with a Refresh Cycle when
+    # fewer than BATCH_SIZE valid proxies survive.
     stage_started = time.monotonic()
+    reachable: list[tuple[Proxy, float]] = []
     try:
         reachable = rank_reachable(candidates, enough=BATCH_SIZE + 3)
+        if len(reachable) < BATCH_SIZE:
+            logger.warning(
+                "Only %d valid proxies after probing; Refresh Cycle with a "
+                "broader candidate pool (+%d)", len(reachable), REFRESH_EXTRA,
+            )
+            refreshed = collect_candidates(extra=REFRESH_EXTRA)
+            if refreshed:
+                reachable = rank_reachable(
+                    refreshed, enough=BATCH_SIZE + 3,
+                )
     except Exception:
         logger.exception("Unexpected error during latency tests")
         return 0
     logger.info(
-        "[stage] latency test: %d/%d reachable in %.1f s",
+        "[stage] probe: %d valid / %d tested in %.1f s",
         len(reachable), len(candidates), time.monotonic() - stage_started,
     )
-    if not reachable:
-        logger.error("None of the %d candidates are reachable.", len(candidates))
-        gh_annotation("warning",
-                      f"0/{len(candidates)} proxy candidates reachable; skipping run")
-        _post_decision(False, "0 candidates reachable", len(candidates), 0,
-                       channel_id, "-", 0)
-        return 0
     logger.info(
         "Distinct server hostnames available: %d",
         len({p.server.lower() for p, _ in reachable}),
     )
+    # Never post dead proxies just to fill space: below the hard floor of
+    # BATCH_SIZE - 2 valid proxies, publish the low-maintenance notice.
+    if len(reachable) < BATCH_SIZE - 2:
+        logger.warning(
+            "Valid pool below floor (%d < %d); entering low-maintenance mode",
+            len(reachable), BATCH_SIZE - 2,
+        )
+        gh_annotation(
+            "warning",
+            f"Only {len(reachable)} valid proxies available; "
+            "posting low-maintenance notice instead of dead proxies",
+        )
+        return _low_maintenance(token, channel_id, run_started,
+                                f"valid pool {len(reachable)} < {BATCH_SIZE - 2}")
 
     # 3. Pick fresh proxies (cooldown-aware reuse; never pad unverified).
     stage_started = time.monotonic()
@@ -1117,26 +1009,14 @@ def main() -> int:
     logger.info("[stage] selection: %d fresh proxies in %.1f s",
                 len(picks), time.monotonic() - stage_started)
     if not picks:
-        # Pool fully exhausted within the cooldown window: publish the
-        # maintenance notice instead of exiting silently.
+        # Pool fully exhausted within the cooldown window: low-maintenance
+        # notice instead of exiting silently or reposting.
         logger.warning(
             "No fresh proxies within the %.0fh cooldown window; falling "
             "back to the maintenance notice.", REUSE_COOLDOWN / 3600.0,
         )
-        gh_annotation(
-            "warning",
-            "Proxy pool exhausted within cooldown; posting maintenance notice",
-        )
-        try:
-            ok = _maintenance_fallback(token, channel_id)
-        except Exception:
-            logger.exception("Maintenance fallback crashed")
-            ok = False
-        _post_decision(ok, "pool exhausted -> maintenance notice", 0, 0,
-                       channel_id, "plain", len(MAINTENANCE_TEXT))
-        logger.info("=== ProxGram run finished (maintenance) in %.1f s ===",
-                    time.monotonic() - run_started)
-        return 0
+        return _low_maintenance(token, channel_id, run_started,
+                                "pool exhausted within cooldown")
     if len(picks) < BATCH_SIZE:
         logger.warning(
             "Partial batch: only %d/%d fresh valid proxies available; "
