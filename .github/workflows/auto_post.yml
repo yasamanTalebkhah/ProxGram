@@ -49,8 +49,8 @@ jobs:
           if [ -f history.txt ] && [ -n "$(git status --porcelain -- history.txt)" ]; then
             git add history.txt
           fi
-          if [ -f news_history.txt ] && [ -n "$(git status --porcelain -- news_history.txt)" ]; then
-            git add news_history.txt
+          if [ -f last_rates.json ] && [ -n "$(git status --porcelain -- last_rates.json)" ]; then
+            git add last_rates.json
           fi
           if git diff --staged --quiet; then
             echo "No history changes to commit."

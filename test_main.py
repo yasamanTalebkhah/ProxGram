@@ -1,8 +1,8 @@
 """Unit tests for ProxGram's five-proxy batch posting logic.
 
 Run with:  python -m unittest test_main -v
-Uses only the standard library (unittest); `requests` and `feedparser`
-are stubbed so the tests run without the packages installed.
+Uses only the standard library (unittest); `requests` is stubbed so the
+tests run without the package installed.
 """
 
 import os
@@ -10,6 +10,7 @@ import re
 import sys
 import types
 import unittest
+from datetime import date, datetime
 from pathlib import Path
 from unittest import mock
 from urllib.parse import urlparse
@@ -27,13 +28,8 @@ _requests.get = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"
 _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
 sys.modules["requests"] = _requests
 
-_feedparser = types.ModuleType("feedparser")
-_feedparser.parse = lambda *a, **k: (_ for _ in ()).throw(AssertionError(
-    "feedparser.parse called outside a test that mocks it"))
-sys.modules["feedparser"] = _feedparser
-
 import main  # noqa: E402
-import news  # noqa: E402
+import rates  # noqa: E402
 
 
 def make_proxy(server="s.example", port=443, secret="ee" + "ab" * 8):
@@ -387,8 +383,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertLess(self.text.index("Run unit tests"),
                         self.text.index("Run Proxy Publisher"))
 
-    def test_news_history_committed_alongside_history(self):
-        self.assertIn("news_history.txt", self.text)
+    def test_history_committed_before_push(self):
         self.assertIn("history.txt", self.text)
         self.assertLess(self.text.index("git add history.txt"),
                         self.text.index("git diff --staged --quiet"))
@@ -410,225 +405,323 @@ class WorkflowConfigTests(unittest.TestCase):
 # News integration (news.py + caption wiring)
 # ---------------------------------------------------------------------------
 
-def _fake_feed_response(text):
-    class Resp:
-        def raise_for_status(self):
-            pass
+# ---------------------------------------------------------------------------
+# Jalali date formatting (rates.py)
+# ---------------------------------------------------------------------------
 
-    resp = Resp()
-    resp.text = text
-    resp.status_code = 200
-    resp.apparent_encoding = "utf-8"
-    resp.encoding = "utf-8"
-    return resp
+class JalaliDateTests(unittest.TestCase):
+    def test_known_conversions(self):
+        pairs = [
+            ((2026, 9, 17), (1405, 6, 26)),
+            ((2026, 9, 16), (1405, 6, 25)),      # matches TGJU's own stamps
+            ((2026, 3, 21), (1405, 1, 1)),        # Nowruz 1405
+            ((2025, 3, 21), (1404, 1, 1)),        # Nowruz 1404
+            ((2024, 3, 20), (1403, 1, 1)),        # Nowruz 1403
+            ((2025, 12, 21), (1404, 9, 30)),      # end of Azar 1404
+            ((2026, 3, 20), (1404, 12, 29)),      # end of Esfand 1404
+            ((2028, 3, 20), (1407, 1, 1)),        # Nowruz 1407
+        ]
+        for g, expected in pairs:
+            self.assertEqual(rates.gregorian_to_jalali(date(*g)), expected,
+                             f"{g} -> {expected}")
+
+    def test_leap_year_30_esfand(self):
+        self.assertEqual(rates.gregorian_to_jalali(date(2028, 3, 20)), (1407, 1, 1))
+        self.assertEqual(rates.gregorian_to_jalali(date(2027, 3, 20)), (1405, 12, 29))
+
+    def test_roundtrip(self):
+        for g in (date(2026, 9, 17), date(2026, 3, 21), date(2024, 3, 20),
+                  date(2025, 12, 21), date(2030, 7, 15)):
+            jy, jm, jd = rates.gregorian_to_jalali(g)
+            self.assertEqual(rates.jalali_to_gregorian(jy, jm, jd),
+                             (g.year, g.month, g.day))
+
+    def test_weekday_names(self):
+        self.assertEqual(rates.persian_weekday(datetime(2026, 9, 17)), "پنج‌شنبه")
+        self.assertEqual(rates.persian_weekday(datetime(2026, 9, 18)), "جمعه")
+        self.assertEqual(rates.persian_weekday(datetime(2026, 9, 19)), "شنبه")
+        self.assertEqual(rates.persian_weekday(datetime(2026, 9, 21)), "دوشنبه")
+
+    def test_format_zero_padded(self):
+        self.assertEqual(rates.format_jalali_date(datetime(2026, 9, 17)),
+                         "26/06/1405")
+        self.assertEqual(rates.format_jalali_date(datetime(2026, 3, 21)),
+                         "01/01/1405")
 
 
-def _rss_xml(items):
-    """Minimal RSS 2.0 document builder. items: list of (title, link, pubDate, desc)."""
-    rows = []
-    for title, link, pub, desc in items:
-        desc = f"<description><![CDATA[{desc}]]></description>" if desc else ""
-        rows.append(
-            f"<item><title><![CDATA[{title}]]></title>"
-            f"<link>{link}</link>{desc}"
-            f"<pubDate>{pub}</pubDate><guid>{link}</guid></item>"
-        )
-    return (
-        '<?xml version="1.0" encoding="UTF-8"?>'
-        "<rss version='2.0'><channel>" + "".join(rows) + "</channel></rss>"
-    )
+# ---------------------------------------------------------------------------
+# Market rates parsing (TGJU bulk JSON)
+# ---------------------------------------------------------------------------
+
+def _tgju_entry(p, ts="2026-09-16 12:00:00"):
+    return {"p": str(p), "h": str(p), "l": str(p), "d": "0", "dp": 0,
+            "dt": "", "t": "", "t_en": "", "t-g": "", "ts": ts}
 
 
-def _fake_feedparser_parse(raw):
-    """Test double for feedparser.parse: stdlib RSS parsing with dates."""
-    import xml.etree.ElementTree as ET
-    from email.utils import parsedate_to_datetime
+def _tgju_bulk():
+    return {"current": {
+        "price_dollar_rl": _tgju_entry("2,305,000"),
+        "geram18": _tgju_entry("235,013,000"),
+        "geram24": _tgju_entry("313,348,000"),
+        "sekee": _tgju_entry("2,340,100,000"),
+        "sekee_real": _tgju_entry("2,293,633,000"),
+        "sekeb": _tgju_entry("2,292,400,000"),
+        "sekeb_blubber": _tgju_entry("66,580,000"),
+        "nim": _tgju_entry("1,178,000,000"),
+        "nim_blubber": _tgju_entry("10,820,000"),
+        "rob": _tgju_entry("630,000,000"),
+        "rob_blubber": _tgju_entry("40,380,000"),
+        "gerami": _tgju_entry("330,000,000"),
+        "gerami_blubber": _tgju_entry("39,990,000"),
+        "gold_melted_wholesale": _tgju_entry("1,018,530,000"),
+        "ons": _tgju_entry("4,306.00"),
+        "silver": _tgju_entry("63.81"),
+    }}
 
-    root = ET.fromstring(raw)
-    entries = []
-    for item in root.iter("item"):
-        def txt(tag, item=item):
-            el = item.find(tag)
-            return (el.text or "").strip() if el is not None else ""
-        entry = {
-            "title": txt("title"),
-            "link": txt("link"),
-            "summary": txt("description"),
-            "id": txt("guid"),
+
+class RatesParsingTests(unittest.TestCase):
+    def test_extracts_all_direct_fields(self):
+        data = rates.parse_tgju_bulk(_tgju_bulk())
+        self.assertEqual(data["usd"], 2305000.0)
+        self.assertEqual(data["gold_18"], 235013000.0)
+        self.assertEqual(data["gold_24"], 313348000.0)
+        self.assertEqual(data["emami"], 2340100000.0)
+        self.assertEqual(data["bahar"], 2292400000.0)
+        self.assertEqual(data["nim"], 1178000000.0)
+        self.assertEqual(data["rob"], 630000000.0)
+        self.assertEqual(data["gerami"], 330000000.0)
+        self.assertEqual(data["abshodeh"], 1018530000.0)
+        self.assertEqual(data["ons_gold"], 4306.0)
+        self.assertEqual(data["ons_silver"], 63.81)
+
+    def test_computed_emami_bubble_and_value(self):
+        data = rates.parse_tgju_bulk(_tgju_bulk())
+        self.assertEqual(data["value_emami"], 2293633000.0)
+        self.assertAlmostEqual(data["bubble_emami"],
+                               2340100000.0 - 2293633000.0, delta=0.01)
+
+    def test_computed_abshodeh_value_and_bubble(self):
+        data = rates.parse_tgju_bulk(_tgju_bulk())
+        expected_value = 313348000.0 * rates.MISQAL_GRAMS * rates.GOLD_17_PURITY
+        self.assertAlmostEqual(data["value_abshodeh"], expected_value, delta=0.01)
+        self.assertAlmostEqual(data["bubble_abshodeh"],
+                               1018530000.0 - expected_value, delta=0.01)
+        # sanity: value must be in the ~1 billion rial range, not per gram
+        self.assertGreater(data["value_abshodeh"], 1_000_000_000)
+
+    def test_span_marked_prices_parsed(self):
+        self.assertEqual(rates._to_number(
+            '<span class="high" dir="ltr">2422000</span>'), 2422000.0)
+        self.assertEqual(rates._to_number("4,306.00"), 4306.0)
+        self.assertEqual(rates._to_number(4306), 4306.0)
+        self.assertIsNone(rates._to_number("N/A"))
+        self.assertIsNone(rates._to_number(None))
+
+    def test_missing_keys_give_none_without_error(self):
+        data = rates.parse_tgju_bulk({"current": {}})
+        for field in rates.ALL_FIELDS:
+            self.assertIsNone(data[field], field)
+
+    def test_all_required_fields_defined(self):
+        expected = {
+            "usd", "gold_18", "gold_24", "emami", "bahar", "nim", "rob",
+            "gerami", "abshodeh", "ons_gold", "ons_silver",
+            "bubble_abshodeh", "bubble_emami", "bubble_bahar", "bubble_nim",
+            "bubble_rob", "bubble_gerami", "value_abshodeh", "value_emami",
         }
-        pub = txt("pubDate")
-        if pub:
-            try:
-                entry["published_parsed"] = parsedate_to_datetime(pub).timetuple()
-            except (TypeError, ValueError):
+        self.assertEqual(set(rates.ALL_FIELDS), expected)
+
+
+class RatesCacheTests(unittest.TestCase):
+    def test_save_and_load_roundtrip(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "last_rates.json"
+            with mock.patch.object(rates, "RATES_CACHE_FILE", cache):
+                data = rates.parse_tgju_bulk(_tgju_bulk())
+                self.assertTrue(rates.save_cached_rates(data))
+                loaded = rates.load_cached_rates()
+                self.assertIn("fetched_at", loaded)
+                self.assertEqual(loaded["rates"]["usd"], 2305000.0)
+
+    def test_missing_or_corrupt_cache_returns_none(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(rates, "RATES_CACHE_FILE",
+                                   Path(tmp) / "none.json"):
+                self.assertIsNone(rates.load_cached_rates())
+            bad = Path(tmp) / "bad.json"
+            bad.write_text("{not json", encoding="utf-8")
+            with mock.patch.object(rates, "RATES_CACHE_FILE", bad):
+                self.assertIsNone(rates.load_cached_rates())
+
+    def test_get_rates_falls_back_to_cache(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "last_rates.json"
+            with mock.patch.object(rates, "RATES_CACHE_FILE", cache), \
+                    mock.patch.object(rates, "fetch_tgju_bulk", return_value=None), \
+                    mock.patch.object(rates, "fetch_usd_nobitex", return_value=None):
+                rates.save_cached_rates(rates.parse_tgju_bulk(_tgju_bulk()))
+                merged = rates.get_rates()
+        self.assertEqual(merged["usd"], 2305000.0)
+        self.assertEqual(merged["emami"], 2340100000.0)
+
+    def test_get_rates_live_success_refreshes_cache(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "last_rates.json"
+            with mock.patch.object(rates, "RATES_CACHE_FILE", cache), \
+                    mock.patch.object(rates, "fetch_tgju_bulk",
+                                      return_value=_tgju_bulk()):
+                merged = rates.get_rates()
+                cached = rates.load_cached_rates()
+        self.assertEqual(merged["emami"], 2340100000.0)
+        self.assertEqual(cached["rates"]["emami"], 2340100000.0)
+
+    def test_get_rates_merges_cache_into_live_gaps(self):
+        import tempfile
+
+        partial = _tgju_bulk()
+        del partial["current"]["geram24"]  # live feed missing this one
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "last_rates.json"
+            with mock.patch.object(rates, "RATES_CACHE_FILE", cache), \
+                    mock.patch.object(rates, "fetch_tgju_bulk",
+                                      return_value=partial), \
+                    mock.patch.object(rates, "fetch_usd_nobitex",
+                                      return_value=None):
+                rates.save_cached_rates({"gold_24": 300000000.0})
+                merged = rates.get_rates()
+        self.assertEqual(merged["gold_24"], 300000000.0)  # from cache
+        self.assertEqual(merged["usd"], 2305000.0)        # from live
+
+    def test_get_rates_total_outage_without_cache_returns_none(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(rates, "RATES_CACHE_FILE",
+                                   Path(tmp) / "none.json"), \
+                    mock.patch.object(rates, "fetch_tgju_bulk", return_value=None), \
+                    mock.patch.object(rates, "fetch_usd_nobitex", return_value=None):
+                self.assertIsNone(rates.get_rates())
+
+
+class RatesFetchTests(unittest.TestCase):
+    def test_strict_timeout_and_endpoint(self):
+        self.assertEqual(rates.RATE_TIMEOUT, 3.0)
+        self.assertTrue(rates.TGJU_BULK_URL.startswith("https://call1.tgju.org"))
+
+    def test_fetch_tgju_bulk_none_on_error(self):
+        def boom(*a, **k):
+            raise RequestException("timed out")
+
+        with mock.patch.object(rates.requests, "get", side_effect=boom):
+            self.assertIsNone(rates.fetch_tgju_bulk())
+
+    def test_fetch_usd_nobitex_midpoint(self):
+        class Resp:
+            status_code = 200
+
+            def raise_for_status(self):
                 pass
-        entries.append(entry)
-    return {"entries": entries}
+
+            def json(self):
+                return {"stats": {"usdt-rls": {
+                    "bestSell": "2310000", "bestBuy": "2300000"}}}
+
+        with mock.patch.object(rates.requests, "get", return_value=Resp()):
+            self.assertAlmostEqual(rates.fetch_usd_nobitex(), 2305000.0)
+
+    def test_fetch_usd_nobitex_missing_keys_returns_none(self):
+        class Resp:
+            status_code = 200
+
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return {"stats": {}}
+
+        with mock.patch.object(rates.requests, "get", return_value=Resp()):
+            self.assertIsNone(rates.fetch_usd_nobitex())
 
 
-class NewsSanitizeTests(unittest.TestCase):
-    def test_strips_tags_urls_and_whitespace(self):
-        text = news.sanitize_news_text(
-            "  <b>Headline</b> details at https://bbc.in/xyz  ",
-            "<p>more\n details\t here</p>",
-        )
-        self.assertEqual(text, "Headline details at — more details here")
-        self.assertNotIn("http", text)
-        self.assertNotIn("\n", text)
-
-    def test_entity_disguised_tags_removed(self):
-        text = news.sanitize_news_text("Safe &lt;script&gt; alert(1) end", None)
-        self.assertNotIn("<", text)
-        self.assertNotIn(">", text)
-        self.assertNotIn("script", text)
-
-    def test_redundant_summary_dropped(self):
-        self.assertEqual(news.sanitize_news_text("Same", "Same"), "Same")
-
-    def test_summary_falls_back_to_title(self):
-        self.assertEqual(news.sanitize_news_text("Only title", None), "Only title")
-        self.assertIsNone(news.sanitize_news_text(None, None))
-
-    def test_truncation_to_140_chars(self):
-        self.assertEqual(news.truncate_news_text("short"), "short")
-        long_text = "x" * 150
-        out = news.truncate_news_text(long_text)
-        self.assertEqual(len(out), 143)  # 140 + "..."
-        self.assertTrue(out.endswith("..."))
-        self.assertEqual(news.truncate_news_text("y" * 140), "y" * 140)
-
-
-class NewsHistoryTests(unittest.TestCase):
-    def test_append_and_dedup_and_200_cap(self):
-        import tempfile
-
-        with tempfile.TemporaryDirectory() as tmp:
-            hist = Path(tmp) / "news_history.txt"
-            with mock.patch.object(news, "NEWS_HISTORY_FILE", hist):
-                self.assertTrue(news.append_news_history("a"))
-                self.assertTrue(news.append_news_history("b"))
-                self.assertEqual(news.load_news_history(), {"a", "b"})
-                # re-appending moves the ID to the end, no duplicate line
-                news.append_news_history("a")
-                self.assertEqual(len(news.load_news_history()), 2)
-                # cap at 200
-                for i in range(250):
-                    news.append_news_history(f"id{i}")
-                loaded = news.load_news_history()
-                self.assertEqual(len(loaded), 200)
-                self.assertIn("id249", loaded)
-                self.assertNotIn("a", loaded)
-
-    def test_missing_file_returns_empty_set(self):
-        import tempfile
-
-        with tempfile.TemporaryDirectory() as tmp:
-            with mock.patch.object(news, "NEWS_HISTORY_FILE", Path(tmp) / "none.txt"):
-                self.assertEqual(news.load_news_history(), set())
-
-
-class NewsSelectionTests(unittest.TestCase):
+class RatesSectionTests(unittest.TestCase):
     def setUp(self):
-        # Replace the (deliberately exploding) feedparser stub with the
-        # stdlib test double for every selection test.
-        patch = mock.patch.object(news.feedparser, "parse", _fake_feedparser_parse)
-        patch.start()
-        self.addCleanup(patch.stop)
+        self.data = rates.parse_tgju_bulk(_tgju_bulk())
+        self.now = datetime(2026, 9, 17)  # پنج‌شنبه 26/06/1405
 
-    def test_fresh_item_selected_and_returned(self):
-        xml = _rss_xml([
-            ("Old news", "https://x.example/1", "Mon, 01 Sep 2025 10:00:00 GMT", "old"),
-            ("Fresh news", "https://x.example/2", "Wed, 16 Sep 2026 10:00:00 GMT", "body"),
-        ])
-        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
-                mock.patch.object(news, "_fetch_feed", return_value=xml):
-            text, entry_id = news.get_news(history=set())
-        self.assertEqual(text, "Fresh news — body")
-        self.assertEqual(entry_id, "https://x.example/2")
+    def test_html_section_structure(self):
+        html = rates.format_section(self.data, "html", now=self.now)
+        self.assertIn("📊 <b>آرشیو روزانه اقلام فیزیکی</b>", html)
+        self.assertIn("🗓 پنج‌شنبه 26/06/1405", html)
+        self.assertIn("💰 دلار: <code>2,305,000</code>", html)
+        self.assertIn("🔸 سکه امامی: <code>2,340,100,000</code>", html)
+        self.assertIn("🔹 حباب سکه امامی: <code>46,467,000</code>", html)
+        self.assertIn("🥇 انس طلا: <code>4,306.00</code>", html)
+        self.assertIn("🔸 ارزش آبشده بدون حباب: <code>", html)
+        self.assertIn("🔸 ارزش سکه امامی بدون حباب: <code>", html)
 
-    def test_empty_feed_returns_none(self):
-        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
-                mock.patch.object(news, "_fetch_feed", return_value=_rss_xml([])):
-            self.assertEqual(news.get_news(history=set()), (None, None))
+    def test_plain_twin_has_no_tags(self):
+        plain = rates.format_section(self.data, "plain", now=self.now)
+        self.assertNotIn("<", plain)
+        self.assertNotIn(">", plain)
+        self.assertIn("📊 آرشیو روزانه اقلام فیزیکی", plain)
+        self.assertIn("💰 دلار: 2,305,000", plain)
+        self.assertIn("🗓 پنج‌شنبه 26/06/1405", plain)
 
-    def test_all_duplicates_returns_none(self):
-        xml = _rss_xml([("Dup", "https://x.example/1", "Wed, 16 Sep 2026 10:00:00 GMT", "")])
-        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
-                mock.patch.object(news, "_fetch_feed", return_value=xml):
-            self.assertEqual(news.get_news(history={"https://x.example/1"}), (None, None))
+    def test_all_required_labels_present(self):
+        html = rates.format_section(self.data, "html", now=self.now)
+        for label in ("دلار", "سکه امامی", "گرم طلای 18", "گرم طلای 24",
+                      "آبشده", "سکه بهار آزادی", "نیم سکه", "ربع سکه",
+                      "سکه گرمی", "انس طلا", "انس نقره", "حباب آبشده",
+                      "حباب سکه امامی", "حباب سکه بهار آزادی", "حباب نیم سکه",
+                      "حباب ربع سکه", "حباب سکه گرمی",
+                      "ارزش آبشده بدون حباب", "ارزش سکه امامی بدون حباب"):
+            self.assertIn(label, html)
 
-    def test_duplicate_skipped_fresh_pick(self):
-        xml = _rss_xml([
-            ("Posted already", "https://x.example/1", "Wed, 16 Sep 2026 10:00:00 GMT", ""),
-            ("New headline", "https://x.example/2", "Tue, 15 Sep 2026 09:00:00 GMT", ""),
-        ])
-        with mock.patch.object(news, "NEWS_FEEDS", [("T", "http://t/feed")]), \
-                mock.patch.object(news, "_fetch_feed", return_value=xml):
-            text, entry_id = news.get_news(history={"https://x.example/1"})
-        self.assertEqual(text, "New headline")
-        self.assertEqual(entry_id, "https://x.example/2")
-
-    def test_network_failure_falls_through_to_next_feed(self):
-        xml = _rss_xml([("Fallback news", "https://y.example/9", "Wed, 16 Sep 2026 08:00:00 GMT", "")])
-        feeds = [("A", "http://a/feed"), ("B", "http://b/feed")]
-
-        def fetch(url):
-            if url == "http://a/feed":
-                return None  # timeout / network error
-            return xml
-
-        with mock.patch.object(news, "NEWS_FEEDS", feeds), \
-                mock.patch.object(news, "_fetch_feed", side_effect=fetch):
-            text, entry_id = news.get_news(history=set())
-        self.assertEqual(text, "Fallback news")
-        self.assertEqual(entry_id, "https://y.example/9")
-
-    def test_total_outage_returns_none(self):
-        with mock.patch.object(news, "NEWS_FEEDS", [("A", "http://a/feed")]), \
-                mock.patch.object(news, "_fetch_feed", return_value=None):
-            self.assertEqual(news.get_news(history=set()), (None, None))
-
-    def test_real_feeds_constant(self):
-        urls = [u for _n, u in news.NEWS_FEEDS]
-        self.assertIn("https://feeds.bbci.co.uk/persian/rss.xml", urls)
-        self.assertIn("https://ir.voanews.com/api/z$g-m_eq_m", urls)
-        self.assertIn("https://www.iranintl.com/rss/all", urls)
-        self.assertEqual(urls[0], "https://feeds.bbci.co.uk/persian/rss.xml")  # priority
+    def test_missing_fields_render_dash(self):
+        empty = {field: None for field in rates.ALL_FIELDS}
+        empty["usd"] = 2305000.0
+        html = rates.format_section(empty, "html", now=self.now)
+        self.assertIn("💰 دلار: <code>2,305,000</code>", html)
+        self.assertIn("—", html)
+        plain = rates.format_section(empty, "plain", now=self.now)
+        self.assertIn("💰 دلار: 2,305,000", plain)
 
 
-class NewsCaptionTests(unittest.TestCase):
+class RatesCaptionTests(unittest.TestCase):
     def setUp(self):
         self.proxies = [p for p, _ in make_batch(5)]
         self.latencies = [100.0] * 5
 
-    def test_news_section_prepended_when_present(self):
-        msg = main.format_message(self.proxies, self.latencies, "تست خبر")
-        self.assertIn("📰 <b>خبر فوری:</b>", msg)
-        self.assertIn("تست خبر", msg)
+    def test_rates_section_prepended_above_proxy_block(self):
+        msg = main.format_message(self.proxies, self.latencies, "📊 RATES")
+        self.assertIn("📊 RATES", msg)
         self.assertIn("⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>", msg)
-        # order: news first, then proxy block
-        self.assertLess(msg.index("خبر فوری"), msg.index("پروکسی‌های پرسرعت"))
+        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های پرسرعت"))
 
-    def test_no_news_section_when_absent(self):
+    def test_no_rates_section_when_absent(self):
         msg = main.format_message(self.proxies, self.latencies, None)
-        self.assertNotIn("خبر فوری", msg)
+        self.assertNotIn("📊", msg)
         plain = main.format_message_minimal(self.proxies, self.latencies, None)
-        self.assertNotIn("خبر فوری", plain)
+        self.assertNotIn("📊", plain)
 
-    def test_news_text_html_escaped_in_caption(self):
-        msg = main.format_message(self.proxies, self.latencies,
-                                  "a<b>&amp;c")
-        self.assertIn("a&lt;b&gt;&amp;amp;c", msg)
-        plain = main.format_message_minimal(self.proxies, self.latencies, "a<b>&amp;c")
-        # plaintext mode needs no escaping - raw text renders literally
-        self.assertIn("a<b>&amp;c", plain)
+    def test_post_body_never_contains_proxy_links_even_with_rates(self):
+        msg = main.format_message(self.proxies, self.latencies, "📊 RATES")
+        self.assertNotIn("t.me/proxy", msg)
 
-    def test_news_survives_formatting_fallback(self):
+    def test_rates_survive_formatting_fallback(self):
         calls = []
 
         class Resp:
             def json(self):
-                if "parse_mode" in calls[-1] if calls else {}:
+                if "parse_mode" in (calls[-1] if calls else {}):
                     return {"ok": False,
                             "description": "Bad Request: can't parse entities"}
                 return {"ok": True, "result": {"message_id": 3}}
@@ -641,38 +734,36 @@ class NewsCaptionTests(unittest.TestCase):
         try:
             ok = main.send_message("TOK", "@chan", "<b>unused</b>",
                                    proxies=self.proxies, latencies=self.latencies,
-                                   news_text="خبر مهم")
+                                   rates_section_plain="💰 دلار: 2,305,000")
         finally:
             _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
         self.assertTrue(ok)
         self.assertEqual(len(calls), 2)  # HTML attempt rejected, plaintext retry
-        # plaintext retry still carries the headline
-        self.assertIn("خبر فوری", calls[-1]["text"])
-        self.assertIn("خبر مهم", calls[-1]["text"])
-
-    def test_post_body_never_contains_proxy_links_even_with_news(self):
-        msg = main.format_message(self.proxies, self.latencies, "headline")
-        self.assertNotIn("t.me/proxy", msg)
+        self.assertIn("💰 دلار: 2,305,000", calls[-1]["text"])
 
 
-class WorkflowNewsConfigTests(unittest.TestCase):
+class WorkflowRatesConfigTests(unittest.TestCase):
     def setUp(self):
         self.text = open(".github/workflows/auto_post.yml", encoding="utf-8").read()
 
-    def test_news_history_in_commit_step(self):
-        add_idx = self.text.find("git add news_history.txt")
+    def test_last_rates_committed(self):
+        add_idx = self.text.find("git add last_rates.json")
         self.assertGreater(add_idx, 0)
         commit_idx = self.text.index("git commit -m")
         self.assertLess(add_idx, commit_idx)
 
+    def test_news_references_removed(self):
+        self.assertNotIn("news_history.txt", self.text)
 
-class EndToEndNewsHistoryTests(unittest.TestCase):
-    """The posting flow writes news_history.txt ONLY after a confirmed send."""
+class EndToEndRatesFlowTests(unittest.TestCase):
+    """The posting flow threads rates sections and writes history only on
+    confirmed sends; a rates failure never blocks the proxy post."""
 
     # Well-formed but fake: must satisfy main.validate_credentials.
     TOKEN = "123456789:" + "A" * 34
 
-    def _run_main(self, send_ok, n_proxies=5, history_preload=None):
+    def _run_main(self, send_ok, n_proxies=5, history_preload=None,
+                  rates_side_effect=None):
         import tempfile
 
         proxies = [
@@ -681,18 +772,21 @@ class EndToEndNewsHistoryTests(unittest.TestCase):
         ]
         with tempfile.TemporaryDirectory() as tmp:
             hist = Path(tmp) / "history.txt"
-            nhist = Path(tmp) / "news_history.txt"
             if history_preload:
                 hist.write_text("\n".join(history_preload) + "\n", encoding="utf-8")
+            rates_kwargs = (
+                {"side_effect": rates_side_effect}  # exceptions are raised
+                if isinstance(rates_side_effect, Exception)
+                else {"return_value": rates_side_effect}
+            )
             with \
                     mock.patch.object(main, "HISTORY_FILE", hist), \
-                    mock.patch.object(news, "NEWS_HISTORY_FILE", nhist), \
                     mock.patch.object(main, "collect_candidates", return_value=proxies), \
                     mock.patch.object(main, "rank_reachable",
                                       return_value=[(p, 100.0) for p in proxies]), \
                     mock.patch.object(main, "send_message", return_value=send_ok) as sm, \
-                    mock.patch.object(main.news_module, "get_news",
-                                      return_value=("تیتر خبر", "https://n.example/1")), \
+                    mock.patch.object(main.rates_module, "get_rates",
+                                      **rates_kwargs), \
                     mock.patch.dict(os.environ, {
                         "TELEGRAM_BOT_TOKEN": self.TOKEN,
                         "TELEGRAM_CHANNEL_ID": "@chan",
@@ -701,30 +795,31 @@ class EndToEndNewsHistoryTests(unittest.TestCase):
                 # read inside the temp context (it vanishes on exit)
                 hist_lines = (hist.read_text(encoding="utf-8").splitlines()
                               if hist.exists() else None)
-                nhist_lines = (nhist.read_text(encoding="utf-8").split()
-                               if nhist.exists() else None)
+                sent_html = sm.call_args.kwargs.get("rates_section_plain") \
+                    if sm.call_args else None
                 send_calls = sm.call_count
-        return code, hist_lines, nhist_lines, send_calls
+        return code, hist_lines, send_calls, sent_html
 
-    def test_history_and_news_history_written_on_success(self):
-        code, hist_lines, nhist_lines, send_calls = self._run_main(send_ok=True)
+    def test_success_writes_history_and_sends_rates(self):
+        data = {"usd": 2305000.0}
+        code, hist_lines, send_calls, sent_plain = self._run_main(
+            send_ok=True, rates_side_effect=data)
         self.assertEqual(code, 0)
         self.assertEqual(len(hist_lines), 5)
         self.assertEqual(send_calls, 1)
-        self.assertEqual(nhist_lines, ["https://n.example/1"])
+        self.assertIn("دلار", sent_plain)  # plaintext rates section threaded
 
     def test_nothing_written_when_send_fails(self):
-        code, hist_lines, nhist_lines, send_calls = self._run_main(send_ok=False)
+        data = {"usd": 2305000.0}
+        code, hist_lines, _calls, _plain = self._run_main(
+            send_ok=False, rates_side_effect=data)
         self.assertEqual(code, 0)
-        # history.txt may exist (created empty by the pre-send touch) but
-        # must contain zero links; news_history.txt must not exist at all.
         self.assertEqual(hist_lines, [], "no proxy links after failed send")
-        self.assertIsNone(nhist_lines, "no news history after failed send")
 
     def test_partial_batch_still_posts(self):
         """Fewer than 5 fresh proxies -> publish 1-4 instead of skipping."""
-        code, hist_lines, _nh, send_calls = self._run_main(
-            send_ok=True, n_proxies=3)
+        code, hist_lines, send_calls, _plain = self._run_main(
+            send_ok=True, n_proxies=3, rates_side_effect={"usd": 1.0})
         self.assertEqual(code, 0)
         self.assertEqual(send_calls, 1, "partial batch must still be posted")
         self.assertEqual(len(hist_lines), 3)
@@ -735,12 +830,22 @@ class EndToEndNewsHistoryTests(unittest.TestCase):
             main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
             for i in range(1, 6)
         ]
-        code, hist_lines, _nh, send_calls = self._run_main(
-            send_ok=True, history_preload=[p.link for p in proxies])
+        code, hist_lines, send_calls, _plain = self._run_main(
+            send_ok=True, history_preload=[p.link for p in proxies],
+            rates_side_effect={"usd": 1.0})
         self.assertEqual(code, 0)
         self.assertEqual(send_calls, 0, "no post when nothing fresh exists")
         self.assertEqual(hist_lines or [], [p.link for p in proxies],
                          "history unchanged")
+
+    def test_rates_failure_never_blocks_the_post(self):
+        # side_effect (not return_value) so the exception is raised
+        code, hist_lines, send_calls, sent_plain = self._run_main(
+            send_ok=True, rates_side_effect=RuntimeError("rates down"))
+        self.assertEqual(code, 0)
+        self.assertEqual(send_calls, 1, "proxy post must survive rates failure")
+        self.assertEqual(len(hist_lines), 5)
+        self.assertIsNone(sent_plain)
 
 
 class CredentialValidationTests(unittest.TestCase):
@@ -849,7 +954,7 @@ class TimeoutAndTelemetryConfigTests(unittest.TestCase):
     def test_strict_timeout_constants(self):
         self.assertEqual(main.TELEGRAM_TIMEOUT, 10)
         self.assertEqual(main.HTTP_TIMEOUT, 10)
-        self.assertEqual(news.NEWS_TIMEOUT, 4)
+        self.assertEqual(rates.RATE_TIMEOUT, 3.0)
         self.assertEqual(main.PING_TIMEOUT, 2.0)
         self.assertLessEqual(main.MAX_TO_TEST, 90)
 

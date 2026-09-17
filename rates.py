@@ -1,0 +1,471 @@
+#!/usr/bin/env python3
+"""rates.py — real-time Iranian gold & currency market rates for ProxGram.
+
+Primary source: TGJU bulk market JSON (call1.tgju.org/ajax.json) — one HTTP
+request covering currencies, coins, gold, melted gold, and global ounce
+benchmarks. Secondary reference: Nobitex USDT-RLS midpoint as a USD
+fallback when TGJU is unreachable.
+
+Resilience contract: a strict 3-second timeout per request; if live
+fetching fails entirely, the last successful rates are served from
+`last_rates.json` so the Telegram post is never delayed. When some fields
+are missing live, they are filled from the cache; fields missing everywhere
+render as "—". Only when nothing at all is available does `get_rates()`
+return None and the caller posts without the rates section.
+
+Units: Iranian quotes are TGJU rial values (comma-formatted for display);
+global ounce benchmarks (انس طلا/نقره) are US dollars. آبشده is quoted per
+مثقال (misqal = 4.6083 g) of 17-alloy melted gold, so its intrinsic value
+(بدون حباب) is computed from the 24-geram price: geram24 × 4.6083 × 17/24.
+The امامی-coin intrinsic value uses TGJU's own `sekee_real` field and its
+bubble is sekee − sekee_real; other coin bubbles come from TGJU's
+`*_blubber` fields directly.
+"""
+
+import html
+import json
+import logging
+import re
+import time
+from datetime import datetime
+from pathlib import Path
+
+import requests
+
+logger = logging.getLogger("proxgram.rates")
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+
+RATE_TIMEOUT = 3.0          # seconds - hard timeout for every market request
+TGJU_BULK_URL = "https://call1.tgju.org/ajax.json"
+NOBITEX_USD_URL = "https://api.nobitex.ir/market/stats?srcCurrency=usdt&dstCurrency=rls"
+RATE_USER_AGENT = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
+
+MISQAL_GRAMS = 4.6083       # one misqal = 4.6083 g
+GOLD_17_PURITY = 17.0 / 24.0  # آبشده is 17-alloy melted gold (per misqal)
+
+RATES_CACHE_FILE = Path(__file__).resolve().parent / "last_rates.json"
+
+# Internal field -> TGJU bulk keys, first present wins.
+FIELD_KEYS = {
+    "usd": ["price_dollar_rl", "price_dollar_dt"],
+    "gold_18": ["geram18", "tgju_gold_irg18"],
+    "gold_24": ["geram24"],
+    "emami": ["sekee", "retail_sekee"],
+    "bahar": ["sekeb", "retail_sekeb"],
+    "nim": ["nim", "retail_nim"],
+    "rob": ["rob", "retail_rob"],
+    "gerami": ["gerami", "retail_gerami"],
+    "abshodeh": ["gold_melted_wholesale", "gold_melted_transfer"],
+    "ons_gold": ["ons"],
+    "ons_silver": ["silver"],
+    "bubble_bahar": ["sekeb_blubber"],
+    "bubble_nim": ["nim_blubber"],
+    "bubble_rob": ["rob_blubber"],
+    "bubble_gerami": ["gerami_blubber"],
+}
+COMPUTED_FIELDS = ("bubble_emami", "value_emami", "bubble_abshodeh", "value_abshodeh")
+ALL_FIELDS = list(FIELD_KEYS) + list(COMPUTED_FIELDS)
+USD_FIELDS = {"ons_gold", "ons_silver"}  # quoted in US dollars, not rial
+
+_NUMBER_RE = re.compile(r"[^0-9.\-]")
+
+# ---------------------------------------------------------------------------
+# Persian (Jalali) calendar — pure python port of the jalaali algorithm
+# ---------------------------------------------------------------------------
+
+_JALALI_BREAKS = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210,
+                  1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178]
+
+# Persian weekday names, Monday (datetime.weekday() == 0) first.
+JALALI_WEEKDAYS = ["دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه",
+                   "جمعه", "شنبه", "یکشنبه"]
+
+
+def _div(a: float, b: float) -> int:
+    """Integer division truncating toward zero (matches jalaali-js `div`)."""
+    return int(a / b)
+
+
+def _jal_cal(jy: int) -> tuple[int, int, int]:
+    """(leap, gregorian_year, march_day) for a Jalali year."""
+    bl = len(_JALALI_BREAKS)
+    gy = jy + 621
+    leap_j = -14
+    jp = _JALALI_BREAKS[0]
+    jump = 0
+    for i in range(1, bl):
+        jm = _JALALI_BREAKS[i]
+        jump = jm - jp
+        if jy < jm:
+            break
+        leap_j += _div(jump, 33) * 8 + _div(jump % 33, 4)
+        jp = jm
+    n = jy - jp
+    leap_j += _div(n, 33) * 8 + _div((n % 33) + 3, 4)
+    if (jump % 33) == 4 and jump - n == 4:
+        leap_j += 1
+    leap_g = _div(gy, 4) - _div((_div(gy, 100) + 1) * 3, 4) - 150
+    march = 20 + leap_j - leap_g
+    if jump - n < 6:
+        n = n - jump + _div(jump + 4, 33) * 33
+    leap = ((n + 1) % 33 - 1) % 4
+    if leap == -1:
+        leap = 4
+    return leap, gy, march
+
+
+def _g2d(gy: int, gm: int, gd: int) -> int:
+    """Gregorian date -> Julian day number."""
+    d = _div((gy + _div(gm - 8, 6) + 100100) * 1461, 4) \
+        + _div(153 * ((gm + 9) % 12) + 2, 5) + gd - 34840408
+    d = d - _div(_div(gy + 100100 + _div(gm - 8, 6), 100) * 3, 4) + 752
+    return d
+
+
+def _d2g(jdn: int) -> tuple[int, int, int]:
+    """Julian day number -> Gregorian (y, m, d)."""
+    j = 4 * jdn + 139361631
+    j += _div(_div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908
+    i = _div(j % 1461, 4) * 5 + 308
+    gd = _div(i % 153, 5) + 1
+    gm = (_div(i, 153) % 12) + 1
+    gy = _div(j, 1461) - 100100 + _div(8 - gm, 6)
+    return gy, gm, gd
+
+
+def _d2j(jdn: int, gy: int) -> tuple[int, int, int]:
+    """Julian day number -> Jalali (y, m, d)."""
+    jy = gy - 621
+    leap, _g_year, march = _jal_cal(jy)
+    jdn1f = _g2d(gy, 3, march)
+    k = jdn - jdn1f
+    if k >= 0:
+        if k <= 185:
+            return jy, 1 + _div(k, 31), (k % 31) + 1
+        k -= 186
+    else:
+        jy -= 1
+        k += 179
+        if leap == 1:
+            k += 1
+    return jy, 7 + _div(k, 30), (k % 30) + 1
+
+
+def _j2d(jy: int, jm: int, jd: int) -> int:
+    """Jalali date -> Julian day number."""
+    _leap, gy, march = _jal_cal(jy)
+    return _g2d(gy, 3, march) + (jm - 1) * 31 - _div(jm, 7) * (jm - 7) + jd - 1
+
+
+def gregorian_to_jalali(dt: datetime) -> tuple[int, int, int]:
+    """Convert a gregorian datetime to (jalali_year, month, day)."""
+    jdn = _g2d(dt.year, dt.month, dt.day)
+    return _d2j(jdn, dt.year)
+
+
+def jalali_to_gregorian(jy: int, jm: int, jd: int) -> tuple[int, int, int]:
+    """Convert (jalali_year, month, day) to a gregorian (y, m, d) date."""
+    return _d2g(_j2d(jy, jm, jd))
+
+
+def format_jalali_date(dt: datetime) -> str:
+    """Zero-padded Jalali date, e.g. 2026-09-17 -> '26/06/1405'."""
+    jy, jm, jd = gregorian_to_jalali(dt)
+    return f"{jd:02d}/{jm:02d}/{jy}"
+
+
+def persian_weekday(dt: datetime) -> str:
+    """Persian weekday name for a gregorian datetime."""
+    return JALALI_WEEKDAYS[dt.weekday()]
+
+
+# ---------------------------------------------------------------------------
+# Parsing / formatting
+# ---------------------------------------------------------------------------
+
+def _to_number(raw) -> float | None:
+    """'2,340,100,000' / '<span ...>2422000</span>' / 4306 -> float."""
+    if raw is None:
+        return None
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    text = _NUMBER_RE.sub("", str(raw))
+    if not text:
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def _fmt_rial(value: float | None) -> str:
+    """Rial amounts with thousand separators; None -> em dash."""
+    if value is None:
+        return "—"
+    return f"{int(round(value)):,}"
+
+
+def _fmt_usd(value: float | None) -> str:
+    """Dollar benchmarks with 2 decimals; None -> em dash."""
+    if value is None:
+        return "—"
+    return f"{value:,.2f}"
+
+
+def parse_tgju_bulk(payload: dict) -> dict[str, float | None]:
+    """Extract every required field from the TGJU bulk JSON.
+
+    Direct fields come from FIELD_KEYS; computed fields:
+      - value_emami   = sekee_real (TGJU's intrinsic coin value)
+      - bubble_emami  = sekee - sekee_real
+      - value_abshodeh = geram24 * MISQAL_GRAMS * GOLD_17_PURITY (per misqal)
+      - bubble_abshodeh = quoted melted gold - value_abshodeh
+    Missing inputs yield None for the dependent fields, never exceptions.
+    """
+    current = payload.get("current") or {}
+    data: dict[str, float | None] = {}
+
+    for field, keys in FIELD_KEYS.items():
+        value = None
+        for key in keys:
+            entry = current.get(key)
+            if isinstance(entry, dict) and entry.get("p") is not None:
+                value = _to_number(entry.get("p"))
+                if value is not None:
+                    break
+        data[field] = value
+
+    emami = data.get("emami")
+    emami_real = _to_number((current.get("sekee_real") or {}).get("p"))
+    data["value_emami"] = emami_real
+    data["bubble_emami"] = (emami - emami_real) if (emami is not None and emami_real is not None) else None
+
+    gold_24 = data.get("gold_24")
+    abshodeh = data.get("abshodeh")
+    value_abshodeh = (gold_24 * MISQAL_GRAMS * GOLD_17_PURITY) if gold_24 is not None else None
+    data["value_abshodeh"] = value_abshodeh
+    data["bubble_abshodeh"] = (abshodeh - value_abshodeh) if (abshodeh is not None and value_abshodeh is not None) else None
+
+    return data
+
+
+def format_rates(data: dict[str, float | None]) -> dict[str, str]:
+    """Numbers -> display strings (rial comma format; USD 2 decimals)."""
+    out: dict[str, str] = {}
+    for field in ALL_FIELDS:
+        value = data.get(field)
+        if value is None:
+            out[field] = "—"
+        elif field in USD_FIELDS:
+            out[field] = _fmt_usd(value)
+        else:
+            out[field] = _fmt_rial(value)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Fetching + caching
+# ---------------------------------------------------------------------------
+
+def fetch_tgju_bulk() -> dict | None:
+    """Download the TGJU bulk JSON (3s timeout); None on any failure."""
+    started = time.monotonic()
+    try:
+        resp = requests.get(
+            TGJU_BULK_URL,
+            timeout=RATE_TIMEOUT,
+            headers={"User-Agent": RATE_USER_AGENT},
+        )
+        elapsed = (time.monotonic() - started) * 1000.0
+        resp.raise_for_status()
+        payload = resp.json()
+        logger.info(
+            "TGJU bulk feed: HTTP %s, %d bytes in %.0f ms",
+            getattr(resp, "status_code", "?"), len(resp.content or b""), elapsed,
+        )
+        return payload
+    except (requests.RequestException, OSError, ValueError) as exc:
+        logger.warning(
+            "TGJU bulk feed failed after %.0f ms: %s: %s",
+            (time.monotonic() - started) * 1000.0, type(exc).__name__, exc,
+        )
+        return None
+
+
+def fetch_usd_nobitex() -> float | None:
+    """Secondary USD reference: Nobitex USDT-RLS midpoint (3s timeout)."""
+    started = time.monotonic()
+    try:
+        resp = requests.get(
+            NOBITEX_USD_URL,
+            timeout=RATE_TIMEOUT,
+            headers={"User-Agent": RATE_USER_AGENT},
+        )
+        resp.raise_for_status()
+        stats = (resp.json().get("stats") or {})
+        pair = stats.get("usdt-rls") or {}
+        best_sell = _to_number(pair.get("bestSell"))
+        best_buy = _to_number(pair.get("bestBuy"))
+        if best_sell is not None and best_buy is not None:
+            midpoint = (best_sell + best_buy) / 2.0
+            logger.info(
+                "Nobitex USDT-RLS midpoint %.0f rial (%.0f ms)",
+                midpoint, (time.monotonic() - started) * 1000.0,
+            )
+            return midpoint
+        logger.warning("Nobitex response missing usdt-rls bestSell/bestBuy keys")
+    except (requests.RequestException, OSError, ValueError) as exc:
+        logger.warning(
+            "Nobitex USD fallback failed after %.0f ms: %s: %s",
+            (time.monotonic() - started) * 1000.0, type(exc).__name__, exc,
+        )
+    return None
+
+
+def load_cached_rates() -> dict | None:
+    """Load last_rates.json ({'fetched_at', 'rates'}) or None."""
+    if not RATES_CACHE_FILE.exists():
+        return None
+    try:
+        payload = json.loads(RATES_CACHE_FILE.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict) or not isinstance(payload.get("rates"), dict):
+            logger.warning("last_rates.json has unexpected structure; ignoring")
+            return None
+        return payload
+    except (OSError, ValueError) as exc:
+        logger.warning("Could not read %s: %s", RATES_CACHE_FILE, exc)
+        return None
+
+
+def save_cached_rates(data: dict[str, float | None]) -> bool:
+    """Persist successfully fetched rates to last_rates.json."""
+    try:
+        payload = {
+            "fetched_at": datetime.now().isoformat(timespec="seconds"),
+            "rates": {k: v for k, v in data.items() if v is not None},
+        }
+        RATES_CACHE_FILE.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return True
+    except OSError as exc:
+        logger.error("Could not update %s: %s", RATES_CACHE_FILE, exc)
+        return False
+
+
+def get_rates() -> dict[str, float | None] | None:
+    """Live rates merged with cache; None only when nothing is available.
+
+    Order: TGJU bulk (live) -> cache fill for missing fields -> Nobitex
+    USD fallback if the dollar is still missing. On live success the cache
+    is refreshed so future failures fall back to fresh data.
+    """
+    cached = (load_cached_rates() or {}).get("rates") or {}
+    data: dict[str, float | None] = {}
+
+    payload = fetch_tgju_bulk()
+    if payload is not None:
+        try:
+            data = parse_tgju_bulk(payload)
+        except Exception:
+            logger.exception("Failed to parse TGJU bulk payload")
+            data = {}
+        if data:
+            save_cached_rates(data)
+    else:
+        logger.warning("TGJU bulk unavailable; falling back to last_rates.json")
+
+    merged: dict[str, float | None] = {}
+    live_count = 0
+    for field in ALL_FIELDS:
+        value = data.get(field)
+        if value is not None:
+            live_count += 1
+        else:
+            value = _to_number(cached.get(field))
+        merged[field] = value
+
+    if merged.get("usd") is None:
+        usd = fetch_usd_nobitex()
+        if usd is not None:
+            merged["usd"] = usd
+            save_cached_rates(merged)
+
+    available = sum(1 for v in merged.values() if v is not None)
+    logger.info(
+        "Market rates: %d/%d fields available (%d live, %d from cache)",
+        available, len(ALL_FIELDS), live_count, available - live_count,
+    )
+    return merged if available > 0 else None
+
+
+# ---------------------------------------------------------------------------
+# Message section (exact user template, HTML + plaintext twins)
+# ---------------------------------------------------------------------------
+
+RATES_TITLE_HTML = "📊 <b>آرشیو روزانه اقلام فیزیکی</b>"
+RATES_TITLE_PLAIN = "📊 آرشیو روزانه اقلام فیزیکی"
+
+_SECTION_LINES = (
+    "💰 دلار: {usd}",
+    "🔸 سکه امامی: {emami}",
+    "",
+    "🔸 گرم طلای 18: {gold_18}",
+    "🔸 گرم طلای 24: {gold_24}",
+    "🔸 آبشده: {abshodeh}",
+    "🔸 سکه بهار آزادی: {bahar}",
+    "🔸 نیم سکه: {nim}",
+    "🔸 ربع سکه: {rob}",
+    "🔸 سکه گرمی: {gerami}",
+    "",
+    "🥇 انس طلا: {ons_gold}",
+    "🥈 انس نقره: {ons_silver}",
+    "",
+    "🔹 حباب آبشده: {bubble_abshodeh}",
+    "🔹 حباب سکه امامی: {bubble_emami}",
+    "🔹 حباب سکه بهار آزادی: {bubble_bahar}",
+    "🔹 حباب نیم سکه: {bubble_nim}",
+    "🔹 حباب ربع سکه: {bubble_rob}",
+    "🔹 حباب سکه گرمی: {bubble_gerami}",
+    "",
+    "🔸 ارزش آبشده بدون حباب: {value_abshodeh}",
+    "🔸 ارزش سکه امامی بدون حباب: {value_emami}",
+)
+
+
+def _html_escape(text: str) -> str:
+    return (
+        (text or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
+def format_section(data: dict[str, float | None], mode: str = "html",
+                   now: datetime | None = None) -> str:
+    """Render the rates block (title + Jalali date + all items).
+
+    mode="html" produces the <b>/<code> version for parse_mode=HTML;
+    mode="plain" the tag-free twin. Values are numeric strings, but they
+    are still entity-escaped in the HTML variant so parse_mode=HTML is
+    always safe.
+    """
+    now = now or datetime.now()
+    values = format_rates(data)
+    date_line = f"🗓 {persian_weekday(now)} {format_jalali_date(now)}"
+    if mode == "html":
+        # Values carry the <code> wrapper; labels stay plain. Numeric
+        # strings, but still entity-escaped so parse_mode=HTML is safe.
+        display = {k: f"<code>{_html_escape(v)}</code>" for k, v in values.items()}
+        body = "\n".join(_SECTION_LINES).format(**display)
+        return f"{RATES_TITLE_HTML}\n{date_line}\n\n{body}"
+    body = "\n".join(_SECTION_LINES).format(**values)
+    return f"{RATES_TITLE_PLAIN}\n{date_line}\n\n{body}"

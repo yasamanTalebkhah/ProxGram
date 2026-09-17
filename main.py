@@ -24,8 +24,8 @@ Credentials are read from environment variables:
                            (defaults to TELEGRAM_CHANNEL_ID)
 
 history.txt (repo root) stores the full deep link of every posted proxy so
-duplicates are never re-posted across workflow runs. news_history.txt
-(news.py) likewise records published news headline IDs.
+duplicates are never re-posted across workflow runs. last_rates.json
+(rates.py) caches the last successfully fetched market rates.
 """
 
 import concurrent.futures
@@ -43,7 +43,7 @@ from urllib.parse import parse_qs, quote, urlparse
 
 import requests
 
-import news as news_module
+import rates as rates_module
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -567,20 +567,20 @@ POST_GUIDANCE = (
 
 
 def format_message(proxies: list[Proxy], latencies: list[float],
-                   news_text: str | None = None) -> str:
+                   rates_section: str | None = None) -> str:
     """Build the Persian post body (HTML entities pre-escaped).
 
     Minimal and engaging: no protocol/technical metadata, no update-cadence
     labels, and no raw proxy links — deep links live ONLY in the
     inline-keyboard buttons.
 
-    When `news_text` is given, a sanitized breaking-news section leads the
-    post; it is HTML-escaped here (the only dynamic value in the body) so
+    When `rates_section` is given, the market-rates block leads the post;
+    rates.py renders it (values are entity-escaped there), so
     parse_mode=HTML is always safe.
     """
     parts: list[str] = []
-    if news_text:
-        parts.append(f"{NEWS_HEADER}\n{html_escape(news_text)}")
+    if rates_section:
+        parts.append(rates_section)
     parts.append(
         f"{POST_HEADLINE}\n\n"
         f"{POST_GUIDANCE}"
@@ -589,12 +589,12 @@ def format_message(proxies: list[Proxy], latencies: list[float],
 
 
 def format_message_minimal(proxies: list[Proxy], latencies: list[float],
-                           news_text: str | None = None) -> str:
+                           rates_section: str | None = None) -> str:
     """Safe plaintext twin of the body (still link-free; the inline
-    keyboard carries all five deep links)."""
+    keyboard carries the deep links)."""
     parts: list[str] = []
-    if news_text:
-        parts.append(f"{NEWS_HEADER_PLAIN}\n{news_text}")
+    if rates_section:
+        parts.append(rates_section)
     parts.append(
         f"{POST_HEADLINE_PLAIN}\n\n"
         f"{POST_GUIDANCE}"
@@ -603,16 +603,17 @@ def format_message_minimal(proxies: list[Proxy], latencies: list[float],
 
 
 def format_batch_message(proxies: list[Proxy], latencies: list[float],
-                         news_text: str | None = None) -> str:
+                         rates_section: str | None = None,
+                         rates_section_plain: str | None = None) -> str:
     """Format with HTML; on any failure return the plaintext fallback."""
     try:
-        message = format_message(proxies, latencies, news_text)
+        message = format_message(proxies, latencies, rates_section)
         if len(message) > MAX_MESSAGE_LENGTH:
             raise ValueError("message exceeds Telegram limit")
         return message
     except Exception:
         logger.exception("HTML formatting failed; using plaintext fallback")
-        return format_message_minimal(proxies, latencies, news_text)
+        return format_message_minimal(proxies, latencies, rates_section_plain)
 
 
 def html_escape(text: str) -> str:
@@ -646,12 +647,12 @@ def build_inline_keyboard(proxies: list[Proxy],
 def send_message(token: str, chat_id: str, text: str,
                  proxies: list[Proxy] | None = None,
                  latencies: list[float] | None = None,
-                 news_text: str | None = None) -> bool:
+                 rates_section_plain: str | None = None) -> bool:
     """ONE logical sendMessage (first successful HTTP request wins) with
     graceful degradation: HTML+keyboard -> plaintext+keyboard -> plaintext.
-    The five proxy links always reach users via the keyboard buttons; the
-    news headline (when any) survives the formatting fallback; only the
-    text formatting changes between attempts. True on any success.
+    The deep links always reach users via the keyboard buttons and the
+    market-rates section (when any) survives the formatting fallback; only
+    the text formatting changes between attempts. True on any success.
     """
     url = TELEGRAM_API_URL.format(token=token, method="sendMessage")
     keyboard = (
@@ -659,7 +660,8 @@ def send_message(token: str, chat_id: str, text: str,
         if proxies and latencies else None
     )
     attempts: list[dict] = [{"text": text, "parse_mode": "HTML"}]
-    attempts.append({"text": format_message_minimal(proxies, latencies, news_text)
+    attempts.append({"text": format_message_minimal(proxies, latencies,
+                                                    rates_section_plain)
                      if proxies and latencies else text})
     if keyboard:
         attempts[0]["reply_markup"] = keyboard
@@ -916,29 +918,39 @@ def main() -> int:
         logger.info("Selected #%d server=%s port=%d latency=%.0f ms",
                     i, proxy.server, proxy.port, latency)
 
-    # 4. Breaking news headline (never blocks the proxy post on failure).
+    # 4. Market rates section (never blocks the proxy post on failure).
     stage_started = time.monotonic()
+    rates_html = rates_plain = None
     try:
-        news_text, news_id = news_module.get_news()
+        rates_data = rates_module.get_rates()
     except Exception:
-        logger.exception("Unexpected news error; posting without news")
-        news_text, news_id = None, None
-    news_elapsed = time.monotonic() - stage_started
-    if news_text:
-        logger.info("[stage] news: headline fetched in %.1f s", news_elapsed)
+        logger.exception("Unexpected rates error; posting without rates")
+        rates_data = None
+    if rates_data:
+        try:
+            rates_html = rates_module.format_section(rates_data, "html")
+            rates_plain = rates_module.format_section(rates_data, "plain")
+        except Exception:
+            logger.exception("Failed to render rates section; posting without it")
+            rates_html = rates_plain = None
+    rates_elapsed = time.monotonic() - stage_started
+    if rates_html:
+        logger.info("[stage] rates: section rendered in %.1f s", rates_elapsed)
     else:
         logger.info(
-            "[stage] news: no headline after %.1f s; posting without news",
-            news_elapsed,
+            "[stage] rates: unavailable after %.1f s; posting without rates",
+            rates_elapsed,
         )
 
     # 5. Send exactly ONE message; deep links live only in the buttons.
     stage_started = time.monotonic()
-    message = format_batch_message(proxies, latencies, news_text)
+    message = format_batch_message(proxies, latencies,
+                                   rates_section=rates_html,
+                                   rates_section_plain=rates_plain)
     try:
         success = send_message(token, channel_id, message,
                                proxies=proxies, latencies=latencies,
-                               news_text=news_text)
+                               rates_section_plain=rates_plain)
     except Exception:
         logger.exception("Unexpected error while posting the batch")
         gh_annotation("error", "Unexpected crash while posting the batch")
@@ -952,13 +964,9 @@ def main() -> int:
         logger.error("History NOT updated for this batch.")
         return 0
 
-    # 6. Only after a confirmed send, record the posted links + the news ID.
+    # 6. Only after a confirmed send, record the posted proxy links.
     if append_history(proxies):
         logger.info("All %d links written to %s.", len(proxies), HISTORY_FILE.name)
-    if news_id:
-        if news_module.append_news_history(news_id):
-            logger.info("News headline recorded in %s.",
-                        news_module.NEWS_HISTORY_FILE.name)
     logger.info("=== ProxGram run finished OK in %.1f s ===",
                 time.monotonic() - run_started)
     return 0
