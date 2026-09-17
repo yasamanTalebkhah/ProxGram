@@ -43,7 +43,7 @@ NEWS_FEEDS = [
     ("Iran International", "https://www.iranintl.com/rss/all"),
 ]
 
-NEWS_TIMEOUT = 10          # seconds - per-feed HTTP fetch timeout
+NEWS_TIMEOUT = 4           # seconds - hard per-feed HTTP fetch timeout
 NEWS_USER_AGENT = "Mozilla/5.0 (compatible; ProxGram/1.0; RSS reader)"
 MAX_NEWS_TEXT_LEN = 140    # headline (title+summary) hard limit, then "..."
 MAX_NEWS_HISTORY = 200     # unique IDs kept in news_history.txt
@@ -150,20 +150,34 @@ def append_news_history(entry_id: str) -> bool:
 # ---------------------------------------------------------------------------
 
 def _fetch_feed(url: str) -> str | None:
-    """Download raw feed bytes; return None on any network/HTTP error."""
+    """Download raw feed bytes; return None on any network/HTTP error.
+
+    Telemetry: logs the URL, HTTP status, byte size, and elapsed time on
+    success, or the exact exception (with timing) on failure.
+    """
+    started = time.monotonic()
     try:
         resp = requests.get(
             url,
             timeout=NEWS_TIMEOUT,
             headers={"User-Agent": NEWS_USER_AGENT},
         )
+        elapsed = (time.monotonic() - started) * 1000.0
         resp.raise_for_status()
         resp.encoding = resp.apparent_encoding or resp.encoding
+        logger.info(
+            "News feed %s: HTTP %s, %d chars in %.0f ms",
+            url, getattr(resp, "status_code", "?"), len(resp.text), elapsed,
+        )
         return resp.text
     except (requests.RequestException, OSError) as exc:
         # OSError also covers socket-level failures from non-requests backends
         # so the remaining feeds (and the post itself) are never skipped.
-        logger.warning("News feed fetch failed %s: %s", url, exc)
+        logger.warning(
+            "News feed %s failed after %.0f ms: %s: %s",
+            url, (time.monotonic() - started) * 1000.0,
+            type(exc).__name__, exc,
+        )
         return None
 
 
@@ -221,15 +235,28 @@ def get_news(feeds: list[tuple[str, str]] | None = None,
         raw = _fetch_feed(url)
         if raw is None:
             continue
+        parse_started = time.monotonic()
         try:
             parsed_feed = feedparser.parse(raw)
         except Exception as exc:  # feedparser rarely raises; be defensive
-            logger.warning("News feed parse failed %s: %s", name, exc)
+            logger.warning(
+                "News feed %s parse failed after %.0f ms: %s: %s",
+                name, (time.monotonic() - parse_started) * 1000.0,
+                type(exc).__name__, exc,
+            )
             continue
+        parse_elapsed = (time.monotonic() - parse_started) * 1000.0
         entries = list(parsed_feed.get("entries") or [])
         if not entries:
-            logger.info("News feed %s: no entries", name)
+            logger.info(
+                "News feed %s: parsed 0 entries in %.0f ms",
+                name, parse_elapsed,
+            )
             continue
+        logger.info(
+            "News feed %s: parsed %d entries in %.0f ms",
+            name, len(entries), parse_elapsed,
+        )
         entries.sort(key=_entry_published_ts, reverse=True)
         for entry in entries:
             entry_id = _entry_identifier(entry)
@@ -249,5 +276,8 @@ def get_news(feeds: list[tuple[str, str]] | None = None,
             return news_text, entry_id
         logger.info("News feed %s: no fresh usable entries", name)
 
-    logger.info("No new news available from any feed; posting without news.")
+    logger.warning(
+        "No new news available from any feed (tried %d); posting without news.",
+        len(feeds),
+    )
     return None, None

@@ -669,27 +669,32 @@ class WorkflowNewsConfigTests(unittest.TestCase):
 class EndToEndNewsHistoryTests(unittest.TestCase):
     """The posting flow writes news_history.txt ONLY after a confirmed send."""
 
-    def _run_main(self, send_ok):
+    # Well-formed but fake: must satisfy main.validate_credentials.
+    TOKEN = "123456789:" + "A" * 34
+
+    def _run_main(self, send_ok, n_proxies=5, history_preload=None):
         import tempfile
 
         proxies = [
             main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
-            for i in range(1, 6)
+            for i in range(1, n_proxies + 1)
         ]
         with tempfile.TemporaryDirectory() as tmp:
             hist = Path(tmp) / "history.txt"
             nhist = Path(tmp) / "news_history.txt"
+            if history_preload:
+                hist.write_text("\n".join(history_preload) + "\n", encoding="utf-8")
             with \
                     mock.patch.object(main, "HISTORY_FILE", hist), \
                     mock.patch.object(news, "NEWS_HISTORY_FILE", nhist), \
                     mock.patch.object(main, "collect_candidates", return_value=proxies), \
                     mock.patch.object(main, "rank_reachable",
                                       return_value=[(p, 100.0) for p in proxies]), \
-                    mock.patch.object(main, "send_message", return_value=send_ok), \
+                    mock.patch.object(main, "send_message", return_value=send_ok) as sm, \
                     mock.patch.object(main.news_module, "get_news",
                                       return_value=("تیتر خبر", "https://n.example/1")), \
                     mock.patch.dict(os.environ, {
-                        "TELEGRAM_BOT_TOKEN": "tok",
+                        "TELEGRAM_BOT_TOKEN": self.TOKEN,
                         "TELEGRAM_CHANNEL_ID": "@chan",
                     }):
                 code = main.main()
@@ -698,21 +703,159 @@ class EndToEndNewsHistoryTests(unittest.TestCase):
                               if hist.exists() else None)
                 nhist_lines = (nhist.read_text(encoding="utf-8").split()
                                if nhist.exists() else None)
-        return code, hist_lines, nhist_lines
+                send_calls = sm.call_count
+        return code, hist_lines, nhist_lines, send_calls
 
     def test_history_and_news_history_written_on_success(self):
-        code, hist_lines, nhist_lines = self._run_main(send_ok=True)
+        code, hist_lines, nhist_lines, send_calls = self._run_main(send_ok=True)
         self.assertEqual(code, 0)
         self.assertEqual(len(hist_lines), 5)
+        self.assertEqual(send_calls, 1)
         self.assertEqual(nhist_lines, ["https://n.example/1"])
 
     def test_nothing_written_when_send_fails(self):
-        code, hist_lines, nhist_lines = self._run_main(send_ok=False)
+        code, hist_lines, nhist_lines, send_calls = self._run_main(send_ok=False)
         self.assertEqual(code, 0)
         # history.txt may exist (created empty by the pre-send touch) but
         # must contain zero links; news_history.txt must not exist at all.
         self.assertEqual(hist_lines, [], "no proxy links after failed send")
         self.assertIsNone(nhist_lines, "no news history after failed send")
+
+    def test_partial_batch_still_posts(self):
+        """Fewer than 5 fresh proxies -> publish 1-4 instead of skipping."""
+        code, hist_lines, _nh, send_calls = self._run_main(
+            send_ok=True, n_proxies=3)
+        self.assertEqual(code, 0)
+        self.assertEqual(send_calls, 1, "partial batch must still be posted")
+        self.assertEqual(len(hist_lines), 3)
+
+    def test_zero_fresh_proxies_skips_posting(self):
+        """Everything already in history -> no post, graceful exit."""
+        proxies = [
+            main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+            for i in range(1, 6)
+        ]
+        code, hist_lines, _nh, send_calls = self._run_main(
+            send_ok=True, history_preload=[p.link for p in proxies])
+        self.assertEqual(code, 0)
+        self.assertEqual(send_calls, 0, "no post when nothing fresh exists")
+        self.assertEqual(hist_lines or [], [p.link for p in proxies],
+                         "history unchanged")
+
+
+class CredentialValidationTests(unittest.TestCase):
+    def test_valid_credentials_pass(self):
+        self.assertEqual(main.validate_credentials(
+            "123456789:" + "A" * 34, "@mychannel"), [])
+        self.assertEqual(main.validate_credentials(
+            "123456789:" + "A" * 34, "-1001234567890"), [])
+
+    def test_missing_credentials_actionable(self):
+        problems = main.validate_credentials(None, None)
+        self.assertEqual(len(problems), 2)
+        self.assertIn("TELEGRAM_BOT_TOKEN", problems[0])
+        self.assertIn("Secrets", problems[0] + problems[1])
+
+    def test_malformed_token_detected(self):
+        problems = main.validate_credentials("tok", "@chan")
+        self.assertEqual(len(problems), 1)
+        self.assertIn("malformed", problems[0])
+
+    def test_bad_channel_id_detected(self):
+        problems = main.validate_credentials(
+            "123456789:" + "A" * 34, "chan")
+        self.assertEqual(len(problems), 1)
+        self.assertIn("@", problems[0])
+        self.assertIn("-100", problems[0])
+
+    def test_mask_token_never_leaks_secret(self):
+        token = "123456789012:" + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef"
+        masked = main.mask_token(token)
+        self.assertTrue(masked.startswith("123456789012:"))
+        self.assertNotIn("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef", masked)
+        self.assertIn("***", masked)
+        self.assertEqual(main.mask_token(None), "<missing>")
+
+
+class TelegramErrorHandlingTests(unittest.TestCase):
+    """4xx API responses surface actionable hints via annotations."""
+
+    def setUp(self):
+        self.proxies = [p for p, _ in make_batch(5)]
+        self.latencies = [100.0] * 5
+        self.msg = main.format_message(self.proxies, self.latencies)
+
+    def _post_returning(self, body):
+        class Resp:
+            status_code = body.get("error_code", 400)
+
+            def json(self):
+                return body
+
+        return lambda url, json=None, timeout=None: Resp()
+
+    def _run_send(self, post_fn):
+        captured = []
+        with mock.patch.object(main, "gh_annotation",
+                               side_effect=lambda lvl, msg: captured.append((lvl, msg))):
+            _requests.post = post_fn
+            try:
+                ok = main.send_message("TOK", "@chan", self.msg,
+                                       proxies=self.proxies,
+                                       latencies=self.latencies)
+            finally:
+                _requests.post = lambda *a, **k: (_ for _ in ()).throw(
+                    RequestException("offline"))
+        return ok, captured
+
+    def test_401_unauthorized_hint(self):
+        ok, captured = self._run_send(self._post_returning(
+            {"ok": False, "error_code": 401, "description": "Unauthorized"}))
+        self.assertFalse(ok)
+        level, msg = captured[-1]
+        self.assertEqual(level, "error")
+        self.assertIn("Unauthorized", msg)
+        self.assertIn("@BotFather", msg)
+
+    def test_403_forbidden_admin_hint(self):
+        ok, captured = self._run_send(self._post_returning(
+            {"ok": False, "error_code": 403,
+             "description": "Forbidden: bot is not a member"}))
+        self.assertFalse(ok)
+        _, msg = captured[-1]
+        self.assertIn("ADMIN", msg.upper())
+
+    def test_400_chat_not_found_hint(self):
+        ok, captured = self._run_send(self._post_returning(
+            {"ok": False, "error_code": 400,
+             "description": "Bad Request: chat not found"}))
+        self.assertFalse(ok)
+        _, msg = captured[-1]
+        self.assertIn("chat not found", msg)
+        self.assertIn("TELEGRAM_CHANNEL_ID", msg)
+
+    def test_network_timeout_annotated(self):
+        def timeout_post(url, json=None, timeout=None):
+            raise RequestException("timed out")
+
+        ok, captured = self._run_send(timeout_post)
+        self.assertFalse(ok)
+        level, msg = captured[-1]
+        self.assertEqual(level, "error")
+        self.assertIn("timed out", msg)
+
+
+class TimeoutAndTelemetryConfigTests(unittest.TestCase):
+    def test_strict_timeout_constants(self):
+        self.assertEqual(main.TELEGRAM_TIMEOUT, 10)
+        self.assertEqual(main.HTTP_TIMEOUT, 10)
+        self.assertEqual(news.NEWS_TIMEOUT, 4)
+        self.assertEqual(main.PING_TIMEOUT, 2.0)
+        self.assertLessEqual(main.MAX_TO_TEST, 90)
+
+    def test_error_hints_cover_common_4xx(self):
+        for code in (400, 401, 403, 404, 429):
+            self.assertIn(code, main.TG_ERROR_HINTS)
 
 
 class TcpPingTests(unittest.TestCase):

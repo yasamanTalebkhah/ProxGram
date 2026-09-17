@@ -32,6 +32,7 @@ import concurrent.futures
 import json
 import logging
 import os
+import re
 import select
 import socket
 import string
@@ -75,7 +76,8 @@ MIN_HEX_SECRET_LEN = 34     # ee + 32 hex (key only) is NOT enough - domain requ
 HISTORY_FILE = Path(__file__).resolve().parent / "history.txt"
 LOG_FILE = Path(__file__).resolve().parent / "proxgram.log"
 
-HTTP_TIMEOUT = 15  # seconds
+HTTP_TIMEOUT = 10     # seconds - strict cap for every source/feed fetch
+TELEGRAM_TIMEOUT = 10  # seconds - hard cap per Telegram API call
 USER_AGENT = "v2rayN/6.23"  # standard client UA - aggregators treat unknown UAs differently
 TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/{method}"
 MAX_MESSAGE_LENGTH = 4096
@@ -106,7 +108,15 @@ def setup_logging() -> logging.Logger:
     logger.setLevel(logging.INFO)
     fmt = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
 
-    console = logging.StreamHandler(sys.stdout)
+    class _ConsoleHandler(logging.StreamHandler):
+        """Console handler that follows the current sys.stdout, so log
+        lines and GitHub annotations stay interleaved (and testable)."""
+
+        def emit(self, record):
+            self.stream = sys.stdout
+            super().emit(record)
+
+    console = _ConsoleHandler(sys.stdout)
     console.setFormatter(fmt)
     logger.addHandler(console)
 
@@ -118,6 +128,82 @@ def setup_logging() -> logging.Logger:
         logger.warning("Could not open log file %s: %s", LOG_FILE, exc)
 
     return logger
+
+
+# ---------------------------------------------------------------------------
+# Telemetry + GitHub Actions annotations + credential verification
+# ---------------------------------------------------------------------------
+
+_TOKEN_RE = re.compile(r"^\d{6,12}:[A-Za-z0-9_-]{30,}$")
+
+TG_ERROR_HINTS = {
+    400: ("Bad Request: 'chat not found' means TELEGRAM_CHANNEL_ID is wrong "
+          "or the bot is not in that channel; 'parse entities' errors are "
+          "already handled by the plaintext fallback."),
+    401: ("Unauthorized: the bot token is invalid or revoked. Regenerate it "
+          "with @BotFather and update the TELEGRAM_BOT_TOKEN secret."),
+    403: ("Forbidden: the bot must be an ADMIN of the target channel with "
+          "'Post messages' permission (or it has been blocked)."),
+    404: ("Not Found: chat not found - check TELEGRAM_CHANNEL_ID and add "
+          "the bot to the channel."),
+    429: ("Too Many Requests: rate-limited by Telegram; the next scheduled "
+          "run will retry automatically."),
+}
+
+
+def mask_token(token: str | None) -> str:
+    """Token form safe for logs: bot id + first 2 secret chars only."""
+    if not token:
+        return "<missing>"
+    bot_id, sep, secret = token.partition(":")
+    if sep and secret:
+        return f"{bot_id}:{secret[:2]}***"
+    return token[:4] + "***"
+
+
+def gh_annotation(level: str, message: str) -> None:
+    """Emit a GitHub Actions annotation (::error:: / ::warning:: / ::notice::).
+
+    Printed bare to stdout so Actions renders it on the run summary; locally
+    it is simply a visible marker line.
+    """
+    prefix = {"error": "::error::", "warning": "::warning::"}.get(
+        level, "::notice::"
+    )
+    print(f"{prefix}{message}")
+
+
+def validate_credentials(token: str | None,
+                         channel_id: str | None) -> list[str]:
+    """Actionable credential problems; empty list means OK to proceed."""
+    problems: list[str] = []
+    if not token:
+        problems.append(
+            "TELEGRAM_BOT_TOKEN is missing. Add it under Settings > Secrets "
+            "and variables > Actions (get the token from @BotFather)."
+        )
+    elif not _TOKEN_RE.match(token.strip()):
+        problems.append(
+            "TELEGRAM_BOT_TOKEN is malformed (expected '<bot_id>:<secret>', "
+            "e.g. '123456789:AA...'). Regenerate it with @BotFather and "
+            "update the secret."
+        )
+    if not channel_id:
+        problems.append(
+            "TELEGRAM_CHANNEL_ID is missing. Use '@channelusername' or a "
+            "'-100...' numeric channel id."
+        )
+    else:
+        cid = channel_id.strip()
+        valid = (cid.startswith("@") and len(cid) > 1) or (
+            cid.startswith("-100") and len(cid) > 4
+        )
+        if not valid:
+            problems.append(
+                "TELEGRAM_CHANNEL_ID must start with '@' (public username) "
+                "or '-100' (numeric channel/supergroup id)."
+            )
+    return problems
 
 
 # ---------------------------------------------------------------------------
@@ -201,16 +287,26 @@ def is_allowed_port(port: int) -> bool:
 
 def fetch_text(url: str) -> str | None:
     """Download a text payload; return None on any network/HTTP error."""
+    started = time.monotonic()
     try:
         resp = requests.get(
             url,
             timeout=HTTP_TIMEOUT,
             headers={"User-Agent": USER_AGENT},
         )
+        elapsed = (time.monotonic() - started) * 1000.0
         resp.raise_for_status()
+        logger.info(
+            "Fetched %s: HTTP %s, %d chars in %.0f ms",
+            url, getattr(resp, "status_code", "?"), len(resp.text), elapsed,
+        )
         return resp.text
-    except requests.RequestException as exc:
-        logger.warning("Failed to fetch %s: %s", url, exc)
+    except (requests.RequestException, OSError) as exc:
+        # OSError covers socket-level failures so sibling sources still load.
+        logger.warning(
+            "Failed to fetch %s after %.0f ms: %s",
+            url, (time.monotonic() - started) * 1000.0, exc,
+        )
         return None
 
 
@@ -573,14 +669,27 @@ def send_message(token: str, chat_id: str, text: str,
     last_desc = ""
     for i, payload_base in enumerate(attempts):
         payload = {"chat_id": chat_id, "disable_web_page_preview": False, **payload_base}
+        logger.info(
+            "Telegram dispatch attempt %d/%d: chat_id=%s parse_mode=%s "
+            "text_len=%d keyboard_rows=%d token=%s",
+            i + 1, len(attempts), chat_id,
+            payload.get("parse_mode", "<plain>"),
+            len(payload.get("text", "")),
+            len(payload.get("reply_markup", {}).get("inline_keyboard", [])),
+            mask_token(token),
+        )
         try:
-            resp = requests.post(url, json=payload, timeout=HTTP_TIMEOUT)
+            resp = requests.post(url, json=payload, timeout=TELEGRAM_TIMEOUT)
+            status = getattr(resp, "status_code", None)
             data = resp.json()
         except requests.RequestException as exc:
-            logger.error("Telegram request failed: %s", exc)
+            logger.error("Telegram request failed (timeout <= %ds): %s",
+                         TELEGRAM_TIMEOUT, exc)
+            gh_annotation("error", f"Telegram request failed: {exc}")
             return False
         except ValueError as exc:
             logger.error("Telegram returned non-JSON response: %s", exc)
+            gh_annotation("error", f"Telegram returned non-JSON response: {exc}")
             return False
 
         if data.get("ok"):
@@ -591,9 +700,21 @@ def send_message(token: str, chat_id: str, text: str,
             return True
 
         last_desc = str(data.get("description", data))
-        logger.warning("Telegram API error (attempt %d): %s", i + 1, last_desc)
-        if "parse" not in last_desc.lower():
-            return False  # non-formatting error - retrying won't help
+        error_code = data.get("error_code", status)
+        logger.error(
+            "Telegram API error (attempt %d): HTTP status=%s body=%s",
+            i + 1, status, data,
+        )
+        if "parse" in last_desc.lower() and i + 1 < len(attempts):
+            continue  # formatting error - the plaintext attempt follows
+        # Non-formatting (or final) failure: surface an actionable hint.
+        hint = TG_ERROR_HINTS.get(error_code) or TG_ERROR_HINTS.get(status)
+        message = f"Telegram API error {error_code or status or '?'}: {last_desc}"
+        if hint:
+            message = f"{message} -> {hint}"
+        logger.error(message)
+        gh_annotation("error", message)
+        return False
     logger.error("Telegram rejected all formatting attempts: %s", last_desc)
     return False
 
@@ -606,6 +727,7 @@ def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
     """TCP-test candidates in parallel; return reachable ones sorted by ping."""
     if not proxies:
         return []
+    started = time.monotonic()
     results: list[tuple[int, Proxy, float]] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         futures = {
@@ -622,14 +744,16 @@ def rank_reachable(proxies: list[Proxy]) -> list[tuple[Proxy, float]]:
             if latency is not None:
                 results.append((index, proxy, latency))
 
+    elapsed = time.monotonic() - started
     results.sort(key=lambda item: (item[2], item[0]))  # lowest ping first, ties by feed order
     reachable = [(proxy, latency) for _i, proxy, latency in results]
     logger.info(
-        "Latency test: %d/%d proxies reachable, best %.0f ms "
-        "(timeout %.1fs, max %d ms)",
-        len(reachable), len(proxies),
+        "Latency test: tested %d candidates in %.1f s (%d workers, timeout "
+        "%.1fs) -> %d reachable, best %.0f ms, cap %d ms",
+        len(proxies), elapsed, MAX_WORKERS, PING_TIMEOUT,
+        len(reachable),
         reachable[0][1] if reachable else float("inf"),
-        PING_TIMEOUT, MAX_LATENCY_MS,
+        MAX_LATENCY_MS,
     )
     return reachable
 
@@ -693,7 +817,11 @@ def pick_batch(reachable: list[tuple[Proxy, float]],
 # Main
 # ---------------------------------------------------------------------------
 
+MIN_BATCH_SIZE = 1     # post 1-4 proxies rather than skip the run entirely
+
+
 def main() -> int:
+    run_started = time.monotonic()
     setup_logging()
     trigger = os.environ.get("GITHUB_EVENT_NAME", "manual/local")
     logger.info("=== ProxGram run started (trigger: %s) ===", trigger)
@@ -701,40 +829,56 @@ def main() -> int:
     # 0. Credentials are required for any posting to happen.
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     channel_id = os.environ.get("TELEGRAM_CHANNEL_ID")
-    if not token or not channel_id:
-        logger.error(
-            "Missing credentials. Set TELEGRAM_BOT_TOKEN and "
-            "TELEGRAM_CHANNEL_ID environment variables."
-        )
-        return 2  # unrecoverable
+    cred_problems = validate_credentials(token, channel_id)
+    if cred_problems:
+        for problem in cred_problems:
+            logger.error("Credential problem: %s", problem)
+            gh_annotation("error", problem)
+        return 2  # unrecoverable: nothing can be posted without them
+    logger.info(
+        "Credentials OK (token=%s channel_id=%s)",
+        mask_token(token), channel_id,
+    )
 
     # 1. Collect + filter candidates.
+    stage_started = time.monotonic()
     try:
         candidates = collect_candidates()
     except Exception:
         logger.exception("Unexpected error while collecting proxies")
+        gh_annotation("error", "Proxy source collection crashed - see logs")
         return 0  # transient infrastructure issue - don't fail the workflow
-
+    logger.info("[stage] fetch+validate: %d candidates in %.1f s",
+                len(candidates), time.monotonic() - stage_started)
     if not candidates:
         logger.error("No valid Fake-TLS candidates from any source.")
+        gh_annotation("warning",
+                      "No valid Fake-TLS candidates from any source; skipping run")
         return 0
 
     # 2. Latency-test and rank.
+    stage_started = time.monotonic()
     try:
         reachable = rank_reachable(candidates)
     except Exception:
         logger.exception("Unexpected error during latency tests")
         return 0
-
+    logger.info(
+        "[stage] latency test: %d/%d reachable in %.1f s",
+        len(reachable), len(candidates), time.monotonic() - stage_started,
+    )
     if not reachable:
         logger.error("None of the %d candidates are reachable.", len(candidates))
+        gh_annotation("warning",
+                      f"0/{len(candidates)} proxy candidates reachable; skipping run")
         return 0
     logger.info(
         "Distinct server hostnames available: %d",
         len({p.server.lower() for p, _ in reachable}),
     )
 
-    # 3. Pick five fresh ones (never pad with duplicates/unverified proxies).
+    # 3. Pick fresh proxies (never pad with duplicates/unverified ones).
+    stage_started = time.monotonic()
     try:
         HISTORY_FILE.touch(exist_ok=True)
     except OSError as exc:
@@ -743,14 +887,28 @@ def main() -> int:
     after_history = [p for p, _ in reachable if p.link not in history and p.key not in history]
     logger.info("After history filtering: %d candidates remain", len(after_history))
     picks = pick_batch(reachable, history)
+    logger.info("[stage] selection: %d fresh proxies in %.1f s",
+                len(picks), time.monotonic() - stage_started)
+    if not picks:
+        logger.warning(
+            "No fresh valid proxies available after all filters and tests; "
+            "skipping this run. Next scheduled run will retry."
+        )
+        gh_annotation("warning",
+                      "All reachable proxies were already posted (history "
+                      "exhausted); skipping this run")
+        return 0
     if len(picks) < BATCH_SIZE:
         logger.warning(
-            "Only %d/%d fresh valid proxies available after all filters and "
-            "tests; skipping this run (no incomplete or padded posts). "
-            "Next scheduled run will retry.",
+            "Partial batch: only %d/%d fresh valid proxies available; "
+            "publishing what is available rather than skipping.",
             len(picks), BATCH_SIZE,
         )
-        return 0
+        gh_annotation(
+            "warning",
+            f"Partial batch: only {len(picks)}/{BATCH_SIZE} fresh proxies "
+            "available; publishing them anyway",
+        )
 
     proxies = [p for p, _ in picks]
     latencies = [l for _, l in picks]
@@ -759,17 +917,23 @@ def main() -> int:
                     i, proxy.server, proxy.port, latency)
 
     # 4. Breaking news headline (never blocks the proxy post on failure).
+    stage_started = time.monotonic()
     try:
         news_text, news_id = news_module.get_news()
     except Exception:
         logger.exception("Unexpected news error; posting without news")
         news_text, news_id = None, None
+    news_elapsed = time.monotonic() - stage_started
     if news_text:
-        logger.info("Including news headline in the post.")
+        logger.info("[stage] news: headline fetched in %.1f s", news_elapsed)
     else:
-        logger.info("No news available; posting without the news section.")
+        logger.info(
+            "[stage] news: no headline after %.1f s; posting without news",
+            news_elapsed,
+        )
 
     # 5. Send exactly ONE message; deep links live only in the buttons.
+    stage_started = time.monotonic()
     message = format_batch_message(proxies, latencies, news_text)
     try:
         success = send_message(token, channel_id, message,
@@ -777,21 +941,26 @@ def main() -> int:
                                news_text=news_text)
     except Exception:
         logger.exception("Unexpected error while posting the batch")
+        gh_annotation("error", "Unexpected crash while posting the batch")
         return 0
-    logger.info("Telegram message sent successfully." if success
-                else "Telegram message NOT sent.")
+    logger.info(
+        "[stage] dispatch: success=%s in %.1f s",
+        success, time.monotonic() - stage_started,
+    )
 
     if not success:
         logger.error("History NOT updated for this batch.")
         return 0
 
-    # 6. Only after a confirmed send, record all five links + the news ID.
+    # 6. Only after a confirmed send, record the posted links + the news ID.
     if append_history(proxies):
         logger.info("All %d links written to %s.", len(proxies), HISTORY_FILE.name)
     if news_id:
         if news_module.append_news_history(news_id):
             logger.info("News headline recorded in %s.",
                         news_module.NEWS_HISTORY_FILE.name)
+    logger.info("=== ProxGram run finished OK in %.1f s ===",
+                time.monotonic() - run_started)
     return 0
 
 
