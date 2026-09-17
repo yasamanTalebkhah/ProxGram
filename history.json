@@ -1,47 +1,59 @@
 {
-  "updated_at": "2026-09-17T17:58:00",
+  "updated_at": "2026-09-17T18:20:54",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.2,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 134.6,
+      "last_seen": 1789669254.6554685
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.9,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 105.5,
+      "last_seen": 1789669254.6554685
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.2,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 147.2,
+      "last_seen": 1789669254.6554685
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.7,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 133.3,
+      "last_seen": 1789669254.6554685
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.1,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 133.8,
+      "last_seen": 1789669254.6554685
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.9,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 147.8,
+      "last_seen": 1789669254.6554685
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.5,
-      "last_seen": 1789667880.1085112
+      "latency_ms": 132.6,
+      "last_seen": 1789669254.6554685
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 133.7,
+      "last_seen": 1789669254.6554685
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 145.3,
+      "last_seen": 1789669254.6554685
     },
     "media.experthost.shop:443": {
       "strikes": 0,
@@ -85,12 +97,6 @@
       "latency_ms": 135.9,
       "last_seen": 1789659204.311748
     },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 127.6,
-      "last_seen": 1789659204.311748
-    },
     "87.121.82.9:443": {
       "strikes": 0,
       "alive": true,
@@ -108,12 +114,6 @@
       "alive": false,
       "last_seen": 1789649462.295507,
       "purged": true
-    },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1789648329.8146422
     },
     "mtp.webvirt.cloud:443": {
       "strikes": 0,
