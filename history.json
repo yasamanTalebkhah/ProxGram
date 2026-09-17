@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-17T16:34:49",
+  "updated_at": "2026-09-17T16:49:19",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.7,
-      "last_seen": 1789662889.4421656
+      "latency_ms": 155.3,
+      "last_seen": 1789663759.6229882
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.8,
-      "last_seen": 1789662889.4421656
+      "latency_ms": 85.7,
+      "last_seen": 1789663759.6229882
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.4,
-      "last_seen": 1789662889.4421656
+      "latency_ms": 158.6,
+      "last_seen": 1789663759.6229882
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 161.2,
-      "last_seen": 1789662889.4421656
+      "latency_ms": 159.0,
+      "last_seen": 1789663759.6229882
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.6,
-      "last_seen": 1789662889.4421656
+      "latency_ms": 160.6,
+      "last_seen": 1789663759.6229882
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 77.4,
-      "last_seen": 1789662889.4421656
+      "latency_ms": 131.6,
+      "last_seen": 1789663759.6229882
+    },
+    "194.59.221.90:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 148.9,
+      "last_seen": 1789663759.6229882
+    },
+    "reborn.rebirthconnect.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.3,
+      "last_seen": 1789663759.6229882
     },
     "79.137.196.223:443": {
       "strikes": 0,
@@ -48,12 +60,6 @@
       "alive": true,
       "latency_ms": 156.4,
       "last_seen": 1789662889.4421656
-    },
-    "194.59.221.90:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 102.8,
-      "last_seen": 1789661997.0802412
     },
     "2.26.87.69:443": {
       "strikes": 0,
