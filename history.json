@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-09-17T17:01:04",
+  "updated_at": "2026-09-17T17:17:33",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.4,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 93.3,
+      "last_seen": 1789665453.3543067
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.8,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 41.3,
+      "last_seen": 1789665453.3543067
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.7,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 94.6,
+      "last_seen": 1789665453.3543067
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.8,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 107.3,
+      "last_seen": 1789665453.3543067
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.8,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 105.1,
+      "last_seen": 1789665453.3543067
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 81.2,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 80.7,
+      "last_seen": 1789665453.3543067
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.7,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 106.8,
+      "last_seen": 1789665453.3543067
     },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.8,
-      "last_seen": 1789664464.8503015
+      "latency_ms": 109.7,
+      "last_seen": 1789665453.3543067
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
