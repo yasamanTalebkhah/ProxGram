@@ -10,20 +10,18 @@ Resilience contract: a strict 3-second timeout per request; if live
 fetching fails entirely, the last successful rates are served from
 `last_rates.json` so the Telegram post is never delayed. When some fields
 are missing live, they are filled from the cache; fields missing everywhere
-render as "—". Only when nothing at all is available does `get_rates()`
-return None and the caller posts without the rates section.
+are dropped from the board cleanly (never dashes, zeros or placeholders).
+Only when nothing at all is available does `get_rates()` return None and
+the caller posts without the rates section.
 
 Units: all Iranian instruments are normalized to TOMAN at parse time
 (TGJU quotes rials; divided by 10 here); global ounce benchmarks
-(انس طلا/نقره) stay in US dollars. آبشده is quoted per مثقال
-(misqal = 4.6083 g) of 17-alloy melted gold, so its intrinsic value
-(بدون حباب) is computed from the 24-geram price: geram24 × 4.6083 × 17/24.
-The امامی-coin intrinsic value uses TGJU's own `sekee_real` field and its
-bubble is sekee − sekee_real; other coin bubbles come from TGJU's
-`*_blubber` fields directly. Live values must pass plausibility checks
-(PLAUSIBLE_RANGES); any violation is logged as a loud warning naming the
-endpoint and offending field — cache fill is reported per-field, never
-silently injected.
+(انس طلا) stay in US dollars. Bubble/intrinsic fields are still computed
+and cached for downstream tooling, but the posted board NEVER renders
+bubble or intrinsic-value metrics. Live values must pass plausibility
+checks (PLAUSIBLE_RANGES); any violation is logged as a loud warning
+naming the endpoint and offending field — cache fill is reported
+per-field, never silently injected.
 """
 
 import html
@@ -57,6 +55,9 @@ RATES_CACHE_FILE = Path(__file__).resolve().parent / "last_rates.json"
 # Internal field -> TGJU bulk keys, first present wins.
 FIELD_KEYS = {
     "usd": ["price_dollar_rl", "price_dollar_dt"],
+    "eur": ["price_eur"],
+    "aed": ["price_aed"],
+    "usdt": ["crypto-tether-irr"],
     "gold_18": ["geram18", "tgju_gold_irg18"],
     "gold_24": ["geram24"],
     "emami": ["sekee", "retail_sekee"],
@@ -274,6 +275,9 @@ def parse_tgju_bulk(payload: dict) -> dict[str, float | None]:
 # must fall inside to be trusted. Catches zeroed/stale/mislabeled feeds.
 PLAUSIBLE_RANGES: dict[str, tuple[float, float]] = {
     "usd": (50_000, 2_000_000),
+    "eur": (50_000, 2_000_000),
+    "aed": (5_000, 600_000),
+    "usdt": (5_000, 2_000_000),
     "gold_18": (1_000_000, 100_000_000),
     "gold_24": (1_000_000, 150_000_000),
     "abshodeh": (5_000_000, 500_000_000),
@@ -531,32 +535,49 @@ def get_rates() -> dict[str, float | None] | None:
 
 
 # ---------------------------------------------------------------------------
-# Compact board (minimal height, units OUTSIDE <code>, missing fields
-# dropped cleanly - no bubbles, no dash rows, no blank lines)
+# Full market board (compact paired rows, units OUTSIDE <code>, missing
+# fields dropped cleanly - NO bubble or intrinsic-value items ever)
 # ---------------------------------------------------------------------------
 
-RATES_TITLE_HTML = "📌 <b>تابلوی سریع طلا و ارز</b>"
-RATES_TITLE_PLAIN = "📌 تابلوی سریع طلا و ارز"
+RATES_TITLE_HTML = "📌 <b>تابلوی کامل طلا، سکه و ارز</b>"
+RATES_TITLE_PLAIN = "📌 تابلوی کامل طلا، سکه و ارز"
 
 _DIVIDER = "━━━━━━━━━━━━"
-_PAIR_GAP = "   "  # gap between the two segments of a paired line
+_PAIR_GAP = " | "  # separator between the two segments of a paired line
 
 # Board segments: (label, field, unit). Only the numeric portion is
 # wrapped in <code>; the unit stays outside so RTL/LTR runs never mix
 # inside a single markup token. A segment whose value is missing/unreliable
 # is removed entirely - never "0", "N/A", "null" or a dash placeholder.
+# Deliberately absent: every bubble (حباب) and intrinsic-value (ارزش ذاتی)
+# metric - those are never shown on the board.
 _SEGMENTS = (
     ("💵 دلار", "usd", "تومان"),
-    ("🌍 انس طلا", "ons_gold", "$"),
-    ("🟡 طلای ۱۸", "gold_18", "تومان"),
+    ("💶 یورو", "eur", "تومان"),
+    ("🇦🇪 درهم", "aed", "تومان"),
+    ("🪙 تتر", "usdt", "تومان"),
+    ("🌍 انس جهانی", "ons_gold", "$"),
+    ("🟡 طلای ۱۸ عیار", "gold_18", "تومان"),
     ("🧊 آبشده", "abshodeh", "تومان"),
     ("🪙 سکه امامی", "emami", "تومان"),
+    ("🪙 تمام بهار", "bahar", "تومان"),
+    ("🪙 نیم‌سکه", "nim", "تومان"),
+    ("🪙 ربع‌سکه", "rob", "تومان"),
+    ("🪙 سکه گرمی", "gerami", "تومان"),
 )
 
 # Layout rows: each row is a tuple of segment indexes; two segments share
 # a line, a single segment keeps its own line. Rows whose segments are all
 # missing vanish (no blank lines).
-_BOARD_ROWS = ((0, 1), (2,), (3, 4))
+_BOARD_ROWS = (
+    (0, 1),    # دلار | یورو
+    (2, 3),    # درهم | تتر
+    (4, 5),    # انس جهانی | طلای ۱۸
+    (6,),      # آبشده
+    (7, 8),    # سکه امامی | تمام بهار
+    (9, 10),   # نیم‌سکه | ربع‌سکه
+    (11,),     # سکه گرمی
+)
 
 
 def _html_escape(text: str) -> str:
@@ -590,11 +611,12 @@ def _segment_plain(label: str, field: str, value: float | None,
 
 def format_board(data: dict[str, float | None], mode: str = "html",
                  now: datetime | None = None) -> str:
-    """Render the compact market board (title + date + 3 rows max).
+    """Render the full market board (currencies, ounce, gold, coins).
 
     mode="html" produces the <code>/<b> version for parse_mode=HTML;
     mode="plain" the tag-free twin. Missing fields are dropped cleanly:
-    a lone survivor keeps its row, a fully-missing row disappears.
+    a lone survivor keeps its row, a fully-missing row disappears, and no
+    bubble/intrinsic metric is ever rendered.
     """
     now = now or datetime.now()
     if mode == "html":

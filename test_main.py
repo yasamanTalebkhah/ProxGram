@@ -238,11 +238,11 @@ class MessageAndKeyboardTests(unittest.TestCase):
             self.assertNotIn("t.me/socks", text)
 
     def test_body_is_short_with_required_lines(self):
-        # exact final-template proxy block: headline with parenthetical
-        # guidance, no separate guidance line
+        # exact final-template proxy block: clean headline, no guidance text
         self.assertEqual(self.msg.split("\n\n")[-1],
-                         "⚡️ <b>پروکسی‌های آماده</b> (اگر وصل نشد، دکمهٔ بعدی)")
+                         "⚡️ <b>پروکسی‌های فعال و پرسرعت</b>")
         self.assertNotIn("برای اتصال", self.msg)
+        self.assertNotIn("دکمهٔ بعدی", self.msg)
         self.assertLess(len(self.msg), main.MAX_MESSAGE_LENGTH)
         self.assertNotIn("<b>", self.minimal)
 
@@ -262,30 +262,37 @@ class MessageAndKeyboardTests(unittest.TestCase):
             self.assertEqual(parsed.path, "/proxy")
             self.assertIn("secret=", proxy.link)
 
-    def test_keyboard_two_columns_with_help_button(self):
-        """5 proxy buttons + help in a 2-column grid: 3 rows, row 3 =
-        proxy 5 | help. Proxy rows must not exceed 2 buttons."""
-        self.assertEqual(len(self.keyboard), 3)
-        self.assertTrue(all(len(row) == 2 for row in self.keyboard))
-        flat = [btn for row in self.keyboard for btn in row]
-        self.assertEqual(len(flat), 6)
-        for i, btn in enumerate(flat[:5], start=1):
+    def test_keyboard_two_columns_with_full_width_join(self):
+        """5 proxy buttons in a 2-column grid (3 rows) + one full-width
+        channel-join row at the very bottom. No help button anywhere."""
+        self.assertEqual(len(self.keyboard), 4)
+        self.assertEqual(len(self.keyboard[0]), 2)   # proxy 1 | proxy 2
+        self.assertEqual(len(self.keyboard[1]), 2)   # proxy 3 | proxy 4
+        self.assertEqual(len(self.keyboard[2]), 1)   # proxy 5 alone
+        self.assertEqual(len(self.keyboard[3]), 1)   # full-width join row
+        flat = [btn for row in self.keyboard[:3] for btn in row]
+        self.assertEqual(len(flat), 5)
+        for i, btn in enumerate(flat, start=1):
             self.assertIn(f"پروکسی {main.fa_num(i)}", btn["text"])
             self.assertEqual(btn["url"], self.proxies[i - 1].tg_link)
             self.assertTrue(btn["url"].startswith("tg://proxy?"))
-        self.assertEqual(flat[5]["text"], main.HELP_BUTTON_TEXT)
-        self.assertEqual(flat[5]["url"], main.HELP_URL)
+        join = self.keyboard[3][0]
+        self.assertEqual(join["text"], main.JOIN_BUTTON_TEXT)
+        self.assertEqual(join["url"], "https://t.me/ChannelID")
+        for row in self.keyboard:
+            for btn in row:
+                self.assertNotIn("راهنما", btn["text"])
         # per-row emoji variety for visual scanning
         self.assertEqual(flat[0]["text"].startswith("🚀"), True)
         self.assertEqual(flat[1]["text"].startswith("⚡️"), True)
 
     def test_keyboard_small_batches_stay_two_columns(self):
-        """A 2-proxy batch renders one row of 2 + a help row."""
+        """A 2-proxy batch renders one row of 2 + the full-width join row."""
         rows = main.build_inline_keyboard(self.proxies[:2], [100.0, 100.0])
         self.assertEqual(len(rows), 2)
         self.assertEqual(len(rows[0]), 2)
         self.assertEqual(len(rows[1]), 1)
-        self.assertEqual(rows[1][0]["text"], main.HELP_BUTTON_TEXT)
+        self.assertEqual(rows[1][0]["text"], main.JOIN_BUTTON_TEXT)
 
     def test_channel_button_url_has_no_at_sign(self):
         os.environ["TELEGRAM_CHANNEL_TAG"] = "@my_channel"
@@ -296,10 +303,10 @@ class MessageAndKeyboardTests(unittest.TestCase):
         finally:
             del os.environ["TELEGRAM_CHANNEL_TAG"]
             importlib.reload(main)
-        # The join-channel button is no longer part of the compact
-        # keyboard; the help button closes it instead.
-        self.assertEqual(rows[-1][-1]["text"], main.HELP_BUTTON_TEXT)
-        self.assertNotIn("@my_channel", rows[-1][-1]["url"])
+        join = rows[-1][0]  # full-width row at the very bottom
+        self.assertEqual(join["text"], main.JOIN_BUTTON_TEXT)
+        self.assertTrue(join["url"].startswith("https://t.me/"))
+        self.assertNotIn("@", join["url"])
 
     def test_keyboard_has_no_feedback_or_callback(self):
         flat = [btn for row in self.keyboard for btn in row]
@@ -336,10 +343,11 @@ class MessageAndKeyboardTests(unittest.TestCase):
         self.assertEqual(payload["parse_mode"], "HTML")
         self.assertNotIn("https://t.me/proxy?", payload["text"])
         kb = payload["reply_markup"]["inline_keyboard"]
-        self.assertEqual(len(kb), 3)  # 2-column grid: 5 proxies + help
+        self.assertEqual(len(kb), 4)  # 2-col proxy grid (3 rows) + join row
         self.assertEqual([btn["url"] for btn in kb[0]],
                          [self.proxies[0].tg_link, self.proxies[1].tg_link])
-        self.assertEqual(kb[2][1]["url"], main.HELP_URL)
+        self.assertEqual(kb[-1][0]["text"], main.JOIN_BUTTON_TEXT)
+        self.assertTrue(kb[-1][0]["url"].startswith("https://t.me/"))
         self.assertNotIn("callback_data", payload)
         self.assertNotIn("message_effect_id", payload)
 
@@ -369,7 +377,7 @@ class MessageAndKeyboardTests(unittest.TestCase):
         self.assertEqual(len(attempts), 2)
         # fallback keeps the compact keyboard, drops HTML entities
         self.assertNotIn("parse_mode", attempts[-1])
-        self.assertEqual(len(attempts[-1]["reply_markup"]["inline_keyboard"]), 3)
+        self.assertEqual(len(attempts[-1]["reply_markup"]["inline_keyboard"]), 4)
         self.assertNotIn("<b>", attempts[-1]["text"])
 
 
@@ -555,6 +563,9 @@ def _tgju_entry(p, ts="2026-09-16 12:00:00"):
 def _tgju_bulk():
     return {"current": {
         "price_dollar_rl": _tgju_entry("2,305,000"),
+        "price_eur": _tgju_entry("2,622,900"),
+        "price_aed": _tgju_entry("623,550"),
+        "crypto-tether-irr": _tgju_entry("2,283,340"),
         "geram18": _tgju_entry("235,013,000"),
         "geram24": _tgju_entry("313,348,000"),
         "sekee": _tgju_entry("2,340,100,000"),
@@ -580,6 +591,9 @@ class RatesParsingTests(unittest.TestCase):
     def test_extracts_all_direct_fields_normalized_to_toman(self):
         data = rates.parse_tgju_bulk(_tgju_bulk())
         self.assertEqual(data["usd"], 230500.0)          # 2,305,000 rial
+        self.assertEqual(data["eur"], 262290.0)          # 2,622,900 rial
+        self.assertEqual(data["aed"], 62355.0)           # 623,550 rial
+        self.assertEqual(data["usdt"], 228334.0)         # 2,283,340 rial
         self.assertEqual(data["gold_18"], 23501300.0)    # 235,013,000 rial
         self.assertEqual(data["gold_24"], 31334800.0)    # 313,348,000 rial
         self.assertEqual(data["emami"], 234010000.0)     # 2,340,100,000 rial
@@ -621,7 +635,8 @@ class RatesParsingTests(unittest.TestCase):
 
     def test_all_required_fields_defined(self):
         expected = {
-            "usd", "gold_18", "gold_24", "emami", "bahar", "nim", "rob",
+            "usd", "eur", "aed", "usdt",
+            "gold_18", "gold_24", "emami", "bahar", "nim", "rob",
             "gerami", "abshodeh", "ons_gold", "ons_silver",
             "bubble_abshodeh", "bubble_emami", "bubble_bahar", "bubble_nim",
             "bubble_rob", "bubble_gerami", "value_abshodeh", "value_emami",
@@ -785,8 +800,9 @@ class RatesFetchTests(unittest.TestCase):
 
 
 class RatesBoardTests(unittest.TestCase):
-    """The compact market board: 5 segments, ━━ dividers, units outside
-    <code>, missing fields dropped cleanly (no dashes/blank lines)."""
+    """The full market board: 12 items (currencies, ounce, gold, coins,
+    NO bubble/intrinsic), ━━ dividers, units outside <code>, missing
+    fields dropped cleanly (no dashes/blank lines)."""
 
     def setUp(self):
         self.data = rates.parse_tgju_bulk(_tgju_bulk())
@@ -794,44 +810,50 @@ class RatesBoardTests(unittest.TestCase):
 
     def test_html_board_matches_template(self):
         html = rates.format_board(self.data, "html", now=self.now)
-        self.assertIn("📌 <b>تابلوی سریع طلا و ارز</b>", html)
+        self.assertIn("📌 <b>تابلوی کامل طلا، سکه و ارز</b>", html)
         self.assertIn("🗓 <i>پنج‌شنبه 26/06/1405</i>", html)
         self.assertIn("━━━━━━━━━━━━", html)
-        self.assertIn("💵 دلار: <code>230,500</code> تومان   🌍 انس طلا: <code>4,306.00</code> $",
+        self.assertIn("💵 دلار: <code>230,500</code> تومان | 💶 یورو: <code>262,290</code> تومان",
                       html)
-        self.assertIn("🟡 طلای ۱۸: <code>23,501,300</code> تومان", html)
-        self.assertIn("🧊 آبشده: <code>101,853,000</code> تومان   "
-                      "🪙 سکه امامی: <code>234,010,000</code> تومان", html)
+        self.assertIn("🇦🇪 درهم: <code>62,355</code> تومان | 🪙 تتر: <code>228,334</code> تومان",
+                      html)
+        self.assertIn("🌍 انس جهانی: <code>4,306.00</code> $ | "
+                      "🟡 طلای ۱۸ عیار: <code>23,501,300</code> تومان", html)
+        self.assertIn("🧊 آبشده: <code>101,853,000</code> تومان", html)
+        self.assertIn("🪙 سکه امامی: <code>234,010,000</code> تومان | "
+                      "🪙 تمام بهار: <code>229,240,000</code> تومان", html)
+        self.assertIn("🪙 نیم‌سکه: <code>117,800,000</code> تومان | "
+                      "🪙 ربع‌سکه: <code>63,000,000</code> تومان", html)
+        self.assertIn("🪙 سکه گرمی: <code>33,000,000</code> تومان", html)
+
+    def test_board_covers_full_market(self):
+        """All 12 required items render; bubbles/intrinsic never do."""
+        html = rates.format_board(self.data, "html", now=self.now)
+        for label in ("دلار", "یورو", "درهم", "تتر", "انس جهانی",
+                      "طلای ۱۸ عیار", "آبشده", "سکه امامی", "تمام بهار",
+                      "نیم‌سکه", "ربع‌سکه", "سکه گرمی"):
+            self.assertIn(label, html, f"missing board item: {label}")
 
     def test_board_is_compact(self):
-        """Title + date + divider + 3 content rows + divider = 7 lines."""
+        """Title + date + divider + 7 content rows + divider = 11 lines."""
         html = rates.format_board(self.data, "html", now=self.now)
-        self.assertEqual(len(html.splitlines()), 7)
+        self.assertEqual(len(html.splitlines()), 11)
         plain = rates.format_board(self.data, "plain", now=self.now)
-        self.assertEqual(len(plain.splitlines()), 7)
-
-    def test_units_live_outside_code_tags(self):
-        html = rates.format_board(self.data, "html", now=self.now)
-        for unit in ("تومان", "$"):
-            for line in html.splitlines():
-                if unit in line:
-                    self.assertNotIn(
-                        f"<code>...{unit}", line.replace("...", ""))
-        # explicit: units are not inside any <code> token
-        self.assertNotIn("تومان</code>", html.replace("</code> تومان", ""))
-        self.assertNotIn("$</code>", html.replace("</code> $", ""))
+        self.assertEqual(len(plain.splitlines()), 11)
 
     def test_no_bubble_or_intrinsic_labels_anywhere(self):
         html = rates.format_board(self.data, "html", now=self.now)
-        for banned in ("حباب", "بدون حباب", "ارزش ذاتی", "نیم سکه",
-                       "ربع سکه", "گرمی", "بهار", "انس نقره", "گرم طلای ۲۴"):
+        for banned in ("حباب", "بدون حباب", "ارزش ذاتی"):
             self.assertNotIn(banned, html)
+        plain = rates.format_board(self.data, "plain", now=self.now)
+        for banned in ("حباب", "ارزش ذاتی"):
+            self.assertNotIn(banned, plain)
 
     def test_plain_twin_has_no_tags(self):
         plain = rates.format_board(self.data, "plain", now=self.now)
         self.assertNotIn("<", plain)
         self.assertNotIn(">", plain)
-        self.assertIn("📌 تابلوی سریع طلا و ارز", plain)
+        self.assertIn("📌 تابلوی کامل طلا، سکه و ارز", plain)
         self.assertIn("💵 دلار: 230,500 تومان", plain)
         self.assertIn("🪙 سکه امامی: 234,010,000 تومان", plain)
 
@@ -844,11 +866,26 @@ class RatesBoardTests(unittest.TestCase):
         self.assertNotIn("—", html)
         self.assertNotIn("N/A", html)
         self.assertNotIn("null", html)
-        # rows 2 and 3 vanish -> only the دلار row remains
+        # every other row vanished -> title, date, divider, دلار row,
+        # divider
         self.assertEqual(len(html.splitlines()), 5)
         self.assertNotIn("  \n", html)
+        self.assertNotIn("\n\n", html)
         plain = rates.format_board(empty, "plain", now=self.now)
         self.assertIn("💵 دلار: 230,500 تومان", plain)
+
+    def test_partial_rows_keep_survivors_paired(self):
+        """One segment of a pair missing -> the survivor keeps its row;
+        both missing -> the row disappears entirely."""
+        partial = dict(self.data)
+        partial["eur"] = None    # یورو gone -> دلار keeps row 1 alone
+        partial["abshodeh"] = None
+        html = rates.format_board(partial, "html", now=self.now)
+        self.assertIn("💵 دلار: <code>230,500</code> تومان", html)
+        self.assertNotIn("یورو", html)
+        self.assertNotIn("آبشده", html)
+        self.assertNotIn(" | \n", html)
+        self.assertNotIn("\n | ", html)
 
     def test_thousands_separator_formatting(self):
         self.assertEqual(rates._fmt_toman(85400000), "85,400,000")
@@ -884,8 +921,8 @@ class RatesCaptionTests(unittest.TestCase):
     def test_rates_section_prepended_above_proxy_block(self):
         msg = main.format_message(self.proxies, self.latencies, "📊 RATES")
         self.assertIn("📊 RATES", msg)
-        self.assertIn("⚡️ <b>پروکسی‌های آماده</b> (اگر وصل نشد، دکمهٔ بعدی)", msg)
-        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های آماده"))
+        self.assertIn("⚡️ <b>پروکسی‌های فعال و پرسرعت</b>", msg)
+        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های فعال"))
 
     def test_no_rates_section_when_absent(self):
         msg = main.format_message(self.proxies, self.latencies, None)
@@ -968,6 +1005,8 @@ class EndToEndRatesFlowTests(unittest.TestCase):
                     mock.patch.object(main, "send_message", return_value=send_ok) as sm, \
                     mock.patch.object(main.rates_module, "get_rates",
                                       **rates_kwargs), \
+                    mock.patch.object(main.prober_module, "load_health",
+                                      return_value={}), \
                     mock.patch.dict(os.environ, {
                         "TELEGRAM_BOT_TOKEN": self.TOKEN,
                         "TELEGRAM_CHANNEL_ID": "@chan",
@@ -1007,9 +1046,9 @@ class EndToEndRatesFlowTests(unittest.TestCase):
         self.assertEqual(send_calls, 1, "partial batch must still be posted")
         self.assertEqual(len(hist_lines), 3)
 
-    def test_zero_fresh_proxies_skips_posting(self):
-        """Everything recently posted -> maintenance notice instead of a
-        silent exit; the tag lands in history and no batch is dispatched."""
+    def test_zero_fresh_proxies_reuses_known_good(self):
+        """Everything recently posted -> Fallback 1 re-posts known-good
+        proxies that re-probed healthy; no maintenance placeholder."""
         proxies = [
             main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
             for i in range(1, 6)
@@ -1020,11 +1059,11 @@ class EndToEndRatesFlowTests(unittest.TestCase):
             history_preload=[f"{now_iso}|{p.link}" for p in proxies],
             rates_side_effect={"usd": 1.0})
         self.assertEqual(code, 0)
-        self.assertEqual(send_calls, 1,
-                         "maintenance notice must be posted, not skipped")
-        self.assertIn("به‌روزرسانی", sent_text)
-        self.assertTrue(any(main.MAINTENANCE_TAG in line for line in hist_lines))
-        self.assertEqual(len(hist_lines), 6)  # 5 preloaded + maintenance tag
+        self.assertEqual(send_calls, 1, "known-good reuse must post a batch")
+        self.assertIn("پروکسی‌های فعال", sent_text)
+        self.assertNotIn("به‌روزرسانی", sent_text)
+        # reuse appended a second entry per proxy (stamps refresh)
+        self.assertEqual(len(hist_lines), 10)
 
     def test_rates_failure_never_blocks_the_post(self):
         # side_effect (not return_value) so the exception is raised
@@ -1234,35 +1273,55 @@ class ReliabilityHardeningTests(unittest.TestCase):
         self.assertIn("selected_count=5", out)
         self.assertIn("chat_id=@chan", out)
 
-    def test_maintenance_fallback_posts_and_records_tag(self):
-        import tempfile
+    def test_maintenance_posts_removed(self):
+        """The maintenance notice path is gone: no placeholder post ever.
+        Zero-proxy situations use known-good reuse, then silent skip."""
+        self.assertFalse(hasattr(main, "MAINTENANCE_TEXT"))
+        self.assertFalse(hasattr(main, "MAINTENANCE_TAG"))
+        self.assertFalse(hasattr(main, "_maintenance_fallback"))
+        self.assertFalse(hasattr(main, "_low_maintenance"))
 
-        calls = []
+    def test_silent_skip_posts_nothing_and_exits_clean(self):
+        import io
+        import contextlib
 
-        class Resp:
-            def json(self):
-                return {"ok": True, "result": {"message_id": 12}}
+        captured = io.StringIO()
+        with contextlib.redirect_stdout(captured):
+            code = main._silent_skip(0.0, "no viable proxies this cycle", 3)
+        self.assertEqual(code, 0)
+        self.assertIn("POST DECISION", captured.getvalue())
+        self.assertIn("will_post=no", captured.getvalue())
+        self.assertIn("fresh_count=3", captured.getvalue())
 
-        def fake_post(url, json=None, timeout=None):
-            calls.append(json)
-            return Resp()
+    def test_reuse_known_good_prefers_healthy_and_distinct(self):
+        """Fallback 1: re-probed healthy proxies with recorded health
+        rank first; distinct hostnames are preferred; count is honored."""
+        reachable = make_batch(8)  # fresh probes (no health records)
+        last_posted = {p.key: time.time() - 60 for p, _ in reachable}
+        with mock.patch.object(main.prober_module, "load_health",
+                               return_value={}), \
+                mock.patch.object(main.prober_module, "HISTORY_JSON_FILE",
+                                  Path("nonexistent-history.json")):
+            picks = main._reuse_known_good(reachable, last_posted, 5)
+        self.assertEqual(len(picks), 5)
+        self.assertEqual(len({p.server.lower() for p, _ in picks}), 5)
 
-        with tempfile.TemporaryDirectory() as tmp:
-            hist = Path(tmp) / "history.txt"
-            with mock.patch.object(main, "HISTORY_FILE", hist):
-                _requests.post = fake_post
-                try:
-                    ok = main._maintenance_fallback("TOK", "@chan")
-                finally:
-                    _requests.post = lambda *a, **k: (_ for _ in ()).throw(
-                        RequestException("offline"))
-                recorded = main.MAINTENANCE_TAG in main.load_history()
-        self.assertTrue(ok)
-        self.assertEqual(len(calls), 1)
-        self.assertNotIn("reply_markup", calls[0], "no buttons on maintenance")
-        self.assertEqual(calls[0]["text"], main.MAINTENANCE_TEXT)
-        self.assertIn("به‌روزرسانی", calls[0]["text"])
-        self.assertTrue(recorded, "maintenance tag recorded in history")
+    def test_reuse_known_good_uses_health_records_for_ranking(self):
+        """A proxy with an alive health record and low recorded ping wins."""
+        slow = (make_proxy("slow.example", 443, "eeAA" + "bb" * 8), 2000.0)
+        fast = (make_proxy("fast.example", 443, "eeCC" + "dd" * 8), 1900.0)
+        health = {
+            "fast.example:443": {"alive": True, "strikes": 0,
+                                 "latency_ms": 90.0, "last_seen": time.time()},
+            "slow.example:443": {"alive": False, "strikes": 1,
+                                 "last_seen": time.time()},
+        }
+        with mock.patch.object(main.prober_module, "load_health",
+                               return_value=health), \
+                mock.patch.object(main.prober_module, "HISTORY_JSON_FILE",
+                                  Path("nonexistent-history.json")):
+            picks = main._reuse_known_good([slow, fast], {}, 1)
+        self.assertEqual([p.server for p, _ in picks], ["fast.example"])
 
 
 class TimeoutAndTelemetryConfigTests(unittest.TestCase):
@@ -1452,6 +1511,12 @@ class ResiliencePipelineTests(unittest.TestCase):
 
     def _run_main(self, collect_results, rank_results, send_ok=True):
         import tempfile
+        self._send_count = 0
+
+        def _send(*args, **kwargs):
+            self._send_count += 1
+            return send_ok
+
         with tempfile.TemporaryDirectory() as tmp:
             hist = Path(tmp) / "history.txt"
             with \
@@ -1460,8 +1525,7 @@ class ResiliencePipelineTests(unittest.TestCase):
                                       side_effect=collect_results), \
                     mock.patch.object(main, "rank_reachable",
                                       side_effect=rank_results), \
-                    mock.patch.object(main, "send_message",
-                                      return_value=send_ok), \
+                    mock.patch.object(main, "send_message", side_effect=_send), \
                     mock.patch.dict(os.environ, {
                         "TELEGRAM_BOT_TOKEN": self.TOKEN,
                         "TELEGRAM_CHANNEL_ID": "@chan",
@@ -1478,13 +1542,16 @@ class ResiliencePipelineTests(unittest.TestCase):
         )
         self.assertEqual(code, 0)  # recovered via the refresh cycle
 
-    def test_low_maintenance_below_hard_floor(self):
+    def test_low_pool_falls_back_to_reuse_then_skips_silently(self):
+        """Below the hard floor the run no longer posts a notice: with a
+        healthy re-probed pool it still selects (reuse fills the batch),
+        and with nothing viable it silently skips - no send at all."""
         proxies = [main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
         code = self._run_main(
             collect_results=[proxies],
-            rank_results=[[(proxies[0], 100.0)]],   # 1 valid < floor of 3
+            rank_results=[[]],                       # nothing survives probing
         )
-        self.assertEqual(code, 0)
+        self.assertEqual(code, 0)  # silent skip exits cleanly, no dispatch
 
     def test_no_dead_proxies_ever_posted(self):
         proxies = [main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
@@ -1493,6 +1560,8 @@ class ResiliencePipelineTests(unittest.TestCase):
             rank_results=[[]],                       # nothing survives probing
         )
         self.assertEqual(code, 0)
+        self.assertEqual(self._send_count, 0,
+                         "no dispatch may happen without validated proxies")
 
     def test_telemetry_constants(self):
         self.assertEqual(fetcher.FETCH_TIMEOUT, 5.0)

@@ -71,15 +71,6 @@ GLOBAL_DEADLINE = 90          # seconds - hard budget for the entire run
 # cooldown reuse so old entries can never block the pipeline forever).
 RECOVERY_TS = "2000-01-01T00:00:00"
 
-# Posted when zero proxies are fresh after cooldown-aware selection, so the
-# channel always sees activity instead of silent gaps.
-MAINTENANCE_TAG = "maintenance"
-MAINTENANCE_TEXT = (
-    "🔧 در حال به‌روزرسانی لیست پروکسی‌ها...\n\n"
-    "⚡️ به‌زودی دستهٔ جدیدی از پروکسی‌های پرسرعت منتشر می‌شود. "
-    "لطفاً چند دقیقه دیگر دوباره بررسی کنید."
-)
-
 ALLOWED_PORTS = {443, 8443, 2053, 2083, 8880}
 
 HEX_SET = set(string.hexdigits)
@@ -535,20 +526,6 @@ def append_history(proxies: list[Proxy]) -> bool:
         return False
 
 
-def append_history_text(lines: list[str]) -> bool:
-    """Append raw text lines to history.txt (used by the maintenance path)."""
-    try:
-        now_iso = datetime.now().isoformat(timespec="seconds")
-        with HISTORY_FILE.open("a", encoding="utf-8") as fh:
-            for line in lines:
-                fh.write(f"{now_iso}|{_extract_ident(line)}\n")
-        compact_history()
-        return True
-    except OSError as exc:
-        logger.error("Could not update history file %s: %s", HISTORY_FILE, exc)
-        return False
-
-
 # ---------------------------------------------------------------------------
 # Message formatting (HTML parse mode)
 # ---------------------------------------------------------------------------
@@ -569,11 +546,8 @@ def channel_username() -> str | None:
 
 NEWS_HEADER = "📰 <b>خبر فوری:</b>"
 NEWS_HEADER_PLAIN = "📰 خبر فوری:"
-POST_HEADLINE = "⚡️ <b>پروکسی‌های آماده</b> (اگر وصل نشد، دکمهٔ بعدی)"
-POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های آماده (اگر وصل نشد، دکمهٔ بعدی)"
-
-HELP_BUTTON_TEXT = "📌 راهنما"
-HELP_URL = "https://t.me/TelegramTips"  # اگر وصل نشد، دکمه بعدی را بزنید
+POST_HEADLINE = "⚡️ <b>پروکسی‌های فعال و پرسرعت</b>"
+POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های فعال و پرسرعت"
 
 
 def format_message(proxies: list[Proxy], latencies: list[float],
@@ -581,8 +555,8 @@ def format_message(proxies: list[Proxy], latencies: list[float],
     """Build the Persian post body (HTML entities pre-escaped).
 
     Compact: the rates board (when available) leads, then the proxy
-    headline whose parenthetical carries the retry guidance. No raw proxy
-    links — deep links live ONLY in the inline-keyboard buttons.
+    headline. No raw proxy links — deep links live ONLY in the
+    inline-keyboard buttons.
     """
     parts: list[str] = []
     if rates_section:
@@ -628,11 +602,26 @@ def html_escape(text: str) -> str:
     )
 
 
+JOIN_BUTTON_TEXT = "📢 عضویت در کانال"
+
+
+def _join_button() -> dict | None:
+    """Join-channel button, or None when the channel id is numeric
+    (it cannot be turned into a t.me link Telegram would accept)."""
+    username = channel_username()
+    return {"text": JOIN_BUTTON_TEXT, "url": f"https://t.me/{username}"} \
+        if username else None
+
+
 def build_inline_keyboard(proxies: list[Proxy],
                           latencies: list[float]) -> list[list[dict]]:
-    """Compact 2-column keyboard: proxy connect buttons side-by-side with
-    a trailing help button (row 3: proxy 5 | help). Height stays minimal
-    regardless of batch size. Deep links use the native tg:// scheme."""
+    """Compact 2-column proxy grid + one full-width channel row.
+
+    Proxy connect buttons sit side-by-side (2 per row, minimal height);
+    the final row spans the full width with the join-channel button.
+    Deep links use the native tg:// scheme. There is no help/feedback
+    button and no callback data.
+    """
     buttons = [
         {
             "text": f"{PROXY_BUTTON_EMOJIS[(i - 1) % len(PROXY_BUTTON_EMOJIS)]} "
@@ -641,8 +630,11 @@ def build_inline_keyboard(proxies: list[Proxy],
         }
         for i, proxy in enumerate(proxies, start=1)
     ]
-    buttons.append({"text": HELP_BUTTON_TEXT, "url": HELP_URL})
-    return [buttons[i:i + 2] for i in range(0, len(buttons), 2)]
+    rows = [buttons[i:i + 2] for i in range(0, len(buttons), 2)]
+    join = _join_button()
+    if join is not None:
+        rows.append([join])  # full-width channel row at the very bottom
+    return rows
 
 
 def send_message(token: str, chat_id: str, text: str,
@@ -858,38 +850,63 @@ def _post_decision(will_post: bool, reason: str, fresh_count: int,
     )
 
 
-def _maintenance_fallback(token: str, chat_id: str) -> bool:
-    """Post the maintenance notice (no rates, no buttons) and log it."""
-    logger.info("Posting maintenance notice instead of a proxy batch.")
-    try:
-        ok = send_message(token, chat_id, MAINTENANCE_TEXT,
-                          proxies=None, latencies=None,
-                          rates_section_plain=None)
-    except Exception:
-        logger.exception("Maintenance notice dispatch crashed")
-        ok = False
-    if ok:
-        append_history_text([MAINTENANCE_TAG])
-        logger.info("Maintenance tag recorded in history.")
-    return ok
+def _reuse_known_good(reachable: list[tuple[Proxy, float]],
+                      last_posted: dict[str, float],
+                      count: int) -> list[tuple[Proxy, float]]:
+    """Fallback 1: reuse previously posted proxies that re-probed healthy.
 
-
-def _low_maintenance(token: str, chat_id: str, run_started: float,
-                     reason: str) -> int:
-    """Low-maintenance mode: a short notice post instead of dead proxies.
-
-    Used when the valid pool is below the hard floor (or empty after the
-    Refresh Cycle); keeps the channel alive without ever posting an
-    unverified proxy. Returns the process exit code.
+    Every candidate here comes from the CURRENT run's validated pool, so
+    each returned proxy just passed the strict TCP probe (< 2500 ms). Among
+    those, proxies with a proven history.json health record (alive, low
+    recorded ping) rank first, then the oldest last-posted stamp; distinct
+    server hostnames are preferred exactly like pick_batch.
     """
-    try:
-        ok = _maintenance_fallback(token, chat_id)
-    except Exception:
-        logger.exception("Low-maintenance dispatch crashed")
-        ok = False
-    _post_decision(ok, f"low-maintenance ({reason})", 0, 0,
-                   chat_id, "plain", len(MAINTENANCE_TEXT))
-    logger.info("=== ProxGram run finished (low-maintenance) in %.1f s ===",
+    if count <= 0 or not reachable:
+        return []
+    health = prober_module.load_health()
+
+    def rank(item: tuple[Proxy, float]):
+        proxy, latency = item
+        entry = health.get(proxy.key) or {}
+        alive = 1 if entry.get("alive") else 0
+        recorded = float(entry.get("latency_ms") or latency)
+        stamp = last_posted.get(proxy.key, 0.0)
+        return (-alive, recorded, stamp)
+
+    ordered = sorted(reachable, key=rank)
+    picked: list[tuple[Proxy, float]] = []
+    seen_hosts: set[str] = set()
+    for proxy, latency in ordered:  # pass 1: distinct hostnames
+        if len(picked) >= count:
+            break
+        host = proxy.server.lower()
+        if host in seen_hosts:
+            continue
+        seen_hosts.add(host)
+        picked.append((proxy, latency))
+    for proxy, latency in ordered:  # pass 2: distinct hosts exhausted
+        if len(picked) >= count:
+            break
+        if all(p.combo != proxy.combo for p, _ in picked):
+            picked.append((proxy, latency))
+    if picked:
+        logger.info(
+            "Known-good reuse: returning %d previously-posted proxies with "
+            "verified health records", len(picked),
+        )
+    return picked
+
+
+def _silent_skip(run_started: float, reason: str, fresh_count: int) -> int:
+    """Fallback 2: post nothing this cycle (silent wait until the next
+    scheduled run). No placeholder, maintenance, or dummy post is ever
+    sent; dead proxies are never published to fill space."""
+    logger.warning(
+        "Silent skip: %s - nothing will be posted this cycle; the next "
+        "scheduled run will retry.", reason,
+    )
+    _post_decision(False, reason, fresh_count, 0, "skipped", "-", 0)
+    logger.info("=== ProxGram run finished (silent skip) in %.1f s ===",
                 time.monotonic() - run_started)
     return 0
 
@@ -944,8 +961,7 @@ def main() -> int:
         logger.error("No valid Fake-TLS candidates from any source.")
         gh_annotation("warning",
                       "No valid Fake-TLS candidates from any source")
-        return _low_maintenance(token, channel_id, run_started,
-                                "no valid candidates from sources")
+        return _silent_skip(run_started, "no valid candidates from sources", 0)
 
     # 2. Strict probe (latency cap + TTL health) with a Refresh Cycle when
     # fewer than BATCH_SIZE valid proxies survive.
@@ -975,19 +991,19 @@ def main() -> int:
         len({p.server.lower() for p, _ in reachable}),
     )
     # Never post dead proxies just to fill space: below the hard floor of
-    # BATCH_SIZE - 2 valid proxies, publish the low-maintenance notice.
+    # BATCH_SIZE - 2 valid proxies, selection falls back to known-good
+    # reuse and, if that finds nothing, a silent skip (no notice post).
     if len(reachable) < BATCH_SIZE - 2:
         logger.warning(
-            "Valid pool below floor (%d < %d); entering low-maintenance mode",
+            "Valid pool below floor (%d < %d); known-good reuse will fill "
+            "the batch if the fresh selection comes up short",
             len(reachable), BATCH_SIZE - 2,
         )
         gh_annotation(
             "warning",
             f"Only {len(reachable)} valid proxies available; "
-            "posting low-maintenance notice instead of dead proxies",
+            "falling back to known-good reuse",
         )
-        return _low_maintenance(token, channel_id, run_started,
-                                f"valid pool {len(reachable)} < {BATCH_SIZE - 2}")
 
     # 3. Pick fresh proxies (cooldown-aware reuse; never pad unverified).
     stage_started = time.monotonic()
@@ -1009,14 +1025,19 @@ def main() -> int:
     logger.info("[stage] selection: %d fresh proxies in %.1f s",
                 len(picks), time.monotonic() - stage_started)
     if not picks:
-        # Pool fully exhausted within the cooldown window: low-maintenance
-        # notice instead of exiting silently or reposting.
+        # Fallback 1: the pool is exhausted within the cooldown window ->
+        # re-post known-good proxies that just re-probed healthy (proven
+        # latency records), never unverified or dead fillers.
         logger.warning(
-            "No fresh proxies within the %.0fh cooldown window; falling "
-            "back to the maintenance notice.", REUSE_COOLDOWN / 3600.0,
+            "No fresh proxies within the %.0fh cooldown window; reusing "
+            "known-good proxies with verified health records.",
+            REUSE_COOLDOWN / 3600.0,
         )
-        return _low_maintenance(token, channel_id, run_started,
-                                "pool exhausted within cooldown")
+        picks = _reuse_known_good(reachable, last_posted, BATCH_SIZE)
+    if not picks:
+        # Fallback 2: nothing viable at all -> silent wait, no placeholder.
+        return _silent_skip(run_started, "no viable proxies this cycle",
+                            len(after_history))
     if len(picks) < BATCH_SIZE:
         logger.warning(
             "Partial batch: only %d/%d fresh valid proxies available; "
