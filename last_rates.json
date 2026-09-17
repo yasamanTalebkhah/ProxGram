@@ -1,0 +1,24 @@
+{
+  "fetched_at": "2026-09-17T08:32:41",
+  "rates": {
+    "usd": 2286000.0,
+    "gold_18": 232566000.0,
+    "gold_24": 310085000.0,
+    "emami": 2320050000.0,
+    "bahar": 2271900000.0,
+    "nim": 1190000000.0,
+    "rob": 630000000.0,
+    "gerami": 330000000.0,
+    "abshodeh": 1007930000.0,
+    "ons_gold": 4316.5,
+    "ons_silver": 64.06,
+    "bubble_bahar": 52630000.0,
+    "bubble_nim": 28330000.0,
+    "bubble_rob": 49140000.0,
+    "bubble_gerami": 44290000.0,
+    "value_emami": 2269751000.0,
+    "bubble_emami": 50299000.0,
+    "value_abshodeh": 1012183333.0625,
+    "bubble_abshodeh": -4253333.0625
+  }
+}
