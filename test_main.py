@@ -236,9 +236,8 @@ class MessageAndKeyboardTests(unittest.TestCase):
             self.assertNotIn("t.me/socks", text)
 
     def test_body_is_short_with_required_lines(self):
-        self.assertIn("⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>", self.msg)
-        self.assertIn("برای اتصال روی یکی از گزینه‌های زیر کلیک کنید.", self.msg)
-        self.assertIn("در صورت عدم اتصال، دکمه بعدی را تست کنید.", self.msg)
+        self.assertIn("⚡️ <b>پروکسی‌های فعال و ضدفیلتر تلگرام</b>", self.msg)
+        self.assertIn("برای اتصال از دکمه‌های شیشه‌ای زیر استفاده کنید", self.msg)
         self.assertLess(len(self.msg), main.MAX_MESSAGE_LENGTH)
         self.assertNotIn("<b>", self.minimal)
 
@@ -554,34 +553,37 @@ def _tgju_bulk():
 
 
 class RatesParsingTests(unittest.TestCase):
-    def test_extracts_all_direct_fields(self):
+    """TGJU quotes rials; parse_tgju_bulk normalizes every Iranian field to
+    toman (÷10). Ounce benchmarks stay in dollars."""
+
+    def test_extracts_all_direct_fields_normalized_to_toman(self):
         data = rates.parse_tgju_bulk(_tgju_bulk())
-        self.assertEqual(data["usd"], 2305000.0)
-        self.assertEqual(data["gold_18"], 235013000.0)
-        self.assertEqual(data["gold_24"], 313348000.0)
-        self.assertEqual(data["emami"], 2340100000.0)
-        self.assertEqual(data["bahar"], 2292400000.0)
-        self.assertEqual(data["nim"], 1178000000.0)
-        self.assertEqual(data["rob"], 630000000.0)
-        self.assertEqual(data["gerami"], 330000000.0)
-        self.assertEqual(data["abshodeh"], 1018530000.0)
-        self.assertEqual(data["ons_gold"], 4306.0)
+        self.assertEqual(data["usd"], 230500.0)          # 2,305,000 rial
+        self.assertEqual(data["gold_18"], 23501300.0)    # 235,013,000 rial
+        self.assertEqual(data["gold_24"], 31334800.0)    # 313,348,000 rial
+        self.assertEqual(data["emami"], 234010000.0)     # 2,340,100,000 rial
+        self.assertEqual(data["bahar"], 229240000.0)
+        self.assertEqual(data["nim"], 117800000.0)
+        self.assertEqual(data["rob"], 63000000.0)
+        self.assertEqual(data["gerami"], 33000000.0)
+        self.assertEqual(data["abshodeh"], 101853000.0)  # 1,018,530,000 rial
+        self.assertEqual(data["ons_gold"], 4306.0)       # dollars: untouched
         self.assertEqual(data["ons_silver"], 63.81)
 
     def test_computed_emami_bubble_and_value(self):
         data = rates.parse_tgju_bulk(_tgju_bulk())
-        self.assertEqual(data["value_emami"], 2293633000.0)
+        self.assertEqual(data["value_emami"], 229363300.0)   # sekee_real ÷ 10
         self.assertAlmostEqual(data["bubble_emami"],
-                               2340100000.0 - 2293633000.0, delta=0.01)
+                               234010000.0 - 229363300.0, delta=0.01)
 
     def test_computed_abshodeh_value_and_bubble(self):
         data = rates.parse_tgju_bulk(_tgju_bulk())
-        expected_value = 313348000.0 * rates.MISQAL_GRAMS * rates.GOLD_17_PURITY
+        expected_value = 31334800.0 * rates.MISQAL_GRAMS * rates.GOLD_17_PURITY
         self.assertAlmostEqual(data["value_abshodeh"], expected_value, delta=0.01)
         self.assertAlmostEqual(data["bubble_abshodeh"],
-                               1018530000.0 - expected_value, delta=0.01)
-        # sanity: value must be in the ~1 billion rial range, not per gram
-        self.assertGreater(data["value_abshodeh"], 1_000_000_000)
+                               101853000.0 - expected_value, delta=0.01)
+        # sanity: value must be in the ~100 million toman range, not per gram
+        self.assertGreater(data["value_abshodeh"], 100_000_000)
 
     def test_span_marked_prices_parsed(self):
         self.assertEqual(rates._to_number(
@@ -617,7 +619,7 @@ class RatesCacheTests(unittest.TestCase):
                 self.assertTrue(rates.save_cached_rates(data))
                 loaded = rates.load_cached_rates()
                 self.assertIn("fetched_at", loaded)
-                self.assertEqual(loaded["rates"]["usd"], 2305000.0)
+                self.assertEqual(loaded["rates"]["usd"], 230500.0)
 
     def test_missing_or_corrupt_cache_returns_none(self):
         import tempfile
@@ -641,8 +643,8 @@ class RatesCacheTests(unittest.TestCase):
                     mock.patch.object(rates, "fetch_usd_nobitex", return_value=None):
                 rates.save_cached_rates(rates.parse_tgju_bulk(_tgju_bulk()))
                 merged = rates.get_rates()
-        self.assertEqual(merged["usd"], 2305000.0)
-        self.assertEqual(merged["emami"], 2340100000.0)
+        self.assertEqual(merged["usd"], 230500.0)
+        self.assertEqual(merged["emami"], 234010000.0)
 
     def test_get_rates_live_success_refreshes_cache(self):
         import tempfile
@@ -654,8 +656,8 @@ class RatesCacheTests(unittest.TestCase):
                                       return_value=_tgju_bulk()):
                 merged = rates.get_rates()
                 cached = rates.load_cached_rates()
-        self.assertEqual(merged["emami"], 2340100000.0)
-        self.assertEqual(cached["rates"]["emami"], 2340100000.0)
+        self.assertEqual(merged["emami"], 234010000.0)
+        self.assertEqual(cached["rates"]["emami"], 234010000.0)
 
     def test_get_rates_merges_cache_into_live_gaps(self):
         import tempfile
@@ -669,10 +671,44 @@ class RatesCacheTests(unittest.TestCase):
                                       return_value=partial), \
                     mock.patch.object(rates, "fetch_usd_nobitex",
                                       return_value=None):
-                rates.save_cached_rates({"gold_24": 300000000.0})
+                rates.save_cached_rates({"gold_24": 30000000.0})
                 merged = rates.get_rates()
-        self.assertEqual(merged["gold_24"], 300000000.0)  # from cache
-        self.assertEqual(merged["usd"], 2305000.0)        # from live
+        self.assertEqual(merged["gold_24"], 30000000.0)   # from cache
+        self.assertEqual(merged["usd"], 230500.0)         # from live
+
+    def test_rial_scale_cache_rejected_wholesale(self):
+        """A cache written before toman normalization (or by a mismatched
+        source) must be loudly rejected, never served as current rates."""
+        import tempfile
+        import json as json_mod
+
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "last_rates.json"
+            stale_rial_cache = {
+                "fetched_at": "2026-09-16T11:48:24",
+                "rates": {
+                    "usd": 2305000.0,          # rial-scale, not toman
+                    "emami": 2340100000.0,
+                    "gold_18": 235013000.0,
+                },
+            }
+            cache.write_text(json_mod.dumps(stale_rial_cache), encoding="utf-8")
+            with self.assertLogs("proxgram.rates", level="WARNING") as logs:
+                with mock.patch.object(rates, "RATES_CACHE_FILE", cache), \
+                        mock.patch.object(rates, "fetch_tgju_bulk",
+                                          return_value=None), \
+                        mock.patch.object(rates, "fetch_usd_nobitex",
+                                          return_value=None):
+                    merged = rates.get_rates()
+        self.assertIsNone(
+            merged,
+            "a rial-scale cache with no live data must yield no rates at "
+            "all - not silently served stale values",
+        )
+        self.assertTrue(
+            any("plausibility" in line or "unit" in line for line in logs.output),
+            f"rejection must be logged loudly, got: {logs.output}",
+        )
 
     def test_get_rates_total_outage_without_cache_returns_none(self):
         import tempfile
@@ -709,7 +745,9 @@ class RatesFetchTests(unittest.TestCase):
                     "bestSell": "2310000", "bestBuy": "2300000"}}}
 
         with mock.patch.object(rates.requests, "get", return_value=Resp()):
-            self.assertAlmostEqual(rates.fetch_usd_nobitex(), 2305000.0)
+            # Nobitex quotes rials: (2,310,000 + 2,300,000)/2 = 2,305,000
+            # rial midpoint -> 230,500 toman after normalization.
+            self.assertAlmostEqual(rates.fetch_usd_nobitex(), 230500.0)
 
     def test_fetch_usd_nobitex_missing_keys_returns_none(self):
         class Resp:
@@ -732,41 +770,87 @@ class RatesSectionTests(unittest.TestCase):
 
     def test_html_section_structure(self):
         html = rates.format_section(self.data, "html", now=self.now)
-        self.assertIn("📊 <b>آرشیو روزانه اقلام فیزیکی</b>", html)
-        self.assertIn("🗓 پنج‌شنبه 26/06/1405", html)
-        self.assertIn("💰 دلار: <code>2,305,000</code>", html)
-        self.assertIn("🔸 سکه امامی: <code>2,340,100,000</code>", html)
-        self.assertIn("🔹 حباب سکه امامی: <code>46,467,000</code>", html)
-        self.assertIn("🥇 انس طلا: <code>4,306.00</code>", html)
-        self.assertIn("🔸 ارزش آبشده بدون حباب: <code>", html)
-        self.assertIn("🔸 ارزش سکه امامی بدون حباب: <code>", html)
+        self.assertIn("📊 <b>تابلوی زنده قیمت طلا و ارز</b>", html)
+        self.assertIn("🗓 <i>پنج‌شنبه 26/06/1405</i>", html)
+        self.assertIn("─", html)  # unicode divider
+        self.assertIn("💰 <b>ارز و مبنا</b>", html)
+        self.assertIn("▫️ دلار آزاد: <code>230,500 تومان</code>", html)
+        self.assertIn("▫️ انس جهانی طلا: <code>4,306.00 $</code>", html)
+        self.assertIn("▫️ انس جهانی نقره: <code>63.81 $</code>", html)
+        self.assertIn("🪙 <b>انواع مسکوکات طلا</b>", html)
+        self.assertIn("▫️ سکه امامی: <code>234,010,000 تومان</code>", html)
+        self.assertIn("▫️ سکه بهار آزادی: <code>229,240,000 تومان</code>", html)
+        self.assertIn("▫️ نیم سکه: <code>117,800,000 تومان</code>", html)
+        self.assertIn("▫️ ربع سکه: <code>63,000,000 تومان</code>", html)
+        self.assertIn("▫️ سکه گرمی: <code>33,000,000 تومان</code>", html)
+        self.assertIn("✨ <b>طلای خام و آبشده</b>", html)
+        self.assertIn("▫️ آبشده نقدی: <code>101,853,000 تومان</code>", html)
+        self.assertIn("▫️ یک گرم طلای ۱۸: <code>23,501,300 تومان</code>", html)
+        self.assertIn("▫️ یک گرم طلای ۲۴: <code>31,334,800 تومان</code>", html)
+        self.assertIn("🔍 <b>حباب و ارزش ذاتی</b>", html)
+        self.assertIn("▫️ حباب سکه امامی: <code>4,646,700 تومان</code>", html)
+        self.assertIn("▫️ حباب آبشده: <code>", html)
+        self.assertIn("▫️ ارزش ذاتی سکه امامی: <code>229,363,300 تومان</code>", html)
 
     def test_plain_twin_has_no_tags(self):
         plain = rates.format_section(self.data, "plain", now=self.now)
         self.assertNotIn("<", plain)
         self.assertNotIn(">", plain)
-        self.assertIn("📊 آرشیو روزانه اقلام فیزیکی", plain)
-        self.assertIn("💰 دلار: 2,305,000", plain)
+        self.assertIn("📊 تابلوی زنده قیمت طلا و ارز", plain)
+        self.assertIn("▫️ دلار آزاد: 230,500 تومان", plain)
+        self.assertIn("▫️ سکه امامی: 234,010,000 تومان", plain)
         self.assertIn("🗓 پنج‌شنبه 26/06/1405", plain)
 
     def test_all_required_labels_present(self):
         html = rates.format_section(self.data, "html", now=self.now)
-        for label in ("دلار", "سکه امامی", "گرم طلای 18", "گرم طلای 24",
-                      "آبشده", "سکه بهار آزادی", "نیم سکه", "ربع سکه",
-                      "سکه گرمی", "انس طلا", "انس نقره", "حباب آبشده",
-                      "حباب سکه امامی", "حباب سکه بهار آزادی", "حباب نیم سکه",
-                      "حباب ربع سکه", "حباب سکه گرمی",
-                      "ارزش آبشده بدون حباب", "ارزش سکه امامی بدون حباب"):
+        for label in ("دلار آزاد", "انس جهانی طلا", "انس جهانی نقره",
+                      "سکه امامی", "سکه بهار آزادی", "نیم سکه", "ربع سکه",
+                      "سکه گرمی", "آبشده نقدی", "یک گرم طلای ۱۸",
+                      "یک گرم طلای ۲۴", "حباب سکه امامی", "حباب آبشده",
+                      "ارزش ذاتی سکه امامی"):
             self.assertIn(label, html)
+
+    def test_all_values_carry_toman_unit_and_separators(self):
+        html = rates.format_section(self.data, "html", now=self.now)
+        # every Iranian amount is rendered with a تومان suffix
+        for amount in ("230,500", "234,010,000", "101,853,000", "23,501,300"):
+            self.assertIn(f"<code>{amount} تومان</code>", html)
+        # ounce benchmarks are dollars, never toman
+        self.assertNotIn("4,306.00 تومان", html)
+        self.assertIn("<code>4,306.00 $</code>", html)
+
+    def test_thousands_separator_formatting(self):
+        self.assertEqual(rates._fmt_toman(85400000), "85,400,000")
+        self.assertEqual(rates._fmt_toman(1234567), "1,234,567")
+        self.assertEqual(rates._fmt_toman(None), "—")
 
     def test_missing_fields_render_dash(self):
         empty = {field: None for field in rates.ALL_FIELDS}
-        empty["usd"] = 2305000.0
+        empty["usd"] = 230500.0
         html = rates.format_section(empty, "html", now=self.now)
-        self.assertIn("💰 دلار: <code>2,305,000</code>", html)
+        self.assertIn("▫️ دلار آزاد: <code>230,500 تومان</code>", html)
         self.assertIn("—", html)
         plain = rates.format_section(empty, "plain", now=self.now)
-        self.assertIn("💰 دلار: 2,305,000", plain)
+        self.assertIn("▫️ دلار آزاد: 230,500 تومان", plain)
+
+
+class RatesValidationTests(unittest.TestCase):
+    """Live values must be plausible; violations are reported loudly."""
+
+    def test_valid_rates_pass_without_warnings(self):
+        data = rates.parse_tgju_bulk(_tgju_bulk())
+        self.assertEqual(rates.validate_rates(data), [])
+
+    def test_implausible_value_flagged_with_field_and_range(self):
+        data = rates.parse_tgju_bulk(_tgju_bulk())
+        data["usd"] = 0.0  # zeroed feed
+        warnings = rates.validate_rates(data)
+        self.assertTrue(any("usd" in w and "plausible" in w for w in warnings))
+
+    def test_missing_field_flagged(self):
+        data = rates.parse_tgju_bulk({"current": {}})
+        warnings = rates.validate_rates(data)
+        self.assertTrue(any("usd" in w and "missing" in w for w in warnings))
 
 
 class RatesCaptionTests(unittest.TestCase):
@@ -777,8 +861,8 @@ class RatesCaptionTests(unittest.TestCase):
     def test_rates_section_prepended_above_proxy_block(self):
         msg = main.format_message(self.proxies, self.latencies, "📊 RATES")
         self.assertIn("📊 RATES", msg)
-        self.assertIn("⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>", msg)
-        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های پرسرعت"))
+        self.assertIn("⚡️ <b>پروکسی‌های فعال و ضدفیلتر تلگرام</b>", msg)
+        self.assertLess(msg.index("📊"), msg.index("پروکسی‌های فعال"))
 
     def test_no_rates_section_when_absent(self):
         msg = main.format_message(self.proxies, self.latencies, None)
@@ -808,12 +892,12 @@ class RatesCaptionTests(unittest.TestCase):
         try:
             ok = main.send_message("TOK", "@chan", "<b>unused</b>",
                                    proxies=self.proxies, latencies=self.latencies,
-                                   rates_section_plain="💰 دلار: 2,305,000")
+                                   rates_section_plain="▫️ دلار آزاد: 230,500 تومان")
         finally:
             _requests.post = lambda *a, **k: (_ for _ in ()).throw(RequestException("offline"))
         self.assertTrue(ok)
         self.assertEqual(len(calls), 2)  # HTML attempt rejected, plaintext retry
-        self.assertIn("💰 دلار: 2,305,000", calls[-1]["text"])
+        self.assertIn("230,500 تومان", calls[-1]["text"])
 
 
 class WorkflowRatesConfigTests(unittest.TestCase):
@@ -876,7 +960,7 @@ class EndToEndRatesFlowTests(unittest.TestCase):
         return code, hist_lines, send_calls, sent_text, sent_plain
 
     def test_success_writes_history_and_sends_rates(self):
-        data = {"usd": 2305000.0}
+        data = {"usd": 230500.0}
         code, hist_lines, send_calls, sent_text, sent_plain = self._run_main(
             send_ok=True, rates_side_effect=data)
         self.assertEqual(code, 0)
@@ -886,7 +970,7 @@ class EndToEndRatesFlowTests(unittest.TestCase):
         self.assertIn("دلار", sent_plain)  # plaintext rates section threaded
 
     def test_nothing_written_when_send_fails(self):
-        data = {"usd": 2305000.0}
+        data = {"usd": 230500.0}
         code, hist_lines, _calls, _text, _plain = self._run_main(
             send_ok=False, rates_side_effect=data)
         self.assertEqual(code, 0)

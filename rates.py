@@ -13,13 +13,17 @@ are missing live, they are filled from the cache; fields missing everywhere
 render as "—". Only when nothing at all is available does `get_rates()`
 return None and the caller posts without the rates section.
 
-Units: Iranian quotes are TGJU rial values (comma-formatted for display);
-global ounce benchmarks (انس طلا/نقره) are US dollars. آبشده is quoted per
-مثقال (misqal = 4.6083 g) of 17-alloy melted gold, so its intrinsic value
+Units: all Iranian instruments are normalized to TOMAN at parse time
+(TGJU quotes rials; divided by 10 here); global ounce benchmarks
+(انس طلا/نقره) stay in US dollars. آبشده is quoted per مثقال
+(misqal = 4.6083 g) of 17-alloy melted gold, so its intrinsic value
 (بدون حباب) is computed from the 24-geram price: geram24 × 4.6083 × 17/24.
 The امامی-coin intrinsic value uses TGJU's own `sekee_real` field and its
 bubble is sekee − sekee_real; other coin bubbles come from TGJU's
-`*_blubber` fields directly.
+`*_blubber` fields directly. Live values must pass plausibility checks
+(PLAUSIBLE_RANGES); any violation is logged as a loud warning naming the
+endpoint and offending field — cache fill is reported per-field, never
+silently injected.
 """
 
 import html
@@ -202,8 +206,8 @@ def _to_number(raw) -> float | None:
         return None
 
 
-def _fmt_rial(value: float | None) -> str:
-    """Rial amounts with thousand separators; None -> em dash."""
+def _fmt_toman(value: float | None) -> str:
+    """Toman amounts with thousands separators (e.g. 85,400,000)."""
     if value is None:
         return "—"
     return f"{int(round(value)):,}"
@@ -219,15 +223,24 @@ def _fmt_usd(value: float | None) -> str:
 def parse_tgju_bulk(payload: dict) -> dict[str, float | None]:
     """Extract every required field from the TGJU bulk JSON.
 
-    Direct fields come from FIELD_KEYS; computed fields:
-      - value_emami   = sekee_real (TGJU's intrinsic coin value)
-      - bubble_emami  = sekee - sekee_real
+    TGJU quotes Iranian instruments in RIALS; every rial field is
+    normalized to TOMAN (divided by 10) here so the whole pipeline
+    (bubbles, cache, display) speaks one unit. USD ounce benchmarks are
+    left untouched.
+
+    Computed fields (all in toman after normalization):
+      - value_emami    = sekee_real / 10 (TGJU's intrinsic coin value)
+      - bubble_emami   = emami - value_emami
       - value_abshodeh = geram24 * MISQAL_GRAMS * GOLD_17_PURITY (per misqal)
-      - bubble_abshodeh = quoted melted gold - value_abshodeh
+      - bubble_abshodeh = abshodeh - value_abshodeh
     Missing inputs yield None for the dependent fields, never exceptions.
     """
     current = payload.get("current") or {}
     data: dict[str, float | None] = {}
+
+    def rial_to_toman(raw) -> float | None:
+        value = _to_number(raw)
+        return value / 10.0 if value is not None else None
 
     for field, keys in FIELD_KEYS.items():
         value = None
@@ -236,11 +249,14 @@ def parse_tgju_bulk(payload: dict) -> dict[str, float | None]:
             if isinstance(entry, dict) and entry.get("p") is not None:
                 value = _to_number(entry.get("p"))
                 if value is not None:
+                    # Global ounce benchmarks are USD: no rial->toman divide.
+                    if field not in USD_FIELDS:
+                        value /= 10.0
                     break
         data[field] = value
 
     emami = data.get("emami")
-    emami_real = _to_number((current.get("sekee_real") or {}).get("p"))
+    emami_real = rial_to_toman((current.get("sekee_real") or {}).get("p"))
     data["value_emami"] = emami_real
     data["bubble_emami"] = (emami - emami_real) if (emami is not None and emami_real is not None) else None
 
@@ -253,8 +269,48 @@ def parse_tgju_bulk(payload: dict) -> dict[str, float | None]:
     return data
 
 
+# Plausibility windows (in toman; USD fields in dollars) that live values
+# must fall inside to be trusted. Catches zeroed/stale/mislabeled feeds.
+PLAUSIBLE_RANGES: dict[str, tuple[float, float]] = {
+    "usd": (50_000, 2_000_000),
+    "gold_18": (1_000_000, 100_000_000),
+    "gold_24": (1_000_000, 150_000_000),
+    "abshodeh": (5_000_000, 500_000_000),
+    "emami": (10_000_000, 1_000_000_000),
+    "ons_gold": (500.0, 10_000.0),
+    "ons_silver": (1.0, 500.0),
+}
+
+
+def _plausible(field: str, value: float) -> bool:
+    """True when `value` falls inside the field's plausibility window."""
+    window = PLAUSIBLE_RANGES.get(field)
+    return True if window is None else window[0] <= value <= window[1]
+
+# Last error detail from each endpoint, surfaced in warnings so nothing
+# fails silently.
+_last_tgju_error: str | None = None
+
+
+def validate_rates(data: dict[str, float | None]) -> list[str]:
+    """Human-readable warnings for implausible live values (or empty)."""
+    warnings: list[str] = []
+    for field, (low, high) in PLAUSIBLE_RANGES.items():
+        value = data.get(field)
+        if value is None:
+            warnings.append(
+                f"field '{field}' missing from live endpoint response"
+            )
+        elif not (low <= value <= high):
+            warnings.append(
+                f"field '{field}'={value} outside plausible range "
+                f"[{low}, {high}] - source response may be stale or mislabeled"
+            )
+    return warnings
+
+
 def format_rates(data: dict[str, float | None]) -> dict[str, str]:
-    """Numbers -> display strings (rial comma format; USD 2 decimals)."""
+    """Numbers -> display strings (toman with separators; USD 2 decimals)."""
     out: dict[str, str] = {}
     for field in ALL_FIELDS:
         value = data.get(field)
@@ -263,7 +319,7 @@ def format_rates(data: dict[str, float | None]) -> dict[str, str]:
         elif field in USD_FIELDS:
             out[field] = _fmt_usd(value)
         else:
-            out[field] = _fmt_rial(value)
+            out[field] = _fmt_toman(value)
     return out
 
 
@@ -273,6 +329,7 @@ def format_rates(data: dict[str, float | None]) -> dict[str, str]:
 
 def fetch_tgju_bulk() -> dict | None:
     """Download the TGJU bulk JSON (3s timeout); None on any failure."""
+    global _last_tgju_error
     started = time.monotonic()
     try:
         resp = requests.get(
@@ -283,15 +340,28 @@ def fetch_tgju_bulk() -> dict | None:
         elapsed = (time.monotonic() - started) * 1000.0
         resp.raise_for_status()
         payload = resp.json()
+        # Structural validation: an unexpected/empty body must not be
+        # mistaken for "live data is empty" (which would silently inject
+        # stale cache values as if they were current).
+        current = payload.get("current") if isinstance(payload, dict) else None
+        if not isinstance(current, dict) or not current:
+            _last_tgju_error = (
+                f"unexpected payload structure from {TGJU_BULK_URL}: "
+                "missing or empty 'current' object"
+            )
+            logger.warning("TGJU bulk feed unusable: %s", _last_tgju_error)
+            return None
+        _last_tgju_error = None
         logger.info(
             "TGJU bulk feed: HTTP %s, %d bytes in %.0f ms",
             getattr(resp, "status_code", "?"), len(resp.content or b""), elapsed,
         )
         return payload
     except (requests.RequestException, OSError, ValueError) as exc:
+        _last_tgju_error = f"{type(exc).__name__}: {exc}"
         logger.warning(
-            "TGJU bulk feed failed after %.0f ms: %s: %s",
-            (time.monotonic() - started) * 1000.0, type(exc).__name__, exc,
+            "TGJU bulk feed failed after %.0f ms: %s",
+            (time.monotonic() - started) * 1000.0, _last_tgju_error,
         )
         return None
 
@@ -311,12 +381,12 @@ def fetch_usd_nobitex() -> float | None:
         best_sell = _to_number(pair.get("bestSell"))
         best_buy = _to_number(pair.get("bestBuy"))
         if best_sell is not None and best_buy is not None:
-            midpoint = (best_sell + best_buy) / 2.0
+            midpoint_toman = (best_sell + best_buy) / 2.0 / 10.0
             logger.info(
-                "Nobitex USDT-RLS midpoint %.0f rial (%.0f ms)",
-                midpoint, (time.monotonic() - started) * 1000.0,
+                "Nobitex USDT-RLS midpoint %.0f toman (%.0f ms)",
+                midpoint_toman, (time.monotonic() - started) * 1000.0,
             )
-            return midpoint
+            return midpoint_toman
         logger.warning("Nobitex response missing usdt-rls bestSell/bestBuy keys")
     except (requests.RequestException, OSError, ValueError) as exc:
         logger.warning(
@@ -365,7 +435,21 @@ def get_rates() -> dict[str, float | None] | None:
     USD fallback if the dollar is still missing. On live success the cache
     is refreshed so future failures fall back to fresh data.
     """
-    cached = (load_cached_rates() or {}).get("rates") or {}
+    cached_payload = load_cached_rates() or {}
+    cached = cached_payload.get("rates") or {}
+
+    # Whole-cache unit fingerprint: the cached dollar must be plausible in
+    # toman. A rial-scale cache (written before normalization, or by a
+    # mismatched source) is rejected wholesale and loudly, never served.
+    cached_usd = _to_number(cached.get("usd"))
+    if cached_usd is not None and not _plausible("usd", cached_usd):
+        logger.warning(
+            "Rates validation: last_rates.json (fetched_at=%s) fails unit "
+            "plausibility (usd=%s toman expected; got rial-scale or corrupt "
+            "value) - ignoring the ENTIRE cache as stale/mismatched data",
+            cached_payload.get("fetched_at"), cached_usd,
+        )
+        cached = {}
     data: dict[str, float | None] = {}
 
     payload = fetch_tgju_bulk()
@@ -378,7 +462,11 @@ def get_rates() -> dict[str, float | None] | None:
         if data:
             save_cached_rates(data)
     else:
-        logger.warning("TGJU bulk unavailable; falling back to last_rates.json")
+        detail = _last_tgju_error or "no response"
+        logger.warning(
+            "TGJU bulk unavailable (%s at %s); falling back to last_rates.json",
+            detail, TGJU_BULK_URL,
+        )
 
     merged: dict[str, float | None] = {}
     live_count = 0
@@ -388,6 +476,21 @@ def get_rates() -> dict[str, float | None] | None:
             live_count += 1
         else:
             value = _to_number(cached.get(field))
+            if value is not None:
+                if _plausible(field, value):
+                    logger.info(
+                        "field '%s' missing live; served from last_rates.json "
+                        "cache (fetched_at=%s)",
+                        field, cached_payload.get("fetched_at"),
+                    )
+                else:
+                    logger.warning(
+                        "Rates validation: cached field '%s'=%s outside "
+                        "plausible range %s - rejected (stale or mismatched "
+                        "unit), field renders as dash",
+                        field, value, PLAUSIBLE_RANGES.get(field),
+                    )
+                    value = None
         merged[field] = value
 
     if merged.get("usd") is None:
@@ -395,6 +498,16 @@ def get_rates() -> dict[str, float | None] | None:
         if usd is not None:
             merged["usd"] = usd
             save_cached_rates(merged)
+        else:
+            logger.warning(
+                "USD unavailable from both %s and %s; field renders as dash",
+                TGJU_BULK_URL, NOBITEX_USD_URL,
+            )
+
+    # Loud validation: implausible live values are logged with the exact
+    # offending field; nothing is silently swapped for dummy data.
+    for warning in validate_rates(merged):
+        logger.warning("Rates validation: %s", warning)
 
     available = sum(1 for v in merged.values() if v is not None)
     logger.info(
@@ -408,33 +521,43 @@ def get_rates() -> dict[str, float | None] | None:
 # Message section (exact user template, HTML + plaintext twins)
 # ---------------------------------------------------------------------------
 
-RATES_TITLE_HTML = "📊 <b>آرشیو روزانه اقلام فیزیکی</b>"
-RATES_TITLE_PLAIN = "📊 آرشیو روزانه اقلام فیزیکی"
+RATES_TITLE_HTML = "📊 <b>تابلوی زنده قیمت طلا و ارز</b>"
+RATES_TITLE_PLAIN = "📊 تابلوی زنده قیمت طلا و ارز"
 
+_DIVIDER = "─" * 18
+
+# Sectioned template: values carry the تومان/$ unit inside the <code> tag
+# so the number + unit copy as one token. USD ounce benchmarks stay in
+# dollars; every Iranian instrument is toman with thousands separators.
 _SECTION_LINES = (
-    "💰 دلار: {usd}",
-    "🔸 سکه امامی: {emami}",
+    "──────────────────",
+    "💰 <b>ارز و مبنا</b>",
+    "▫️ دلار آزاد: {usd}",
+    "▫️ انس جهانی طلا: {ons_gold}",
+    "▫️ انس جهانی نقره: {ons_silver}",
     "",
-    "🔸 گرم طلای 18: {gold_18}",
-    "🔸 گرم طلای 24: {gold_24}",
-    "🔸 آبشده: {abshodeh}",
-    "🔸 سکه بهار آزادی: {bahar}",
-    "🔸 نیم سکه: {nim}",
-    "🔸 ربع سکه: {rob}",
-    "🔸 سکه گرمی: {gerami}",
+    "🪙 <b>انواع مسکوکات طلا</b>",
+    "▫️ سکه امامی: {emami}",
+    "▫️ سکه بهار آزادی: {bahar}",
+    "▫️ نیم سکه: {nim}",
+    "▫️ ربع سکه: {rob}",
+    "▫️ سکه گرمی: {gerami}",
     "",
-    "🥇 انس طلا: {ons_gold}",
-    "🥈 انس نقره: {ons_silver}",
+    "✨ <b>طلای خام و آبشده</b>",
+    "▫️ آبشده نقدی: {abshodeh}",
+    "▫️ یک گرم طلای ۱۸: {gold_18}",
+    "▫️ یک گرم طلای ۲۴: {gold_24}",
     "",
-    "🔹 حباب آبشده: {bubble_abshodeh}",
-    "🔹 حباب سکه امامی: {bubble_emami}",
-    "🔹 حباب سکه بهار آزادی: {bubble_bahar}",
-    "🔹 حباب نیم سکه: {bubble_nim}",
-    "🔹 حباب ربع سکه: {bubble_rob}",
-    "🔹 حباب سکه گرمی: {bubble_gerami}",
-    "",
-    "🔸 ارزش آبشده بدون حباب: {value_abshodeh}",
-    "🔸 ارزش سکه امامی بدون حباب: {value_emami}",
+    "🔍 <b>حباب و ارزش ذاتی</b>",
+    "▫️ حباب سکه امامی: {bubble_emami}",
+    "▫️ حباب آبشده: {bubble_abshodeh}",
+    "▫️ ارزش ذاتی سکه امامی: {value_emami}",
+    "──────────────────",
+)
+
+# Plaintext twin: same layout, tags stripped.
+_SECTION_LINES_PLAIN = tuple(
+    line.replace("<b>", "").replace("</b>", "") for line in _SECTION_LINES
 )
 
 
@@ -449,23 +572,42 @@ def _html_escape(text: str) -> str:
     )
 
 
+def _fmt_toman_line(value: float | None) -> str:
+    """Display a toman amount with separators + the تومان unit."""
+    if value is None:
+        return "—"
+    return f"{_fmt_toman(value)} تومان"
+
+
+def _fmt_usd_line(value: float | None) -> str:
+    """Display a dollar benchmark with 2 decimals + the $ unit."""
+    if value is None:
+        return "—"
+    return f"{_fmt_usd(value)} $"
+
+
 def format_section(data: dict[str, float | None], mode: str = "html",
                    now: datetime | None = None) -> str:
-    """Render the rates block (title + Jalali date + all items).
+    """Render the sectioned rates block (title + Jalali date + groups).
 
     mode="html" produces the <b>/<code> version for parse_mode=HTML;
-    mode="plain" the tag-free twin. Values are numeric strings, but they
-    are still entity-escaped in the HTML variant so parse_mode=HTML is
-    always safe.
+    mode="plain" the tag-free twin. Every display value is entity-escaped
+    in the HTML variant, so parse_mode=HTML is always safe.
     """
     now = now or datetime.now()
-    values = format_rates(data)
-    date_line = f"🗓 {persian_weekday(now)} {format_jalali_date(now)}"
-    if mode == "html":
-        # Values carry the <code> wrapper; labels stay plain. Numeric
-        # strings, but still entity-escaped so parse_mode=HTML is safe.
-        display = {k: f"<code>{_html_escape(v)}</code>" for k, v in values.items()}
-        body = "\n".join(_SECTION_LINES).format(**display)
-        return f"{RATES_TITLE_HTML}\n{date_line}\n\n{body}"
-    body = "\n".join(_SECTION_LINES).format(**values)
-    return f"{RATES_TITLE_PLAIN}\n{date_line}\n\n{body}"
+    date_line = f"🗓 <i>{persian_weekday(now)} {format_jalali_date(now)}</i>" \
+        if mode == "html" else \
+        f"🗓 {persian_weekday(now)} {format_jalali_date(now)}"
+    lines: dict[str, str] = {}
+    for field in ALL_FIELDS:
+        value = data.get(field)
+        if field in USD_FIELDS:
+            text = _fmt_usd_line(value)
+        else:
+            text = _fmt_toman_line(value)
+        lines[field] = f"<code>{_html_escape(text)}</code>" if mode == "html" else text
+    body = "\n".join(
+        _SECTION_LINES if mode == "html" else _SECTION_LINES_PLAIN
+    ).format(**lines)
+    title = RATES_TITLE_HTML if mode == "html" else RATES_TITLE_PLAIN
+    return f"{title}\n{date_line}\n{body}"

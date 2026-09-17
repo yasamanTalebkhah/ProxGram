@@ -676,12 +676,9 @@ def channel_username() -> str | None:
 
 NEWS_HEADER = "📰 <b>خبر فوری:</b>"
 NEWS_HEADER_PLAIN = "📰 خبر فوری:"
-POST_HEADLINE = "⚡️ <b>پروکسی‌های پرسرعت و پایدار تلگرام</b>"
-POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های پرسرعت و پایدار تلگرام"
-POST_GUIDANCE = (
-    "برای اتصال روی یکی از گزینه‌های زیر کلیک کنید. "
-    "در صورت عدم اتصال، دکمه بعدی را تست کنید."
-)
+POST_HEADLINE = "⚡️ <b>پروکسی‌های فعال و ضدفیلتر تلگرام</b>"
+POST_HEADLINE_PLAIN = "⚡️ پروکسی‌های فعال و ضدفیلتر تلگرام"
+POST_GUIDANCE = "👇 برای اتصال از دکمه‌های شیشه‌ای زیر استفاده کنید:"
 
 
 def format_message(proxies: list[Proxy], latencies: list[float],
