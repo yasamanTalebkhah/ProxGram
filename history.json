@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-18T14:39:14",
+  "updated_at": "2026-09-18T14:53:05",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.8,
-      "last_seen": 1789742354.2256212
+      "latency_ms": 85.6,
+      "last_seen": 1789743185.6405616
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 76.0,
-      "last_seen": 1789742354.2256212
+      "latency_ms": 35.6,
+      "last_seen": 1789743185.6405616
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.6,
-      "last_seen": 1789742354.2256212
+      "latency_ms": 94.0,
+      "last_seen": 1789743185.6405616
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.3,
-      "last_seen": 1789742354.2256212
+      "latency_ms": 65.3,
+      "last_seen": 1789743185.6405616
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.6,
-      "last_seen": 1789742354.2256212
+      "latency_ms": 95.9,
+      "last_seen": 1789743185.6405616
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.5,
+      "last_seen": 1789743185.6405616
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 93.4,
+      "last_seen": 1789743185.6405616
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.7,
+      "last_seen": 1789743185.6405616
     },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
@@ -37,29 +55,11 @@
       "latency_ms": 99.3,
       "last_seen": 1789742354.2256212
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.3,
-      "last_seen": 1789742354.2256212
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.2,
-      "last_seen": 1789742354.2256212
-    },
     "s13.assetflux.org:443": {
       "strikes": 2,
       "alive": false,
       "last_seen": 1789742354.2256212,
       "purged": true
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 92.4,
-      "last_seen": 1789741413.0240119
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
