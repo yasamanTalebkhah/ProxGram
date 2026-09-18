@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-18T06:17:06",
+  "updated_at": "2026-09-18T06:37:34",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 129.1,
-      "last_seen": 1789712226.4818506
+      "latency_ms": 90.8,
+      "last_seen": 1789713454.2634542
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.3,
-      "last_seen": 1789712226.4818506
+      "latency_ms": 80.6,
+      "last_seen": 1789713454.2634542
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1789712226.4818506
+      "latency_ms": 42.0,
+      "last_seen": 1789713454.2634542
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.2,
-      "last_seen": 1789712226.4818506
+      "latency_ms": 95.4,
+      "last_seen": 1789713454.2634542
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.8,
-      "last_seen": 1789712226.4818506
+      "latency_ms": 100.8,
+      "last_seen": 1789713454.2634542
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.2,
-      "last_seen": 1789712226.4818506
+      "latency_ms": 99.9,
+      "last_seen": 1789713454.2634542
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 105.9,
+      "last_seen": 1789713454.2634542
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.6,
+      "last_seen": 1789713454.2634542
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -61,23 +73,11 @@
       "latency_ms": 153.5,
       "last_seen": 1789712226.4818506
     },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.0,
-      "last_seen": 1789710297.1763294
-    },
     "2.26.52.23:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 124.3,
       "last_seen": 1789705053.5356743
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.2,
-      "last_seen": 1789699601.0205762
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
