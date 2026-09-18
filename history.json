@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-18T07:26:58",
+  "updated_at": "2026-09-18T07:42:26",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.6,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 93.0,
+      "last_seen": 1789717346.1655648
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.3,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 81.2,
+      "last_seen": 1789717346.1655648
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 94.6,
+      "last_seen": 1789717346.1655648
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 97.9,
+      "last_seen": 1789717346.1655648
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 94.8,
+      "last_seen": 1789717346.1655648
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.9,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 98.1,
+      "last_seen": 1789717346.1655648
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 72.8,
-      "last_seen": 1789716418.3411732
+      "latency_ms": 54.5,
+      "last_seen": 1789717346.1655648
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.0,
+      "last_seen": 1789717346.1655648
     },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 96.7,
       "last_seen": 1789716418.3411732
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 76.5,
-      "last_seen": 1789715395.3895206
     },
     "79.137.196.223:443": {
       "strikes": 0,
