@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-18T10:17:00",
+  "updated_at": "2026-09-18T10:32:48",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.8,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 108.8,
+      "last_seen": 1789727568.9835486
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 65.4,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 80.7,
+      "last_seen": 1789727568.9835486
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 120.5,
+      "last_seen": 1789727568.9835486
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.5,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 125.9,
+      "last_seen": 1789727568.9835486
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.5,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 131.3,
+      "last_seen": 1789727568.9835486
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.9,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 126.4,
+      "last_seen": 1789727568.9835486
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.0,
-      "last_seen": 1789726620.4853382
+      "latency_ms": 128.3,
+      "last_seen": 1789727568.9835486
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 81.0,
+      "last_seen": 1789727568.9835486
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
@@ -66,12 +72,6 @@
       "alive": true,
       "latency_ms": 110.0,
       "last_seen": 1789726620.4853382
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 80.8,
-      "last_seen": 1789725448.9209425
     },
     "168.100.9.222:8443": {
       "strikes": 0,
