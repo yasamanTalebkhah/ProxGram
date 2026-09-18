@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-18T01:45:27",
+  "updated_at": "2026-09-18T01:56:53",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.6,
-      "last_seen": 1789695927.083227
+      "latency_ms": 141.2,
+      "last_seen": 1789696613.0012276
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.9,
-      "last_seen": 1789695927.083227
+      "latency_ms": 133.0,
+      "last_seen": 1789696613.0012276
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.6,
-      "last_seen": 1789695927.083227
+      "latency_ms": 102.5,
+      "last_seen": 1789696613.0012276
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.3,
-      "last_seen": 1789695927.083227
+      "latency_ms": 157.6,
+      "last_seen": 1789696613.0012276
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.1,
-      "last_seen": 1789695927.083227
+      "latency_ms": 156.9,
+      "last_seen": 1789696613.0012276
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.9,
-      "last_seen": 1789695927.083227
+      "latency_ms": 156.9,
+      "last_seen": 1789696613.0012276
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.4,
-      "last_seen": 1789695927.083227
+      "latency_ms": 158.4,
+      "last_seen": 1789696613.0012276
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.6,
-      "last_seen": 1789695927.083227
+      "latency_ms": 152.8,
+      "last_seen": 1789696613.0012276
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 73.9,
-      "last_seen": 1789694302.9436395
+      "latency_ms": 118.4,
+      "last_seen": 1789696613.0012276
     },
     "topproxt.asia:443": {
       "strikes": 1,
