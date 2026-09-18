@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-18T21:26:42",
+  "updated_at": "2026-09-18T21:40:10",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.8,
-      "last_seen": 1789766802.0025358
+      "latency_ms": 85.1,
+      "last_seen": 1789767610.1307383
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 76.6,
-      "last_seen": 1789766802.0025358
+      "latency_ms": 80.8,
+      "last_seen": 1789767610.1307383
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.6,
-      "last_seen": 1789766802.0025358
+      "latency_ms": 95.1,
+      "last_seen": 1789767610.1307383
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.7,
-      "last_seen": 1789766802.0025358
+      "latency_ms": 96.1,
+      "last_seen": 1789767610.1307383
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 24.3,
+      "last_seen": 1789767610.1307383
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.7,
+      "last_seen": 1789767610.1307383
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.4,
+      "last_seen": 1789767610.1307383
+    },
+    "open.gpoint.website:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.5,
+      "last_seen": 1789767610.1307383
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 120.6,
-      "last_seen": 1789766802.0025358
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 79.0,
-      "last_seen": 1789766802.0025358
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 127.0,
       "last_seen": 1789766802.0025358
     },
     "2.26.85.57:443": {
@@ -53,12 +65,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 133.9,
-      "last_seen": 1789765896.4224532
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 134.4,
       "last_seen": 1789765896.4224532
     },
     "168.100.9.222:8443": {
@@ -150,12 +156,6 @@
       "alive": true,
       "latency_ms": 154.7,
       "last_seen": 1789739550.4263823
-    },
-    "open.gpoint.website:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 148.1,
-      "last_seen": 1789736830.7352302
     },
     "87.121.82.9:443": {
       "strikes": 0,
