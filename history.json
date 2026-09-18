@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-18T21:51:01",
+  "updated_at": "2026-09-18T22:03:15",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.5,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 86.5,
+      "last_seen": 1789768995.8968623
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.7,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 39.7,
+      "last_seen": 1789768995.8968623
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.2,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 99.3,
+      "last_seen": 1789768995.8968623
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.7,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 96.8,
+      "last_seen": 1789768995.8968623
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.0,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 95.1,
+      "last_seen": 1789768995.8968623
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.7,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 95.8,
+      "last_seen": 1789768995.8968623
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.6,
-      "last_seen": 1789768261.6950703
+      "latency_ms": 96.4,
+      "last_seen": 1789768995.8968623
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.0,
+      "last_seen": 1789768995.8968623
     },
     "168.100.9.222:8443": {
       "strikes": 0,
@@ -90,12 +96,6 @@
       "alive": true,
       "latency_ms": 125.4,
       "last_seen": 1789763468.4311976
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.1,
-      "last_seen": 1789762571.3027718
     },
     "ardesvpn1.ru:8443": {
       "strikes": 2,
