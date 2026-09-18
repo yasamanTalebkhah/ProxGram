@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-09-18T09:46:08",
+  "updated_at": "2026-09-18T09:57:28",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.5,
-      "last_seen": 1789724768.633374
+      "latency_ms": 143.0,
+      "last_seen": 1789725448.9209425
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 57.5,
-      "last_seen": 1789724768.633374
+      "latency_ms": 132.9,
+      "last_seen": 1789725448.9209425
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.3,
-      "last_seen": 1789724768.633374
+      "latency_ms": 161.3,
+      "last_seen": 1789725448.9209425
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.4,
+      "last_seen": 1789725448.9209425
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 80.8,
+      "last_seen": 1789725448.9209425
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 148.6,
+      "last_seen": 1789725448.9209425
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 164.1,
+      "last_seen": 1789725448.9209425
+    },
+    "2.26.0.194:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 163.1,
+      "last_seen": 1789725448.9209425
     },
     "media.experthost.shop:443": {
       "strikes": 0,
@@ -25,22 +55,10 @@
       "latency_ms": 100.0,
       "last_seen": 1789724768.633374
     },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.0,
-      "last_seen": 1789724768.633374
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 97.9,
-      "last_seen": 1789724768.633374
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 56.0,
       "last_seen": 1789724768.633374
     },
     "79.137.196.223:8443": {
@@ -67,23 +85,11 @@
       "latency_ms": 154.5,
       "last_seen": 1789721845.22657
     },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 146.3,
-      "last_seen": 1789721112.4404953
-    },
     "2.26.85.57:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 128.2,
       "last_seen": 1789714445.553034
-    },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 124.3,
-      "last_seen": 1789705053.5356743
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -155,12 +161,6 @@
       "alive": true,
       "latency_ms": 128.0,
       "last_seen": 1789659204.311748
-    },
-    "2.26.0.194:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 131.0,
-      "last_seen": 1789651432.008907
     },
     "kostyanchekloh.lol:443": {
       "strikes": 2,
