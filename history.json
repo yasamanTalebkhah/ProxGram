@@ -1,35 +1,59 @@
 {
-  "updated_at": "2026-09-18T19:46:31",
+  "updated_at": "2026-09-18T19:57:23",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.1,
-      "last_seen": 1789760791.172987
+      "latency_ms": 152.2,
+      "last_seen": 1789761443.6678996
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 97.7,
-      "last_seen": 1789760791.172987
+      "latency_ms": 85.8,
+      "last_seen": 1789761443.6678996
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.1,
-      "last_seen": 1789760791.172987
+      "latency_ms": 149.2,
+      "last_seen": 1789761443.6678996
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.3,
-      "last_seen": 1789760791.172987
+      "latency_ms": 154.6,
+      "last_seen": 1789761443.6678996
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.2,
-      "last_seen": 1789760791.172987
+      "latency_ms": 151.0,
+      "last_seen": 1789761443.6678996
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 111.3,
+      "last_seen": 1789761443.6678996
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.8,
+      "last_seen": 1789761443.6678996
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.1,
+      "last_seen": 1789761443.6678996
+    },
+    "ardesvpn1.ru:8443": {
+      "strikes": 2,
+      "alive": false,
+      "last_seen": 1789761443.6678996,
+      "purged": true
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -37,33 +61,10 @@
       "latency_ms": 104.2,
       "last_seen": 1789760791.172987
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 58.3,
-      "last_seen": 1789760791.172987
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 104.8,
-      "last_seen": 1789760791.172987
-    },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 160.2,
-      "last_seen": 1789760132.8768384
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 144.6,
-      "last_seen": 1789760132.8768384
-    },
-    "ardesvpn1.ru:8443": {
-      "strikes": 1,
-      "alive": false,
       "last_seen": 1789760132.8768384
     },
     "l01.antenna-mzt.live:443": {
