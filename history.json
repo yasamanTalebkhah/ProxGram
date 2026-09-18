@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-18T06:37:34",
+  "updated_at": "2026-09-18T06:54:05",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.8,
-      "last_seen": 1789713454.2634542
+      "latency_ms": 113.4,
+      "last_seen": 1789714445.553034
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.6,
-      "last_seen": 1789713454.2634542
+      "latency_ms": 114.5,
+      "last_seen": 1789714445.553034
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 42.0,
-      "last_seen": 1789713454.2634542
+      "latency_ms": 84.7,
+      "last_seen": 1789714445.553034
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1789713454.2634542
+      "latency_ms": 125.8,
+      "last_seen": 1789714445.553034
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.8,
-      "last_seen": 1789713454.2634542
+      "latency_ms": 126.3,
+      "last_seen": 1789714445.553034
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.9,
-      "last_seen": 1789713454.2634542
+      "latency_ms": 119.5,
+      "last_seen": 1789714445.553034
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 126.1,
+      "last_seen": 1789714445.553034
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 128.2,
+      "last_seen": 1789714445.553034
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -59,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 139.4,
-      "last_seen": 1789712226.4818506
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.0,
       "last_seen": 1789712226.4818506
     },
     "media.experthost.shop:443": {
@@ -107,12 +113,6 @@
       "alive": true,
       "latency_ms": 129.1,
       "last_seen": 1789686939.9427204
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 126.6,
-      "last_seen": 1789685335.055266
     },
     "s05.neo-trading.org:443": {
       "strikes": 2,
