@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-18T06:54:05",
+  "updated_at": "2026-09-18T07:09:55",
   "health": {
     "2.27.12.116:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.4,
-      "last_seen": 1789714445.553034
+      "latency_ms": 119.7,
+      "last_seen": 1789715395.3895206
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.5,
-      "last_seen": 1789714445.553034
+      "latency_ms": 114.2,
+      "last_seen": 1789715395.3895206
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.7,
-      "last_seen": 1789714445.553034
+      "latency_ms": 76.5,
+      "last_seen": 1789715395.3895206
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.8,
-      "last_seen": 1789714445.553034
+      "latency_ms": 119.7,
+      "last_seen": 1789715395.3895206
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.3,
-      "last_seen": 1789714445.553034
+      "latency_ms": 128.5,
+      "last_seen": 1789715395.3895206
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.5,
-      "last_seen": 1789714445.553034
+      "latency_ms": 118.0,
+      "last_seen": 1789715395.3895206
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.1,
-      "last_seen": 1789714445.553034
+      "latency_ms": 123.0,
+      "last_seen": 1789715395.3895206
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.3,
+      "last_seen": 1789715395.3895206
     },
     "2.26.85.57:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 128.2,
       "last_seen": 1789714445.553034
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 105.9,
-      "last_seen": 1789713454.2634542
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
