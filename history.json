@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-18T22:03:15",
+  "updated_at": "2026-09-18T22:20:17",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.5,
-      "last_seen": 1789768995.8968623
+      "latency_ms": 108.4,
+      "last_seen": 1789770017.101215
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 39.7,
-      "last_seen": 1789768995.8968623
+      "latency_ms": 78.7,
+      "last_seen": 1789770017.101215
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.3,
-      "last_seen": 1789768995.8968623
+      "latency_ms": 119.8,
+      "last_seen": 1789770017.101215
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 129.4,
+      "last_seen": 1789770017.101215
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 125.9,
+      "last_seen": 1789770017.101215
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 127.4,
+      "last_seen": 1789770017.101215
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 136.2,
+      "last_seen": 1789770017.101215
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 129.5,
+      "last_seen": 1789770017.101215
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 96.8,
-      "last_seen": 1789768995.8968623
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.1,
-      "last_seen": 1789768995.8968623
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.8,
-      "last_seen": 1789768995.8968623
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.4,
       "last_seen": 1789768995.8968623
     },
     "static.antenna-mzt.live:443": {
@@ -59,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 24.3,
-      "last_seen": 1789767610.1307383
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 100.7,
       "last_seen": 1789767610.1307383
     },
     "open.gpoint.website:443": {
@@ -114,12 +120,6 @@
       "alive": true,
       "latency_ms": 127.7,
       "last_seen": 1789751832.0140119
-    },
-    "2.26.87.69:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 133.3,
-      "last_seen": 1789750167.6602583
     },
     "nl.cdnflow.store:443": {
       "strikes": 0,
