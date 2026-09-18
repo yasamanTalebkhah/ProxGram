@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-09-18T22:20:17",
+  "updated_at": "2026-09-18T22:33:45",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.4,
-      "last_seen": 1789770017.101215
+      "latency_ms": 144.4,
+      "last_seen": 1789770825.2295055
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 78.7,
-      "last_seen": 1789770017.101215
+      "latency_ms": 128.2,
+      "last_seen": 1789770825.2295055
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.8,
-      "last_seen": 1789770017.101215
+      "latency_ms": 151.4,
+      "last_seen": 1789770825.2295055
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 146.5,
+      "last_seen": 1789770825.2295055
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.0,
+      "last_seen": 1789770825.2295055
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.1,
+      "last_seen": 1789770825.2295055
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 143.9,
+      "last_seen": 1789770825.2295055
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 88.6,
+      "last_seen": 1789770825.2295055
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 129.4,
-      "last_seen": 1789770017.101215
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 125.9,
-      "last_seen": 1789770017.101215
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 127.4,
       "last_seen": 1789770017.101215
     },
     "media.experthost.shop:443": {
@@ -49,29 +67,11 @@
       "latency_ms": 129.5,
       "last_seen": 1789770017.101215
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.8,
-      "last_seen": 1789768995.8968623
-    },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 97.0,
       "last_seen": 1789768995.8968623
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 138.6,
-      "last_seen": 1789768261.6950703
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 24.3,
-      "last_seen": 1789767610.1307383
     },
     "open.gpoint.website:443": {
       "strikes": 0,
