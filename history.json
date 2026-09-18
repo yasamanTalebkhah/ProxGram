@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-09-18T11:44:41",
+  "updated_at": "2026-09-18T11:56:04",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.7,
-      "last_seen": 1789731881.425418
+      "latency_ms": 113.5,
+      "last_seen": 1789732564.3570642
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.0,
-      "last_seen": 1789731881.425418
+      "latency_ms": 118.4,
+      "last_seen": 1789732564.3570642
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.3,
-      "last_seen": 1789731881.425418
+      "latency_ms": 86.4,
+      "last_seen": 1789732564.3570642
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 130.0,
+      "last_seen": 1789732564.3570642
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 126.9,
+      "last_seen": 1789732564.3570642
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 121.8,
+      "last_seen": 1789732564.3570642
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 128.4,
+      "last_seen": 1789732564.3570642
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 127.0,
+      "last_seen": 1789732564.3570642
     },
     "168.100.9.222:8443": {
       "strikes": 0,
@@ -25,28 +55,10 @@
       "latency_ms": 145.5,
       "last_seen": 1789731881.425418
     },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.3,
-      "last_seen": 1789731881.425418
-    },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 57.0,
-      "last_seen": 1789731881.425418
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 159.7,
-      "last_seen": 1789731881.425418
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 160.3,
       "last_seen": 1789731881.425418
     },
     "mtp.webvirt.cloud:443": {
@@ -60,12 +72,6 @@
       "alive": true,
       "latency_ms": 142.3,
       "last_seen": 1789731088.7749896
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.1,
-      "last_seen": 1789730200.8028636
     },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
@@ -137,12 +143,6 @@
       "alive": false,
       "last_seen": 1789687670.977932,
       "purged": true
-    },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 129.1,
-      "last_seen": 1789686939.9427204
     },
     "s05.neo-trading.org:443": {
       "strikes": 2,
