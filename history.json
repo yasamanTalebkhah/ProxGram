@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-18T23:40:22",
+  "updated_at": "2026-09-18T23:52:14",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.7,
-      "last_seen": 1789774822.0525634
+      "latency_ms": 87.0,
+      "last_seen": 1789775534.563369
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.2,
-      "last_seen": 1789774822.0525634
+      "latency_ms": 46.4,
+      "last_seen": 1789775534.563369
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.7,
-      "last_seen": 1789774822.0525634
+      "latency_ms": 103.3,
+      "last_seen": 1789775534.563369
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.8,
-      "last_seen": 1789774822.0525634
+      "latency_ms": 102.6,
+      "last_seen": 1789775534.563369
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 103.7,
+      "last_seen": 1789775534.563369
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 103.8,
+      "last_seen": 1789775534.563369
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.3,
+      "last_seen": 1789775534.563369
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.4,
+      "last_seen": 1789775534.563369
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 93.2,
-      "last_seen": 1789774822.0525634
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.7,
-      "last_seen": 1789774822.0525634
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.6,
-      "last_seen": 1789774822.0525634
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.9,
       "last_seen": 1789774822.0525634
     },
     "168.100.9.222:8443": {
@@ -59,12 +65,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 94.5,
-      "last_seen": 1789774053.6193454
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.3,
       "last_seen": 1789774053.6193454
     },
     "2.26.87.69:443": {
