@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-19T08:56:17",
+  "updated_at": "2026-09-19T09:13:44",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.4,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 126.0,
+      "last_seen": 1789809224.5365953
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.3,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 154.0,
+      "last_seen": 1789809224.5365953
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.3,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 75.6,
+      "last_seen": 1789809224.5365953
     },
     "168.100.9.222:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 136.7,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 140.1,
+      "last_seen": 1789809224.5365953
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.8,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 113.9,
+      "last_seen": 1789809224.5365953
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.0,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 149.2,
+      "last_seen": 1789809224.5365953
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.9,
-      "last_seen": 1789808177.8161962
+      "latency_ms": 151.0,
+      "last_seen": 1789809224.5365953
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.5,
+      "last_seen": 1789809224.5365953
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 149.8,
       "last_seen": 1789808177.8161962
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.4,
-      "last_seen": 1789807511.295881
     },
     "79.137.196.223:443": {
       "strikes": 0,
