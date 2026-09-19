@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-19T10:37:36",
+  "updated_at": "2026-09-19T10:49:37",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.4,
-      "last_seen": 1789814256.9114015
+      "latency_ms": 101.7,
+      "last_seen": 1789814977.380351
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.3,
-      "last_seen": 1789814256.9114015
+      "latency_ms": 110.2,
+      "last_seen": 1789814977.380351
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.8,
-      "last_seen": 1789814256.9114015
+      "latency_ms": 111.1,
+      "last_seen": 1789814977.380351
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.8,
-      "last_seen": 1789814256.9114015
+      "latency_ms": 111.6,
+      "last_seen": 1789814977.380351
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.1,
-      "last_seen": 1789814256.9114015
+      "latency_ms": 106.2,
+      "last_seen": 1789814977.380351
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 111.6,
+      "last_seen": 1789814977.380351
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 118.9,
+      "last_seen": 1789814977.380351
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 118.9,
+      "last_seen": 1789814977.380351
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -37,23 +55,11 @@
       "latency_ms": 26.0,
       "last_seen": 1789814256.9114015
     },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.1,
-      "last_seen": 1789814256.9114015
-    },
     "168.100.9.222:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 143.8,
       "last_seen": 1789814256.9114015
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1789813422.1520941
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
@@ -65,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 101.6,
-      "last_seen": 1789811608.6101167
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.5,
       "last_seen": 1789811608.6101167
     },
     "reborn.rebirthconnect.com:443": {
