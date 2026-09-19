@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-19T11:17:26",
+  "updated_at": "2026-09-19T11:30:40",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.8,
-      "last_seen": 1789816646.343584
+      "latency_ms": 80.8,
+      "last_seen": 1789817440.3920534
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.8,
-      "last_seen": 1789816646.343584
+      "latency_ms": 100.0,
+      "last_seen": 1789817440.3920534
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.7,
-      "last_seen": 1789816646.343584
+      "latency_ms": 42.9,
+      "last_seen": 1789817440.3920534
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.0,
-      "last_seen": 1789816646.343584
+      "latency_ms": 94.4,
+      "last_seen": 1789817440.3920534
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.6,
-      "last_seen": 1789816646.343584
+      "latency_ms": 100.0,
+      "last_seen": 1789817440.3920534
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.4,
-      "last_seen": 1789816646.343584
+      "latency_ms": 95.8,
+      "last_seen": 1789817440.3920534
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 104.8,
+      "last_seen": 1789817440.3920534
+    },
+    "t.meow-network.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.7,
+      "last_seen": 1789817440.3920534
     },
     "2.26.52.23:443": {
       "strikes": 0,
@@ -48,12 +60,6 @@
       "alive": true,
       "latency_ms": 132.7,
       "last_seen": 1789816646.343584
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.5,
-      "last_seen": 1789815611.8851514
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
