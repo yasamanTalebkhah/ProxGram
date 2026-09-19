@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-19T07:45:07",
+  "updated_at": "2026-09-19T07:56:01",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.3,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 126.1,
+      "last_seen": 1789804561.9163744
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.3,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 154.1,
+      "last_seen": 1789804561.9163744
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.4,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 149.9,
+      "last_seen": 1789804561.9163744
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.1,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 153.2,
+      "last_seen": 1789804561.9163744
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 92.2,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 150.7,
+      "last_seen": 1789804561.9163744
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.7,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 150.9,
+      "last_seen": 1789804561.9163744
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 44.2,
-      "last_seen": 1789803907.9375927
+      "latency_ms": 70.8,
+      "last_seen": 1789804561.9163744
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 139.1,
+      "last_seen": 1789804561.9163744
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -54,12 +60,6 @@
       "alive": true,
       "latency_ms": 95.6,
       "last_seen": 1789803907.9375927
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 143.2,
-      "last_seen": 1789803188.9717894
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
