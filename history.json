@@ -1,34 +1,58 @@
 {
-  "updated_at": "2026-09-19T17:30:41",
+  "updated_at": "2026-09-19T17:42:12",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.4,
-      "last_seen": 1789839041.8333805
+      "latency_ms": 141.2,
+      "last_seen": 1789839732.30166
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 48.5,
-      "last_seen": 1789839041.8333805
+      "latency_ms": 85.9,
+      "last_seen": 1789839732.30166
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 111.1,
-      "last_seen": 1789839041.8333805
+      "latency_ms": 155.6,
+      "last_seen": 1789839732.30166
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.1,
+      "last_seen": 1789839732.30166
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.1,
+      "last_seen": 1789839732.30166
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.8,
+      "last_seen": 1789839732.30166
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 159.0,
+      "last_seen": 1789839732.30166
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.9,
+      "last_seen": 1789839732.30166
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 110.6,
-      "last_seen": 1789839041.8333805
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 117.3,
       "last_seen": 1789839041.8333805
     },
     "79.137.196.223:2053": {
@@ -37,23 +61,11 @@
       "latency_ms": 124.4,
       "last_seen": 1789839041.8333805
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 116.1,
-      "last_seen": 1789839041.8333805
-    },
     "2.26.87.69:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 117.1,
       "last_seen": 1789839041.8333805
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.6,
-      "last_seen": 1789838375.735568
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -90,18 +102,6 @@
       "alive": true,
       "latency_ms": 154.6,
       "last_seen": 1789835207.0698447
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 102.6,
-      "last_seen": 1789834252.2879074
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 157.3,
-      "last_seen": 1789831085.0846639
     },
     "t.meow-network.com:443": {
       "strikes": 0,
