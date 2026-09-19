@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-09-19T16:40:31",
+  "updated_at": "2026-09-19T16:52:08",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.6,
-      "last_seen": 1789836031.511988
+      "latency_ms": 85.6,
+      "last_seen": 1789836728.235848
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 51.5,
-      "last_seen": 1789836031.511988
+      "latency_ms": 36.5,
+      "last_seen": 1789836728.235848
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 111.2,
-      "last_seen": 1789836031.511988
+      "latency_ms": 100.1,
+      "last_seen": 1789836728.235848
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 106.9,
-      "last_seen": 1789836031.511988
+      "latency_ms": 93.5,
+      "last_seen": 1789836728.235848
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.9,
+      "last_seen": 1789836728.235848
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 103.6,
+      "last_seen": 1789836728.235848
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.8,
+      "last_seen": 1789836728.235848
+    },
+    "tg.aezakmi.org:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.0,
+      "last_seen": 1789836728.235848
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -35,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 114.2,
-      "last_seen": 1789836031.511988
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 122.1,
       "last_seen": 1789836031.511988
     },
     "open.gpoint.website:443": {
@@ -67,22 +85,10 @@
       "latency_ms": 154.6,
       "last_seen": 1789835207.0698447
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.5,
-      "last_seen": 1789834252.2879074
-    },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 102.6,
-      "last_seen": 1789834252.2879074
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.6,
       "last_seen": 1789834252.2879074
     },
     "mt1.kurduk.store:443": {
