@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-09-18T23:52:14",
+  "updated_at": "2026-09-19T00:08:03",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.0,
-      "last_seen": 1789775534.563369
+      "latency_ms": 83.6,
+      "last_seen": 1789776483.2056885
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 46.4,
-      "last_seen": 1789775534.563369
+      "latency_ms": 74.2,
+      "last_seen": 1789776483.2056885
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 103.3,
-      "last_seen": 1789775534.563369
+      "latency_ms": 97.5,
+      "last_seen": 1789776483.2056885
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.1,
+      "last_seen": 1789776483.2056885
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.2,
+      "last_seen": 1789776483.2056885
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.7,
+      "last_seen": 1789776483.2056885
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.8,
+      "last_seen": 1789776483.2056885
+    },
+    "l01.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.3,
+      "last_seen": 1789776483.2056885
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -31,41 +61,17 @@
       "latency_ms": 103.7,
       "last_seen": 1789775534.563369
     },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 103.8,
-      "last_seen": 1789775534.563369
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.3,
-      "last_seen": 1789775534.563369
-    },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 107.4,
       "last_seen": 1789775534.563369
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.2,
-      "last_seen": 1789774822.0525634
-    },
     "168.100.9.222:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 149.9,
       "last_seen": 1789774822.0525634
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.5,
-      "last_seen": 1789774053.6193454
     },
     "2.26.87.69:443": {
       "strikes": 0,
@@ -84,12 +90,6 @@
       "alive": true,
       "latency_ms": 123.9,
       "last_seen": 1789766802.0025358
-    },
-    "l01.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.9,
-      "last_seen": 1789764922.4269385
     },
     "2.26.52.23:443": {
       "strikes": 0,
