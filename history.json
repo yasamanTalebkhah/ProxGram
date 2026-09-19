@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-19T16:26:47",
+  "updated_at": "2026-09-19T16:40:31",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 140.7,
-      "last_seen": 1789835207.0698447
+      "latency_ms": 99.6,
+      "last_seen": 1789836031.511988
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.4,
-      "last_seen": 1789835207.0698447
+      "latency_ms": 51.5,
+      "last_seen": 1789836031.511988
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 166.3,
-      "last_seen": 1789835207.0698447
+      "latency_ms": 111.2,
+      "last_seen": 1789836031.511988
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 165.4,
-      "last_seen": 1789835207.0698447
+      "latency_ms": 106.9,
+      "last_seen": 1789836031.511988
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 162.9,
-      "last_seen": 1789835207.0698447
+      "latency_ms": 118.9,
+      "last_seen": 1789836031.511988
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 114.2,
+      "last_seen": 1789836031.511988
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 122.1,
+      "last_seen": 1789836031.511988
+    },
+    "open.gpoint.website:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 109.3,
+      "last_seen": 1789836031.511988
     },
     "168.100.9.222:8443": {
       "strikes": 0,
@@ -66,18 +84,6 @@
       "alive": true,
       "latency_ms": 96.6,
       "last_seen": 1789834252.2879074
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.8,
-      "last_seen": 1789832615.4720135
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 104.6,
-      "last_seen": 1789832615.4720135
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -138,12 +144,6 @@
       "alive": true,
       "latency_ms": 97.3,
       "last_seen": 1789776483.2056885
-    },
-    "open.gpoint.website:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.5,
-      "last_seen": 1789767610.1307383
     },
     "2.26.0.194:443": {
       "strikes": 0,
