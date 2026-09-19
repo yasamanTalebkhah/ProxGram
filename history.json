@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-19T01:32:07",
+  "updated_at": "2026-09-19T01:45:44",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.2,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 147.2,
+      "last_seen": 1789782344.0928426
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 73.6,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 93.9,
+      "last_seen": 1789782344.0928426
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.2,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 157.6,
+      "last_seen": 1789782344.0928426
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.5,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 156.8,
+      "last_seen": 1789782344.0928426
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.4,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 160.9,
+      "last_seen": 1789782344.0928426
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.7,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 160.5,
+      "last_seen": 1789782344.0928426
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.0,
-      "last_seen": 1789781527.1706867
+      "latency_ms": 158.6,
+      "last_seen": 1789782344.0928426
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 159.4,
+      "last_seen": 1789782344.0928426
     },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 97.0,
       "last_seen": 1789781527.1706867
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 142.4,
-      "last_seen": 1789780605.6327958
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
