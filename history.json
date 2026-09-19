@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-09-19T19:41:49",
+  "updated_at": "2026-09-19T19:52:39",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.8,
-      "last_seen": 1789846909.959981
+      "latency_ms": 135.8,
+      "last_seen": 1789847559.014159
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.9,
-      "last_seen": 1789846909.959981
+      "latency_ms": 75.1,
+      "last_seen": 1789847559.014159
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.8,
+      "last_seen": 1789847559.014159
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 146.7,
+      "last_seen": 1789847559.014159
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.2,
+      "last_seen": 1789847559.014159
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.9,
+      "last_seen": 1789847559.014159
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.0,
+      "last_seen": 1789847559.014159
+    },
+    "open.gpoint.website:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.8,
+      "last_seen": 1789847559.014159
     },
     "77.239.105.219:443": {
       "strikes": 0,
@@ -25,35 +61,11 @@
       "latency_ms": 152.8,
       "last_seen": 1789846909.959981
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 103.4,
-      "last_seen": 1789846909.959981
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 141.4,
-      "last_seen": 1789846909.959981
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.5,
-      "last_seen": 1789846909.959981
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 151.0,
       "last_seen": 1789846909.959981
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.6,
-      "last_seen": 1789846216.2178156
     },
     "media.experthost.shop:443": {
       "strikes": 0,
@@ -73,12 +85,6 @@
       "latency_ms": 129.5,
       "last_seen": 1789844006.5900912
     },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 104.6,
-      "last_seen": 1789841324.4714866
-    },
     "mt1.kurduk.store:443": {
       "strikes": 0,
       "alive": true,
@@ -90,12 +96,6 @@
       "alive": true,
       "latency_ms": 117.1,
       "last_seen": 1789839041.8333805
-    },
-    "open.gpoint.website:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.4,
-      "last_seen": 1789838375.735568
     },
     "tg.aezakmi.org:443": {
       "strikes": 0,
