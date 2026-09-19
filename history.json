@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-19T17:05:12",
+  "updated_at": "2026-09-19T17:19:35",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.8,
-      "last_seen": 1789837512.3709698
+      "latency_ms": 146.2,
+      "last_seen": 1789838375.735568
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.6,
-      "last_seen": 1789837512.3709698
+      "latency_ms": 86.5,
+      "last_seen": 1789838375.735568
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.4,
-      "last_seen": 1789837512.3709698
+      "latency_ms": 156.1,
+      "last_seen": 1789838375.735568
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.2,
-      "last_seen": 1789837512.3709698
+      "latency_ms": 150.2,
+      "last_seen": 1789838375.735568
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.6,
+      "last_seen": 1789838375.735568
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.6,
+      "last_seen": 1789838375.735568
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 92.1,
+      "last_seen": 1789838375.735568
+    },
+    "open.gpoint.website:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.4,
+      "last_seen": 1789838375.735568
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 152.5,
-      "last_seen": 1789837512.3709698
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.4,
-      "last_seen": 1789837512.3709698
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 140.0,
-      "last_seen": 1789837512.3709698
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 119.1,
       "last_seen": 1789837512.3709698
     },
     "ma.hastim.co.uk:443": {
@@ -71,12 +77,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 114.2,
-      "last_seen": 1789836031.511988
-    },
-    "open.gpoint.website:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 109.3,
       "last_seen": 1789836031.511988
     },
     "w.bestproxy.icu:8443": {
