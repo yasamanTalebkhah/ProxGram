@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-19T17:19:35",
+  "updated_at": "2026-09-19T17:30:41",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.2,
-      "last_seen": 1789838375.735568
+      "latency_ms": 99.4,
+      "last_seen": 1789839041.8333805
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.5,
-      "last_seen": 1789838375.735568
+      "latency_ms": 48.5,
+      "last_seen": 1789839041.8333805
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.1,
-      "last_seen": 1789838375.735568
+      "latency_ms": 111.1,
+      "last_seen": 1789839041.8333805
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.2,
-      "last_seen": 1789838375.735568
+      "latency_ms": 110.6,
+      "last_seen": 1789839041.8333805
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.6,
-      "last_seen": 1789838375.735568
+      "latency_ms": 117.3,
+      "last_seen": 1789839041.8333805
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 124.4,
+      "last_seen": 1789839041.8333805
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 116.1,
+      "last_seen": 1789839041.8333805
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.1,
+      "last_seen": 1789839041.8333805
     },
     "168.100.9.222:8443": {
       "strikes": 0,
@@ -49,12 +67,6 @@
       "latency_ms": 149.4,
       "last_seen": 1789838375.735568
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.5,
-      "last_seen": 1789837512.3709698
-    },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
@@ -72,12 +84,6 @@
       "alive": true,
       "latency_ms": 99.0,
       "last_seen": 1789836728.235848
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 114.2,
-      "last_seen": 1789836031.511988
     },
     "w.bestproxy.icu:8443": {
       "strikes": 0,
@@ -126,12 +132,6 @@
       "alive": true,
       "latency_ms": 129.5,
       "last_seen": 1789816646.343584
-    },
-    "2.26.87.69:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 130.1,
-      "last_seen": 1789799783.3613825
     },
     "87.121.82.9:443": {
       "strikes": 0,
