@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-09-19T15:31:20",
+  "updated_at": "2026-09-19T15:43:35",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.6,
-      "last_seen": 1789831880.856287
+      "latency_ms": 80.8,
+      "last_seen": 1789832615.4720135
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 47.2,
-      "last_seen": 1789831880.856287
+      "latency_ms": 93.5,
+      "last_seen": 1789832615.4720135
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.0,
-      "last_seen": 1789831880.856287
+      "latency_ms": 94.7,
+      "last_seen": 1789832615.4720135
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 106.8,
-      "last_seen": 1789831880.856287
+      "latency_ms": 94.9,
+      "last_seen": 1789832615.4720135
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 112.6,
-      "last_seen": 1789831880.856287
+      "latency_ms": 94.8,
+      "last_seen": 1789832615.4720135
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.9,
-      "last_seen": 1789831880.856287
+      "latency_ms": 95.1,
+      "last_seen": 1789832615.4720135
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.9,
-      "last_seen": 1789831880.856287
+      "latency_ms": 95.2,
+      "last_seen": 1789832615.4720135
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.9,
-      "last_seen": 1789831880.856287
+      "latency_ms": 104.6,
+      "last_seen": 1789832615.4720135
     },
     "168.100.9.222:8443": {
       "strikes": 0,
