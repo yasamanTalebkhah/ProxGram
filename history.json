@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-19T23:38:04",
+  "updated_at": "2026-09-19T23:49:09",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.4,
-      "last_seen": 1789861084.1470883
+      "latency_ms": 134.2,
+      "last_seen": 1789861749.4546733
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 76.7,
-      "last_seen": 1789861084.1470883
+      "latency_ms": 103.2,
+      "last_seen": 1789861749.4546733
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.6,
-      "last_seen": 1789861084.1470883
+      "latency_ms": 146.1,
+      "last_seen": 1789861749.4546733
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.3,
-      "last_seen": 1789861084.1470883
+      "latency_ms": 154.2,
+      "last_seen": 1789861749.4546733
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.4,
-      "last_seen": 1789861084.1470883
+      "latency_ms": 149.3,
+      "last_seen": 1789861749.4546733
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.9,
-      "last_seen": 1789861084.1470883
+      "latency_ms": 146.6,
+      "last_seen": 1789861749.4546733
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 146.5,
+      "last_seen": 1789861749.4546733
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.8,
+      "last_seen": 1789861749.4546733
     },
     "2.26.87.69:443": {
       "strikes": 0,
@@ -53,12 +65,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 119.6,
-      "last_seen": 1789860313.3343987
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.9,
       "last_seen": 1789860313.3343987
     },
     "media.experthost.shop:443": {
@@ -138,12 +144,6 @@
       "alive": true,
       "latency_ms": 127.0,
       "last_seen": 1789819848.4928415
-    },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 129.5,
-      "last_seen": 1789816646.343584
     },
     "mtp.webvirt.cloud:443": {
       "strikes": 0,
