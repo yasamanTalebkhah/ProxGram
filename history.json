@@ -1,28 +1,58 @@
 {
-  "updated_at": "2026-09-19T14:24:31",
+  "updated_at": "2026-09-19T14:38:37",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.8,
-      "last_seen": 1789827871.7500515
+      "latency_ms": 127.3,
+      "last_seen": 1789828717.5374424
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 37.3,
-      "last_seen": 1789827871.7500515
+      "latency_ms": 87.4,
+      "last_seen": 1789828717.5374424
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 141.0,
+      "last_seen": 1789828717.5374424
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 147.8,
+      "last_seen": 1789828717.5374424
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.2,
+      "last_seen": 1789828717.5374424
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 140.9,
+      "last_seen": 1789828717.5374424
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 148.1,
+      "last_seen": 1789828717.5374424
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 141.1,
+      "last_seen": 1789828717.5374424
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 96.1,
-      "last_seen": 1789827871.7500515
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.5,
       "last_seen": 1789827871.7500515
     },
     "ma.hastim.co.uk:443": {
@@ -31,46 +61,16 @@
       "latency_ms": 99.4,
       "last_seen": 1789827871.7500515
     },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1789827871.7500515
-    },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 93.7,
       "last_seen": 1789827871.7500515
     },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.3,
-      "last_seen": 1789827871.7500515
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 100.0,
-      "last_seen": 1789827871.7500515
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.4,
-      "last_seen": 1789826958.1818423
-    },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 90.5,
-      "last_seen": 1789826958.1818423
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 146.3,
       "last_seen": 1789826958.1818423
     },
     "reborn.rebirthconnect.com:443": {
