@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-19T15:54:47",
+  "updated_at": "2026-09-19T16:10:52",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.7,
-      "last_seen": 1789833287.9504387
+      "latency_ms": 86.0,
+      "last_seen": 1789834252.2879074
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 78.8,
-      "last_seen": 1789833287.9504387
+      "latency_ms": 74.2,
+      "last_seen": 1789834252.2879074
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.4,
-      "last_seen": 1789833287.9504387
+      "latency_ms": 92.4,
+      "last_seen": 1789834252.2879074
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.8,
-      "last_seen": 1789833287.9504387
+      "latency_ms": 100.1,
+      "last_seen": 1789834252.2879074
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.5,
-      "last_seen": 1789833287.9504387
+      "latency_ms": 93.7,
+      "last_seen": 1789834252.2879074
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.4,
-      "last_seen": 1789833287.9504387
+      "latency_ms": 94.5,
+      "last_seen": 1789834252.2879074
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.6,
+      "last_seen": 1789834252.2879074
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.6,
+      "last_seen": 1789834252.2879074
     },
     "168.100.9.222:8443": {
       "strikes": 0,
@@ -73,12 +85,6 @@
       "latency_ms": 95.7,
       "last_seen": 1789829380.0593026
     },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.2,
-      "last_seen": 1789828717.5374424
-    },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
       "alive": true,
@@ -102,12 +108,6 @@
       "alive": true,
       "latency_ms": 129.5,
       "last_seen": 1789816646.343584
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.5,
-      "last_seen": 1789815611.8851514
     },
     "2.26.87.69:443": {
       "strikes": 0,
