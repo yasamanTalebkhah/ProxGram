@@ -1,28 +1,58 @@
 {
-  "updated_at": "2026-09-19T15:00:53",
+  "updated_at": "2026-09-19T15:18:05",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 140.5,
-      "last_seen": 1789830053.2320478
+      "latency_ms": 146.2,
+      "last_seen": 1789831085.0846639
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 81.3,
-      "last_seen": 1789830053.2320478
+      "latency_ms": 89.3,
+      "last_seen": 1789831085.0846639
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.2,
+      "last_seen": 1789831085.0846639
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.7,
+      "last_seen": 1789831085.0846639
+    },
+    "168.100.9.222:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.9,
+      "last_seen": 1789831085.0846639
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 76.3,
+      "last_seen": 1789831085.0846639
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.6,
+      "last_seen": 1789831085.0846639
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.3,
+      "last_seen": 1789831085.0846639
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 155.4,
-      "last_seen": 1789830053.2320478
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.3,
       "last_seen": 1789830053.2320478
     },
     "79.137.196.223:2053": {
@@ -31,34 +61,10 @@
       "latency_ms": 153.8,
       "last_seen": 1789830053.2320478
     },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.3,
-      "last_seen": 1789830053.2320478
-    },
-    "168.100.9.222:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.2,
-      "last_seen": 1789830053.2320478
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 67.7,
-      "last_seen": 1789830053.2320478
-    },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 98.9,
-      "last_seen": 1789829380.0593026
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.1,
       "last_seen": 1789829380.0593026
     },
     "t.meow-network.com:443": {
@@ -71,12 +77,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 149.2,
-      "last_seen": 1789828717.5374424
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 140.9,
       "last_seen": 1789828717.5374424
     },
     "reborn.rebirthconnect.com:443": {
