@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-19T05:33:38",
+  "updated_at": "2026-09-19T05:45:16",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.1,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 81.1,
+      "last_seen": 1789796716.2841468
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.7,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 48.7,
+      "last_seen": 1789796716.2841468
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 99.8,
+      "last_seen": 1789796716.2841468
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.3,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 101.2,
+      "last_seen": 1789796716.2841468
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.3,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 96.2,
+      "last_seen": 1789796716.2841468
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 99.6,
+      "last_seen": 1789796716.2841468
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.4,
-      "last_seen": 1789796018.5980809
+      "latency_ms": 96.2,
+      "last_seen": 1789796716.2841468
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 63.1,
+      "last_seen": 1789796716.2841468
     },
     "87.121.82.9:443": {
       "strikes": 0,
@@ -53,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 135.5,
-      "last_seen": 1789795226.788778
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.2,
       "last_seen": 1789795226.788778
     },
     "ma.hastim.co.uk:443": {
