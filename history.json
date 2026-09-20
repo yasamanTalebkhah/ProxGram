@@ -1,58 +1,58 @@
 {
-  "updated_at": "2026-09-20T08:13:20",
+  "updated_at": "2026-09-20T08:29:39",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.2,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 124.9,
+      "last_seen": 1789892979.79246
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.0,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 154.2,
+      "last_seen": 1789892979.79246
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.9,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 149.6,
+      "last_seen": 1789892979.79246
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.2,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 77.4,
+      "last_seen": 1789892979.79246
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.8,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 154.0,
+      "last_seen": 1789892979.79246
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.7,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 151.1,
+      "last_seen": 1789892979.79246
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.4,
-      "last_seen": 1789892000.5363934
+      "latency_ms": 126.5,
+      "last_seen": 1789892979.79246
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.7,
+      "last_seen": 1789892979.79246
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 155.2,
-      "last_seen": 1789892000.5363934
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.8,
       "last_seen": 1789892000.5363934
     },
     "ma.hastim.co.uk:443": {
