@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-20T07:32:02",
+  "updated_at": "2026-09-20T07:44:52",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.8,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 127.8,
+      "last_seen": 1789890292.4177926
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.8,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 154.1,
+      "last_seen": 1789890292.4177926
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 133.1,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 150.1,
+      "last_seen": 1789890292.4177926
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.1,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 151.2,
+      "last_seen": 1789890292.4177926
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.3,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 103.2,
+      "last_seen": 1789890292.4177926
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.2,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 152.2,
+      "last_seen": 1789890292.4177926
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 133.0,
-      "last_seen": 1789889522.3827507
+      "latency_ms": 151.7,
+      "last_seen": 1789890292.4177926
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 126.0,
+      "last_seen": 1789890292.4177926
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 132.2,
       "last_seen": 1789889522.3827507
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.3,
-      "last_seen": 1789888688.9729621
     },
     "media.experthost.shop:443": {
       "strikes": 0,
