@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-20T22:19:53",
+  "updated_at": "2026-09-20T22:32:51",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.9,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 127.8,
+      "last_seen": 1789943571.5207593
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 143.6,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 139.2,
+      "last_seen": 1789943571.5207593
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 142.7,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 141.1,
+      "last_seen": 1789943571.5207593
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.4,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 93.6,
+      "last_seen": 1789943571.5207593
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.3,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 136.7,
+      "last_seen": 1789943571.5207593
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.4,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 140.8,
+      "last_seen": 1789943571.5207593
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.5,
-      "last_seen": 1789942793.8455942
+      "latency_ms": 73.3,
+      "last_seen": 1789943571.5207593
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.2,
+      "last_seen": 1789943571.5207593
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
@@ -96,12 +102,6 @@
       "alive": true,
       "latency_ms": 96.6,
       "last_seen": 1789918429.8770661
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 116.8,
-      "last_seen": 1789915209.1595209
     },
     "31.76.77.196:443": {
       "strikes": 0,
