@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-09-20T01:16:24",
+  "updated_at": "2026-09-20T01:31:11",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 103.6,
-      "last_seen": 1789866984.2643042
+      "latency_ms": 99.1,
+      "last_seen": 1789867871.1348343
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 70.5,
-      "last_seen": 1789866984.2643042
+      "latency_ms": 96.7,
+      "last_seen": 1789867871.1348343
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.7,
+      "last_seen": 1789867871.1348343
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.4,
+      "last_seen": 1789867871.1348343
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 110.4,
+      "last_seen": 1789867871.1348343
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.0,
+      "last_seen": 1789867871.1348343
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.2,
+      "last_seen": 1789867871.1348343
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 112.9,
+      "last_seen": 1789867871.1348343
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -19,41 +55,11 @@
       "latency_ms": 110.9,
       "last_seen": 1789866984.2643042
     },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 108.1,
-      "last_seen": 1789866984.2643042
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 69.1,
-      "last_seen": 1789866984.2643042
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 107.9,
-      "last_seen": 1789866984.2643042
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 105.8,
-      "last_seen": 1789866984.2643042
-    },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 115.6,
       "last_seen": 1789866984.2643042
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 126.8,
-      "last_seen": 1789865185.3046846
     },
     "2.26.85.57:443": {
       "strikes": 0,
@@ -84,12 +90,6 @@
       "alive": true,
       "latency_ms": 123.7,
       "last_seen": 1789861084.1470883
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.3,
-      "last_seen": 1789858572.3919487
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
