@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-09-20T19:50:53",
+  "updated_at": "2026-09-20T20:03:01",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.1,
-      "last_seen": 1789933853.4919274
+      "latency_ms": 139.8,
+      "last_seen": 1789934581.5014324
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.9,
+      "last_seen": 1789934581.5014324
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.7,
+      "last_seen": 1789934581.5014324
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.2,
+      "last_seen": 1789934581.5014324
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 88.4,
+      "last_seen": 1789934581.5014324
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.8,
+      "last_seen": 1789934581.5014324
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 67.4,
+      "last_seen": 1789934581.5014324
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.5,
+      "last_seen": 1789934581.5014324
     },
     "77.239.105.219:443": {
       "strikes": 0,
@@ -13,53 +55,11 @@
       "latency_ms": 134.5,
       "last_seen": 1789933853.4919274
     },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 133.1,
-      "last_seen": 1789933853.4919274
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 129.4,
-      "last_seen": 1789933853.4919274
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 123.2,
-      "last_seen": 1789933853.4919274
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.5,
-      "last_seen": 1789933853.4919274
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 133.7,
-      "last_seen": 1789933853.4919274
-    },
     "2.26.87.69:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 137.7,
       "last_seen": 1789933853.4919274
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 85.7,
-      "last_seen": 1789933203.6814947
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 165.7,
-      "last_seen": 1789932476.3805966
     },
     "87.121.82.9:443": {
       "strikes": 0,
