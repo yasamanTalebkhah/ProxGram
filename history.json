@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-19T23:59:56",
+  "updated_at": "2026-09-20T00:26:39",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.2,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 141.3,
+      "last_seen": 1789863999.521475
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.8,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 91.1,
+      "last_seen": 1789863999.521475
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.1,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 151.5,
+      "last_seen": 1789863999.521475
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.5,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 154.6,
+      "last_seen": 1789863999.521475
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.4,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 150.7,
+      "last_seen": 1789863999.521475
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.2,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 156.2,
+      "last_seen": 1789863999.521475
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.6,
-      "last_seen": 1789862396.2088695
+      "latency_ms": 157.8,
+      "last_seen": 1789863999.521475
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.0,
+      "last_seen": 1789863999.521475
     },
     "87.121.82.9:443": {
       "strikes": 0,
@@ -84,12 +90,6 @@
       "alive": true,
       "latency_ms": 91.3,
       "last_seen": 1789858572.3919487
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 161.0,
-      "last_seen": 1789857281.3753226
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
