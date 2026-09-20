@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-20T20:33:25",
+  "updated_at": "2026-09-20T20:44:58",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 127.5,
-      "last_seen": 1789936405.06911
+      "latency_ms": 82.7,
+      "last_seen": 1789937098.9947567
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.8,
-      "last_seen": 1789936405.06911
+      "latency_ms": 100.7,
+      "last_seen": 1789937098.9947567
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.9,
-      "last_seen": 1789936405.06911
+      "latency_ms": 100.8,
+      "last_seen": 1789937098.9947567
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.7,
-      "last_seen": 1789936405.06911
+      "latency_ms": 73.9,
+      "last_seen": 1789937098.9947567
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.6,
-      "last_seen": 1789936405.06911
+      "latency_ms": 100.6,
+      "last_seen": 1789937098.9947567
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.5,
-      "last_seen": 1789936405.06911
+      "latency_ms": 95.3,
+      "last_seen": 1789937098.9947567
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.0,
-      "last_seen": 1789936405.06911
+      "latency_ms": 95.1,
+      "last_seen": 1789937098.9947567
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 85.9,
+      "last_seen": 1789937098.9947567
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 160.9,
       "last_seen": 1789936405.06911
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 40.5,
-      "last_seen": 1789935592.007815
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
