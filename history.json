@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-20T08:55:00",
+  "updated_at": "2026-09-20T09:11:14",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1789894500.495213
+      "latency_ms": 85.2,
+      "last_seen": 1789895474.0504525
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 122.9,
-      "last_seen": 1789894500.495213
+      "latency_ms": 94.2,
+      "last_seen": 1789895474.0504525
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.6,
-      "last_seen": 1789894500.495213
+      "latency_ms": 91.7,
+      "last_seen": 1789895474.0504525
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.3,
-      "last_seen": 1789894500.495213
+      "latency_ms": 93.8,
+      "last_seen": 1789895474.0504525
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 122.5,
-      "last_seen": 1789894500.495213
+      "latency_ms": 97.7,
+      "last_seen": 1789895474.0504525
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.3,
-      "last_seen": 1789894500.495213
+      "latency_ms": 97.8,
+      "last_seen": 1789895474.0504525
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.1,
-      "last_seen": 1789894500.495213
+      "latency_ms": 72.0,
+      "last_seen": 1789895474.0504525
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.9,
+      "last_seen": 1789895474.0504525
     },
     "31.76.77.196:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 134.3,
       "last_seen": 1789894500.495213
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 115.8,
-      "last_seen": 1789893843.3100605
     },
     "87.121.82.9:443": {
       "strikes": 0,
