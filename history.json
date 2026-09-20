@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-20T03:44:58",
+  "updated_at": "2026-09-20T03:56:31",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.7,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 122.1,
+      "last_seen": 1789876591.564276
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.9,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 117.5,
+      "last_seen": 1789876591.564276
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 159.4,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 142.2,
+      "last_seen": 1789876591.564276
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 164.6,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 142.1,
+      "last_seen": 1789876591.564276
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 163.5,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 142.7,
+      "last_seen": 1789876591.564276
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.0,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 138.3,
+      "last_seen": 1789876591.564276
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 165.9,
-      "last_seen": 1789875898.5497932
+      "latency_ms": 141.7,
+      "last_seen": 1789876591.564276
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.1,
+      "last_seen": 1789876591.564276
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -54,12 +60,6 @@
       "alive": true,
       "latency_ms": 163.4,
       "last_seen": 1789875898.5497932
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 123.0,
-      "last_seen": 1789875006.0284345
     },
     "media.experthost.shop:443": {
       "strikes": 0,
