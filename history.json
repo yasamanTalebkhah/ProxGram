@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-09-21T18:12:58",
+  "updated_at": "2026-09-21T18:32:48",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.6,
-      "last_seen": 1790014378.393284
+      "latency_ms": 84.5,
+      "last_seen": 1790015568.8906553
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.7,
-      "last_seen": 1790014378.393284
+      "latency_ms": 95.3,
+      "last_seen": 1790015568.8906553
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.6,
-      "last_seen": 1790014378.393284
+      "latency_ms": 102.2,
+      "last_seen": 1790015568.8906553
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.3,
-      "last_seen": 1790014378.393284
+      "latency_ms": 99.6,
+      "last_seen": 1790015568.8906553
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 34.6,
+      "last_seen": 1790015568.8906553
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 98.9,
+      "last_seen": 1790015568.8906553
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.9,
+      "last_seen": 1790015568.8906553
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.5,
+      "last_seen": 1790015568.8906553
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -43,12 +67,6 @@
       "latency_ms": 79.9,
       "last_seen": 1790014378.393284
     },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 72.5,
-      "last_seen": 1790014378.393284
-    },
     "t.meow-network.com:443": {
       "strikes": 0,
       "alive": true,
@@ -61,22 +79,10 @@
       "latency_ms": 133.3,
       "last_seen": 1790012630.3453853
     },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.4,
-      "last_seen": 1790010939.988914
-    },
     "mt1.kurduk.store:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 95.4,
-      "last_seen": 1790010939.988914
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.4,
       "last_seen": 1790010939.988914
     },
     "reborn.rebirthconnect.com:443": {
@@ -102,12 +108,6 @@
       "alive": true,
       "latency_ms": 139.3,
       "last_seen": 1790006247.7420878
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 98.6,
-      "last_seen": 1790003727.1850867
     },
     "31.76.77.196:443": {
       "strikes": 0,
