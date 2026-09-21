@@ -1,41 +1,59 @@
 {
-  "updated_at": "2026-09-21T22:21:28",
+  "updated_at": "2026-09-21T22:36:13",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.0,
-      "last_seen": 1790029288.9270504
+      "latency_ms": 125.7,
+      "last_seen": 1790030173.9273632
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.5,
-      "last_seen": 1790029288.9270504
+      "latency_ms": 123.8,
+      "last_seen": 1790030173.9273632
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 122.1,
-      "last_seen": 1790029288.9270504
+      "latency_ms": 136.9,
+      "last_seen": 1790030173.9273632
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 74.6,
-      "last_seen": 1790029288.9270504
+      "latency_ms": 88.6,
+      "last_seen": 1790030173.9273632
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.1,
-      "last_seen": 1790029288.9270504
+      "latency_ms": 145.1,
+      "last_seen": 1790030173.9273632
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.9,
-      "last_seen": 1790029288.9270504
+      "latency_ms": 134.4,
+      "last_seen": 1790030173.9273632
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 131.3,
+      "last_seen": 1790030173.9273632
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 143.8,
+      "last_seen": 1790030173.9273632
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 142.3,
+      "last_seen": 1790030173.9273632
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -73,23 +91,11 @@
       "latency_ms": 99.8,
       "last_seen": 1790025885.7065141
     },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 130.7,
-      "last_seen": 1790024010.7463996
-    },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 153.9,
       "last_seen": 1790022507.4758453
-    },
-    "2.26.87.69:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 109.7,
-      "last_seen": 1790019916.209542
     },
     "t.meow-network.com:443": {
       "strikes": 0,
@@ -114,12 +120,6 @@
       "alive": true,
       "latency_ms": 132.0,
       "last_seen": 1789987609.3987184
-    },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 130.5,
-      "last_seen": 1789983976.0929887
     },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
