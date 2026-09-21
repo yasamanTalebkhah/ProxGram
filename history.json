@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-21T02:59:48",
+  "updated_at": "2026-09-21T03:19:35",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.0,
-      "last_seen": 1789959588.5985286
+      "latency_ms": 108.9,
+      "last_seen": 1789960775.456
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.2,
-      "last_seen": 1789959588.5985286
+      "latency_ms": 94.9,
+      "last_seen": 1789960775.456
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.1,
-      "last_seen": 1789959588.5985286
+      "latency_ms": 107.3,
+      "last_seen": 1789960775.456
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.7,
-      "last_seen": 1789959588.5985286
+      "latency_ms": 99.2,
+      "last_seen": 1789960775.456
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.5,
-      "last_seen": 1789959588.5985286
+      "latency_ms": 105.0,
+      "last_seen": 1789960775.456
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.2,
+      "last_seen": 1789960775.456
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 114.4,
+      "last_seen": 1789960775.456
+    },
+    "reborn.rebirthconnect.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 104.1,
+      "last_seen": 1789960775.456
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -48,24 +66,6 @@
       "alive": true,
       "latency_ms": 156.2,
       "last_seen": 1789959588.5985286
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.2,
-      "last_seen": 1789958937.1584377
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 159.2,
-      "last_seen": 1789958937.1584377
-    },
-    "reborn.rebirthconnect.com:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 159.5,
-      "last_seen": 1789958937.1584377
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
