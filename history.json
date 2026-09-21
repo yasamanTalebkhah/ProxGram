@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-09-21T16:17:18",
+  "updated_at": "2026-09-21T16:33:16",
   "health": {
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.1,
-      "last_seen": 1790007438.4369762
+      "latency_ms": 46.2,
+      "last_seen": 1790008396.556439
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.2,
-      "last_seen": 1790007438.4369762
+      "latency_ms": 84.9,
+      "last_seen": 1790008396.556439
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1790007438.4369762
+      "latency_ms": 97.8,
+      "last_seen": 1790008396.556439
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.1,
+      "last_seen": 1790008396.556439
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 58.3,
+      "last_seen": 1790008396.556439
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 98.5,
+      "last_seen": 1790008396.556439
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 101.1,
+      "last_seen": 1790008396.556439
+    },
+    "tg.aezakmi.org:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 92.7,
+      "last_seen": 1790008396.556439
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -35,12 +65,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 122.6,
-      "last_seen": 1790007438.4369762
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 120.3,
       "last_seen": 1790007438.4369762
     },
     "ma.hastim.co.uk:443": {
@@ -61,18 +85,6 @@
       "latency_ms": 139.3,
       "last_seen": 1790006247.7420878
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 55.0,
-      "last_seen": 1790005509.0515056
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.1,
-      "last_seen": 1790005509.0515056
-    },
     "t.meow-network.com:443": {
       "strikes": 0,
       "alive": true,
@@ -84,12 +96,6 @@
       "alive": true,
       "latency_ms": 98.6,
       "last_seen": 1790003727.1850867
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.5,
-      "last_seen": 1790002655.348288
     },
     "31.76.77.196:443": {
       "strikes": 0,
@@ -138,12 +144,6 @@
       "alive": true,
       "latency_ms": 152.8,
       "last_seen": 1789847559.014159
-    },
-    "tg.aezakmi.org:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.0,
-      "last_seen": 1789836728.235848
     },
     "w.bestproxy.icu:8443": {
       "strikes": 0,
