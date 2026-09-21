@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-21T11:58:55",
+  "updated_at": "2026-09-21T12:22:07",
   "health": {
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.1,
-      "last_seen": 1789991935.9221473
+      "latency_ms": 54.4,
+      "last_seen": 1789993327.7689734
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.9,
-      "last_seen": 1789991935.9221473
+      "latency_ms": 95.6,
+      "last_seen": 1789993327.7689734
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.8,
-      "last_seen": 1789991935.9221473
+      "latency_ms": 80.9,
+      "last_seen": 1789993327.7689734
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 160.3,
-      "last_seen": 1789991935.9221473
+      "latency_ms": 111.7,
+      "last_seen": 1789993327.7689734
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 159.7,
-      "last_seen": 1789991935.9221473
+      "latency_ms": 109.3,
+      "last_seen": 1789993327.7689734
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.9,
-      "last_seen": 1789991935.9221473
+      "latency_ms": 100.0,
+      "last_seen": 1789993327.7689734
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 85.3,
+      "last_seen": 1789993327.7689734
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.4,
+      "last_seen": 1789993327.7689734
     },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 162.4,
       "last_seen": 1789991935.9221473
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 77.2,
-      "last_seen": 1789991935.9221473
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 107.6,
-      "last_seen": 1789991278.9129481
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
