@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-21T20:42:35",
+  "updated_at": "2026-09-21T20:53:30",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.2,
-      "last_seen": 1790023355.551085
+      "latency_ms": 111.7,
+      "last_seen": 1790024010.7463996
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.1,
-      "last_seen": 1790023355.551085
+      "latency_ms": 134.4,
+      "last_seen": 1790024010.7463996
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.5,
-      "last_seen": 1790023355.551085
+      "latency_ms": 134.4,
+      "last_seen": 1790024010.7463996
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 142.0,
-      "last_seen": 1790023355.551085
+      "latency_ms": 125.0,
+      "last_seen": 1790024010.7463996
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.8,
-      "last_seen": 1790023355.551085
+      "latency_ms": 85.4,
+      "last_seen": 1790024010.7463996
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 158.0,
-      "last_seen": 1790023355.551085
+      "latency_ms": 120.1,
+      "last_seen": 1790024010.7463996
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.4,
-      "last_seen": 1790023355.551085
+      "latency_ms": 123.6,
+      "last_seen": 1790024010.7463996
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 130.7,
+      "last_seen": 1790024010.7463996
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -84,12 +90,6 @@
       "alive": true,
       "latency_ms": 165.9,
       "last_seen": 1790013296.361063
-    },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 133.3,
-      "last_seen": 1790012630.3453853
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
