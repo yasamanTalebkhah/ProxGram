@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-21T17:54:56",
+  "updated_at": "2026-09-21T18:12:58",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.0,
-      "last_seen": 1790013296.361063
+      "latency_ms": 85.6,
+      "last_seen": 1790014378.393284
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.2,
-      "last_seen": 1790013296.361063
+      "latency_ms": 95.7,
+      "last_seen": 1790014378.393284
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 162.5,
-      "last_seen": 1790013296.361063
+      "latency_ms": 101.6,
+      "last_seen": 1790014378.393284
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.9,
-      "last_seen": 1790013296.361063
+      "latency_ms": 99.3,
+      "last_seen": 1790014378.393284
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.5,
-      "last_seen": 1790013296.361063
+      "latency_ms": 104.4,
+      "last_seen": 1790014378.393284
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 163.4,
-      "last_seen": 1790013296.361063
+      "latency_ms": 102.5,
+      "last_seen": 1790014378.393284
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 39.7,
-      "last_seen": 1790013296.361063
+      "latency_ms": 79.9,
+      "last_seen": 1790014378.393284
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 72.5,
+      "last_seen": 1790014378.393284
     },
     "t.meow-network.com:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 165.9,
       "last_seen": 1790013296.361063
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 105.8,
-      "last_seen": 1790012630.3453853
     },
     "2.26.52.23:443": {
       "strikes": 0,
