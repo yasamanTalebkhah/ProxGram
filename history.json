@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-21T10:32:57",
+  "updated_at": "2026-09-21T10:46:49",
   "health": {
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 71.4,
-      "last_seen": 1789986777.8994207
+      "latency_ms": 81.3,
+      "last_seen": 1789987609.3987184
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.7,
-      "last_seen": 1789986777.8994207
+      "latency_ms": 123.9,
+      "last_seen": 1789987609.3987184
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 125.3,
-      "last_seen": 1789986777.8994207
+      "last_seen": 1789987609.3987184
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.6,
-      "last_seen": 1789986777.8994207
+      "latency_ms": 123.4,
+      "last_seen": 1789987609.3987184
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 133.8,
+      "last_seen": 1789987609.3987184
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 132.0,
+      "last_seen": 1789987609.3987184
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 121.3,
+      "last_seen": 1789987609.3987184
+    },
+    "31.76.77.196:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 132.0,
+      "last_seen": 1789987609.3987184
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 39.1,
-      "last_seen": 1789986777.8994207
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.4,
-      "last_seen": 1789986777.8994207
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.5,
       "last_seen": 1789986777.8994207
     },
     "mt1.kurduk.store:443": {
@@ -54,12 +66,6 @@
       "alive": true,
       "latency_ms": 156.2,
       "last_seen": 1789985877.4768896
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.2,
-      "last_seen": 1789984682.1580617
     },
     "media.experthost.shop:443": {
       "strikes": 0,
@@ -101,12 +107,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 129.0,
-      "last_seen": 1789957120.8122423
-    },
-    "31.76.77.196:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 126.1,
       "last_seen": 1789957120.8122423
     },
     "87.121.82.9:443": {
