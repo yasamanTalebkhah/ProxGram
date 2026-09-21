@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-21T04:54:57",
+  "updated_at": "2026-09-21T05:11:24",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.0,
-      "last_seen": 1789966497.1437683
+      "latency_ms": 134.1,
+      "last_seen": 1789967484.2788644
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 72.0,
-      "last_seen": 1789966497.1437683
+      "latency_ms": 82.3,
+      "last_seen": 1789967484.2788644
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 134.4,
-      "last_seen": 1789966497.1437683
+      "latency_ms": 148.8,
+      "last_seen": 1789967484.2788644
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.5,
-      "last_seen": 1789966497.1437683
+      "latency_ms": 127.9,
+      "last_seen": 1789967484.2788644
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.1,
-      "last_seen": 1789966497.1437683
+      "latency_ms": 138.8,
+      "last_seen": 1789967484.2788644
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 147.5,
+      "last_seen": 1789967484.2788644
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.1,
+      "last_seen": 1789967484.2788644
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 135.0,
+      "last_seen": 1789967484.2788644
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 131.1,
-      "last_seen": 1789966497.1437683
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 133.3,
       "last_seen": 1789966497.1437683
     },
     "31.76.77.201:443": {
@@ -60,18 +72,6 @@
       "alive": true,
       "latency_ms": 90.8,
       "last_seen": 1789965651.1675286
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 100.3,
-      "last_seen": 1789964581.8058522
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.5,
-      "last_seen": 1789964581.8058522
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
