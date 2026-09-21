@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-21T10:46:49",
+  "updated_at": "2026-09-21T10:57:39",
   "health": {
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 81.3,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 54.9,
+      "last_seen": 1789988259.832883
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.9,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 112.2,
+      "last_seen": 1789988259.832883
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.3,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 105.5,
+      "last_seen": 1789988259.832883
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.4,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 116.3,
+      "last_seen": 1789988259.832883
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 133.8,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 120.6,
+      "last_seen": 1789988259.832883
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.0,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 118.6,
+      "last_seen": 1789988259.832883
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.3,
-      "last_seen": 1789987609.3987184
+      "latency_ms": 123.7,
+      "last_seen": 1789988259.832883
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 115.2,
+      "last_seen": 1789988259.832883
     },
     "31.76.77.196:443": {
       "strikes": 0,
@@ -60,12 +66,6 @@
       "alive": true,
       "latency_ms": 151.2,
       "last_seen": 1789986777.8994207
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 156.2,
-      "last_seen": 1789985877.4768896
     },
     "media.experthost.shop:443": {
       "strikes": 0,
