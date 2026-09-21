@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-21T01:19:10",
+  "updated_at": "2026-09-21T01:34:07",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.1,
-      "last_seen": 1789953550.6306643
+      "latency_ms": 108.3,
+      "last_seen": 1789954447.6505618
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 77.8,
-      "last_seen": 1789953550.6306643
+      "latency_ms": 53.5,
+      "last_seen": 1789954447.6505618
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.1,
-      "last_seen": 1789953550.6306643
+      "latency_ms": 108.6,
+      "last_seen": 1789954447.6505618
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.7,
-      "last_seen": 1789953550.6306643
+      "latency_ms": 98.5,
+      "last_seen": 1789954447.6505618
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.9,
-      "last_seen": 1789953550.6306643
+      "latency_ms": 108.4,
+      "last_seen": 1789954447.6505618
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 110.7,
+      "last_seen": 1789954447.6505618
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 118.7,
+      "last_seen": 1789954447.6505618
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 116.3,
+      "last_seen": 1789954447.6505618
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 126.2,
-      "last_seen": 1789953550.6306643
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 124.8,
-      "last_seen": 1789953550.6306643
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 127.8,
       "last_seen": 1789953550.6306643
     },
     "yostavpn.casacam.net:443": {
@@ -108,12 +114,6 @@
       "alive": true,
       "latency_ms": 134.3,
       "last_seen": 1789894500.495213
-    },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 127.6,
-      "last_seen": 1789884730.2277699
     },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
