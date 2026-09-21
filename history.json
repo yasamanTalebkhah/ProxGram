@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-21T19:56:17",
+  "updated_at": "2026-09-21T20:13:19",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.6,
-      "last_seen": 1790020577.3072336
+      "latency_ms": 140.0,
+      "last_seen": 1790021599.91619
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.2,
-      "last_seen": 1790020577.3072336
+      "latency_ms": 153.1,
+      "last_seen": 1790021599.91619
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 98.1,
-      "last_seen": 1790020577.3072336
+      "latency_ms": 155.9,
+      "last_seen": 1790021599.91619
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1790020577.3072336
+      "latency_ms": 155.8,
+      "last_seen": 1790021599.91619
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.1,
+      "last_seen": 1790021599.91619
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 81.6,
+      "last_seen": 1790021599.91619
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 64.4,
+      "last_seen": 1790021599.91619
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.9,
+      "last_seen": 1790021599.91619
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 98.3,
-      "last_seen": 1790020577.3072336
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.5,
-      "last_seen": 1790020577.3072336
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 83.0,
-      "last_seen": 1790020577.3072336
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.9,
       "last_seen": 1790020577.3072336
     },
     "2.26.87.69:443": {
@@ -66,12 +72,6 @@
       "alive": true,
       "latency_ms": 100.9,
       "last_seen": 1790018323.193618
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 98.5,
-      "last_seen": 1790016604.1346874
     },
     "t.meow-network.com:443": {
       "strikes": 0,
