@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-21T05:56:34",
+  "updated_at": "2026-09-21T06:21:10",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 138.5,
-      "last_seen": 1789970194.0969448
+      "latency_ms": 94.6,
+      "last_seen": 1789971670.743047
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 94.1,
-      "last_seen": 1789970194.0969448
+      "last_seen": 1789971670.743047
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 134.6,
-      "last_seen": 1789970194.0969448
+      "latency_ms": 94.8,
+      "last_seen": 1789971670.743047
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.6,
-      "last_seen": 1789970194.0969448
+      "latency_ms": 80.6,
+      "last_seen": 1789971670.743047
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 125.6,
-      "last_seen": 1789970194.0969448
+      "latency_ms": 97.6,
+      "last_seen": 1789971670.743047
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.5,
-      "last_seen": 1789970194.0969448
+      "latency_ms": 96.0,
+      "last_seen": 1789971670.743047
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.4,
+      "last_seen": 1789971670.743047
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.2,
+      "last_seen": 1789971670.743047
     },
     "31.76.77.201:443": {
       "strikes": 0,
@@ -60,18 +72,6 @@
       "alive": true,
       "latency_ms": 101.1,
       "last_seen": 1789969457.116647
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.9,
-      "last_seen": 1789968478.1894066
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.5,
-      "last_seen": 1789967484.2788644
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
