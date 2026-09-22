@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-22T04:47:42",
+  "updated_at": "2026-09-22T04:58:48",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.6,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 108.8,
+      "last_seen": 1790053128.2271526
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 121.3,
+      "last_seen": 1790053128.2271526
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 55.0,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 82.1,
+      "last_seen": 1790053128.2271526
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 117.5,
+      "last_seen": 1790053128.2271526
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.2,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 128.4,
+      "last_seen": 1790053128.2271526
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.0,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 115.2,
+      "last_seen": 1790053128.2271526
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1790052462.4616644
+      "latency_ms": 115.3,
+      "last_seen": 1790053128.2271526
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 123.7,
+      "last_seen": 1790053128.2271526
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -59,12 +65,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 120.0,
-      "last_seen": 1790051644.6021435
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 119.2,
       "last_seen": 1790051644.6021435
     },
     "yostavpn.casacam.net:443": {
