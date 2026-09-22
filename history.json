@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-22T12:57:07",
+  "updated_at": "2026-09-22T13:16:46",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 85.6,
-      "last_seen": 1790081827.164704
+      "last_seen": 1790083006.943469
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 60.9,
-      "last_seen": 1790081827.164704
+      "latency_ms": 52.9,
+      "last_seen": 1790083006.943469
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 102.3,
-      "last_seen": 1790081827.164704
+      "latency_ms": 94.9,
+      "last_seen": 1790083006.943469
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 102.1,
-      "last_seen": 1790081827.164704
+      "latency_ms": 94.5,
+      "last_seen": 1790083006.943469
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.7,
-      "last_seen": 1790081827.164704
+      "latency_ms": 97.6,
+      "last_seen": 1790083006.943469
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 37.0,
+      "last_seen": 1790083006.943469
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.3,
+      "last_seen": 1790083006.943469
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.2,
+      "last_seen": 1790083006.943469
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 94.7,
-      "last_seen": 1790081827.164704
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 83.8,
-      "last_seen": 1790081827.164704
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 98.0,
       "last_seen": 1790081827.164704
     },
     "2.26.87.69:443": {
@@ -60,12 +66,6 @@
       "alive": true,
       "latency_ms": 126.8,
       "last_seen": 1790080869.5130777
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 135.1,
-      "last_seen": 1790079714.9315624
     },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
