@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-09-22T15:51:39",
+  "updated_at": "2026-09-22T16:04:59",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.7,
-      "last_seen": 1790092299.3384686
+      "latency_ms": 126.0,
+      "last_seen": 1790093099.1329563
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 54.9,
-      "last_seen": 1790092299.3384686
+      "latency_ms": 103.2,
+      "last_seen": 1790093099.1329563
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.3,
-      "last_seen": 1790092299.3384686
+      "latency_ms": 171.0,
+      "last_seen": 1790093099.1329563
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 73.6,
-      "last_seen": 1790092299.3384686
+      "latency_ms": 116.5,
+      "last_seen": 1790093099.1329563
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 195.8,
+      "last_seen": 1790093099.1329563
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 174.1,
+      "last_seen": 1790093099.1329563
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 192.2,
+      "last_seen": 1790093099.1329563
+    },
+    "w.bestproxy.icu:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 187.7,
+      "last_seen": 1790093099.1329563
     },
     "media.experthost.shop:443": {
       "strikes": 0,
@@ -37,35 +61,17 @@
       "latency_ms": 88.6,
       "last_seen": 1790092299.3384686
     },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.6,
-      "last_seen": 1790092299.3384686
-    },
     "t.meow-network.com:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 97.4,
       "last_seen": 1790092299.3384686
     },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 166.6,
-      "last_seen": 1790091524.705521
-    },
     "click.zov.network:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 158.7,
       "last_seen": 1790091524.705521
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 121.9,
-      "last_seen": 1790090623.3130817
     },
     "2.26.85.57:443": {
       "strikes": 0,
@@ -120,12 +126,6 @@
       "alive": true,
       "latency_ms": 167.2,
       "last_seen": 1790085618.8806493
-    },
-    "w.bestproxy.icu:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.4,
-      "last_seen": 1790084024.8468883
     },
     "31.76.77.201:443": {
       "strikes": 0,
