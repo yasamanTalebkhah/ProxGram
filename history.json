@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-22T21:17:07",
+  "updated_at": "2026-09-22T21:31:20",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 143.9,
-      "last_seen": 1790111827.377727
+      "latency_ms": 93.5,
+      "last_seen": 1790112680.3403404
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.9,
-      "last_seen": 1790111827.377727
+      "latency_ms": 87.3,
+      "last_seen": 1790112680.3403404
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.2,
-      "last_seen": 1790111827.377727
+      "latency_ms": 97.5,
+      "last_seen": 1790112680.3403404
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 82.1,
-      "last_seen": 1790111827.377727
+      "latency_ms": 111.6,
+      "last_seen": 1790112680.3403404
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 161.0,
-      "last_seen": 1790111827.377727
+      "latency_ms": 99.3,
+      "last_seen": 1790112680.3403404
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.4,
-      "last_seen": 1790111827.377727
+      "latency_ms": 101.7,
+      "last_seen": 1790112680.3403404
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.1,
-      "last_seen": 1790111827.377727
+      "latency_ms": 98.0,
+      "last_seen": 1790112680.3403404
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.3,
+      "last_seen": 1790112680.3403404
     },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 153.4,
       "last_seen": 1790111827.377727
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.3,
-      "last_seen": 1790110779.684412
     },
     "shared1.ddproxy.xyz:443": {
       "strikes": 0,
