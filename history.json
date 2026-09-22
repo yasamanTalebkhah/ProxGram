@@ -1,40 +1,64 @@
 {
-  "updated_at": "2026-09-22T16:04:59",
+  "updated_at": "2026-09-22T16:23:11",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.0,
-      "last_seen": 1790093099.1329563
+      "latency_ms": 131.5,
+      "last_seen": 1790094191.0666409
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 103.2,
-      "last_seen": 1790093099.1329563
+      "latency_ms": 90.6,
+      "last_seen": 1790094191.0666409
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 171.0,
-      "last_seen": 1790093099.1329563
+      "latency_ms": 149.6,
+      "last_seen": 1790094191.0666409
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.5,
-      "last_seen": 1790093099.1329563
+      "latency_ms": 65.2,
+      "last_seen": 1790094191.0666409
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 173.0,
+      "last_seen": 1790094191.0666409
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 173.5,
+      "last_seen": 1790094191.0666409
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 171.0,
+      "last_seen": 1790094191.0666409
+    },
+    "l01.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 165.5,
+      "last_seen": 1790094191.0666409
+    },
+    "nl.cdnflow.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 165.2,
+      "last_seen": 1790094191.0666409
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 195.8,
-      "last_seen": 1790093099.1329563
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 174.1,
       "last_seen": 1790093099.1329563
     },
     "212.193.4.172:8443": {
@@ -48,12 +72,6 @@
       "alive": true,
       "latency_ms": 187.7,
       "last_seen": 1790093099.1329563
-    },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.7,
-      "last_seen": 1790092299.3384686
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
@@ -85,22 +103,10 @@
       "latency_ms": 135.0,
       "last_seen": 1790090623.3130817
     },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 92.9,
-      "last_seen": 1790089619.7302797
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 93.7,
-      "last_seen": 1790089619.7302797
-    },
-    "l01.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.8,
       "last_seen": 1790089619.7302797
     },
     "77.239.105.219:443": {
@@ -192,12 +198,6 @@
       "alive": false,
       "last_seen": 1789753962.6031933,
       "purged": true
-    },
-    "nl.cdnflow.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 160.6,
-      "last_seen": 1789746757.4673386
     },
     "s13.assetflux.org:443": {
       "strikes": 2,
