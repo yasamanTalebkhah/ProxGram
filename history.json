@@ -1,52 +1,70 @@
 {
-  "updated_at": "2026-09-22T04:58:48",
+  "updated_at": "2026-09-22T05:17:25",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.8,
-      "last_seen": 1790053128.2271526
+      "latency_ms": 122.7,
+      "last_seen": 1790054245.8582323
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.3,
-      "last_seen": 1790053128.2271526
+      "latency_ms": 118.7,
+      "last_seen": 1790054245.8582323
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 82.1,
-      "last_seen": 1790053128.2271526
+      "latency_ms": 100.9,
+      "last_seen": 1790054245.8582323
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 125.8,
+      "last_seen": 1790054245.8582323
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 126.5,
+      "last_seen": 1790054245.8582323
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 135.7,
+      "last_seen": 1790054245.8582323
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 136.1,
+      "last_seen": 1790054245.8582323
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 138.3,
+      "last_seen": 1790054245.8582323
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 136.4,
+      "last_seen": 1790054245.8582323
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 138.8,
+      "last_seen": 1790054245.8582323
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 117.5,
-      "last_seen": 1790053128.2271526
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 128.4,
-      "last_seen": 1790053128.2271526
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 115.2,
-      "last_seen": 1790053128.2271526
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 115.3,
-      "last_seen": 1790053128.2271526
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 123.7,
       "last_seen": 1790053128.2271526
     },
     "mt1.kurduk.store:443": {
@@ -73,18 +91,6 @@
       "latency_ms": 65.3,
       "last_seen": 1790050717.4087589
     },
-    "2.26.87.69:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 128.8,
-      "last_seen": 1790049550.2867339
-    },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 131.3,
-      "last_seen": 1790048042.101756
-    },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
@@ -96,12 +102,6 @@
       "alive": true,
       "latency_ms": 144.3,
       "last_seen": 1790040206.1858997
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.9,
-      "last_seen": 1790036292.771299
     },
     "t.meow-network.com:443": {
       "strikes": 0,
