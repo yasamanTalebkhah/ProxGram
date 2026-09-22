@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-22T20:20:45",
+  "updated_at": "2026-09-22T20:35:18",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 147.0,
-      "last_seen": 1790108445.706272
+      "latency_ms": 147.8,
+      "last_seen": 1790109318.8412383
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 161.1,
-      "last_seen": 1790108445.706272
+      "latency_ms": 160.8,
+      "last_seen": 1790109318.8412383
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.4,
-      "last_seen": 1790108445.706272
+      "latency_ms": 82.7,
+      "last_seen": 1790109318.8412383
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.1,
-      "last_seen": 1790108445.706272
+      "latency_ms": 150.6,
+      "last_seen": 1790109318.8412383
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 161.6,
-      "last_seen": 1790108445.706272
+      "latency_ms": 151.5,
+      "last_seen": 1790109318.8412383
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.2,
+      "last_seen": 1790109318.8412383
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 88.1,
+      "last_seen": 1790109318.8412383
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 164.2,
+      "last_seen": 1790109318.8412383
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 159.8,
-      "last_seen": 1790108445.706272
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 162.0,
       "last_seen": 1790108445.706272
     },
     "media.experthost.shop:443": {
@@ -49,23 +61,11 @@
       "latency_ms": 157.1,
       "last_seen": 1790108445.706272
     },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.8,
-      "last_seen": 1790107459.3494017
-    },
     "2.26.85.57:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 162.3,
       "last_seen": 1790107459.3494017
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 146.6,
-      "last_seen": 1790106704.6367264
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
