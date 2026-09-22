@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-22T01:23:26",
+  "updated_at": "2026-09-22T01:38:12",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.6,
-      "last_seen": 1790040206.1858997
+      "latency_ms": 109.0,
+      "last_seen": 1790041092.9770064
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.5,
-      "last_seen": 1790040206.1858997
+      "latency_ms": 104.1,
+      "last_seen": 1790041092.9770064
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 162.6,
-      "last_seen": 1790040206.1858997
+      "latency_ms": 120.1,
+      "last_seen": 1790041092.9770064
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1790040206.1858997
+      "latency_ms": 107.7,
+      "last_seen": 1790041092.9770064
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.1,
-      "last_seen": 1790040206.1858997
+      "latency_ms": 120.3,
+      "last_seen": 1790041092.9770064
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 164.0,
-      "last_seen": 1790040206.1858997
+      "latency_ms": 125.0,
+      "last_seen": 1790041092.9770064
+    },
+    "2.26.87.69:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 129.5,
+      "last_seen": 1790041092.9770064
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 127.6,
+      "last_seen": 1790041092.9770064
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -73,12 +85,6 @@
       "latency_ms": 153.9,
       "last_seen": 1790036292.771299
     },
-    "2.26.87.69:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 130.1,
-      "last_seen": 1790032674.1664965
-    },
     "2.26.52.23:443": {
       "strikes": 0,
       "alive": true,
@@ -108,12 +114,6 @@
       "alive": true,
       "latency_ms": 92.7,
       "last_seen": 1790008396.556439
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 139.3,
-      "last_seen": 1790006247.7420878
     },
     "31.76.77.196:443": {
       "strikes": 0,
