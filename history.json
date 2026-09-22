@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-22T20:35:18",
+  "updated_at": "2026-09-22T20:48:37",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 147.8,
-      "last_seen": 1790109318.8412383
+      "latency_ms": 81.2,
+      "last_seen": 1790110117.4820004
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 160.8,
-      "last_seen": 1790109318.8412383
+      "latency_ms": 99.4,
+      "last_seen": 1790110117.4820004
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 82.7,
-      "last_seen": 1790109318.8412383
+      "latency_ms": 103.9,
+      "last_seen": 1790110117.4820004
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.7,
+      "last_seen": 1790110117.4820004
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 98.7,
+      "last_seen": 1790110117.4820004
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 37.0,
+      "last_seen": 1790110117.4820004
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 92.2,
+      "last_seen": 1790110117.4820004
+    },
+    "shared1.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 61.0,
+      "last_seen": 1790110117.4820004
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 150.6,
-      "last_seen": 1790109318.8412383
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.5,
-      "last_seen": 1790109318.8412383
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.2,
-      "last_seen": 1790109318.8412383
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 88.1,
-      "last_seen": 1790109318.8412383
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 164.2,
       "last_seen": 1790109318.8412383
     },
     "mt1.kurduk.store:443": {
@@ -144,12 +150,6 @@
       "alive": true,
       "latency_ms": 158.7,
       "last_seen": 1790091524.705521
-    },
-    "shared1.ddproxy.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 164.2,
-      "last_seen": 1790088757.8451898
     },
     "czproxy.kochvpn.pw:443": {
       "strikes": 0,
