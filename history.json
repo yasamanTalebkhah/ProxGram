@@ -1,23 +1,59 @@
 {
-  "updated_at": "2026-09-22T13:16:46",
+  "updated_at": "2026-09-22T13:33:44",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.6,
-      "last_seen": 1790083006.943469
+      "latency_ms": 109.0,
+      "last_seen": 1790084024.8468883
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 52.9,
-      "last_seen": 1790083006.943469
+      "latency_ms": 39.7,
+      "last_seen": 1790084024.8468883
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
+      "latency_ms": 95.8,
+      "last_seen": 1790084024.8468883
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.8,
+      "last_seen": 1790084024.8468883
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
       "latency_ms": 94.9,
-      "last_seen": 1790083006.943469
+      "last_seen": 1790084024.8468883
+    },
+    "media.experthost.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 98.5,
+      "last_seen": 1790084024.8468883
+    },
+    "w.bestproxy.icu:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.4,
+      "last_seen": 1790084024.8468883
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.3,
+      "last_seen": 1790084024.8468883
+    },
+    "czproxy.kochvpn.pw:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 109.6,
+      "last_seen": 1790084024.8468883
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -25,22 +61,10 @@
       "latency_ms": 94.5,
       "last_seen": 1790083006.943469
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.6,
-      "last_seen": 1790083006.943469
-    },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 37.0,
-      "last_seen": 1790083006.943469
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.3,
       "last_seen": 1790083006.943469
     },
     "77.239.105.219:443": {
@@ -85,22 +109,10 @@
       "latency_ms": 157.5,
       "last_seen": 1790077594.7857313
     },
-    "media.experthost.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 158.4,
-      "last_seen": 1790077594.7857313
-    },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 160.6,
-      "last_seen": 1790076830.0708983
-    },
-    "w.bestproxy.icu:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.7,
       "last_seen": 1790076830.0708983
     },
     "mt1.kurduk.store:443": {
@@ -113,12 +125,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 136.1,
-      "last_seen": 1790054245.8582323
-    },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 136.4,
       "last_seen": 1790054245.8582323
     },
     "2.26.52.23:443": {
