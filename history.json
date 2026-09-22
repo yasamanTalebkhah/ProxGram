@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-22T04:34:04",
+  "updated_at": "2026-09-22T04:47:42",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 111.0,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 80.6,
+      "last_seen": 1790052462.4616644
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.5,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 95.0,
+      "last_seen": 1790052462.4616644
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.1,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 55.0,
+      "last_seen": 1790052462.4616644
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.7,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 95.0,
+      "last_seen": 1790052462.4616644
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.6,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 95.2,
+      "last_seen": 1790052462.4616644
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.0,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 99.0,
+      "last_seen": 1790052462.4616644
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.9,
-      "last_seen": 1790051644.6021435
+      "latency_ms": 95.4,
+      "last_seen": 1790052462.4616644
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 105.4,
+      "last_seen": 1790052462.4616644
     },
     "2.26.52.23:443": {
       "strikes": 0,
@@ -77,12 +83,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 131.3,
-      "last_seen": 1790048042.101756
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 140.3,
       "last_seen": 1790048042.101756
     },
     "ma.hastim.co.uk:443": {
