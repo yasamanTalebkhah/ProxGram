@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-22T11:46:34",
+  "updated_at": "2026-09-22T11:57:53",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.6,
-      "last_seen": 1790077594.7857313
+      "latency_ms": 124.8,
+      "last_seen": 1790078273.0515296
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.0,
-      "last_seen": 1790077594.7857313
+      "latency_ms": 79.0,
+      "last_seen": 1790078273.0515296
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.8,
-      "last_seen": 1790077594.7857313
+      "latency_ms": 150.5,
+      "last_seen": 1790078273.0515296
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.0,
-      "last_seen": 1790077594.7857313
+      "latency_ms": 149.5,
+      "last_seen": 1790078273.0515296
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.8,
-      "last_seen": 1790077594.7857313
+      "latency_ms": 97.8,
+      "last_seen": 1790078273.0515296
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.5,
+      "last_seen": 1790078273.0515296
+    },
+    "l01.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.0,
+      "last_seen": 1790078273.0515296
+    },
+    "t.meow-network.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.2,
+      "last_seen": 1790078273.0515296
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 157.5,
-      "last_seen": 1790077594.7857313
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.1,
       "last_seen": 1790077594.7857313
     },
     "79.137.196.223:2053": {
@@ -84,18 +96,6 @@
       "alive": true,
       "latency_ms": 97.6,
       "last_seen": 1790066993.1853292
-    },
-    "l01.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.3,
-      "last_seen": 1790063912.2736008
-    },
-    "t.meow-network.com:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 164.7,
-      "last_seen": 1790055169.050228
     },
     "2.26.85.57:443": {
       "strikes": 0,
