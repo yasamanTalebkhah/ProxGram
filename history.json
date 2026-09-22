@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-22T23:46:20",
+  "updated_at": "2026-09-22T23:57:36",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.6,
-      "last_seen": 1790120780.4113445
+      "latency_ms": 104.4,
+      "last_seen": 1790121456.5834863
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.6,
-      "last_seen": 1790120780.4113445
+      "latency_ms": 116.9,
+      "last_seen": 1790121456.5834863
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.5,
-      "last_seen": 1790120780.4113445
+      "latency_ms": 52.2,
+      "last_seen": 1790121456.5834863
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.4,
-      "last_seen": 1790120780.4113445
+      "latency_ms": 110.4,
+      "last_seen": 1790121456.5834863
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 147.7,
-      "last_seen": 1790120780.4113445
+      "latency_ms": 112.6,
+      "last_seen": 1790121456.5834863
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 114.1,
+      "last_seen": 1790121456.5834863
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 109.8,
+      "last_seen": 1790121456.5834863
+    },
+    "31.76.77.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 120.9,
+      "last_seen": 1790121456.5834863
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -37,23 +55,11 @@
       "latency_ms": 108.2,
       "last_seen": 1790120780.4113445
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.5,
-      "last_seen": 1790120780.4113445
-    },
     "media.experthost.shop:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 158.7,
       "last_seen": 1790120780.4113445
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 127.7,
-      "last_seen": 1790120127.8444102
     },
     "31.76.77.196:443": {
       "strikes": 0,
@@ -65,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 88.5,
-      "last_seen": 1790117627.5879138
-    },
-    "31.76.77.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 125.5,
       "last_seen": 1790117627.5879138
     },
     "shared.ddproxy.xyz:443": {
