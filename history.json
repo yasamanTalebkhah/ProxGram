@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-09-22T14:36:51",
+  "updated_at": "2026-09-22T14:52:37",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.6,
-      "last_seen": 1790087811.0826292
+      "latency_ms": 125.0,
+      "last_seen": 1790088757.8451898
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.8,
+      "last_seen": 1790088757.8451898
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 145.4,
+      "last_seen": 1790088757.8451898
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 145.6,
+      "last_seen": 1790088757.8451898
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 146.1,
+      "last_seen": 1790088757.8451898
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 148.2,
+      "last_seen": 1790088757.8451898
+    },
+    "static.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 176.0,
+      "last_seen": 1790088757.8451898
+    },
+    "shared1.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 164.2,
+      "last_seen": 1790088757.8451898
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
@@ -13,40 +55,10 @@
       "latency_ms": 110.5,
       "last_seen": 1790087811.0826292
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1790087811.0826292
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.9,
-      "last_seen": 1790087811.0826292
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.0,
-      "last_seen": 1790087811.0826292
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 155.9,
-      "last_seen": 1790087811.0826292
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.2,
-      "last_seen": 1790087811.0826292
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.2,
       "last_seen": 1790087811.0826292
     },
     "media.experthost.shop:443": {
@@ -72,12 +84,6 @@
       "alive": true,
       "latency_ms": 167.2,
       "last_seen": 1790085618.8806493
-    },
-    "static.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.9,
-      "last_seen": 1790084024.8468883
     },
     "w.bestproxy.icu:8443": {
       "strikes": 0,
