@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-09-22T13:49:03",
+  "updated_at": "2026-09-22T14:00:18",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.5,
-      "last_seen": 1790084943.5771787
+      "latency_ms": 124.8,
+      "last_seen": 1790085618.8806493
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.9,
-      "last_seen": 1790084943.5771787
+      "latency_ms": 97.7,
+      "last_seen": 1790085618.8806493
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 145.2,
+      "last_seen": 1790085618.8806493
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 135.3,
+      "last_seen": 1790085618.8806493
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 145.0,
+      "last_seen": 1790085618.8806493
+    },
+    "czproxy.kochvpn.pw:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 163.1,
+      "last_seen": 1790085618.8806493
+    },
+    "2.26.85.57:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 165.3,
+      "last_seen": 1790085618.8806493
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 167.2,
+      "last_seen": 1790085618.8806493
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -19,28 +55,10 @@
       "latency_ms": 163.8,
       "last_seen": 1790084943.5771787
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 161.6,
-      "last_seen": 1790084943.5771787
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 153.9,
-      "last_seen": 1790084943.5771787
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 80.6,
-      "last_seen": 1790084943.5771787
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.2,
       "last_seen": 1790084943.5771787
     },
     "212.193.4.172:8443": {
@@ -71,12 +89,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 107.3,
-      "last_seen": 1790084024.8468883
-    },
-    "czproxy.kochvpn.pw:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 109.6,
       "last_seen": 1790084024.8468883
     },
     "2.26.87.69:443": {
@@ -120,18 +132,6 @@
       "alive": true,
       "latency_ms": 97.6,
       "last_seen": 1790066993.1853292
-    },
-    "2.26.85.57:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 136.1,
-      "last_seen": 1790054245.8582323
-    },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 118.0,
-      "last_seen": 1790051644.6021435
     },
     "tg.aezakmi.org:443": {
       "strikes": 0,
