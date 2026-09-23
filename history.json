@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-23T22:42:51",
+  "updated_at": "2026-09-23T22:53:59",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.8,
-      "last_seen": 1790203371.879796
+      "latency_ms": 142.1,
+      "last_seen": 1790204039.400222
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.8,
-      "last_seen": 1790203371.879796
+      "latency_ms": 95.1,
+      "last_seen": 1790204039.400222
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.0,
-      "last_seen": 1790203371.879796
+      "latency_ms": 151.5,
+      "last_seen": 1790204039.400222
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.0,
-      "last_seen": 1790203371.879796
+      "latency_ms": 91.7,
+      "last_seen": 1790204039.400222
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.7,
-      "last_seen": 1790203371.879796
+      "latency_ms": 157.2,
+      "last_seen": 1790204039.400222
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.8,
+      "last_seen": 1790204039.400222
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.6,
+      "last_seen": 1790204039.400222
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.3,
+      "last_seen": 1790204039.400222
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -37,28 +55,10 @@
       "latency_ms": 111.5,
       "last_seen": 1790203371.879796
     },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 113.6,
-      "last_seen": 1790203371.879796
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 106.2,
-      "last_seen": 1790203371.879796
-    },
     "s01.neo-trading.org:443": {
       "strikes": 1,
       "alive": false,
       "last_seen": 1790203371.879796
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1790202479.9246151
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
