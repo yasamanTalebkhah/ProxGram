@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-09-23T05:46:54",
+  "updated_at": "2026-09-23T05:57:41",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 139.3,
-      "last_seen": 1790142414.1427894
+      "latency_ms": 107.0,
+      "last_seen": 1790143061.2392268
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 78.7,
-      "last_seen": 1790142414.1427894
+      "latency_ms": 74.4,
+      "last_seen": 1790143061.2392268
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.6,
+      "last_seen": 1790143061.2392268
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.9,
+      "last_seen": 1790143061.2392268
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.2,
+      "last_seen": 1790143061.2392268
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 114.1,
+      "last_seen": 1790143061.2392268
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.2,
+      "last_seen": 1790143061.2392268
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 109.1,
+      "last_seen": 1790143061.2392268
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 73.6,
-      "last_seen": 1790142414.1427894
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.7,
-      "last_seen": 1790142414.1427894
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.0,
-      "last_seen": 1790142414.1427894
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.4,
       "last_seen": 1790142414.1427894
     },
     "media.experthost.shop:443": {
@@ -48,18 +66,6 @@
       "alive": true,
       "latency_ms": 89.8,
       "last_seen": 1790142414.1427894
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 117.7,
-      "last_seen": 1790141566.1255412
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 120.7,
-      "last_seen": 1790141566.1255412
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -90,12 +96,6 @@
       "alive": true,
       "latency_ms": 129.8,
       "last_seen": 1790135851.7278984
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 90.7,
-      "last_seen": 1790131390.1264265
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
