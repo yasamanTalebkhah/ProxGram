@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-23T10:40:33",
+  "updated_at": "2026-09-23T10:54:10",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.1,
-      "last_seen": 1790160033.7864413
+      "latency_ms": 149.1,
+      "last_seen": 1790160850.693799
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.3,
-      "last_seen": 1790160033.7864413
+      "latency_ms": 91.8,
+      "last_seen": 1790160850.693799
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.5,
-      "last_seen": 1790160033.7864413
+      "latency_ms": 155.3,
+      "last_seen": 1790160850.693799
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.8,
-      "last_seen": 1790160033.7864413
+      "latency_ms": 154.7,
+      "last_seen": 1790160850.693799
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.4,
-      "last_seen": 1790160033.7864413
+      "latency_ms": 155.8,
+      "last_seen": 1790160850.693799
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.5,
-      "last_seen": 1790160033.7864413
+      "latency_ms": 153.3,
+      "last_seen": 1790160850.693799
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.1,
+      "last_seen": 1790160850.693799
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 162.9,
+      "last_seen": 1790160850.693799
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -60,18 +72,6 @@
       "alive": true,
       "latency_ms": 93.3,
       "last_seen": 1790157999.6349533
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 156.1,
-      "last_seen": 1790156289.0616803
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 133.0,
-      "last_seen": 1790154205.409207
     },
     "shared.ddproxy.xyz:443": {
       "strikes": 0,
