@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-23T09:22:05",
+  "updated_at": "2026-09-23T09:38:09",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 137.2,
-      "last_seen": 1790155325.036549
+      "latency_ms": 140.9,
+      "last_seen": 1790156289.0616803
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.2,
-      "last_seen": 1790155325.036549
+      "latency_ms": 82.0,
+      "last_seen": 1790156289.0616803
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 129.3,
-      "last_seen": 1790155325.036549
+      "latency_ms": 85.3,
+      "last_seen": 1790156289.0616803
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 157.3,
+      "last_seen": 1790156289.0616803
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.6,
+      "last_seen": 1790156289.0616803
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.6,
+      "last_seen": 1790156289.0616803
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 160.9,
+      "last_seen": 1790156289.0616803
+    },
+    "ma.hastim.co.uk:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.1,
+      "last_seen": 1790156289.0616803
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 152.4,
-      "last_seen": 1790155325.036549
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 164.2,
-      "last_seen": 1790155325.036549
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 164.0,
-      "last_seen": 1790155325.036549
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 163.0,
-      "last_seen": 1790155325.036549
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.9,
       "last_seen": 1790155325.036549
     },
     "mt1.kurduk.store:443": {
@@ -65,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 35.0,
-      "last_seen": 1790153469.6419315
-    },
-    "ma.hastim.co.uk:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.1,
       "last_seen": 1790153469.6419315
     },
     "shared.ddproxy.xyz:443": {
