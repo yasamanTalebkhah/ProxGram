@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-09-23T14:18:24",
+  "updated_at": "2026-09-23T14:35:13",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.3,
-      "last_seen": 1790173104.6392112
+      "latency_ms": 149.3,
+      "last_seen": 1790174113.9106529
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.7,
-      "last_seen": 1790173104.6392112
+      "latency_ms": 82.4,
+      "last_seen": 1790174113.9106529
+    },
+    "217.138.215.102:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 142.9,
+      "last_seen": 1790174113.9106529
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.6,
+      "last_seen": 1790174113.9106529
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 109.6,
+      "last_seen": 1790174113.9106529
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.3,
+      "last_seen": 1790174113.9106529
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.2,
+      "last_seen": 1790174113.9106529
+    },
+    "shared2.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 106.3,
+      "last_seen": 1790174113.9106529
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 150.9,
-      "last_seen": 1790173104.6392112
-    },
-    "217.138.215.102:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 135.9,
-      "last_seen": 1790173104.6392112
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.3,
-      "last_seen": 1790173104.6392112
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 73.6,
       "last_seen": 1790173104.6392112
     },
     "shared1.ddproxy.xyz:443": {
@@ -61,18 +79,6 @@
       "latency_ms": 91.4,
       "last_seen": 1790171881.720556
     },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.5,
-      "last_seen": 1790171223.023259
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.0,
-      "last_seen": 1790171223.023259
-    },
     "shared4.ddproxy.xyz:443": {
       "strikes": 0,
       "alive": true,
@@ -83,12 +89,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 128.2,
-      "last_seen": 1790168062.2699804
-    },
-    "shared2.ddproxy.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.6,
       "last_seen": 1790168062.2699804
     },
     "rf1.data-edge.fyi:443": {
