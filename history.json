@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-23T06:42:18",
+  "updated_at": "2026-09-23T06:58:13",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 140.5,
-      "last_seen": 1790145738.598829
+      "latency_ms": 113.9,
+      "last_seen": 1790146693.8530438
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.5,
-      "last_seen": 1790145738.598829
+      "latency_ms": 84.6,
+      "last_seen": 1790146693.8530438
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.0,
-      "last_seen": 1790145738.598829
+      "latency_ms": 123.9,
+      "last_seen": 1790146693.8530438
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.4,
-      "last_seen": 1790145738.598829
+      "latency_ms": 124.1,
+      "last_seen": 1790146693.8530438
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.7,
-      "last_seen": 1790145738.598829
+      "latency_ms": 126.8,
+      "last_seen": 1790146693.8530438
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.4,
-      "last_seen": 1790145738.598829
+      "latency_ms": 127.9,
+      "last_seen": 1790146693.8530438
+    },
+    "shared.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 111.6,
+      "last_seen": 1790146693.8530438
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 129.8,
+      "last_seen": 1790146693.8530438
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -60,18 +72,6 @@
       "alive": true,
       "latency_ms": 107.6,
       "last_seen": 1790144568.843054
-    },
-    "shared.ddproxy.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 52.1,
-      "last_seen": 1790144568.843054
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 132.8,
-      "last_seen": 1790141566.1255412
     },
     "rf1.data-edge.fyi:443": {
       "strikes": 0,
