@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-23T12:15:03",
+  "updated_at": "2026-09-23T12:37:37",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.4,
-      "last_seen": 1790165703.1954954
+      "latency_ms": 148.2,
+      "last_seen": 1790167057.6809952
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 34.9,
-      "last_seen": 1790165703.1954954
+      "latency_ms": 104.8,
+      "last_seen": 1790167057.6809952
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 97.9,
-      "last_seen": 1790165703.1954954
+      "latency_ms": 155.7,
+      "last_seen": 1790167057.6809952
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 68.6,
+      "last_seen": 1790167057.6809952
+    },
+    "shared1.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.0,
+      "last_seen": 1790167057.6809952
+    },
+    "shared4.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 125.0,
+      "last_seen": 1790167057.6809952
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.6,
+      "last_seen": 1790167057.6809952
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.3,
+      "last_seen": 1790167057.6809952
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 85.9,
       "last_seen": 1790165703.1954954
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 57.1,
-      "last_seen": 1790165703.1954954
-    },
-    "shared1.ddproxy.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 50.4,
-      "last_seen": 1790165703.1954954
-    },
-    "shared4.ddproxy.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 46.8,
-      "last_seen": 1790165703.1954954
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 100.1,
-      "last_seen": 1790165703.1954954
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 162.0,
-      "last_seen": 1790164498.9185216
     },
     "chestno.servera-dlya-tg-zdes-net.abrdns.com:443": {
       "strikes": 0,
