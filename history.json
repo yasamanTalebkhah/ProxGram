@@ -1,46 +1,58 @@
 {
-  "updated_at": "2026-09-23T11:42:45",
+  "updated_at": "2026-09-23T11:54:58",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.2,
-      "last_seen": 1790163765.308601
+      "latency_ms": 145.0,
+      "last_seen": 1790164498.9185216
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 58.0,
-      "last_seen": 1790163765.308601
+      "latency_ms": 88.4,
+      "last_seen": 1790164498.9185216
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.4,
-      "last_seen": 1790163765.308601
+      "latency_ms": 156.6,
+      "last_seen": 1790164498.9185216
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.7,
-      "last_seen": 1790163765.308601
+      "latency_ms": 152.5,
+      "last_seen": 1790164498.9185216
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 162.0,
+      "last_seen": 1790164498.9185216
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 43.4,
+      "last_seen": 1790164498.9185216
+    },
+    "chestno.servera-dlya-tg-zdes-net.abrdns.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.1,
+      "last_seen": 1790164498.9185216
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.7,
+      "last_seen": 1790164498.9185216
     },
     "shared1.ddproxy.xyz:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 62.1,
-      "last_seen": 1790163765.308601
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 112.0,
-      "last_seen": 1790163765.308601
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 59.6,
       "last_seen": 1790163765.308601
     },
     "shared4.ddproxy.xyz:443": {
@@ -138,12 +150,6 @@
       "alive": true,
       "latency_ms": 126.5,
       "last_seen": 1790120127.8444102
-    },
-    "chestno.servera-dlya-tg-zdes-net.abrdns.com:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 58.1,
-      "last_seen": 1790105125.0634108
     },
     "2.26.52.23:443": {
       "strikes": 0,
