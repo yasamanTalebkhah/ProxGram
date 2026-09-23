@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-23T10:54:10",
+  "updated_at": "2026-09-23T11:09:54",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.1,
-      "last_seen": 1790160850.693799
+      "latency_ms": 113.6,
+      "last_seen": 1790161794.33702
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.8,
-      "last_seen": 1790160850.693799
+      "latency_ms": 74.4,
+      "last_seen": 1790161794.33702
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.3,
-      "last_seen": 1790160850.693799
+      "latency_ms": 127.4,
+      "last_seen": 1790161794.33702
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.7,
-      "last_seen": 1790160850.693799
+      "latency_ms": 120.2,
+      "last_seen": 1790161794.33702
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.8,
-      "last_seen": 1790160850.693799
+      "latency_ms": 121.2,
+      "last_seen": 1790161794.33702
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.3,
-      "last_seen": 1790160850.693799
+      "latency_ms": 118.0,
+      "last_seen": 1790161794.33702
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 132.2,
+      "last_seen": 1790161794.33702
+    },
+    "217.138.215.102:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 118.5,
+      "last_seen": 1790161794.33702
     },
     "ma.hastim.co.uk:443": {
       "strikes": 0,
@@ -48,12 +60,6 @@
       "alive": true,
       "latency_ms": 162.9,
       "last_seen": 1790160850.693799
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 157.7,
-      "last_seen": 1790160033.7864413
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
