@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-23T16:57:24",
+  "updated_at": "2026-09-23T17:16:27",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.3,
-      "last_seen": 1790182644.4372637
+      "latency_ms": 111.5,
+      "last_seen": 1790183787.0463777
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.3,
-      "last_seen": 1790182644.4372637
+      "latency_ms": 99.8,
+      "last_seen": 1790183787.0463777
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.7,
-      "last_seen": 1790182644.4372637
+      "latency_ms": 109.3,
+      "last_seen": 1790183787.0463777
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.3,
-      "last_seen": 1790182644.4372637
+      "latency_ms": 115.7,
+      "last_seen": 1790183787.0463777
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.0,
-      "last_seen": 1790182644.4372637
+      "latency_ms": 115.3,
+      "last_seen": 1790183787.0463777
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 87.7,
+      "last_seen": 1790183787.0463777
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 129.0,
+      "last_seen": 1790183787.0463777
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 121.3,
+      "last_seen": 1790183787.0463777
     },
     "77.239.105.219:443": {
       "strikes": 0,
@@ -41,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 152.7,
-      "last_seen": 1790182644.4372637
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 57.4,
       "last_seen": 1790182644.4372637
     },
     "shared1.ddproxy.xyz:443": {
@@ -66,18 +78,6 @@
       "alive": true,
       "latency_ms": 156.4,
       "last_seen": 1790180898.6454067
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.6,
-      "last_seen": 1790179726.7570527
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.4,
-      "last_seen": 1790179726.7570527
     },
     "shared2.ddproxy.xyz:443": {
       "strikes": 0,
