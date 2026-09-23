@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-23T04:48:04",
+  "updated_at": "2026-09-23T04:59:18",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.2,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 143.6,
+      "last_seen": 1790139558.6816297
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 75.6,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 99.7,
+      "last_seen": 1790139558.6816297
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.9,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 159.7,
+      "last_seen": 1790139558.6816297
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.6,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 154.8,
+      "last_seen": 1790139558.6816297
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 75.5,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 100.3,
+      "last_seen": 1790139558.6816297
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.7,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 154.9,
+      "last_seen": 1790139558.6816297
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.8,
-      "last_seen": 1790138884.3733923
+      "latency_ms": 159.6,
+      "last_seen": 1790139558.6816297
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.8,
+      "last_seen": 1790139558.6816297
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
@@ -53,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 100.7,
-      "last_seen": 1790138025.0122883
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 124.6,
       "last_seen": 1790138025.0122883
     },
     "shared1.ddproxy.xyz:443": {
