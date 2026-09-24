@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-09-24T05:33:44",
+  "updated_at": "2026-09-24T05:47:39",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.1,
-      "last_seen": 1790228024.716731
+      "latency_ms": 136.4,
+      "last_seen": 1790228859.5180137
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 125.8,
+      "last_seen": 1790228859.5180137
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.2,
+      "last_seen": 1790228859.5180137
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.3,
+      "last_seen": 1790228859.5180137
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.0,
+      "last_seen": 1790228859.5180137
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 93.6,
+      "last_seen": 1790228859.5180137
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.1,
+      "last_seen": 1790228859.5180137
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.8,
+      "last_seen": 1790228859.5180137
     },
     "217.138.215.102:443": {
       "strikes": 0,
@@ -13,53 +55,11 @@
       "latency_ms": 104.3,
       "last_seen": 1790228024.716731
     },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 54.5,
-      "last_seen": 1790228024.716731
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 108.4,
-      "last_seen": 1790228024.716731
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 106.5,
-      "last_seen": 1790228024.716731
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 108.5,
-      "last_seen": 1790228024.716731
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 31.1,
-      "last_seen": 1790228024.716731
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 108.1,
       "last_seen": 1790228024.716731
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.8,
-      "last_seen": 1790227111.117062
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.3,
-      "last_seen": 1790225999.0632448
     },
     "2.26.0.194:443": {
       "strikes": 0,
