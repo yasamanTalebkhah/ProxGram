@@ -1,58 +1,58 @@
 {
-  "updated_at": "2026-09-24T00:40:00",
+  "updated_at": "2026-09-24T00:56:18",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.5,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 125.6,
+      "last_seen": 1790211378.2822855
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.0,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 70.6,
+      "last_seen": 1790211378.2822855
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 131.3,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 130.2,
+      "last_seen": 1790211378.2822855
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.6,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 151.1,
+      "last_seen": 1790211378.2822855
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.1,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 149.3,
+      "last_seen": 1790211378.2822855
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.7,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 150.0,
+      "last_seen": 1790211378.2822855
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.3,
-      "last_seen": 1790210400.0691855
+      "latency_ms": 150.6,
+      "last_seen": 1790211378.2822855
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 148.9,
+      "last_seen": 1790211378.2822855
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 70.4,
-      "last_seen": 1790210400.0691855
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.6,
       "last_seen": 1790210400.0691855
     },
     "79.137.196.223:8443": {
