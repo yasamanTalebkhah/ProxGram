@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-09-24T23:11:46",
+  "updated_at": "2026-09-24T23:26:26",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 138.2,
-      "last_seen": 1790291506.9993138
+      "latency_ms": 114.1,
+      "last_seen": 1790292386.3428593
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.6,
-      "last_seen": 1790291506.9993138
+      "latency_ms": 109.3,
+      "last_seen": 1790292386.3428593
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 150.7,
-      "last_seen": 1790291506.9993138
+      "latency_ms": 120.9,
+      "last_seen": 1790292386.3428593
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 62.4,
-      "last_seen": 1790291506.9993138
+      "latency_ms": 98.1,
+      "last_seen": 1790292386.3428593
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 74.9,
+      "last_seen": 1790292386.3428593
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 114.9,
+      "last_seen": 1790292386.3428593
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 119.6,
+      "last_seen": 1790292386.3428593
+    },
+    "178.236.245.98:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 125.5,
+      "last_seen": 1790292386.3428593
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
@@ -31,22 +55,10 @@
       "latency_ms": 31.7,
       "last_seen": 1790291506.9993138
     },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 81.0,
-      "last_seen": 1790291506.9993138
-    },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 156.6,
-      "last_seen": 1790291506.9993138
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.6,
       "last_seen": 1790291506.9993138
     },
     "191.44.113.201:443": {
@@ -66,12 +78,6 @@
       "alive": true,
       "latency_ms": 153.3,
       "last_seen": 1790289749.454766
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.9,
-      "last_seen": 1790288913.7691605
     },
     "s02.neo-trading.org:443": {
       "strikes": 2,
@@ -108,12 +114,6 @@
       "alive": true,
       "latency_ms": 155.7,
       "last_seen": 1790270817.6096911
-    },
-    "178.236.245.98:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 130.8,
-      "last_seen": 1790269875.7622688
     },
     "media.experthost.shop:443": {
       "strikes": 2,
