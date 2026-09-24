@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-24T13:37:31",
+  "updated_at": "2026-09-24T13:53:18",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.7,
-      "last_seen": 1790257051.599359
+      "latency_ms": 80.6,
+      "last_seen": 1790257998.874861
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 63.0,
-      "last_seen": 1790257051.599359
+      "latency_ms": 67.3,
+      "last_seen": 1790257998.874861
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.0,
-      "last_seen": 1790257051.599359
+      "latency_ms": 90.1,
+      "last_seen": 1790257998.874861
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.5,
-      "last_seen": 1790257051.599359
+      "latency_ms": 94.6,
+      "last_seen": 1790257998.874861
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 103.8,
-      "last_seen": 1790257051.599359
+      "latency_ms": 97.0,
+      "last_seen": 1790257998.874861
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 98.8,
+      "last_seen": 1790257998.874861
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.4,
+      "last_seen": 1790257998.874861
+    },
+    "2.26.52.23:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 104.9,
+      "last_seen": 1790257998.874861
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -48,18 +66,6 @@
       "alive": true,
       "latency_ms": 104.3,
       "last_seen": 1790257051.599359
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.2,
-      "last_seen": 1790256041.0296564
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.6,
-      "last_seen": 1790256041.0296564
     },
     "191.44.113.201:443": {
       "strikes": 0,
@@ -180,12 +186,6 @@
       "alive": true,
       "latency_ms": 90.7,
       "last_seen": 1790131390.1264265
-    },
-    "2.26.52.23:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 129.5,
-      "last_seen": 1790097814.3612044
     },
     "tg.aezakmi.org:443": {
       "strikes": 0,
