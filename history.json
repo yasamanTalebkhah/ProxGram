@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-09-24T01:43:45",
+  "updated_at": "2026-09-24T01:56:29",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.7,
-      "last_seen": 1790214225.7216299
+      "latency_ms": 85.4,
+      "last_seen": 1790214989.2032042
+    },
+    "217.138.215.102:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 86.2,
+      "last_seen": 1790214989.2032042
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 103.4,
+      "last_seen": 1790214989.2032042
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.9,
+      "last_seen": 1790214989.2032042
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.8,
+      "last_seen": 1790214989.2032042
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 103.8,
+      "last_seen": 1790214989.2032042
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.4,
+      "last_seen": 1790214989.2032042
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 103.2,
+      "last_seen": 1790214989.2032042
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
@@ -13,53 +55,11 @@
       "latency_ms": 58.6,
       "last_seen": 1790214225.7216299
     },
-    "217.138.215.102:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 82.7,
-      "last_seen": 1790214225.7216299
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.7,
-      "last_seen": 1790214225.7216299
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.3,
-      "last_seen": 1790214225.7216299
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1790214225.7216299
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1790214225.7216299
-    },
     "l01.antenna-mzt.live:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 94.6,
       "last_seen": 1790214225.7216299
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 101.2,
-      "last_seen": 1790213262.5269172
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 103.2,
-      "last_seen": 1790213262.5269172
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
