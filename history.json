@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-24T19:44:51",
+  "updated_at": "2026-09-24T19:56:13",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.9,
-      "last_seen": 1790279091.306211
+      "latency_ms": 142.5,
+      "last_seen": 1790279773.9148777
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 136.4,
-      "last_seen": 1790279091.306211
+      "latency_ms": 153.8,
+      "last_seen": 1790279773.9148777
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 97.7,
-      "last_seen": 1790279091.306211
+      "latency_ms": 88.6,
+      "last_seen": 1790279773.9148777
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.0,
-      "last_seen": 1790279091.306211
+      "latency_ms": 81.6,
+      "last_seen": 1790279773.9148777
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 74.9,
-      "last_seen": 1790279091.306211
+      "latency_ms": 36.6,
+      "last_seen": 1790279773.9148777
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 137.8,
-      "last_seen": 1790279091.306211
+      "latency_ms": 152.6,
+      "last_seen": 1790279773.9148777
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.4,
-      "last_seen": 1790279091.306211
+      "latency_ms": 158.6,
+      "last_seen": 1790279773.9148777
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.7,
+      "last_seen": 1790279773.9148777
     },
     "31.76.77.196:443": {
       "strikes": 0,
@@ -53,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 158.0,
-      "last_seen": 1790278301.276321
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 160.8,
       "last_seen": 1790278301.276321
     },
     "79.137.196.223:2053": {
