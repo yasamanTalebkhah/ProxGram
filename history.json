@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-24T21:44:21",
+  "updated_at": "2026-09-24T21:55:16",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.4,
-      "last_seen": 1790286261.3579466
+      "latency_ms": 90.6,
+      "last_seen": 1790286916.733519
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.6,
-      "last_seen": 1790286261.3579466
+      "latency_ms": 90.5,
+      "last_seen": 1790286916.733519
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 105.6,
-      "last_seen": 1790286261.3579466
+      "latency_ms": 24.9,
+      "last_seen": 1790286916.733519
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.9,
-      "last_seen": 1790286261.3579466
+      "latency_ms": 96.7,
+      "last_seen": 1790286916.733519
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 107.2,
-      "last_seen": 1790286261.3579466
+      "latency_ms": 75.5,
+      "last_seen": 1790286916.733519
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.0,
-      "last_seen": 1790286261.3579466
+      "latency_ms": 95.2,
+      "last_seen": 1790286916.733519
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.6,
+      "last_seen": 1790286916.733519
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.5,
+      "last_seen": 1790286916.733519
     },
     "s02.neo-trading.org:443": {
       "strikes": 2,
@@ -66,18 +78,6 @@
       "alive": true,
       "latency_ms": 150.1,
       "last_seen": 1790285527.315154
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.1,
-      "last_seen": 1790285527.315154
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.9,
-      "last_seen": 1790284686.9440286
     },
     "31.76.77.196:443": {
       "strikes": 0,
