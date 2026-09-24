@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-09-24T22:12:15",
+  "updated_at": "2026-09-24T22:28:33",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.6,
-      "last_seen": 1790287935.6182063
+      "latency_ms": 126.5,
+      "last_seen": 1790288913.7691605
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.6,
-      "last_seen": 1790287935.6182063
+      "latency_ms": 130.4,
+      "last_seen": 1790288913.7691605
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.2,
-      "last_seen": 1790287935.6182063
+      "latency_ms": 131.7,
+      "last_seen": 1790288913.7691605
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.9,
+      "last_seen": 1790288913.7691605
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.2,
+      "last_seen": 1790288913.7691605
+    },
+    "f5fe36.proxyhub.co:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.5,
+      "last_seen": 1790288913.7691605
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 74.4,
+      "last_seen": 1790288913.7691605
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.0,
+      "last_seen": 1790288913.7691605
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -31,35 +61,11 @@
       "latency_ms": 97.2,
       "last_seen": 1790287935.6182063
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.5,
-      "last_seen": 1790287935.6182063
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 79.2,
-      "last_seen": 1790287935.6182063
-    },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 96.4,
       "last_seen": 1790287935.6182063
-    },
-    "f5fe36.proxyhub.co:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 24.9,
-      "last_seen": 1790286916.733519
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 75.5,
-      "last_seen": 1790286916.733519
     },
     "s02.neo-trading.org:443": {
       "strikes": 2,
@@ -71,12 +77,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 119.9,
-      "last_seen": 1790286261.3579466
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 123.1,
       "last_seen": 1790286261.3579466
     },
     "31.76.77.196:443": {
