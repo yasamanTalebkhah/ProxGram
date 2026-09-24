@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-09-24T21:18:06",
+  "updated_at": "2026-09-24T21:32:07",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.5,
-      "last_seen": 1790284686.9440286
+      "latency_ms": 124.4,
+      "last_seen": 1790285527.315154
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.1,
-      "last_seen": 1790284686.9440286
+      "latency_ms": 133.2,
+      "last_seen": 1790285527.315154
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 106.0,
-      "last_seen": 1790284686.9440286
+      "latency_ms": 77.3,
+      "last_seen": 1790285527.315154
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 136.4,
-      "last_seen": 1790284686.9440286
+      "latency_ms": 131.0,
+      "last_seen": 1790285527.315154
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.1,
+      "last_seen": 1790285527.315154
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 144.5,
+      "last_seen": 1790285527.315154
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.1,
+      "last_seen": 1790285527.315154
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.1,
+      "last_seen": 1790285527.315154
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 151.2,
-      "last_seen": 1790284686.9440286
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.4,
       "last_seen": 1790284686.9440286
     },
     "79.137.196.223:443": {
@@ -43,34 +61,16 @@
       "latency_ms": 150.9,
       "last_seen": 1790284686.9440286
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 85.4,
-      "last_seen": 1790284686.9440286
-    },
     "s02.neo-trading.org:443": {
       "strikes": 1,
       "alive": false,
       "last_seen": 1790284686.9440286
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 117.6,
-      "last_seen": 1790283572.1198127
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 117.6,
       "last_seen": 1790283572.1198127
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.0,
-      "last_seen": 1790282893.4924304
     },
     "191.44.113.201:443": {
       "strikes": 0,
