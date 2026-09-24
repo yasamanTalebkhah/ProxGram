@@ -1,65 +1,65 @@
 {
-  "updated_at": "2026-09-23T23:55:54",
+  "updated_at": "2026-09-24T00:18:14",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 126.0,
-      "last_seen": 1790207754.822662
+      "latency_ms": 124.5,
+      "last_seen": 1790209094.3431997
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.5,
-      "last_seen": 1790207754.822662
+      "latency_ms": 81.2,
+      "last_seen": 1790209094.3431997
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 133.4,
-      "last_seen": 1790207754.822662
+      "last_seen": 1790209094.3431997
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.3,
-      "last_seen": 1790207754.822662
+      "latency_ms": 149.9,
+      "last_seen": 1790209094.3431997
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.6,
+      "last_seen": 1790209094.3431997
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.5,
+      "last_seen": 1790209094.3431997
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.4,
+      "last_seen": 1790209094.3431997
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.2,
+      "last_seen": 1790209094.3431997
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.9,
+      "last_seen": 1790209094.3431997
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 142.7,
       "last_seen": 1790207754.822662
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 143.3,
-      "last_seen": 1790207754.822662
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 142.7,
-      "last_seen": 1790207754.822662
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 139.6,
-      "last_seen": 1790207754.822662
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 142.2,
-      "last_seen": 1790207754.822662
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1790207106.4585156
     },
     "s01.neo-trading.org:443": {
       "strikes": 2,
