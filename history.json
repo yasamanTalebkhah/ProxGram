@@ -1,34 +1,58 @@
 {
-  "updated_at": "2026-09-24T16:24:25",
+  "updated_at": "2026-09-24T16:40:50",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.6,
-      "last_seen": 1790267065.4185743
+      "latency_ms": 140.1,
+      "last_seen": 1790268050.869464
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 131.1,
-      "last_seen": 1790267065.4185743
+      "latency_ms": 146.3,
+      "last_seen": 1790268050.869464
+    },
+    "t.meow-meow-fast.site:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 80.5,
+      "last_seen": 1790268050.869464
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.8,
+      "last_seen": 1790268050.869464
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 50.4,
+      "last_seen": 1790268050.869464
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.9,
+      "last_seen": 1790268050.869464
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.6,
+      "last_seen": 1790268050.869464
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.1,
+      "last_seen": 1790268050.869464
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 153.2,
-      "last_seen": 1790267065.4185743
-    },
-    "t.meow-meow-fast.site:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 87.5,
-      "last_seen": 1790267065.4185743
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.1,
       "last_seen": 1790267065.4185743
     },
     "191.44.113.201:443": {
@@ -37,34 +61,10 @@
       "latency_ms": 151.3,
       "last_seen": 1790267065.4185743
     },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 21.5,
-      "last_seen": 1790267065.4185743
-    },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 150.1,
-      "last_seen": 1790267065.4185743
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.8,
-      "last_seen": 1790267065.4185743
-    },
     "media.experthost.shop:443": {
       "strikes": 1,
       "alive": false,
       "last_seen": 1790267065.4185743
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 92.8,
-      "last_seen": 1790265881.3933835
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
