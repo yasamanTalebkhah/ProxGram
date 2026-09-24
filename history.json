@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-09-24T04:19:17",
+  "updated_at": "2026-09-24T04:35:07",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 139.7,
-      "last_seen": 1790223557.0504544
+      "latency_ms": 102.4,
+      "last_seen": 1790224507.3172457
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.1,
-      "last_seen": 1790223557.0504544
+      "latency_ms": 113.5,
+      "last_seen": 1790224507.3172457
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 97.4,
-      "last_seen": 1790223557.0504544
+      "latency_ms": 87.4,
+      "last_seen": 1790224507.3172457
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 126.8,
+      "last_seen": 1790224507.3172457
+    },
+    "yostavpn.casacam.net:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.9,
+      "last_seen": 1790224507.3172457
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 126.4,
+      "last_seen": 1790224507.3172457
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 122.6,
+      "last_seen": 1790224507.3172457
+    },
+    "2.26.0.194:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 122.0,
+      "last_seen": 1790224507.3172457
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -25,35 +55,11 @@
       "latency_ms": 154.1,
       "last_seen": 1790223557.0504544
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.1,
-      "last_seen": 1790223557.0504544
-    },
-    "yostavpn.casacam.net:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 64.5,
-      "last_seen": 1790223557.0504544
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.8,
-      "last_seen": 1790223557.0504544
-    },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 154.6,
       "last_seen": 1790223557.0504544
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.5,
-      "last_seen": 1790222374.222616
     },
     "191.44.113.201:443": {
       "strikes": 0,
@@ -234,12 +240,6 @@
       "alive": true,
       "latency_ms": 152.8,
       "last_seen": 1789847559.014159
-    },
-    "2.26.0.194:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 125.4,
-      "last_seen": 1789763468.4311976
     },
     "ardesvpn1.ru:8443": {
       "strikes": 2,
