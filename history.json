@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-25T19:21:23",
+  "updated_at": "2026-09-25T19:34:39",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.1,
-      "last_seen": 1790364083.8953438
+      "latency_ms": 124.9,
+      "last_seen": 1790364879.464805
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 137.8,
-      "last_seen": 1790364083.8953438
+      "latency_ms": 133.1,
+      "last_seen": 1790364879.464805
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.5,
-      "last_seen": 1790364083.8953438
+      "latency_ms": 78.3,
+      "last_seen": 1790364879.464805
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 136.2,
-      "last_seen": 1790364083.8953438
+      "latency_ms": 134.2,
+      "last_seen": 1790364879.464805
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 140.2,
-      "last_seen": 1790364083.8953438
+      "latency_ms": 136.8,
+      "last_seen": 1790364879.464805
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.8,
-      "last_seen": 1790364083.8953438
+      "latency_ms": 75.6,
+      "last_seen": 1790364879.464805
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.0,
+      "last_seen": 1790364879.464805
+    },
+    "77.239.112.39:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 133.0,
+      "last_seen": 1790364879.464805
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -71,12 +83,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 118.8,
-      "last_seen": 1790362352.3679383
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 120.6,
       "last_seen": 1790362352.3679383
     },
     "77.239.105.219:443": {
