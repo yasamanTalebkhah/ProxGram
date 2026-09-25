@@ -1,62 +1,70 @@
 {
-  "updated_at": "2026-09-25T12:31:55",
+  "updated_at": "2026-09-25T12:51:30",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 81.8,
-      "last_seen": 1790339515.435594
+      "latency_ms": 115.7,
+      "last_seen": 1790340690.2177765
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 92.2,
-      "last_seen": 1790339515.435594
+      "latency_ms": 119.7,
+      "last_seen": 1790340690.2177765
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 101.2,
-      "last_seen": 1790339515.435594
+      "latency_ms": 121.3,
+      "last_seen": 1790340690.2177765
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 40.6,
-      "last_seen": 1790339515.435594
+      "latency_ms": 130.7,
+      "last_seen": 1790340690.2177765
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 58.7,
-      "last_seen": 1790339515.435594
+      "latency_ms": 91.9,
+      "last_seen": 1790340690.2177765
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.6,
-      "last_seen": 1790339515.435594
+      "latency_ms": 128.3,
+      "last_seen": 1790340690.2177765
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 134.2,
+      "last_seen": 1790340690.2177765
+    },
+    "nl.cdnflow.store:443": {
+      "strikes": 2,
+      "alive": false,
+      "last_seen": 1790340690.2177765,
+      "purged": true
+    },
+    "pl.cdnflow.store:443": {
+      "strikes": 2,
+      "alive": false,
+      "last_seen": 1790340690.2177765,
+      "purged": true
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 142.2,
+      "last_seen": 1790340690.2177765
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 99.7,
-      "last_seen": 1790339515.435594
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 98.0,
-      "last_seen": 1790339515.435594
-    },
-    "nl.cdnflow.store:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1790339515.435594
-    },
-    "pl.cdnflow.store:443": {
-      "strikes": 1,
-      "alive": false,
       "last_seen": 1790339515.435594
     },
     "mt1.kurduk.store:443": {
@@ -70,12 +78,6 @@
       "alive": true,
       "latency_ms": 153.5,
       "last_seen": 1790338121.0543263
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.3,
-      "last_seen": 1790337159.7812152
     },
     "77.239.105.219:443": {
       "strikes": 0,
