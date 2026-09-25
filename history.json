@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-25T14:34:04",
+  "updated_at": "2026-09-25T14:50:29",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.8,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 85.0,
+      "last_seen": 1790347829.7164795
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.0,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 86.1,
+      "last_seen": 1790347829.7164795
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.7,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 85.2,
+      "last_seen": 1790347829.7164795
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 20.6,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 15.3,
+      "last_seen": 1790347829.7164795
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 35.8,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 51.4,
+      "last_seen": 1790347829.7164795
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.9,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 91.0,
+      "last_seen": 1790347829.7164795
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.8,
-      "last_seen": 1790346844.1630664
+      "latency_ms": 94.3,
+      "last_seen": 1790347829.7164795
+    },
+    "reborn.rebirthconnect.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 88.2,
+      "last_seen": 1790347829.7164795
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -174,12 +180,6 @@
       "alive": true,
       "latency_ms": 97.5,
       "last_seen": 1790236800.4984546
-    },
-    "reborn.rebirthconnect.com:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.3,
-      "last_seen": 1790217074.421896
     },
     "s01.neo-trading.org:443": {
       "strikes": 2,
