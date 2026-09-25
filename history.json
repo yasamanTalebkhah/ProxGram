@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-25T17:58:16",
+  "updated_at": "2026-09-25T18:19:59",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.0,
-      "last_seen": 1790359096.5502577
+      "latency_ms": 85.6,
+      "last_seen": 1790360399.9764132
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 112.8,
-      "last_seen": 1790359096.5502577
+      "latency_ms": 86.0,
+      "last_seen": 1790360399.9764132
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.5,
-      "last_seen": 1790359096.5502577
+      "latency_ms": 84.6,
+      "last_seen": 1790360399.9764132
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.2,
-      "last_seen": 1790359096.5502577
+      "latency_ms": 21.2,
+      "last_seen": 1790360399.9764132
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 92.4,
-      "last_seen": 1790359096.5502577
+      "latency_ms": 36.0,
+      "last_seen": 1790360399.9764132
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.8,
-      "last_seen": 1790359096.5502577
+      "latency_ms": 93.3,
+      "last_seen": 1790360399.9764132
+    },
+    "212.193.4.172:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 92.1,
+      "last_seen": 1790360399.9764132
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.5,
+      "last_seen": 1790360399.9764132
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -61,23 +73,11 @@
       "latency_ms": 100.5,
       "last_seen": 1790357428.8486307
     },
-    "212.193.4.172:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.7,
-      "last_seen": 1790357428.8486307
-    },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 103.4,
       "last_seen": 1790357428.8486307
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 122.7,
-      "last_seen": 1790344590.1113536
     },
     "nl.cdnflow.store:443": {
       "strikes": 2,
