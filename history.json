@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-25T04:19:18",
+  "updated_at": "2026-09-25T04:35:54",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.9,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 138.4,
+      "last_seen": 1790310954.5804791
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 117.2,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 150.8,
+      "last_seen": 1790310954.5804791
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 82.0,
+      "last_seen": 1790310954.5804791
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.3,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 145.5,
+      "last_seen": 1790310954.5804791
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.0,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 31.2,
+      "last_seen": 1790310954.5804791
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 121.0,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 157.7,
+      "last_seen": 1790310954.5804791
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.4,
-      "last_seen": 1790309958.6774762
+      "latency_ms": 153.9,
+      "last_seen": 1790310954.5804791
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 156.9,
+      "last_seen": 1790310954.5804791
     },
     "yostavpn.casacam.net:443": {
       "strikes": 0,
@@ -65,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 147.4,
-      "last_seen": 1790307135.5181239
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 148.1,
       "last_seen": 1790307135.5181239
     },
     "31.76.77.196:443": {
