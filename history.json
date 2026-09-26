@@ -1,65 +1,71 @@
 {
-  "updated_at": "2026-09-26T05:44:58",
+  "updated_at": "2026-09-26T05:55:59",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.3,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 142.3,
+      "last_seen": 1790402159.8390663
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.2,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 147.9,
+      "last_seen": 1790402159.8390663
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.6,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 145.5,
+      "last_seen": 1790402159.8390663
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 82.8,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 147.1,
+      "last_seen": 1790402159.8390663
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.0,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 146.2,
+      "last_seen": 1790402159.8390663
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 13.2,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 27.1,
+      "last_seen": 1790402159.8390663
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 53.2,
-      "last_seen": 1790401498.3632283
+      "latency_ms": 80.0,
+      "last_seen": 1790402159.8390663
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.8,
+      "last_seen": 1790402159.8390663
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 158.8,
+      "last_seen": 1790402159.8390663
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.5,
+      "last_seen": 1790402159.8390663
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 95.8,
       "last_seen": 1790401498.3632283
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 118.1,
-      "last_seen": 1790400687.0401688
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1790399771.4880958
     },
     "79.137.196.223:443": {
       "strikes": 0,
@@ -96,12 +102,6 @@
       "alive": true,
       "latency_ms": 154.3,
       "last_seen": 1790364083.8953438
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.5,
-      "last_seen": 1790360399.9764132
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
