@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-26T20:49:50",
+  "updated_at": "2026-09-26T21:00:34",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.5,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 145.1,
+      "last_seen": 1790456434.5985436
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 92.2,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 147.2,
+      "last_seen": 1790456434.5985436
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.2,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 146.5,
+      "last_seen": 1790456434.5985436
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.6,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 38.0,
+      "last_seen": 1790456434.5985436
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.4,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 147.0,
+      "last_seen": 1790456434.5985436
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 48.9,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 78.3,
+      "last_seen": 1790456434.5985436
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.2,
-      "last_seen": 1790455790.9682627
+      "latency_ms": 156.5,
+      "last_seen": 1790456434.5985436
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 159.3,
+      "last_seen": 1790456434.5985436
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -96,12 +102,6 @@
       "alive": true,
       "latency_ms": 87.4,
       "last_seen": 1790450128.136528
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.3,
-      "last_seen": 1790448448.0528991
     },
     "mtp.webvirt.cloud:443": {
       "strikes": 0,
