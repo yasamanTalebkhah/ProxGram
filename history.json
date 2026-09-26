@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-26T14:54:58",
+  "updated_at": "2026-09-26T15:10:54",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.7,
-      "last_seen": 1790434498.4863813
+      "latency_ms": 88.2,
+      "last_seen": 1790435454.6518908
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.8,
-      "last_seen": 1790434498.4863813
+      "latency_ms": 90.8,
+      "last_seen": 1790435454.6518908
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.2,
-      "last_seen": 1790434498.4863813
+      "latency_ms": 83.9,
+      "last_seen": 1790435454.6518908
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.3,
-      "last_seen": 1790434498.4863813
+      "latency_ms": 86.7,
+      "last_seen": 1790435454.6518908
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 37.9,
-      "last_seen": 1790434498.4863813
+      "latency_ms": 41.8,
+      "last_seen": 1790435454.6518908
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 15.6,
-      "last_seen": 1790434498.4863813
+      "latency_ms": 16.9,
+      "last_seen": 1790435454.6518908
+    },
+    "151.247.25.59:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 90.9,
+      "last_seen": 1790435454.6518908
+    },
+    "reborn.rebirthconnect.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.5,
+      "last_seen": 1790435454.6518908
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -48,12 +60,6 @@
       "alive": true,
       "latency_ms": 93.0,
       "last_seen": 1790434498.4863813
-    },
-    "151.247.25.59:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.5,
-      "last_seen": 1790433801.590688
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -126,12 +132,6 @@
       "alive": true,
       "latency_ms": 154.3,
       "last_seen": 1790364083.8953438
-    },
-    "reborn.rebirthconnect.com:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 103.4,
-      "last_seen": 1790357428.8486307
     },
     "nl.cdnflow.store:443": {
       "strikes": 2,
