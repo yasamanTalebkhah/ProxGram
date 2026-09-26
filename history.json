@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-09-26T03:16:54",
+  "updated_at": "2026-09-26T03:32:55",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 108.5,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 110.5,
+      "last_seen": 1790393575.9990647
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.8,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 113.7,
+      "last_seen": 1790393575.9990647
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.8,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 109.3,
+      "last_seen": 1790393575.9990647
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.7,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 116.2,
+      "last_seen": 1790393575.9990647
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.7,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 104.1,
+      "last_seen": 1790393575.9990647
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.1,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 109.5,
+      "last_seen": 1790393575.9990647
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 77.0,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 80.3,
+      "last_seen": 1790393575.9990647
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 115.0,
-      "last_seen": 1790392614.4272301
+      "latency_ms": 115.1,
+      "last_seen": 1790393575.9990647
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
