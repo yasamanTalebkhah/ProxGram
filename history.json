@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-26T00:51:54",
+  "updated_at": "2026-09-26T01:04:12",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 138.9,
-      "last_seen": 1790383914.256061
+      "latency_ms": 80.8,
+      "last_seen": 1790384652.576974
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 79.2,
-      "last_seen": 1790383914.256061
+      "latency_ms": 57.9,
+      "last_seen": 1790384652.576974
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.3,
-      "last_seen": 1790383914.256061
+      "latency_ms": 89.3,
+      "last_seen": 1790384652.576974
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.5,
-      "last_seen": 1790383914.256061
+      "latency_ms": 94.7,
+      "last_seen": 1790384652.576974
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.6,
-      "last_seen": 1790383914.256061
+      "latency_ms": 89.0,
+      "last_seen": 1790384652.576974
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 28.9,
-      "last_seen": 1790383914.256061
+      "latency_ms": 22.0,
+      "last_seen": 1790384652.576974
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 147.8,
-      "last_seen": 1790383914.256061
+      "latency_ms": 89.1,
+      "last_seen": 1790384652.576974
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.0,
+      "last_seen": 1790384652.576974
     },
     "79.137.196.223:443": {
       "strikes": 0,
@@ -54,12 +60,6 @@
       "alive": true,
       "latency_ms": 107.9,
       "last_seen": 1790382907.6068094
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.3,
-      "last_seen": 1790381517.0979238
     },
     "191.44.113.201:443": {
       "strikes": 0,
