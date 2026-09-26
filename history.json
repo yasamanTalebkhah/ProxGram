@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-26T15:10:54",
+  "updated_at": "2026-09-26T15:27:22",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.2,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 81.3,
+      "last_seen": 1790436442.1765022
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.8,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 95.3,
+      "last_seen": 1790436442.1765022
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.9,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 92.7,
+      "last_seen": 1790436442.1765022
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.7,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 89.4,
+      "last_seen": 1790436442.1765022
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 41.8,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 58.0,
+      "last_seen": 1790436442.1765022
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 16.9,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 30.3,
+      "last_seen": 1790436442.1765022
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.9,
-      "last_seen": 1790435454.6518908
+      "latency_ms": 96.9,
+      "last_seen": 1790436442.1765022
+    },
+    "2.26.160.35:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.4,
+      "last_seen": 1790436442.1765022
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
@@ -72,12 +78,6 @@
       "alive": true,
       "latency_ms": 153.6,
       "last_seen": 1790432890.5577414
-    },
-    "2.26.160.35:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 145.6,
-      "last_seen": 1790431921.3823621
     },
     "79.137.196.223:443": {
       "strikes": 0,
