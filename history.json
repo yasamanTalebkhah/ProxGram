@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-26T03:32:55",
+  "updated_at": "2026-09-26T03:46:47",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.5,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 141.7,
+      "last_seen": 1790394407.9575891
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.7,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 144.9,
+      "last_seen": 1790394407.9575891
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.3,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 145.3,
+      "last_seen": 1790394407.9575891
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 116.2,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 146.3,
+      "last_seen": 1790394407.9575891
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 104.1,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 148.0,
+      "last_seen": 1790394407.9575891
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.5,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 42.9,
+      "last_seen": 1790394407.9575891
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.3,
-      "last_seen": 1790393575.9990647
+      "latency_ms": 80.2,
+      "last_seen": 1790394407.9575891
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.0,
+      "last_seen": 1790394407.9575891
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -54,12 +60,6 @@
       "alive": true,
       "latency_ms": 155.3,
       "last_seen": 1790391494.886657
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.7,
-      "last_seen": 1790390784.9289227
     },
     "191.44.113.201:443": {
       "strikes": 0,
