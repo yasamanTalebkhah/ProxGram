@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-26T03:46:47",
+  "updated_at": "2026-09-26T03:57:47",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.7,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 124.0,
+      "last_seen": 1790395067.6441486
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.9,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 133.8,
+      "last_seen": 1790395067.6441486
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.3,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 134.9,
+      "last_seen": 1790395067.6441486
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.3,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 138.5,
+      "last_seen": 1790395067.6441486
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.0,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 135.6,
+      "last_seen": 1790395067.6441486
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 42.9,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 78.5,
+      "last_seen": 1790395067.6441486
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 80.2,
-      "last_seen": 1790394407.9575891
+      "latency_ms": 106.3,
+      "last_seen": 1790395067.6441486
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 148.4,
+      "last_seen": 1790395067.6441486
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -60,12 +66,6 @@
       "alive": true,
       "latency_ms": 155.3,
       "last_seen": 1790391494.886657
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.9,
-      "last_seen": 1790389978.9382935
     },
     "150.241.87.28:443": {
       "strikes": 0,
