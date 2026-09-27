@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-09-27T10:32:04",
+  "updated_at": "2026-09-27T10:46:01",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 117.5,
-      "last_seen": 1790505124.474265
+      "latency_ms": 84.9,
+      "last_seen": 1790505961.6721487
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 111.2,
-      "last_seen": 1790505124.474265
+      "latency_ms": 85.5,
+      "last_seen": 1790505961.6721487
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 117.3,
-      "last_seen": 1790505124.474265
+      "latency_ms": 91.7,
+      "last_seen": 1790505961.6721487
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 110.5,
-      "last_seen": 1790505124.474265
+      "latency_ms": 31.2,
+      "last_seen": 1790505961.6721487
+    },
+    "151.247.25.59:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 84.4,
+      "last_seen": 1790505961.6721487
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 93.1,
+      "last_seen": 1790505961.6721487
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.3,
+      "last_seen": 1790505961.6721487
+    },
+    "mt1.kurduk.store:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 89.7,
+      "last_seen": 1790505961.6721487
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 124.6,
-      "last_seen": 1790505124.474265
-    },
-    "151.247.25.59:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 116.7,
       "last_seen": 1790505124.474265
     },
     "79.137.196.223:443": {
@@ -53,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 140.6,
-      "last_seen": 1790504199.1565156
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 151.8,
       "last_seen": 1790504199.1565156
     },
     "191.44.113.201:443": {
@@ -84,12 +96,6 @@
       "alive": true,
       "latency_ms": 119.7,
       "last_seen": 1790500666.8295596
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.7,
-      "last_seen": 1790498870.6360765
     },
     "77.239.112.39:443": {
       "strikes": 2,
@@ -126,12 +132,6 @@
       "alive": true,
       "latency_ms": 91.4,
       "last_seen": 1790467569.907116
-    },
-    "mt1.kurduk.store:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.2,
-      "last_seen": 1790463296.3365445
     },
     "files.maggic.biz:443": {
       "strikes": 0,
