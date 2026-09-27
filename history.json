@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-27T09:57:56",
+  "updated_at": "2026-09-27T10:16:39",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.0,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 124.5,
+      "last_seen": 1790504199.1565156
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.1,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 132.8,
+      "last_seen": 1790504199.1565156
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.8,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 131.0,
+      "last_seen": 1790504199.1565156
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 12.5,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 99.1,
+      "last_seen": 1790504199.1565156
     },
     "2.26.160.35:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.0,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 140.6,
+      "last_seen": 1790504199.1565156
     },
     "212.193.4.172:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 149.4,
+      "last_seen": 1790504199.1565156
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.6,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 131.7,
+      "last_seen": 1790504199.1565156
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.7,
-      "last_seen": 1790503076.6098049
+      "latency_ms": 151.8,
+      "last_seen": 1790504199.1565156
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 150.8,
-      "last_seen": 1790502425.951291
+      "last_seen": 1790504199.1565156
     },
     "mtp.webvirt.cloud:443": {
       "strikes": 0,
