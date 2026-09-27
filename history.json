@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-27T14:20:35",
+  "updated_at": "2026-09-27T14:35:08",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 155.3,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 104.5,
+      "last_seen": 1790519708.879723
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 143.1,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 116.4,
+      "last_seen": 1790519708.879723
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.6,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 110.1,
+      "last_seen": 1790519708.879723
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 92.6,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 119.2,
+      "last_seen": 1790519708.879723
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.9,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 115.1,
+      "last_seen": 1790519708.879723
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 72.7,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 48.9,
+      "last_seen": 1790519708.879723
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 156.1,
-      "last_seen": 1790518835.0171745
+      "latency_ms": 114.5,
+      "last_seen": 1790519708.879723
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 121.4,
+      "last_seen": 1790519708.879723
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 153.6,
       "last_seen": 1790518835.0171745
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 98.7,
-      "last_seen": 1790517893.762131
     },
     "212.193.4.172:8443": {
       "strikes": 0,
