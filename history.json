@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-27T02:35:04",
+  "updated_at": "2026-09-27T02:49:08",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.4,
-      "last_seen": 1790476504.4594564
+      "latency_ms": 137.3,
+      "last_seen": 1790477348.7685888
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1790476504.4594564
+      "latency_ms": 143.9,
+      "last_seen": 1790477348.7685888
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1790476504.4594564
+      "latency_ms": 140.4,
+      "last_seen": 1790477348.7685888
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.0,
-      "last_seen": 1790476504.4594564
+      "latency_ms": 139.1,
+      "last_seen": 1790477348.7685888
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 123.5,
-      "last_seen": 1790476504.4594564
+      "latency_ms": 156.3,
+      "last_seen": 1790477348.7685888
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 149.5,
+      "last_seen": 1790477348.7685888
+    },
+    "f5fe36.proxyhub.co:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 61.8,
+      "last_seen": 1790477348.7685888
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.3,
+      "last_seen": 1790477348.7685888
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -37,23 +55,11 @@
       "latency_ms": 120.0,
       "last_seen": 1790476504.4594564
     },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 122.8,
-      "last_seen": 1790476504.4594564
-    },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 121.5,
       "last_seen": 1790476504.4594564
-    },
-    "f5fe36.proxyhub.co:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 76.2,
-      "last_seen": 1790475550.1815777
     },
     "2.26.160.35:443": {
       "strikes": 0,
@@ -72,12 +78,6 @@
       "alive": true,
       "latency_ms": 147.8,
       "last_seen": 1790475550.1815777
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 108.6,
-      "last_seen": 1790474384.3221207
     },
     "2.26.87.69:443": {
       "strikes": 0,
