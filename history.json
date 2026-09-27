@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-09-27T00:06:09",
+  "updated_at": "2026-09-27T00:31:48",
   "health": {
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 136.5,
-      "last_seen": 1790467569.907116
+      "latency_ms": 127.2,
+      "last_seen": 1790469108.9520764
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.5,
-      "last_seen": 1790467569.907116
+      "latency_ms": 136.1,
+      "last_seen": 1790469108.9520764
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 31.6,
-      "last_seen": 1790467569.907116
+      "latency_ms": 109.6,
+      "last_seen": 1790469108.9520764
     },
     "77.239.112.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.6,
-      "last_seen": 1790467569.907116
+      "latency_ms": 136.2,
+      "last_seen": 1790469108.9520764
+    },
+    "217.138.215.102:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 141.4,
+      "last_seen": 1790469108.9520764
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.2,
+      "last_seen": 1790469108.9520764
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 153.6,
+      "last_seen": 1790469108.9520764
+    },
+    "2.26.160.35:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 140.7,
+      "last_seen": 1790469108.9520764
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
@@ -31,35 +55,11 @@
       "latency_ms": 91.4,
       "last_seen": 1790467569.907116
     },
-    "217.138.215.102:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 139.9,
-      "last_seen": 1790467569.907116
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.7,
-      "last_seen": 1790467569.907116
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 154.8,
       "last_seen": 1790467569.907116
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 148.2,
-      "last_seen": 1790466691.7733943
-    },
-    "2.26.160.35:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 138.1,
-      "last_seen": 1790466691.7733943
     },
     "mt1.kurduk.store:443": {
       "strikes": 0,
