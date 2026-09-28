@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-28T21:12:02",
+  "updated_at": "2026-09-28T21:29:03",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.6,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 149.0,
+      "last_seen": 1790630943.7642179
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.6,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 145.7,
+      "last_seen": 1790630943.7642179
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 35.0,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 87.7,
+      "last_seen": 1790630943.7642179
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 64.8,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 70.9,
+      "last_seen": 1790630943.7642179
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.5,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 148.3,
+      "last_seen": 1790630943.7642179
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.6,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 141.6,
+      "last_seen": 1790630943.7642179
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 154.1,
-      "last_seen": 1790629922.7382753
+      "latency_ms": 154.3,
+      "last_seen": 1790630943.7642179
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 151.0,
+      "last_seen": 1790630943.7642179
     },
     "78.108.56.5:443": {
       "strikes": 0,
@@ -84,12 +90,6 @@
       "alive": true,
       "latency_ms": 95.5,
       "last_seen": 1790623171.6903334
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 92.2,
-      "last_seen": 1790619826.5292926
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
