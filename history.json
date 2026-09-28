@@ -1,43 +1,61 @@
 {
-  "updated_at": "2026-09-28T18:23:46",
+  "updated_at": "2026-09-28T18:44:24",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.6,
-      "last_seen": 1790619826.5292926
+      "latency_ms": 90.5,
+      "last_seen": 1790621064.9767337
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.1,
-      "last_seen": 1790619826.5292926
+      "latency_ms": 85.8,
+      "last_seen": 1790621064.9767337
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 16.8,
-      "last_seen": 1790619826.5292926
+      "latency_ms": 21.8,
+      "last_seen": 1790621064.9767337
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.5,
-      "last_seen": 1790619826.5292926
+      "latency_ms": 26.0,
+      "last_seen": 1790621064.9767337
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.7,
-      "last_seen": 1790619826.5292926
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.8,
-      "last_seen": 1790619826.5292926
+      "latency_ms": 101.4,
+      "last_seen": 1790621064.9767337
     },
     "78.108.56.5:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 102.4,
+      "last_seen": 1790621064.9767337
+    },
+    "151.247.25.59:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.9,
+      "last_seen": 1790621064.9767337
+    },
+    "151.247.25.71:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 88.7,
+      "last_seen": 1790621064.9767337
+    },
+    "2.26.160.35:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.1,
+      "last_seen": 1790621064.9767337
+    },
+    "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 99.8,
@@ -48,18 +66,6 @@
       "alive": true,
       "latency_ms": 92.2,
       "last_seen": 1790619826.5292926
-    },
-    "151.247.25.59:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 88.6,
-      "last_seen": 1790618436.9931753
-    },
-    "151.247.25.71:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 89.3,
-      "last_seen": 1790618436.9931753
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -72,12 +78,6 @@
       "alive": true,
       "latency_ms": 93.6,
       "last_seen": 1790617723.846872
-    },
-    "2.26.160.35:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.4,
-      "last_seen": 1790616733.1603084
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
