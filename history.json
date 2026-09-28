@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-28T14:24:18",
+  "updated_at": "2026-09-28T14:43:57",
   "health": {
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 58.1,
-      "last_seen": 1790605458.390956
+      "latency_ms": 47.6,
+      "last_seen": 1790606637.8771014
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.2,
-      "last_seen": 1790605458.390956
+      "latency_ms": 131.8,
+      "last_seen": 1790606637.8771014
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.2,
-      "last_seen": 1790605458.390956
+      "latency_ms": 126.1,
+      "last_seen": 1790606637.8771014
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 140.8,
-      "last_seen": 1790605458.390956
+      "latency_ms": 127.4,
+      "last_seen": 1790606637.8771014
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.3,
-      "last_seen": 1790605458.390956
+      "latency_ms": 136.3,
+      "last_seen": 1790606637.8771014
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.1,
-      "last_seen": 1790605458.390956
+      "latency_ms": 136.8,
+      "last_seen": 1790606637.8771014
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 145.2,
-      "last_seen": 1790605458.390956
+      "latency_ms": 137.6,
+      "last_seen": 1790606637.8771014
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 138.2,
+      "last_seen": 1790606637.8771014
     },
     "150.241.87.28:443": {
       "strikes": 0,
@@ -78,12 +84,6 @@
       "alive": true,
       "latency_ms": 95.1,
       "last_seen": 1790603062.7209883
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.4,
-      "last_seen": 1790601862.7623982
     },
     "reborn.rebirthconnect.com:443": {
       "strikes": 0,
