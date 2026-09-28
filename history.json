@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-09-28T09:58:15",
+  "updated_at": "2026-09-28T10:20:16",
   "health": {
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 47.5,
-      "last_seen": 1790589495.8533328
+      "latency_ms": 35.8,
+      "last_seen": 1790590816.6918564
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 128.7,
-      "last_seen": 1790589495.8533328
+      "latency_ms": 99.6,
+      "last_seen": 1790590816.6918564
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.5,
-      "last_seen": 1790589495.8533328
+      "latency_ms": 104.5,
+      "last_seen": 1790590816.6918564
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 124.8,
-      "last_seen": 1790589495.8533328
+      "latency_ms": 103.9,
+      "last_seen": 1790590816.6918564
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.8,
-      "last_seen": 1790589495.8533328
+      "latency_ms": 91.0,
+      "last_seen": 1790590816.6918564
+    },
+    "78.108.56.5:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 107.9,
+      "last_seen": 1790590816.6918564
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 111.0,
+      "last_seen": 1790590816.6918564
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 109.5,
+      "last_seen": 1790590816.6918564
     },
     "151.247.25.59:443": {
       "strikes": 0,
@@ -37,23 +55,11 @@
       "latency_ms": 134.3,
       "last_seen": 1790589495.8533328
     },
-    "78.108.56.5:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 138.4,
-      "last_seen": 1790589495.8533328
-    },
     "2.26.160.35:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 135.8,
       "last_seen": 1790589495.8533328
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.7,
-      "last_seen": 1790588531.8874376
     },
     "212.193.4.172:8443": {
       "strikes": 0,
@@ -78,12 +84,6 @@
       "alive": true,
       "latency_ms": 138.6,
       "last_seen": 1790584009.1216435
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 116.5,
-      "last_seen": 1790582639.7164278
     },
     "191.44.113.201:443": {
       "strikes": 0,
