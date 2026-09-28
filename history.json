@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-28T10:37:24",
+  "updated_at": "2026-09-28T10:53:51",
   "health": {
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.9,
-      "last_seen": 1790591844.50232
+      "latency_ms": 71.0,
+      "last_seen": 1790592831.8807495
     },
     "194.59.221.90:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.8,
-      "last_seen": 1790591844.50232
+      "latency_ms": 142.7,
+      "last_seen": 1790592831.8807495
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.4,
-      "last_seen": 1790591844.50232
+      "latency_ms": 140.1,
+      "last_seen": 1790592831.8807495
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.0,
-      "last_seen": 1790591844.50232
+      "latency_ms": 145.1,
+      "last_seen": 1790592831.8807495
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 24.4,
-      "last_seen": 1790591844.50232
+      "latency_ms": 88.0,
+      "last_seen": 1790592831.8807495
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.4,
-      "last_seen": 1790591844.50232
+      "latency_ms": 137.9,
+      "last_seen": 1790592831.8807495
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 96.2,
-      "last_seen": 1790591844.50232
+      "latency_ms": 149.2,
+      "last_seen": 1790592831.8807495
+    },
+    "78.108.56.5:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.7,
+      "last_seen": 1790592831.8807495
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 93.1,
       "last_seen": 1790591844.50232
-    },
-    "78.108.56.5:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 107.9,
-      "last_seen": 1790590816.6918564
     },
     "79.137.196.223:443": {
       "strikes": 0,
