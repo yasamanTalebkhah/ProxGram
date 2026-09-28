@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-28T13:44:22",
+  "updated_at": "2026-09-28T14:00:36",
   "health": {
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.5,
-      "last_seen": 1790603062.7209883
+      "latency_ms": 27.3,
+      "last_seen": 1790604036.0632489
     },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.5,
-      "last_seen": 1790603062.7209883
+      "latency_ms": 85.1,
+      "last_seen": 1790604036.0632489
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 11.8,
-      "last_seen": 1790603062.7209883
+      "latency_ms": 14.7,
+      "last_seen": 1790604036.0632489
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.9,
-      "last_seen": 1790603062.7209883
+      "latency_ms": 89.7,
+      "last_seen": 1790604036.0632489
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.2,
-      "last_seen": 1790603062.7209883
+      "latency_ms": 91.5,
+      "last_seen": 1790604036.0632489
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.5,
-      "last_seen": 1790603062.7209883
+      "latency_ms": 87.9,
+      "last_seen": 1790604036.0632489
+    },
+    "78.108.56.5:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.5,
+      "last_seen": 1790604036.0632489
+    },
+    "mtp.webvirt.cloud:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 91.5,
+      "last_seen": 1790604036.0632489
     },
     "79.137.196.223:443": {
       "strikes": 0,
@@ -60,12 +72,6 @@
       "alive": true,
       "latency_ms": 96.4,
       "last_seen": 1790601862.7623982
-    },
-    "78.108.56.5:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 114.1,
-      "last_seen": 1790600584.568672
     },
     "191.44.113.201:443": {
       "strikes": 0,
@@ -120,12 +126,6 @@
       "alive": true,
       "latency_ms": 117.7,
       "last_seen": 1790563226.9601502
-    },
-    "mtp.webvirt.cloud:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 153.1,
-      "last_seen": 1790560989.6405034
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
