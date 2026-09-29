@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-29T15:22:42",
+  "updated_at": "2026-09-29T15:41:48",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.0,
-      "last_seen": 1790695362.4068453
+      "latency_ms": 112.2,
+      "last_seen": 1790696508.4097877
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.1,
-      "last_seen": 1790695362.4068453
+      "latency_ms": 114.1,
+      "last_seen": 1790696508.4097877
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.7,
-      "last_seen": 1790695362.4068453
+      "latency_ms": 49.0,
+      "last_seen": 1790696508.4097877
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 20.1,
-      "last_seen": 1790695362.4068453
+      "latency_ms": 103.9,
+      "last_seen": 1790696508.4097877
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.2,
-      "last_seen": 1790695362.4068453
+      "latency_ms": 110.8,
+      "last_seen": 1790696508.4097877
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.6,
-      "last_seen": 1790695362.4068453
+      "latency_ms": 114.9,
+      "last_seen": 1790696508.4097877
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.8,
+      "last_seen": 1790696508.4097877
+    },
+    "193.233.139.151:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 117.9,
+      "last_seen": 1790696508.4097877
     },
     "rf1.data-edge.fyi:443": {
       "strikes": 0,
@@ -60,12 +72,6 @@
       "alive": true,
       "latency_ms": 97.4,
       "last_seen": 1790692914.0937524
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.8,
-      "last_seen": 1790691779.8422093
     },
     "79.137.196.223:443": {
       "strikes": 0,
