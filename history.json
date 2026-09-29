@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-29T02:52:21",
+  "updated_at": "2026-09-29T03:06:41",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.7,
-      "last_seen": 1790650341.5981686
+      "latency_ms": 145.7,
+      "last_seen": 1790651201.5642974
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.5,
-      "last_seen": 1790650341.5981686
+      "latency_ms": 146.0,
+      "last_seen": 1790651201.5642974
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 152.4,
-      "last_seen": 1790650341.5981686
+      "latency_ms": 152.3,
+      "last_seen": 1790651201.5642974
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.1,
-      "last_seen": 1790650341.5981686
+      "latency_ms": 146.7,
+      "last_seen": 1790651201.5642974
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 28.7,
-      "last_seen": 1790650341.5981686
+      "latency_ms": 28.9,
+      "last_seen": 1790651201.5642974
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 64.5,
-      "last_seen": 1790650341.5981686
+      "latency_ms": 64.0,
+      "last_seen": 1790651201.5642974
+    },
+    "78.108.56.5:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 152.1,
+      "last_seen": 1790651201.5642974
+    },
+    "bo.cryptocurency.wiki:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 150.4,
+      "last_seen": 1790651201.5642974
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 153.3,
-      "last_seen": 1790650341.5981686
-    },
-    "78.108.56.5:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.3,
       "last_seen": 1790650341.5981686
     },
     "79.137.196.223:8443": {
