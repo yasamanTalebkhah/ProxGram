@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-29T13:26:07",
+  "updated_at": "2026-09-29T13:46:40",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 87.1,
-      "last_seen": 1790688367.211402
+      "latency_ms": 87.4,
+      "last_seen": 1790689600.3647628
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.3,
-      "last_seen": 1790688367.211402
+      "latency_ms": 85.8,
+      "last_seen": 1790689600.3647628
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.8,
-      "last_seen": 1790688367.211402
+      "latency_ms": 26.6,
+      "last_seen": 1790689600.3647628
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 18.4,
-      "last_seen": 1790688367.211402
+      "latency_ms": 20.7,
+      "last_seen": 1790689600.3647628
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.4,
-      "last_seen": 1790688367.211402
+      "latency_ms": 86.4,
+      "last_seen": 1790689600.3647628
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.8,
-      "last_seen": 1790688367.211402
+      "latency_ms": 83.5,
+      "last_seen": 1790689600.3647628
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 98.5,
-      "last_seen": 1790688367.211402
+      "latency_ms": 95.5,
+      "last_seen": 1790689600.3647628
+    },
+    "mtp.webvirt.cloud:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 93.0,
+      "last_seen": 1790689600.3647628
     },
     "shared.ddproxy.xyz:443": {
       "strikes": 0,
@@ -156,12 +162,6 @@
       "alive": true,
       "latency_ms": 95.2,
       "last_seen": 1790613588.4479895
-    },
-    "mtp.webvirt.cloud:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 91.5,
-      "last_seen": 1790604036.0632489
     },
     "194.59.221.90:8443": {
       "strikes": 0,
