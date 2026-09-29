@@ -1,52 +1,58 @@
 {
-  "updated_at": "2026-09-29T14:41:54",
+  "updated_at": "2026-09-29T14:59:41",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 86.4,
-      "last_seen": 1790692914.0937524
+      "latency_ms": 88.2,
+      "last_seen": 1790693981.9227135
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.5,
-      "last_seen": 1790692914.0937524
+      "latency_ms": 91.9,
+      "last_seen": 1790693981.9227135
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 27.2,
-      "last_seen": 1790692914.0937524
+      "latency_ms": 28.0,
+      "last_seen": 1790693981.9227135
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 17.7,
-      "last_seen": 1790692914.0937524
+      "latency_ms": 22.7,
+      "last_seen": 1790693981.9227135
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.3,
-      "last_seen": 1790692914.0937524
+      "latency_ms": 85.7,
+      "last_seen": 1790693981.9227135
+    },
+    "217.138.215.102:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 84.3,
+      "last_seen": 1790693981.9227135
+    },
+    "rf1.data-edge.fyi:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 49.8,
+      "last_seen": 1790693981.9227135
+    },
+    "shared2.ddproxy.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 34.7,
+      "last_seen": 1790693981.9227135
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 97.4,
-      "last_seen": 1790692914.0937524
-    },
-    "217.138.215.102:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 91.9,
-      "last_seen": 1790692914.0937524
-    },
-    "rf1.data-edge.fyi:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 31.7,
       "last_seen": 1790692914.0937524
     },
     "79.137.196.223:2053": {
@@ -252,12 +258,6 @@
       "alive": false,
       "last_seen": 1790205660.5206869,
       "purged": true
-    },
-    "shared2.ddproxy.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 70.7,
-      "last_seen": 1790198232.5481138
     },
     "shared4.ddproxy.xyz:443": {
       "strikes": 0,
