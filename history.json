@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-29T18:07:14",
+  "updated_at": "2026-09-29T18:30:54",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 102.2,
-      "last_seen": 1790705234.1085033
+      "latency_ms": 90.7,
+      "last_seen": 1790706654.492051
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1790705234.1085033
+      "latency_ms": 95.6,
+      "last_seen": 1790706654.492051
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 42.2,
-      "last_seen": 1790705234.1085033
+      "latency_ms": 27.3,
+      "last_seen": 1790706654.492051
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.0,
-      "last_seen": 1790705234.1085033
+      "latency_ms": 13.7,
+      "last_seen": 1790706654.492051
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 99.0,
-      "last_seen": 1790705234.1085033
+      "latency_ms": 88.8,
+      "last_seen": 1790706654.492051
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.6,
-      "last_seen": 1790705234.1085033
+      "latency_ms": 85.3,
+      "last_seen": 1790706654.492051
+    },
+    "rf1.data-edge.fyi:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1790706654.492051,
+      "latency_ms": 31.8
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.6,
+      "last_seen": 1790706654.492051
     },
     "79.137.196.223:443": {
       "strikes": 0,
@@ -78,17 +90,6 @@
       "alive": true,
       "latency_ms": 136.7,
       "last_seen": 1790702242.0628257
-    },
-    "rf1.data-edge.fyi:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1790700063.319176
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 114.8,
-      "last_seen": 1790700063.319176
     },
     "178.236.245.98:443": {
       "strikes": 0,
