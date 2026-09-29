@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-29T14:59:41",
+  "updated_at": "2026-09-29T15:22:42",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.2,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 90.0,
+      "last_seen": 1790695362.4068453
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.9,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 91.1,
+      "last_seen": 1790695362.4068453
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 28.0,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 26.7,
+      "last_seen": 1790695362.4068453
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 22.7,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 20.1,
+      "last_seen": 1790695362.4068453
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.7,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 90.2,
+      "last_seen": 1790695362.4068453
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 84.3,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 83.6,
+      "last_seen": 1790695362.4068453
     },
     "rf1.data-edge.fyi:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 49.8,
-      "last_seen": 1790693981.9227135
+      "latency_ms": 29.8,
+      "last_seen": 1790695362.4068453
+    },
+    "mtp.webvirt.cloud:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 93.6,
+      "last_seen": 1790695362.4068453
     },
     "shared2.ddproxy.xyz:443": {
       "strikes": 0,
@@ -72,12 +78,6 @@
       "alive": true,
       "latency_ms": 91.9,
       "last_seen": 1790690499.4030936
-    },
-    "mtp.webvirt.cloud:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.0,
-      "last_seen": 1790689600.3647628
     },
     "shared.ddproxy.xyz:443": {
       "strikes": 0,
