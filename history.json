@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-09-29T07:42:57",
+  "updated_at": "2026-09-29T07:58:03",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 133.7,
-      "last_seen": 1790667777.824298
+      "latency_ms": 115.9,
+      "last_seen": 1790668683.4973648
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.1,
-      "last_seen": 1790667777.824298
+      "latency_ms": 110.6,
+      "last_seen": 1790668683.4973648
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.9,
-      "last_seen": 1790667777.824298
+      "latency_ms": 110.4,
+      "last_seen": 1790668683.4973648
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 49.0,
-      "last_seen": 1790667777.824298
+      "latency_ms": 47.6,
+      "last_seen": 1790668683.4973648
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.6,
-      "last_seen": 1790667777.824298
+      "latency_ms": 114.2,
+      "last_seen": 1790668683.4973648
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 130.6,
-      "last_seen": 1790667777.824298
+      "latency_ms": 110.4,
+      "last_seen": 1790668683.4973648
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 147.3,
-      "last_seen": 1790667777.824298
+      "latency_ms": 113.8,
+      "last_seen": 1790668683.4973648
     },
     "191.44.113.201:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.9,
-      "last_seen": 1790667777.824298
+      "latency_ms": 118.7,
+      "last_seen": 1790668683.4973648
     },
     "79.137.196.223:443": {
       "strikes": 0,
