@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-09-29T03:59:22",
+  "updated_at": "2026-09-29T04:20:26",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 132.0,
-      "last_seen": 1790654362.116385
+      "latency_ms": 101.0,
+      "last_seen": 1790655626.6627605
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 133.3,
-      "last_seen": 1790654362.116385
+      "latency_ms": 101.9,
+      "last_seen": 1790655626.6627605
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 135.6,
-      "last_seen": 1790654362.116385
+      "latency_ms": 102.9,
+      "last_seen": 1790655626.6627605
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 136.1,
-      "last_seen": 1790654362.116385
+      "latency_ms": 107.3,
+      "last_seen": 1790655626.6627605
+    },
+    "78.108.56.5:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.4,
+      "last_seen": 1790655626.6627605
+    },
+    "45.91.138.18:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 39.1,
+      "last_seen": 1790655626.6627605
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.2,
+      "last_seen": 1790655626.6627605
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 108.3,
+      "last_seen": 1790655626.6627605
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 69.4,
-      "last_seen": 1790654362.116385
-    },
-    "78.108.56.5:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 149.1,
       "last_seen": 1790654362.116385
     },
     "2.26.160.35:443": {
@@ -48,24 +66,6 @@
       "alive": true,
       "latency_ms": 147.3,
       "last_seen": 1790654362.116385
-    },
-    "45.91.138.18:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 27.7,
-      "last_seen": 1790653522.3021781
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.5,
-      "last_seen": 1790653522.3021781
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.2,
-      "last_seen": 1790653522.3021781
     },
     "191.44.113.201:443": {
       "strikes": 0,
