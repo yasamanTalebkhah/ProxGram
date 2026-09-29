@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-29T07:03:18",
+  "updated_at": "2026-09-29T07:24:40",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 112.3,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 92.7,
+      "last_seen": 1790666680.5414088
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.3,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 88.9,
+      "last_seen": 1790666680.5414088
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 118.1,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 91.1,
+      "last_seen": 1790666680.5414088
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 49.3,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 26.2,
+      "last_seen": 1790666680.5414088
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.3,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 88.6,
+      "last_seen": 1790666680.5414088
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 109.1,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 24.3,
+      "last_seen": 1790666680.5414088
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 117.4,
-      "last_seen": 1790665398.0306008
+      "latency_ms": 95.0,
+      "last_seen": 1790666680.5414088
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 95.3,
+      "last_seen": 1790666680.5414088
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 119.3,
       "last_seen": 1790665398.0306008
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.8,
-      "last_seen": 1790664428.877271
     },
     "78.108.56.5:443": {
       "strikes": 0,
