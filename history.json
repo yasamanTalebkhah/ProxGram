@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-30T13:17:31",
+  "updated_at": "2026-09-30T13:36:23",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 148.5,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 148.6,
+      "last_seen": 1790775383.3539934
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 69.7,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 64.6,
+      "last_seen": 1790775383.3539934
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.8,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 144.1,
+      "last_seen": 1790775383.3539934
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.3,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 142.5,
+      "last_seen": 1790775383.3539934
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 27.0,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 43.2,
+      "last_seen": 1790775383.3539934
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.6,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 143.4,
+      "last_seen": 1790775383.3539934
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.0,
-      "last_seen": 1790774251.6624177
+      "latency_ms": 151.5,
+      "last_seen": 1790775383.3539934
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 154.4,
+      "last_seen": 1790775383.3539934
     },
     "bo.cryptocurency.wiki:443": {
       "strikes": 0,
@@ -108,12 +114,6 @@
       "alive": true,
       "latency_ms": 117.4,
       "last_seen": 1790760077.905599
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 154.2,
-      "last_seen": 1790751013.8938482
     },
     "rf1.data-edge.fyi:443": {
       "strikes": 0,
