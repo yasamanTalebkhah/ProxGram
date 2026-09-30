@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-09-30T08:01:47",
+  "updated_at": "2026-09-30T08:25:23",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 90.9,
-      "last_seen": 1790755307.988606
+      "latency_ms": 90.1,
+      "last_seen": 1790756723.6601164
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 88.6,
-      "last_seen": 1790755307.988606
+      "last_seen": 1790756723.6601164
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 26.3,
-      "last_seen": 1790755307.988606
+      "last_seen": 1790756723.6601164
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 91.5,
-      "last_seen": 1790755307.988606
+      "latency_ms": 92.3,
+      "last_seen": 1790756723.6601164
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.0,
-      "last_seen": 1790755307.988606
+      "latency_ms": 93.0,
+      "last_seen": 1790756723.6601164
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 21.1,
-      "last_seen": 1790755307.988606
+      "latency_ms": 23.3,
+      "last_seen": 1790756723.6601164
+    },
+    "2.26.160.35:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 100.7,
+      "last_seen": 1790756723.6601164
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 97.5,
+      "last_seen": 1790756723.6601164
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 98.1,
       "last_seen": 1790755307.988606
-    },
-    "2.26.160.35:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.8,
-      "last_seen": 1790755307.988606
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.3,
-      "last_seen": 1790754507.469823
     },
     "bo.cryptocurency.wiki:443": {
       "strikes": 0,
