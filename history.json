@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-09-30T19:08:12",
+  "updated_at": "2026-09-30T19:28:01",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
+      "latency_ms": 91.3,
+      "last_seen": 1790796481.3527775
+    },
+    "f5fe36.proxyhub.co:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 23.1,
+      "last_seen": 1790796481.3527775
+    },
+    "151.247.25.59:443": {
+      "strikes": 0,
+      "alive": true,
       "latency_ms": 90.1,
-      "last_seen": 1790795292.0094411
+      "last_seen": 1790796481.3527775
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.8,
+      "last_seen": 1790796481.3527775
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 94.9,
+      "last_seen": 1790796481.3527775
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.8,
+      "last_seen": 1790796481.3527775
+    },
+    "217.138.215.102:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 87.6,
+      "last_seen": 1790796481.3527775
+    },
+    "151.247.25.71:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 90.0,
+      "last_seen": 1790796481.3527775
     },
     "45.91.138.18:443": {
       "strikes": 0,
@@ -13,53 +55,11 @@
       "latency_ms": 30.5,
       "last_seen": 1790795292.0094411
     },
-    "f5fe36.proxyhub.co:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 31.2,
-      "last_seen": 1790795292.0094411
-    },
-    "151.247.25.59:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 93.8,
-      "last_seen": 1790795292.0094411
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.4,
-      "last_seen": 1790795292.0094411
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.9,
-      "last_seen": 1790795292.0094411
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.4,
-      "last_seen": 1790795292.0094411
-    },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 95.5,
       "last_seen": 1790795292.0094411
-    },
-    "217.138.215.102:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 90.0,
-      "last_seen": 1790794325.7447433
-    },
-    "151.247.25.71:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 90.4,
-      "last_seen": 1790794325.7447433
     },
     "bo.cryptocurency.wiki:443": {
       "strikes": 0,
