@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-09-30T09:21:17",
+  "updated_at": "2026-09-30T09:40:13",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 114.6,
-      "last_seen": 1790760077.905599
+      "latency_ms": 145.6,
+      "last_seen": 1790761213.9823787
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.3,
-      "last_seen": 1790760077.905599
+      "latency_ms": 146.7,
+      "last_seen": 1790761213.9823787
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 51.8,
-      "last_seen": 1790760077.905599
+      "latency_ms": 63.5,
+      "last_seen": 1790761213.9823787
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.3,
-      "last_seen": 1790760077.905599
+      "latency_ms": 150.6,
+      "last_seen": 1790761213.9823787
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 113.2,
-      "last_seen": 1790760077.905599
+      "latency_ms": 152.5,
+      "last_seen": 1790761213.9823787
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 112.1,
-      "last_seen": 1790760077.905599
+      "latency_ms": 27.5,
+      "last_seen": 1790761213.9823787
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 159.8,
+      "last_seen": 1790761213.9823787
+    },
+    "bo.cryptocurency.wiki:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 155.1,
+      "last_seen": 1790761213.9823787
     },
     "78.108.56.5:443": {
       "strikes": 0,
@@ -49,12 +61,6 @@
       "latency_ms": 117.4,
       "last_seen": 1790760077.905599
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 117.2,
-      "last_seen": 1790758782.7053866
-    },
     "193.233.139.151:443": {
       "strikes": 0,
       "alive": true,
@@ -66,12 +72,6 @@
       "alive": true,
       "latency_ms": 99.4,
       "last_seen": 1790757946.6566272
-    },
-    "bo.cryptocurency.wiki:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 97.3,
-      "last_seen": 1790754507.469823
     },
     "77.239.105.219:443": {
       "strikes": 0,
