@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-30T14:13:55",
+  "updated_at": "2026-09-30T14:37:20",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 85.2,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 111.1,
+      "last_seen": 1790779040.5356004
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 26.0,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 47.5,
+      "last_seen": 1790779040.5356004
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 89.9,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 112.4,
+      "last_seen": 1790779040.5356004
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.3,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 112.1,
+      "last_seen": 1790779040.5356004
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 19.9,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 119.3,
+      "last_seen": 1790779040.5356004
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.7,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 112.6,
+      "last_seen": 1790779040.5356004
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.4,
-      "last_seen": 1790777635.0759015
+      "latency_ms": 125.4,
+      "last_seen": 1790779040.5356004
+    },
+    "2.26.0.194:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 123.9,
+      "last_seen": 1790779040.5356004
     },
     "191.44.113.201:443": {
       "strikes": 0,
@@ -228,12 +234,6 @@
       "alive": false,
       "last_seen": 1790488831.4850104,
       "purged": true
-    },
-    "2.26.0.194:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 118.7,
-      "last_seen": 1790486506.8012555
     },
     "t.meow-meow-fast.site:443": {
       "strikes": 0,
