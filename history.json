@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-30T01:41:29",
+  "updated_at": "2026-09-30T01:56:37",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 93.8,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 133.5,
+      "last_seen": 1790733397.1779072
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.2,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 133.9,
+      "last_seen": 1790733397.1779072
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 45.3,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 52.3,
+      "last_seen": 1790733397.1779072
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 17.1,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 65.7,
+      "last_seen": 1790733397.1779072
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 95.0,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 144.9,
+      "last_seen": 1790733397.1779072
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 88.8,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 139.1,
+      "last_seen": 1790733397.1779072
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 94.9,
-      "last_seen": 1790732489.6844664
+      "latency_ms": 149.8,
+      "last_seen": 1790733397.1779072
+    },
+    "2.26.160.35:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 143.9,
+      "last_seen": 1790733397.1779072
     },
     "static.antenna-mzt.live:443": {
       "strikes": 0,
@@ -71,12 +77,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 96.2,
-      "last_seen": 1790730209.6957836
-    },
-    "2.26.160.35:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 94.7,
       "last_seen": 1790730209.6957836
     },
     "77.239.105.219:443": {
