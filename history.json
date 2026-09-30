@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-09-30T13:54:15",
+  "updated_at": "2026-09-30T14:13:55",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.3,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 85.2,
+      "last_seen": 1790777635.0759015
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 63.7,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 26.0,
+      "last_seen": 1790777635.0759015
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 146.4,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 89.9,
+      "last_seen": 1790777635.0759015
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 143.8,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 95.3,
+      "last_seen": 1790777635.0759015
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 36.4,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 19.9,
+      "last_seen": 1790777635.0759015
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 151.9,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 83.7,
+      "last_seen": 1790777635.0759015
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 157.7,
-      "last_seen": 1790776455.0293403
+      "latency_ms": 100.4,
+      "last_seen": 1790777635.0759015
+    },
+    "191.44.113.201:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 99.5,
+      "last_seen": 1790777635.0759015
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -72,12 +78,6 @@
       "alive": true,
       "latency_ms": 140.1,
       "last_seen": 1790772954.1725292
-    },
-    "191.44.113.201:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 147.3,
-      "last_seen": 1790769682.9820566
     },
     "85.9.221.39:443": {
       "strikes": 0,
