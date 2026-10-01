@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-10-01T13:25:19",
+  "updated_at": "2026-10-01T13:43:21",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.5,
-      "last_seen": 1790861119.2468045
+      "latency_ms": 117.7,
+      "last_seen": 1790862201.7869706
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 51.8,
-      "last_seen": 1790861119.2468045
+      "latency_ms": 54.6,
+      "last_seen": 1790862201.7869706
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 79.8,
-      "last_seen": 1790861119.2468045
+      "latency_ms": 122.1,
+      "last_seen": 1790862201.7869706
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.2,
-      "last_seen": 1790861119.2468045
+      "latency_ms": 120.0,
+      "last_seen": 1790862201.7869706
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.3,
-      "last_seen": 1790861119.2468045
+      "latency_ms": 117.5,
+      "last_seen": 1790862201.7869706
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 153.8,
-      "last_seen": 1790861119.2468045
+      "latency_ms": 119.4,
+      "last_seen": 1790862201.7869706
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 120.5,
+      "last_seen": 1790862201.7869706
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 118.8,
+      "last_seen": 1790862201.7869706
     },
     "check.lotfan.ir.yplkmbcyu.info:8443": {
       "strikes": 0,
@@ -59,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 95.5,
-      "last_seen": 1790858230.456841
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 96.9,
       "last_seen": 1790858230.456841
     },
     "bo.cryptocurency.wiki:443": {
@@ -102,12 +108,6 @@
       "alive": true,
       "latency_ms": 136.1,
       "last_seen": 1790852183.0921936
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 115.7,
-      "last_seen": 1790843012.0498445
     },
     "2.26.85.57:443": {
       "strikes": 0,
