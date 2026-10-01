@@ -7,6 +7,7 @@ tests run without the package installed.
 
 import os
 import re
+import socket
 import sys
 import time
 import types
@@ -144,6 +145,128 @@ class SourceParsingTests(unittest.TestCase):
         self.assertEqual([p.server for p in kept], ["a.example", "e.example"])
         self.assertEqual(stats["bad_secret"], 2)
         self.assertEqual(stats["bad_port"], 1)
+
+
+def _hex_sni_secret(domain: str) -> str:
+    """Fake-TLS hex secret: ee + 32-hex key + hex-encoded SNI domain."""
+    return "ee" + "ab" * 16 + domain.encode("ascii").hex()
+
+
+class SniDomainTests(unittest.TestCase):
+    """fetcher.py: SNI extraction + Iran-DPI fronting-domain gate."""
+
+    def test_extract_sni_from_hex_secret(self):
+        self.assertEqual(fetcher.extract_sni_domain(
+            _hex_sni_secret("www.speedtest.net")), "www.speedtest.net")
+
+    def test_extract_sni_from_base64url_secret(self):
+        secret = "eeNEgYdJvXrFGRMCIMJdCQ" + "digikala.com"
+        self.assertEqual(fetcher.extract_sni_domain(secret), "digikala.com")
+
+    def test_extract_sni_key_only_secrets_have_no_domain(self):
+        self.assertIsNone(fetcher.extract_sni_domain("ee" + "ab" * 16))
+        self.assertIsNone(fetcher.extract_sni_domain("eeNEgYdJvXrFGRMCIMJdCQ"))
+
+    def test_extract_sni_rejects_invalid_secrets(self):
+        self.assertIsNone(fetcher.extract_sni_domain(""))
+        self.assertIsNone(fetcher.extract_sni_domain("eeAB"))
+        self.assertIsNone(fetcher.extract_sni_domain("dd" + "ab" * 16 + "00"))
+        # Odd-length hex tail is not a decodable ASCII domain -> None.
+        self.assertIsNone(fetcher.extract_sni_domain(
+            "ee" + "ab" * 16 + "7z"))  # non-hex tail
+        # Hex tail that decodes to a non-domain garbage string -> None.
+        self.assertIsNone(fetcher.extract_sni_domain(
+            "ee" + "ab" * 16 + "6162"))  # decodes to 'ab'
+
+    def test_effective_sni_falls_back_to_server_hostname(self):
+        self.assertEqual(
+            fetcher.effective_sni("cdn.cloudflare.com", "ee" + "ab" * 16),
+            "cdn.cloudflare.com")
+
+    def test_effective_sni_bare_ip_is_none(self):
+        self.assertIsNone(fetcher.effective_sni("1.2.3.4", "ee" + "ab" * 16))
+        self.assertIsNone(fetcher.effective_sni("::1", "ee" + "ab" * 16))
+
+    def test_sni_allow_list_domains(self):
+        for domain in ("cloudflare.com", "www.cloudflare.com", "speedtest.net",
+                       "digikala.com", "snapp.ir", "varzesh3.com",
+                       "aparat.com", "cdn.speedtest.net"):
+            self.assertTrue(fetcher.sni_is_allowed(domain), domain)
+
+    def test_sni_unknown_blocked_and_invalid_domains_rejected(self):
+        for domain in ("", "not-on-the-list.example", "telegram.org", "t.me",
+                       "example.com", "1.2.3.4", "under_score.bad"):
+            self.assertFalse(fetcher.sni_is_allowed(domain), domain)
+
+    def test_sni_tier_prioritizes_global_cdns(self):
+        self.assertEqual(fetcher.sni_tier("cloudflare.com"), 2)
+        self.assertEqual(fetcher.sni_tier("speedtest.net"), 2)
+        self.assertEqual(fetcher.sni_tier("digikala.com"), 1)
+        self.assertEqual(fetcher.sni_tier("snapp.ir"), 1)
+        self.assertEqual(fetcher.sni_tier("other.example"), 0)
+
+    def test_validate_discards_bad_sni_proxies_immediately(self):
+        proxies = [
+            main.Proxy("host1.example", 443,
+                       _hex_sni_secret("www.speedtest.net")),   # keep
+            main.Proxy("host2.example", 443,
+                       _hex_sni_secret("unknown-domain.example")),  # bad SNI
+            main.Proxy("1.2.3.4", 443, "ee" + "ab" * 16),        # IP + key-only
+        ]
+        kept, stats = fetcher.validate(proxies)
+        self.assertEqual([p.server for p in kept], ["host1.example"])
+        # key-only secret counts as bad_secret; the unknown-domain one as bad_sni
+        self.assertEqual(stats["bad_sni"], 1)
+        self.assertEqual(stats["bad_secret"], 1)
+
+    def test_validate_discards_bad_sni_proxies_with_hex_secret(self):
+        """Both SNI-less variants (unknown domain + undecodable hex tail)
+        are discarded as bad SNI."""
+        proxies = [
+            main.Proxy("host2.example", 443,
+                       _hex_sni_secret("unknown-domain.example")),
+            main.Proxy("host3.example", 443, "ee" + "ab" * 16 + "6162"),
+        ]
+        kept, stats = fetcher.validate(proxies)
+        self.assertEqual(kept, [])
+        self.assertEqual(stats["bad_sni"], 2)
+
+    def test_expansion_sources_configured(self):
+        self.assertEqual(fetcher.EXPANSION_SOURCES[0][0],
+                         "https://mtpro.xyz/api/?type=mtproto")
+        self.assertEqual(fetcher.EXPANSION_SOURCES[0][1], "json")
+
+    def test_fetch_candidates_extended_adds_expansion_feeds(self):
+        with mock.patch.object(fetcher, "fetch_all", return_value={}) as fa:
+            fetcher.fetch_candidates(extended=True)
+            urls = [u for u, _k in fa.call_args.args[0]]
+        self.assertIn("https://mtpro.xyz/api/?type=mtproto", urls)
+        self.assertIn("https://raw.githubusercontent.com/"
+                      "dubblebyte/free-mtproto-proxies/main/proxies.json", urls)
+
+    def test_fetch_candidates_default_excludes_expansion_feeds(self):
+        with mock.patch.object(fetcher, "fetch_all", return_value={}) as fa:
+            fetcher.fetch_candidates()
+            urls = [u for u, _k in fa.call_args.args[0]]
+        self.assertNotIn("https://mtpro.xyz/api/?type=mtproto", urls)
+
+    def test_parse_json_feed_accepts_host_key(self):
+        import json as json_mod
+        raw = json_mod.dumps(
+            [{"host": "h.example", "port": 443, "secret": "eeAABBCCDDEEFF001122"}])
+        proxies = fetcher.parse_json_feed(raw)
+        self.assertEqual(proxies[0].server, "h.example")
+
+    def test_fetch_candidates_sorts_by_sni_tier(self):
+        feed = "\n".join([
+            "https://t.me/proxy?server=a.example&port=443&secret=" + _hex_sni_secret("digikala.com"),
+            "https://t.me/proxy?server=b.example&port=443&secret=" + _hex_sni_secret("cloudflare.com"),
+        ])
+        sources = [("https://x.example/a.txt", "text")]
+        with mock.patch.object(fetcher, "fetch_url", return_value=feed):
+            candidates = fetcher.fetch_candidates(sources=sources, cap=10)
+        self.assertEqual([p.server for p in candidates],
+                         ["b.example", "a.example"])  # tier 2 first
 
 
 class BatchSelectionTests(unittest.TestCase):
@@ -1412,16 +1535,121 @@ class TcpPingTests(unittest.TestCase):
         self.assertIsNone(main.tcp_ping("x.example", 0))
 
 
+class FakeTlsHandshakeTests(unittest.TestCase):
+    """prober.py: real Fake-TLS ClientHello probe; ServerHello required."""
+
+    def test_build_client_hello_structure_and_sni(self):
+        hello = prober.build_client_hello("www.speedtest.net",
+                                          random32=b"\x11" * 32)
+        self.assertEqual(hello[0], 0x16)          # handshake record
+        self.assertEqual(hello[5], 0x01)          # ClientHello message
+        record_len = int.from_bytes(hello[3:5], "big")
+        self.assertEqual(len(hello), 5 + record_len)
+        self.assertIn(b"www.speedtest.net", hello)  # SNI embedded
+
+    def test_build_client_hello_bytes_deterministic(self):
+        """Fixed random bytes AND session/key material -> identical bytes."""
+        a = prober.build_client_hello("a.com", random32=b"\x22" * 32)
+        b = prober.build_client_hello("a.com", random32=b"\x22" * 32)
+        # Header + random32 are deterministic; session_id/key_share are
+        # fresh secrets per call, so compare the deterministic prefix only
+        # (5-byte record header + 2 version + 32 random = 39 bytes).
+        self.assertEqual(a[:39], b[:39])
+        self.assertIn(b"a.com", a)
+        self.assertIn(b"a.com", b)
+        self.assertEqual(len(a), len(b))
+
+    def test_tls_server_hello_validation(self):
+        good = bytes([0x16, 0x03, 0x03]) + (6).to_bytes(2, "big") + \
+            bytes([0x02]) + b"\x00" * 5
+        self.assertTrue(prober.is_tls_server_hello(good))
+        self.assertFalse(prober.is_tls_server_hello(b""))
+        self.assertFalse(prober.is_tls_server_hello(good[:3]))  # truncated
+        self.assertFalse(prober.is_tls_server_hello(
+            b"HTTP/1.1 400 Bad Request\r\n\r\n"))               # not TLS
+        self.assertFalse(prober.is_tls_server_hello(
+            bytes([0x17, 0x03, 0x03, 0x00, 0x0a, 0x02]) + b"\x00" * 5))
+        self.assertFalse(prober.is_tls_server_hello(
+            bytes([0x16, 0x03, 0x03, 0x00, 0x0a, 0x01]) + b"\x00" * 5))  # not SH
+
+    def _tls_server(self, respond=b""):
+        """Local TLS-behaving socket server on 127.0.0.1:0."""
+        srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        srv.bind(("127.0.0.1", 0))
+        srv.listen(4)
+        port = srv.getsockname()[1]
+        import threading
+
+        def serve():
+            srv.settimeout(5)
+            try:
+                while True:
+                    conn, _ = srv.accept()
+                    try:
+                        conn.settimeout(2)
+                        data = conn.recv(4096)
+                        if data:
+                            conn.sendall(respond)
+                    except OSError:
+                        pass
+                    finally:
+                        conn.close()
+            except OSError:
+                pass
+
+        t = threading.Thread(target=serve, daemon=True)
+        t.start()
+        return srv, port, t
+
+    def test_faketls_ping_accepts_valid_server_hello(self):
+        server_hello = bytes([0x16, 0x03, 0x03]) + (6).to_bytes(2, "big") + \
+            bytes([0x02]) + b"\x00" * 5
+        srv, port, _t = self._tls_server(respond=server_hello)
+        try:
+            latency = prober.faketls_ping("127.0.0.1", port,
+                                          "www.speedtest.net")
+            self.assertIsNotNone(latency)
+            self.assertGreater(latency, 0)
+        finally:
+            srv.close()
+
+    def test_faketls_ping_rejects_immediate_close(self):
+        srv, port, _t = self._tls_server(respond=b"")  # FIN, no ServerHello
+        try:
+            self.assertIsNone(prober.faketls_ping(
+                "127.0.0.1", port, "www.speedtest.net"))
+        finally:
+            srv.close()
+
+    def test_faketls_ping_rejects_garbage_response(self):
+        srv, port, _t = self._tls_server(respond=b"garbage-not-tls")
+        try:
+            self.assertIsNone(prober.faketls_ping(
+                "127.0.0.1", port, "www.speedtest.net"))
+        finally:
+            srv.close()
+
+    def test_faketls_ping_rejects_closed_port(self):
+        self.assertIsNone(prober.faketls_ping(
+            "127.0.0.1", 1, "www.speedtest.net", timeout=0.5))
+
+    def test_faketls_ping_invalid_inputs(self):
+        self.assertIsNone(prober.faketls_ping("", 443, "a.com"))
+        self.assertIsNone(prober.faketls_ping("h.example", 443, ""))
+
+
 class MultiSourceFetcherTests(unittest.TestCase):
     """fetcher.py: parallel fetch, normalization, strict MTProto filter."""
 
     TEXT_FEED = (
+        # b64url secrets carry allow-listed SNI domains so candidates
+        # survive the new Iran-DPI fronting-domain gate.
         "https://t.me/proxy?server=a.example&port=443"
-        "&secret=eeNEgYdJvXrFGRMCIMJdCQ\n"
+        "&secret=eeNEgYdJvXrFGRMCIMJdCQdigikala.com\n"
         "socks5://1.2.3.4:1080\n"
         "vless://uuid@host:443?security=tls\n"
-        "tg://proxy?server=b.example&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ\n"
-        "  https://t.me/proxy?server=c.example&port=2053&secret=eeZZYYXXWWVVUUTTSSRR  \n"
+        "tg://proxy?server=b.example&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQsnapp.ir\n"
+        "  https://t.me/proxy?server=c.example&port=2053&secret=eeZZYYXXWWVVUUTTSSRRwww.speedtest.net  \n"
     )
 
     def test_text_feed_strict_mtproto_filter(self):
@@ -1474,7 +1702,8 @@ class MultiSourceFetcherTests(unittest.TestCase):
             fetcher, "fetch_candidates", return_value=[],
         ) as fc:
             main.collect_candidates(extra=30)
-            fc.assert_called_once_with(cap=main.MAX_TO_TEST + 30)
+            fc.assert_called_once_with(cap=main.MAX_TO_TEST + 30,
+                                       extended=False)
 
 
 class StrictProberTests(unittest.TestCase):
@@ -1520,7 +1749,7 @@ class StrictProberTests(unittest.TestCase):
         }
         prober.save_health(health)
         candidates = [main.Proxy("banned.example", 443, "eeAABBCCDDEEFF001122")]
-        with mock.patch.object(prober, "tcp_ping") as ping:
+        with mock.patch.object(prober, "faketls_ping") as ping:
             valid = prober.probe(candidates, enough=1)
         ping.assert_not_called()
         self.assertEqual(valid, [])
@@ -1532,14 +1761,28 @@ class StrictProberTests(unittest.TestCase):
         ]
         latencies = {"fast.example": 120.0, "slow.example": 3000.0}
         with mock.patch.object(
-            prober, "tcp_ping",
-            side_effect=lambda host, port, timeout=None:
+            prober, "faketls_ping",
+            side_effect=lambda host, port, sni, timeout=None:
                 latencies[host],
         ):
             valid = prober.probe(candidates, enough=5)
         self.assertEqual([p.key for p, _ in valid], ["fast.example:443"])
         self.assertEqual(
             prober.load_health()["slow.example:443"]["strikes"], 1)
+
+    def test_probe_passes_sni_to_handshake(self):
+        candidates = [main.Proxy("host.example", 443,
+                                 "eeNEgYdJvXrFGRMCIMJdCQdigikala.com")]
+        seen = {}
+
+        def fake_ping(host, port, sni, timeout=None):
+            seen["sni"] = sni
+            return 100.0
+
+        with mock.patch.object(prober, "faketls_ping", side_effect=fake_ping):
+            valid = prober.probe(candidates, enough=1)
+        self.assertEqual(seen["sni"], "digikala.com")
+        self.assertEqual(len(valid), 1)
 
     def test_health_json_compaction_cap(self):
         health = {
@@ -1604,9 +1847,8 @@ class ResiliencePipelineTests(unittest.TestCase):
         self.assertEqual(code, 0)  # recovered via the refresh cycle
 
     def test_low_pool_falls_back_to_reuse_then_skips_silently(self):
-        """Below the hard floor the run no longer posts a notice: with a
-        healthy re-probed pool it still selects (reuse fills the batch),
-        and with nothing viable it silently skips - no send at all."""
+        """Zero-post suppression: with nothing handshake-verified the run
+        posts nothing and exits cleanly - no send, no placeholder."""
         proxies = [main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
         code = self._run_main(
             collect_results=[proxies],
@@ -1624,10 +1866,165 @@ class ResiliencePipelineTests(unittest.TestCase):
         self.assertEqual(self._send_count, 0,
                          "no dispatch may happen without validated proxies")
 
+    def test_refresh_cycle_extended_search_when_sources_empty(self):
+        """Empty primary + refresh triggers the extended expansion search."""
+        proxies = [main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+                   for i in range(1, 6)]
+        with mock.patch.object(main, "collect_candidates",
+                               side_effect=[[], [], proxies]) as cc, \
+                mock.patch.object(main, "rank_reachable",
+                                  return_value=[(proxies[0], 100.0)]), \
+                mock.patch.object(main, "send_message", return_value=True), \
+                mock.patch.dict(os.environ, {
+                    "TELEGRAM_BOT_TOKEN": self.TOKEN,
+                    "TELEGRAM_CHANNEL_ID": "@chan",
+                }):
+            import tempfile
+            with tempfile.TemporaryDirectory() as tmp:
+                with mock.patch.object(main, "HISTORY_FILE",
+                                       Path(tmp) / "history.txt"):
+                    code = main.main()
+        self.assertEqual(code, 0)
+        self.assertEqual(cc.call_count, 3)
+        self.assertTrue(cc.call_args_list[-1].kwargs.get("extended"))
+
+    def test_zero_candidates_extended_search_still_suppresses_post(self):
+        """Even the extended search finding nothing -> no post, exit 0."""
+        with mock.patch.object(main, "collect_candidates",
+                               side_effect=[[], [], []]), \
+                mock.patch.object(main, "send_message") as sm, \
+                mock.patch.dict(os.environ, {
+                    "TELEGRAM_BOT_TOKEN": self.TOKEN,
+                    "TELEGRAM_CHANNEL_ID": "@chan",
+                }):
+            import tempfile
+            with tempfile.TemporaryDirectory() as tmp:
+                with mock.patch.object(main, "HISTORY_FILE",
+                                       Path(tmp) / "history.txt"):
+                    code = main.main()
+        self.assertEqual(code, 0)
+        sm.assert_not_called()
+
     def test_telemetry_constants(self):
         self.assertEqual(fetcher.FETCH_TIMEOUT, 5.0)
         self.assertEqual(prober.STRIKE_LIMIT, 2)
         self.assertLessEqual(fetcher.FETCH_TIMEOUT, 5.0)
+
+
+class ZeroPostSuppressionTests(unittest.TestCase):
+    """The strict rule: no verified working proxy -> NO channel post.
+
+    The system iterates (refresh + extended expansion search) and only
+    posts when at least 1 proxy is handshake-verified; otherwise it skips
+    the run entirely with a clean exit and no Telegram traffic.
+    """
+
+    TOKEN = "123456789:" + "A" * 34
+
+    def _run(self, collect_results, rank_results, send_ok=True):
+        import tempfile
+        sends = []
+
+        def _send(*args, **kwargs):
+            sends.append(args)
+            return send_ok
+
+        with tempfile.TemporaryDirectory() as tmp:
+            with \
+                    mock.patch.object(main, "HISTORY_FILE",
+                                      Path(tmp) / "history.txt"), \
+                    mock.patch.object(main, "collect_candidates",
+                                      side_effect=collect_results), \
+                    mock.patch.object(main, "rank_reachable",
+                                      side_effect=rank_results), \
+                    mock.patch.object(main, "send_message", side_effect=_send), \
+                    mock.patch.object(main.rates_module, "get_rates",
+                                      return_value=None), \
+                    mock.patch.object(main.prober_module, "load_health",
+                                      return_value={}), \
+                    mock.patch.dict(os.environ, {
+                        "TELEGRAM_BOT_TOKEN": self.TOKEN,
+                        "TELEGRAM_CHANNEL_ID": "@chan",
+                    }):
+                code = main.main()
+        return code, len(sends)
+
+    def test_zero_verified_proxies_no_post(self):
+        """0 verified after ALL search stages -> no dispatch, exit 0."""
+        proxies = [main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")]
+        code, sends = self._run(
+            collect_results=[proxies, [], []],
+            rank_results=[[], [], []],               # nothing ever verifies
+        )
+        self.assertEqual(code, 0)
+        self.assertEqual(sends, 0, "dead proxies must never be posted")
+
+    def test_single_verified_proxy_posts_exactly_one(self):
+        """Only 1 handshake-verified proxy -> a 1-button post goes out."""
+        proxies = [
+            main.Proxy("h1.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ"),
+            main.Proxy("h2.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ"),
+        ]
+        code, sends = self._run(
+            collect_results=[proxies],
+            rank_results=[[(proxies[0], 120.0)]],    # only h1 verifies
+        )
+        self.assertEqual(code, 0)
+        self.assertEqual(sends, 1)
+
+    def test_two_verified_proxies_dynamic_batch(self):
+        """2-3 solid proxies -> publish those cleanly (no 5-pad)."""
+        proxies = [
+            main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+            for i in range(1, 4)
+        ]
+        code, sends = self._run(
+            collect_results=[proxies],
+            rank_results=[[(p, 100.0 + i * 10)
+                           for i, p in enumerate(proxies[:2])]],
+        )
+        self.assertEqual(code, 0)
+        self.assertEqual(sends, 1)
+
+    def test_full_batch_of_five_still_works(self):
+        proxies = [
+            main.Proxy(f"h{i}.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+            for i in range(1, 6)
+        ]
+        code, sends = self._run(
+            collect_results=[proxies],
+            rank_results=[[(p, 100.0) for p in proxies]],
+        )
+        self.assertEqual(code, 0)
+        self.assertEqual(sends, 1)
+
+    def test_extended_search_recovers_before_suppression(self):
+        """Primary + refresh verify 0 -> extended search finds 1 -> post."""
+        p1 = main.Proxy("fresh.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+        stale = main.Proxy("stale.example", 443, "eeNEgYdJvXrFGRMCIMJdCQ")
+        code, sends = self._run(
+            collect_results=[[stale], [stale], [p1]],   # 3rd call: extended
+            rank_results=[[], [], [(p1, 90.0)]],
+        )
+        self.assertEqual(code, 0)
+        self.assertEqual(sends, 1)
+
+    def test_min_batch_constant_is_one(self):
+        self.assertEqual(main.MIN_BATCH_SIZE, 1)
+        self.assertEqual(main.BATCH_SIZE, 5)
+
+
+class TlsProbeHealthIntegrationTests(unittest.TestCase):
+    """Handshake failures feed the two-strike purge like any other."""
+
+    def test_handshake_failure_counts_as_failed_check(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(prober, "HISTORY_JSON_FILE",
+                                   Path(tmp) / "history.json"):
+                prober.update_health({"dead.example:443": None})
+                prober.update_health({"dead.example:443": None})
+                self.assertIn("dead.example:443", prober.banned_keys())
 
 
 if __name__ == "__main__":

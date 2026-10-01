@@ -1,21 +1,26 @@
 #!/usr/bin/env python3
-"""ProxGram — post five fast, censorship-resistant Telegram MTProto proxies
-(Fake-TLS `ee` secrets, HTTPS-compatible ports) in ONE Telegram message.
+"""ProxGram — post 1-5 verified, censorship-resistant Telegram MTProto
+proxies (Fake-TLS `ee` secrets, HTTPS-compatible ports) in ONE Telegram
+message — only when at least one proxy passes a real Fake-TLS handshake.
 
 Sources:
   1. Primary: handshake-verified JSON feed (dubblebyte/free-mtproto-proxies).
   2. Fallbacks: plaintext MTProto feeds (SoliSpirit, Grim1313).
 
 Pipeline per run:
-  fetch -> parse (JSON + plaintext) -> Fake-TLS/secret + port filters ->
-  dedupe by (server, port, secret) -> TCP latency test (2.0s, <= 2500ms) ->
-  exclude history.txt -> prefer distinct hostnames -> pick best five ->
-  send ONE message with five connect buttons -> record links in history.txt.
+  fetch (7 sources + mtpro.xyz expansion) -> parse -> Fake-TLS/secret +
+  port + SNI fronting-domain filters -> dedupe by (server, port, secret) ->
+  real Fake-TLS ClientHello handshake test (2.0s, <= 2500ms, ServerHello
+  required) -> exclude history.txt -> prefer distinct hostnames -> post
+  1-5 verified proxies (dynamic batch; 0 verified = NO post) -> send ONE
+  message with connect buttons -> record links in history.txt.
 
-The TCP test is an availability check only. Source-level verification
-(handshake-verified feed) and Fake-TLS/secret validation remain the main
-Iran-DPI defenses; five concurrent proxies give users redundancy because
-individual proxies may still be blocked or unstable on Iranian networks.
+Zero-post suppression: if no proxy passes the handshake check - after
+both refresh cycles and the extended expansion search - the run posts
+NOTHING to Telegram (no dead buttons, no placeholder) and exits cleanly
+with a "0 verified proxies found, skipping post" status. Posting on a
+rigid schedule with unverified/dead proxies is exactly what this
+pipeline exists to prevent.
 
 Credentials are read from environment variables:
     TELEGRAM_BOT_TOKEN   - bot token from @BotFather
@@ -63,7 +68,8 @@ STRIKE_LIMIT = prober_module.STRIKE_LIMIT     # 2 consecutive fails -> purge
 PING_TIMEOUT = 2.0    # seconds - strict TCP connect timeout
 MAX_LATENCY_MS = 2500  # discard anything slower than this
 MAX_WORKERS = 60      # parallel TCP tests (total wall time ~= one timeout)
-BATCH_SIZE = 5        # proxies posted per run (exactly five or none)
+MIN_BATCH_SIZE = 1    # post 1-5 verified proxies (dynamic batch size)
+BATCH_SIZE = 5        # max proxies posted per run (never forced)
 REUSE_COOLDOWN = 24 * 3600.0  # seconds before a posted proxy may be reused
 MAX_HISTORY_ENTRIES = 2000    # history compaction cap
 GLOBAL_DEADLINE = 90          # seconds - hard budget for the entire run
@@ -75,6 +81,10 @@ ALLOWED_PORTS = {443, 8443, 2053, 2083, 8880}
 
 HEX_SET = set(string.hexdigits)
 B64URL_SET = set(string.ascii_letters + string.digits + "-_")
+# Dotted-domain tail of a b64url+domain secret: labels of letters/digits/
+# hyphens, the LAST label a letter TLD (rejects digit-tail garbage like
+# "0.000000000000000" that would otherwise slip through).
+_DOMAIN_SUFFIX_RE = re.compile(r"(?:[A-Za-z0-9][A-Za-z0-9-]*\.)+[A-Za-z]{2,63}")
 FAKETLS_PREFIX = "ee"       # Fake-TLS secrets start with 0xEE
 MIN_B64URL_SECRET_LEN = 22  # 16-byte key (b64) + at least ~10 chars of domain
 MIN_HEX_SECRET_LEN = 34     # ee + 32 hex (key only) is NOT enough - domain required
@@ -280,6 +290,10 @@ def is_valid_faketls_secret(secret: str) -> bool:
         `ee` + 32 hex (34 chars, no domain) is REJECTED.
       - base64url:   `ee` + 22-char b64 key + domain; accepted at >= 22
         chars so the key is present, with the domain following.
+      - base64url + plain-text domain: `ee` + 22-char b64 key + dotted
+        domain appended verbatim (e.g. ...dCQdigikala.com); the domain's
+        dots sit outside the b64url alphabet, so this form needs its own
+        branch and must end in a letter TLD.
     (The spec example secret eeNEgYdJvXrFGRMCIMJdCQ is base64url, which is
     why hex-only validation would wrongly reject working proxies.)
     """
@@ -292,6 +306,14 @@ def is_valid_faketls_secret(secret: str) -> bool:
 
     if all(c in B64URL_SET for c in s):
         return len(s) >= MIN_B64URL_SECRET_LEN
+
+    # b64url key + plain-text SNI domain appended verbatim.
+    if len(s) > 24:
+        key = s[2:24]
+        domain = s[24:]
+        if (all(c in B64URL_SET for c in key) and "." in domain
+                and _DOMAIN_SUFFIX_RE.fullmatch(domain)):
+            return True
 
     return False
 
@@ -391,14 +413,17 @@ def apply_filters(proxies: list[Proxy]) -> tuple[list[Proxy], dict]:
     return kept, stats
 
 
-def collect_candidates(extra: int = 0) -> list[Proxy]:
+def collect_candidates(extra: int = 0,
+                       extended: bool = False) -> list[Proxy]:
     """Parallel multi-source fetch via fetcher.py (dedup + strict filter).
 
-    `extra` raises the probe cap temporarily (refresh cycle). The returned
-    list is ordered JSON-feed-first so handshake-verified entries win.
+    `extra` raises the probe cap temporarily (refresh cycle); `extended`
+    additionally polls the expansion feeds (mtpro.xyz). The returned
+    list is ordered JSON-feed-first, Iran-DPI SNI-tier-sorted, so
+    handshake-verified entries with the strongest camouflage win.
     """
     cap = min(MAX_TO_TEST + max(0, extra), 200)
-    return fetcher_module.fetch_candidates(cap=cap)
+    return fetcher_module.fetch_candidates(cap=cap, extended=extended)
 
 
 # ---------------------------------------------------------------------------
@@ -737,7 +762,8 @@ def send_message(token: str, chat_id: str, text: str,
 
 def rank_reachable(proxies: list[Proxy],
                    enough: int | None = None) -> list[tuple[Proxy, float]]:
-    """Strict parallel probe via prober.py (latency cap + TTL health).
+    """Strict parallel handshake probe via prober.py (Fake-TLS ClientHello,
+    latency cap + TTL health).
 
     `enough` enables early stop: probing halts once that many valid
     proxies exist (deadline-safe; in-flight probes are cancelled).
@@ -750,7 +776,8 @@ def rank_reachable(proxies: list[Proxy],
 def pick_batch(reachable: list[tuple[Proxy, float]],
                history: set[str], size: int = BATCH_SIZE,
                last_posted: dict[str, float] | None = None) -> list[tuple[Proxy, float]]:
-    """Select `size` fresh, fastest proxies, preferring distinct hostnames.
+    """Select up to `size` fresh, fastest proxies, preferring distinct
+    hostnames.
 
     Rules applied in order: latency cap, history exclusion with cooldown
     reuse (a proxy last posted > REUSE_COOLDOWN ago becomes eligible again),
@@ -812,8 +839,6 @@ def pick_batch(reachable: list[tuple[Proxy, float]],
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-
-MIN_BATCH_SIZE = 1     # post 1-4 proxies rather than skip the run entirely
 
 
 def get_chat_info(token: str, chat_id: str) -> dict | None:
@@ -898,9 +923,9 @@ def _reuse_known_good(reachable: list[tuple[Proxy, float]],
 
 
 def _silent_skip(run_started: float, reason: str, fresh_count: int) -> int:
-    """Fallback 2: post nothing this cycle (silent wait until the next
-    scheduled run). No placeholder, maintenance, or dummy post is ever
-    sent; dead proxies are never published to fill space."""
+    """Zero-post suppression: post nothing this cycle (silent wait until
+    the next scheduled run). No placeholder, maintenance, or dummy post
+    is ever sent; dead proxies are never published to fill space."""
     logger.warning(
         "Silent skip: %s - nothing will be posted this cycle; the next "
         "scheduled run will retry.", reason,
@@ -940,7 +965,7 @@ def main() -> int:
         logger.exception("getChat verification crashed (non-fatal)")
 
     # 1. Collect + filter candidates (parallel multi-source fetcher) with a
-    # one-shot Refresh Cycle when the pool comes back empty.
+    # Refresh Cycle, then the extended expansion search when empty.
     stage_started = time.monotonic()
     candidates: list[Proxy] = []
     try:
@@ -951,6 +976,12 @@ def main() -> int:
                 "(+%d probe budget)", REFRESH_EXTRA,
             )
             candidates = collect_candidates(extra=REFRESH_EXTRA)
+        if not candidates:
+            logger.warning(
+                "Refresh Cycle empty; extended search via expansion feeds"
+            )
+            candidates = collect_candidates(extra=REFRESH_EXTRA,
+                                            extended=True)
     except Exception:
         logger.exception("Unexpected error while collecting proxies")
         gh_annotation("error", "Proxy source collection crashed - see logs")
@@ -961,15 +992,19 @@ def main() -> int:
         logger.error("No valid Fake-TLS candidates from any source.")
         gh_annotation("warning",
                       "No valid Fake-TLS candidates from any source")
-        return _silent_skip(run_started, "no valid candidates from sources", 0)
+        # Zero-post suppression: no candidates -> nothing is posted.
+        return _silent_skip(
+            run_started, "0 verified proxies found, skipping post", 0)
 
-    # 2. Strict probe (latency cap + TTL health) with a Refresh Cycle when
-    # fewer than BATCH_SIZE valid proxies survive.
+    # 2. Strict handshake probe (Fake-TLS ClientHello + TTL health) with a
+    # Refresh Cycle, then an extended expansion search, until at least ONE
+    # proxy is verified - or the run gives up and posts nothing.
     stage_started = time.monotonic()
     reachable: list[tuple[Proxy, float]] = []
+    extended = False
     try:
         reachable = rank_reachable(candidates, enough=BATCH_SIZE + 3)
-        if len(reachable) < BATCH_SIZE:
+        if len(reachable) < MIN_BATCH_SIZE:
             logger.warning(
                 "Only %d valid proxies after probing; Refresh Cycle with a "
                 "broader candidate pool (+%d)", len(reachable), REFRESH_EXTRA,
@@ -979,29 +1014,50 @@ def main() -> int:
                 reachable = rank_reachable(
                     refreshed, enough=BATCH_SIZE + 3,
                 )
+            if len(reachable) < MIN_BATCH_SIZE:
+                # Extended search: expansion feeds (mtpro.xyz) - last
+                # resort before giving up. If this also finds nothing,
+                # NOTHING is posted (zero-post suppression).
+                logger.warning(
+                    "Still %d valid; extended search via expansion feeds",
+                    len(reachable),
+                )
+                extended_cands = collect_candidates(
+                    extra=REFRESH_EXTRA, extended=True)
+                fresh_keys = {p.combo for p, _ in reachable}
+                extended_cands = [p for p in extended_cands
+                                  if p.combo not in fresh_keys]
+                if extended_cands:
+                    extended = True
+                    reachable = reachable + rank_reachable(
+                        extended_cands, enough=BATCH_SIZE + 3,
+                    )
     except Exception:
         logger.exception("Unexpected error during latency tests")
         return 0
     logger.info(
-        "[stage] probe: %d valid / %d tested in %.1f s",
-        len(reachable), len(candidates), time.monotonic() - stage_started,
+        "[stage] probe: %d valid / %d tested%s in %.1f s",
+        len(reachable), len(candidates),
+        " (extended search used)" if extended else "",
+        time.monotonic() - stage_started,
     )
     logger.info(
         "Distinct server hostnames available: %d",
         len({p.server.lower() for p, _ in reachable}),
     )
-    # Never post dead proxies just to fill space: below the hard floor of
-    # BATCH_SIZE - 2 valid proxies, selection falls back to known-good
-    # reuse and, if that finds nothing, a silent skip (no notice post).
-    if len(reachable) < BATCH_SIZE - 2:
+    # Zero-post suppression floor: with ZERO handshake-verified proxies
+    # there is nothing honest to publish - selection below falls through
+    # to known-good reuse and, if that finds nothing, a clean skip with
+    # no Telegram post at all.
+    if len(reachable) < MIN_BATCH_SIZE:
         logger.warning(
             "Valid pool below floor (%d < %d); known-good reuse will fill "
             "the batch if the fresh selection comes up short",
-            len(reachable), BATCH_SIZE - 2,
+            len(reachable), MIN_BATCH_SIZE,
         )
         gh_annotation(
             "warning",
-            f"Only {len(reachable)} valid proxies available; "
+            f"Only {len(reachable)} verified proxies available; "
             "falling back to known-good reuse",
         )
 
@@ -1033,21 +1089,20 @@ def main() -> int:
             "known-good proxies with verified health records.",
             REUSE_COOLDOWN / 3600.0,
         )
-        picks = _reuse_known_good(reachable, last_posted, BATCH_SIZE)
+        picks = _reuse_known_good(reachable, last_posted,
+                                  min(BATCH_SIZE, len(reachable)))
     if not picks:
-        # Fallback 2: nothing viable at all -> silent wait, no placeholder.
-        return _silent_skip(run_started, "no viable proxies this cycle",
+        # Zero-post suppression: 0 verified proxies found -> do NOT post.
+        # No dead buttons, no placeholder - a clean skip and exit.
+        logger.warning("0 verified proxies found, skipping post")
+        return _silent_skip(run_started,
+                            "0 verified proxies found, skipping post",
                             len(after_history))
     if len(picks) < BATCH_SIZE:
-        logger.warning(
-            "Partial batch: only %d/%d fresh valid proxies available; "
-            "publishing what is available rather than skipping.",
-            len(picks), BATCH_SIZE,
-        )
-        gh_annotation(
-            "warning",
-            f"Partial batch: only {len(picks)}/{BATCH_SIZE} fresh proxies "
-            "available; publishing them anyway",
+        # Dynamic batch: publishing 1-4 verified proxies is CORRECT
+        # behavior - only handshake-verified proxies go out, however few.
+        logger.info(
+            "Dynamic batch: publishing %d verified proxy(ies)", len(picks),
         )
 
     proxies = [p for p, _ in picks]

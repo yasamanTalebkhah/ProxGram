@@ -3,10 +3,12 @@
 
 Quality rules enforced here:
 
-  - Real connection check: non-blocking TCP connect (the MTProto handshake
-    itself needs the protocol stack; the connect+latency probe is the
-    practical availability signal, and source-level handshake verification
-    from the JSON feed stays the protocol-level guarantee).
+  - Real connection check: non-blocking TCP connect followed by a REAL
+    Fake-TLS ClientHello carrying the secret's fronting domain as SNI.
+    A proxy is alive only when the remote answers with a valid TLS record
+    (0x16 handshake, TLS major version 3) whose first handshake message
+    is a ServerHello (0x02). TCP RST/FIN, garbage, or immediate close =
+    dead - never posted.
   - Latency threshold: only proxies answering within MAX_LATENCY_MS (2500ms)
     are returned as valid.
   - TTL / two-strike rule: every probe outcome is recorded in history.json.
@@ -25,7 +27,9 @@ import concurrent.futures
 import json
 import logging
 import select
+import secrets as _secrets
 import socket
+import struct
 import time
 from datetime import datetime
 from pathlib import Path
@@ -126,6 +130,208 @@ def tcp_ping(host: str, port: int, timeout: float | None = None) -> float | None
 
 
 # ---------------------------------------------------------------------------
+# Fake-TLS ClientHello handshake probe (protocol-level liveness)
+# ---------------------------------------------------------------------------
+
+# A Fake-TLS ClientHello: TLS 1.3 record layer, SNI extension carrying the
+# secret's fronting domain, X25519 + secp256r1 key shares, supported_versions
+# 1.3/1.2 - byte-for-byte the shape a v2rayNG-style Fake-TLS client sends
+# before the MTProto payload.
+_TLS_RECORD_HANDSHAKE = 0x16
+_TLS_MAJOR = 3
+_HANDSHAKE_SERVER_HELLO = 0x02
+
+
+def build_client_hello(sni: str, random32: bytes | None = None) -> bytes:
+    """Minimal, spec-correct Fake-TLS ClientHello with SNI `sni`.
+
+    Framing follows RFC 8446 exactly (verified live against real TLS
+    servers - cloudflare.com/google.com answer with ServerHello):
+    every extension is `type(2) len(2) data`, and nested lists carry
+    their own byte-length prefix.
+
+    `random32` overrides the 32 random bytes (tests inject known bytes).
+    """
+    sni_bytes = sni.encode("idna") if any(ord(c) > 127 for c in sni) \
+        else sni.encode("ascii")
+    random_bytes = random32 if random32 is not None else _secrets.token_bytes(32)
+    session_id = _secrets.token_bytes(32)
+
+    def u16(n: int) -> bytes:
+        return struct.pack(">H", n)
+
+    def ext(ext_type: int, data: bytes) -> bytes:
+        return struct.pack(">HH", ext_type, len(data)) + data
+
+    # server_name (0x0000): list_len + [type=0 + name_len + name]
+    entry = b"\x00" + u16(len(sni_bytes)) + sni_bytes
+    sni_data = u16(len(entry)) + entry
+    # supported_groups (0x000a): list_len(4 bytes) + x25519 + secp256r1
+    groups_data = u16(4) + b"\x00\x1d\x00\x17"
+    # ec_point_formats (0x000b): formats_len(1) + uncompressed
+    ecpf_data = b"\x01\x00"
+    # signature_algorithms (0x000d): list_len(14) + 7 algorithms
+    sig_data = u16(14) + (b"\x04\x03\x08\x04\x04\x01\x08\x05"
+                          b"\x05\x01\x08\x06\x06\x01")
+    # supported_versions (0x002b): RFC 8446 §4.2.1 uses a ONE-BYTE list
+    # length (versions<2..254>): 0x04 + TLS1.3 + TLS1.2
+    sv_data = b"\x04\x03\x04\x03\x03"
+    # key_share (0x0033): x25519 ONLY - any 32 bytes is a valid share.
+    # (A random secp256r1 point is almost never on the curve; servers
+    # that validate key shares answer decode_error, so we never offer one.)
+    x25519_pub = _secrets.token_bytes(32)
+    shares = u16(0x001d) + u16(32) + x25519_pub
+    ks_data = u16(len(shares)) + shares
+
+    extensions = (
+        ext(0x0000, sni_data)
+        + ext(0x000a, groups_data)
+        + ext(0x000b, ecpf_data)
+        + ext(0x000d, sig_data)
+        + ext(0x002b, sv_data)
+        + ext(0x0033, ks_data)
+    )
+
+    # 4 suites = 8 BYTES (TLS list lengths are byte counts).
+    cipher_suites = u16(8) + b"\x13\x01\x13\x02\x13\x03\xc0\x2f"
+    body = (b"\x03\x03" + random_bytes + b"\x20" + session_id
+            + cipher_suites + b"\x01\x00" + u16(len(extensions)) + extensions)
+    handshake = b"\x01" + struct.pack(">I", len(body))[1:] + body
+    return (bytes([_TLS_RECORD_HANDSHAKE]) + b"\x03\x01" + u16(len(handshake))
+            + handshake)
+
+
+def is_tls_server_hello(data: bytes) -> bool:
+    """True when `data` opens with a valid TLS ServerHello record.
+
+    Required: content type 0x16 (handshake), TLS major version 3, and a
+    ServerHello (0x02) as the first handshake message with a sane length.
+    Anything else (HTTP error page, RST echo, garbage, empty) is False.
+    """
+    if not data or len(data) < 6:
+        return False
+    if data[0] != _TLS_RECORD_HANDSHAKE or data[1] != _TLS_MAJOR:
+        return False
+    record_len = struct.unpack(">H", data[3:5])[0]
+    if record_len < 4 or record_len > 16640:
+        return False
+    return data[5] == _HANDSHAKE_SERVER_HELLO
+
+
+def faketls_ping(host: str, port: int, sni: str,
+                 timeout: float | None = None) -> float | None:
+    """TCP connect + real Fake-TLS ClientHello, requiring a TLS ServerHello.
+
+    Shares tcp_ping's connect semantics (non-blocking, shared deadline
+    across DNS and both address families), then sends the ClientHello
+    with the Fake-TLS fronting domain as SNI and waits for a response:
+      - TLS record 0x16 03 with ServerHello 0x02 -> alive, latency in ms
+      - empty read / connection reset / garbage / timeout -> dead (None)
+    The socket is closed immediately after the response; no MTProto data
+    is exchanged and no full TLS session is established.
+    """
+    timeout = PING_TIMEOUT if timeout is None else timeout
+    host = str(host).strip().strip(".")
+    try:
+        port = int(port)
+    except (TypeError, ValueError):
+        return None
+    sni = (sni or "").strip().strip(".")
+    if not host or not sni or not (0 < port < 65536):
+        return None
+
+    started = time.monotonic()
+    deadline = started + timeout
+    try:
+        infos = socket.getaddrinfo(
+            host, port, type=socket.SOCK_STREAM, proto=socket.IPPROTO_TCP,
+        )
+    except OSError:
+        return None
+
+    in_progress_codes = {
+        code for code in (
+            getattr(socket, "EINPROGRESS", None),
+            getattr(socket, "EWOULDBLOCK", None),
+            getattr(socket, "WSAEWOULDBLOCK", None),
+            10035, 115, 36,
+        )
+        if code is not None
+    }
+
+    for family, _type, _proto, _canonname, sa in infos[:2]:  # v4 then v6
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            return None
+        sock = socket.socket(family, socket.SOCK_STREAM)
+        sock.setblocking(False)
+        try:
+            err = sock.connect_ex(sa)
+            if err != 0:
+                if err not in in_progress_codes:
+                    continue  # refused/unreachable - next address
+                while True:
+                    left = deadline - time.monotonic()
+                    if left <= 0:
+                        return None
+                    _, writable, _ = select.select([], [sock], [], left)
+                    if not writable:
+                        continue
+                    err = sock.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
+                    break  # connect finished (success or failure)
+            if err != 0:
+                continue
+
+            # Connected: send the Fake-TLS ClientHello (SNI = fronting domain).
+            hello = build_client_hello(sni)
+            while hello:
+                left = deadline - time.monotonic()
+                if left <= 0:
+                    return None
+                _, writable, _ = select.select([], [sock], [], left)
+                if not writable:
+                    continue
+                try:
+                    sent = sock.send(hello)
+                except (BrokenPipeError, ConnectionResetError, OSError):
+                    return None  # RST on send -> dead
+                hello = hello[sent:]
+
+            # Wait for the response: valid TLS ServerHello bytes required.
+            chunks = []
+            received = 0
+            while received < 64:
+                left = deadline - time.monotonic()
+                if left <= 0:
+                    return None  # silent drop: handshake never answered
+                readable, _, exceptional = select.select(
+                    [sock], [], [sock], left)
+                if exceptional:
+                    return None
+                if not readable:
+                    continue
+                try:
+                    chunk = sock.recv(4096)
+                except (ConnectionResetError, OSError):
+                    return None  # RST/FIN instead of ServerHello -> dead
+                if not chunk:
+                    return None  # clean FIN before any ServerHello -> dead
+                chunks.append(chunk)
+                received += len(chunk)
+                if is_tls_server_hello(b"".join(chunks)):
+                    return (time.monotonic() - started) * 1000.0
+            return None  # answered, but never a valid TLS ServerHello
+        except OSError:
+            continue
+        finally:
+            try:
+                sock.close()
+            except OSError:
+                pass
+    return None
+
+
+# ---------------------------------------------------------------------------
 # history.json — TTL health tracking (two-strike purge)
 # ---------------------------------------------------------------------------
 
@@ -159,7 +365,7 @@ def save_health(health: dict[str, dict]) -> bool:
         )
         return True
     except OSError as exc:
-        logger.error("Could not update %s: %s", HISTORY_JSON_FILE, exc)
+        logger.error("Could not update %s", HISTORY_JSON_FILE, exc)
         return False
 
 
@@ -226,17 +432,29 @@ def update_health(results: dict[str, float | None],
 # Parallel probe with early stop
 # ---------------------------------------------------------------------------
 
+def _sni_for(proxy) -> str:
+    """Fake-TLS fronting domain for a proxy (lazy import: no cycle)."""
+    try:
+        import fetcher
+        return fetcher.effective_sni(proxy.server, proxy.secret) or proxy.server
+    except Exception:
+        return proxy.server
+
+
 def probe(candidates: list[Proxy],
           enough: int = 8,
           timeout: float | None = None,
           max_latency: float = MAX_LATENCY_MS,
           update_health_file: bool = True) -> list[tuple[Proxy, float]]:
-    """TCP-test candidates concurrently; return reachable ones under
+    """Handshake-test candidates concurrently; return alive ones under
     `max_latency`, sorted by latency ascending.
 
-    Early stop: once `enough` valid results exist, remaining probes are
-    cancelled. Banned (two-strike) proxies are skipped without probing.
-    Outcomes update history.json unless update_health_file=False.
+    Each candidate receives a real Fake-TLS ClientHello carrying its
+    fronting (SNI) domain; only proxies answering with a valid TLS
+    ServerHello count as alive. Early stop: once `enough` valid results
+    exist, remaining probes are cancelled. Banned (two-strike) proxies
+    are skipped without probing. Outcomes update history.json unless
+    update_health_file=False.
     """
     timeout = PING_TIMEOUT if timeout is None else timeout
     if not candidates:
@@ -255,9 +473,11 @@ def probe(candidates: list[Proxy],
     started = time.monotonic()
     results: dict[str, float | None] = {}
     key_to_proxy: dict[str, Proxy] = {}
+    sni_by_key: dict[str, str] = {p.key: _sni_for(p) for p in to_test}
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         futures = {
-            pool.submit(tcp_ping, p.server, p.port, timeout): p for p in to_test
+            pool.submit(faketls_ping, p.server, p.port, sni_by_key[p.key],
+                        timeout): p for p in to_test
         }
         pending = set(futures)
         while pending:
@@ -294,7 +514,8 @@ def probe(candidates: list[Proxy],
     ]
     valid.sort(key=lambda item: item[1])
     logger.info(
-        "PROBES: tested %d (%d banned skipped) -> PROXIES_VALIDATED_COUNT: %d "
+        "PROBES: handshake-tested %d (%d banned skipped) -> "
+        "PROXIES_VALIDATED_COUNT: %d "
         "within %.0f ms cap in %.1f s",
         len(tested), len(candidates) - len(to_test), len(valid), max_latency,
         time.monotonic() - started,
