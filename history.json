@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-10-01T01:37:51",
+  "updated_at": "2026-10-01T01:53:48",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 102.3,
-      "last_seen": 1790818671.0880072
+      "latency_ms": 85.2,
+      "last_seen": 1790819628.336854
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 83.1,
-      "last_seen": 1790818671.0880072
+      "latency_ms": 22.5,
+      "last_seen": 1790819628.336854
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 100.2,
-      "last_seen": 1790818671.0880072
+      "latency_ms": 82.3,
+      "last_seen": 1790819628.336854
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 41.1,
-      "last_seen": 1790818671.0880072
+      "latency_ms": 45.3,
+      "last_seen": 1790819628.336854
+    },
+    "151.247.25.71:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 90.9,
+      "last_seen": 1790819628.336854
+    },
+    "151.247.25.59:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 82.7,
+      "last_seen": 1790819628.336854
+    },
+    "rf1.data-edge.fyi:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1790819628.336854,
+      "latency_ms": 27.1
+    },
+    "l01.antenna-mzt.live:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 90.2,
+      "last_seen": 1790819628.336854
     },
     "79.137.196.223:8443": {
       "strikes": 0,
@@ -49,23 +73,11 @@
       "latency_ms": 109.0,
       "last_seen": 1790818671.0880072
     },
-    "151.247.25.71:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 85.5,
-      "last_seen": 1790817671.758358
-    },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 100.3,
       "last_seen": 1790817671.758358
-    },
-    "151.247.25.59:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 108.8,
-      "last_seen": 1790816413.9578342
     },
     "191.44.113.201:443": {
       "strikes": 0,
@@ -78,12 +90,6 @@
       "alive": true,
       "latency_ms": 135.7,
       "last_seen": 1790811500.393357
-    },
-    "rf1.data-edge.fyi:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1790810562.2224295,
-      "latency_ms": 31.3
     },
     "77.239.105.219:443": {
       "strikes": 0,
@@ -198,12 +204,6 @@
       "alive": true,
       "latency_ms": 41.1,
       "last_seen": 1790688367.211402
-    },
-    "l01.antenna-mzt.live:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 91.6,
-      "last_seen": 1790684250.285693
     },
     "212.193.4.172:8443": {
       "strikes": 0,
