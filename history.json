@@ -1,52 +1,63 @@
 {
-  "updated_at": "2026-10-01T07:59:29",
+  "updated_at": "2026-10-01T08:23:32",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 140.4,
-      "last_seen": 1790841569.6607928
+      "latency_ms": 113.4,
+      "last_seen": 1790843012.0498445
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.5,
-      "last_seen": 1790841569.6607928
+      "latency_ms": 117.1,
+      "last_seen": 1790843012.0498445
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 144.3,
-      "last_seen": 1790841569.6607928
+      "latency_ms": 104.9,
+      "last_seen": 1790843012.0498445
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 149.8,
-      "last_seen": 1790841569.6607928
+      "latency_ms": 115.0,
+      "last_seen": 1790843012.0498445
+    },
+    "45.91.138.18:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 47.1,
+      "last_seen": 1790843012.0498445
+    },
+    "f5fe36.proxyhub.co:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 106.0,
+      "last_seen": 1790843012.0498445
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 123.3,
+      "last_seen": 1790843012.0498445
+    },
+    "rf1.data-edge.fyi:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1790843012.0498445
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 115.7,
+      "last_seen": 1790843012.0498445
     },
     "78.108.56.5:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 148.3,
-      "last_seen": 1790841569.6607928
-    },
-    "45.91.138.18:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 70.4,
-      "last_seen": 1790841569.6607928
-    },
-    "f5fe36.proxyhub.co:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 62.6,
-      "last_seen": 1790841569.6607928
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 155.3,
       "last_seen": 1790841569.6607928
     },
     "79.137.196.223:2053": {
@@ -72,12 +83,6 @@
       "alive": true,
       "latency_ms": 92.5,
       "last_seen": 1790839485.0191536
-    },
-    "rf1.data-edge.fyi:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1790838080.9854982,
-      "latency_ms": 79.8
     },
     "2.26.160.35:443": {
       "strikes": 0,
@@ -108,12 +113,6 @@
       "alive": true,
       "latency_ms": 135.7,
       "last_seen": 1790811500.393357
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.5,
-      "last_seen": 1790795292.0094411
     },
     "bo.cryptocurency.wiki:443": {
       "strikes": 0,
