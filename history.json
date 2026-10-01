@@ -1,6 +1,59 @@
 {
-  "updated_at": "2026-10-01T13:43:21",
+  "updated_at": "2026-10-01T14:00:30",
   "health": {
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 319.2,
+      "last_seen": 1790863230.4823256
+    },
+    "77.239.105.219:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 336.1,
+      "last_seen": 1790863230.4823256
+    },
+    "87.58.149.247:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 348.2,
+      "last_seen": 1790863230.4823256
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 318.7,
+      "last_seen": 1790863230.4823256
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 337.4,
+      "last_seen": 1790863230.4823256
+    },
+    "85.9.221.39:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 348.5,
+      "last_seen": 1790863230.4823256
+    },
+    "212.147.241.136:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 359.2,
+      "last_seen": 1790863230.4823256
+    },
+    "direct.mtaccess.win:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 382.6,
+      "last_seen": 1790863230.4823256
+    },
+    "mrak.store:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1790863230.4823256
+    },
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
@@ -37,28 +90,10 @@
       "latency_ms": 119.4,
       "last_seen": 1790862201.7869706
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 120.5,
-      "last_seen": 1790862201.7869706
-    },
-    "77.239.105.219:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 118.8,
-      "last_seen": 1790862201.7869706
-    },
     "check.lotfan.ir.yplkmbcyu.info:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 42.4,
-      "last_seen": 1790861119.2468045
-    },
-    "87.58.149.247:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 152.1,
       "last_seen": 1790861119.2468045
     },
     "2.26.160.35:443": {
@@ -67,23 +102,11 @@
       "latency_ms": 139.2,
       "last_seen": 1790859536.673881
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 95.5,
-      "last_seen": 1790858230.456841
-    },
     "bo.cryptocurency.wiki:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 95.4,
       "last_seen": 1790856612.9348261
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 99.1,
-      "last_seen": 1790855536.9963257
     },
     "rf1.data-edge.fyi:443": {
       "strikes": 0,
@@ -96,18 +119,6 @@
       "alive": true,
       "latency_ms": 127.0,
       "last_seen": 1790853324.002468
-    },
-    "85.9.221.39:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 136.5,
-      "last_seen": 1790852183.0921936
-    },
-    "212.147.241.136:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 136.1,
-      "last_seen": 1790852183.0921936
     },
     "2.26.85.57:443": {
       "strikes": 0,
@@ -402,12 +413,6 @@
       "alive": false,
       "last_seen": 1789683064.2219875,
       "purged": true
-    },
-    "direct.mtaccess.win:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 177.8,
-      "last_seen": 1789676557.858877
     },
     "x.shmelproxy.top:443": {
       "strikes": 2,
