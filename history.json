@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-10-01T11:15:24",
+  "updated_at": "2026-10-01T11:34:05",
   "health": {
     "154.86.119.143:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1790853324.002468
+      "latency_ms": 86.4,
+      "last_seen": 1790854445.860608
     },
     "151.247.25.59:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1790853324.002468
+      "latency_ms": 96.7,
+      "last_seen": 1790854445.860608
     },
     "45.91.138.18:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 46.6,
-      "last_seen": 1790853324.002468
+      "latency_ms": 26.3,
+      "last_seen": 1790854445.860608
     },
     "f5fe36.proxyhub.co:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 105.9,
-      "last_seen": 1790853324.002468
+      "latency_ms": 11.1,
+      "last_seen": 1790854445.860608
     },
     "151.247.25.71:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 119.1,
-      "last_seen": 1790853324.002468
+      "latency_ms": 96.3,
+      "last_seen": 1790854445.860608
     },
     "217.138.215.102:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 120.1,
-      "last_seen": 1790853324.002468
+      "latency_ms": 91.0,
+      "last_seen": 1790854445.860608
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 141.3,
-      "last_seen": 1790853324.002468
+      "latency_ms": 100.4,
+      "last_seen": 1790854445.860608
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 96.3,
+      "last_seen": 1790854445.860608
     },
     "78.108.56.5:443": {
       "strikes": 0,
@@ -65,12 +71,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 106.6,
-      "last_seen": 1790851163.9926233
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 108.8,
       "last_seen": 1790851163.9926233
     },
     "rf1.data-edge.fyi:443": {
