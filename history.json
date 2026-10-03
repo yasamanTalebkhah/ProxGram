@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-10-03T08:17:00",
+  "updated_at": "2026-10-03T08:35:14",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 254.2,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 329.4,
+      "last_seen": 1791016514.068731
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 279.9,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 353.5,
+      "last_seen": 1791016514.068731
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 311.7,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 373.4,
+      "last_seen": 1791016514.068731
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 281.0,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 347.5,
+      "last_seen": 1791016514.068731
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 271.4,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 339.8,
+      "last_seen": 1791016514.068731
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 292.5,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 367.5,
+      "last_seen": 1791016514.068731
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 291.6,
-      "last_seen": 1791015420.1913643
+      "latency_ms": 376.2,
+      "last_seen": 1791016514.068731
+    },
+    "welcome.kisex.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 511.9,
+      "last_seen": 1791016514.068731
     },
     "direct.mtaccess.win:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 318.4,
       "last_seen": 1791015420.1913643
-    },
-    "welcome.kisex.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 468.9,
-      "last_seen": 1791004468.6627123
     },
     "mrak.store:443": {
       "strikes": 2,
