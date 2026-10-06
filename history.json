@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-10-06T03:32:51",
+  "updated_at": "2026-10-06T03:51:47",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 345.7,
-      "last_seen": 1791257571.5515149
+      "latency_ms": 249.6,
+      "last_seen": 1791258707.5857852
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 342.3,
-      "last_seen": 1791257571.5515149
+      "latency_ms": 258.8,
+      "last_seen": 1791258707.5857852
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 366.1,
-      "last_seen": 1791257571.5515149
+      "latency_ms": 315.2,
+      "last_seen": 1791258707.5857852
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 324.7,
-      "last_seen": 1791257571.5515149
+      "latency_ms": 250.7,
+      "last_seen": 1791258707.5857852
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791257571.5515149,
-      "latency_ms": 323.4
+      "last_seen": 1791258707.5857852,
+      "latency_ms": 254.2
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 358.6,
-      "last_seen": 1791257571.5515149
+      "latency_ms": 322.8,
+      "last_seen": 1791258707.5857852
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791257571.5515149,
-      "latency_ms": 367.3
+      "last_seen": 1791258707.5857852,
+      "latency_ms": 298.9
     },
     "direct.mtaccess.win:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 387.0,
-      "last_seen": 1791257571.5515149
+      "latency_ms": 353.4,
+      "last_seen": 1791258707.5857852
     },
     "welcome.kisex.top:443": {
       "strikes": 0,
