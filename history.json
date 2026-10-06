@@ -1,59 +1,59 @@
 {
-  "updated_at": "2026-10-06T17:41:26",
+  "updated_at": "2026-10-06T17:57:44",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 230.7,
-      "last_seen": 1791308486.801748
+      "latency_ms": 252.1,
+      "last_seen": 1791309464.8338504
     },
     "77.239.105.219:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 243.7,
-      "last_seen": 1791308486.801748
+      "latency_ms": 276.4,
+      "last_seen": 1791309464.8338504
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 234.6,
-      "last_seen": 1791308486.801748
+      "latency_ms": 268.6,
+      "last_seen": 1791309464.8338504
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791308486.801748,
-      "latency_ms": 232.1
+      "last_seen": 1791309464.8338504,
+      "latency_ms": 268.6
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 303.7,
-      "last_seen": 1791308486.801748
+      "latency_ms": 327.5,
+      "last_seen": 1791309464.8338504
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791308486.801748,
-      "latency_ms": 294.7
+      "last_seen": 1791309464.8338504,
+      "latency_ms": 329.4
+    },
+    "87.58.149.247:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 328.2,
+      "last_seen": 1791309464.8338504
+    },
+    "welcome.kisex.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 617.4,
+      "last_seen": 1791309464.8338504
     },
     "direct.mtaccess.win:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 526.1,
       "last_seen": 1791308486.801748
-    },
-    "87.58.149.247:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 302.2,
-      "last_seen": 1791308486.801748
-    },
-    "welcome.kisex.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 632.7,
-      "last_seen": 1791306275.2730205
     },
     "mrak.store:443": {
       "strikes": 2,
