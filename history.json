@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-10-07T19:00:50",
+  "updated_at": "2026-10-07T19:22:32",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 329.0,
-      "last_seen": 1791399650.9501238
+      "latency_ms": 328.9,
+      "last_seen": 1791400952.8310459
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 324.4,
-      "last_seen": 1791399650.9501238
+      "latency_ms": 341.9,
+      "last_seen": 1791400952.8310459
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791399650.9501238,
-      "latency_ms": 318.3
+      "last_seen": 1791400952.8310459,
+      "latency_ms": 350.8
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 319.3,
-      "last_seen": 1791399650.9501238
+      "latency_ms": 346.1,
+      "last_seen": 1791400952.8310459
     },
     "play.spacee.xyz:443": {
       "strikes": 2,
