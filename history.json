@@ -1,23 +1,40 @@
 {
-  "updated_at": "2026-10-07T05:58:48",
+  "updated_at": "2026-10-07T06:24:37",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 367.6,
-      "last_seen": 1791352728.1803837
+      "latency_ms": 311.6,
+      "last_seen": 1791354277.1620033
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 402.8,
-      "last_seen": 1791352728.1803837
+      "latency_ms": 358.3,
+      "last_seen": 1791354277.1620033
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791352728.1803837,
-      "latency_ms": 404.4
+      "last_seen": 1791354277.1620033,
+      "latency_ms": 351.9
+    },
+    "87.58.149.247:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 377.2,
+      "last_seen": 1791354277.1620033
+    },
+    "play.spacee.xyz:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 1226.5,
+      "last_seen": 1791354277.1620033
+    },
+    "meow.its-work.ru:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1791354277.1620033
     },
     "77.239.105.219:443": {
       "strikes": 0,
@@ -36,12 +53,6 @@
       "alive": true,
       "last_seen": 1791324309.7292986,
       "latency_ms": 229.7
-    },
-    "87.58.149.247:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 294.9,
-      "last_seen": 1791324309.7292986
     },
     "welcome.kisex.top:443": {
       "strikes": 0,
