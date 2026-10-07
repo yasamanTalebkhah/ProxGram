@@ -1,35 +1,34 @@
 {
-  "updated_at": "2026-10-07T08:27:50",
+  "updated_at": "2026-10-07T08:49:45",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 241.0,
-      "last_seen": 1791361670.270933
+      "latency_ms": 273.2,
+      "last_seen": 1791362985.5009205
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 251.9,
-      "last_seen": 1791361670.270933
+      "latency_ms": 325.7,
+      "last_seen": 1791362985.5009205
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791361670.270933,
-      "latency_ms": 292.3
+      "last_seen": 1791362985.5009205,
+      "latency_ms": 331.1
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 273.7,
-      "last_seen": 1791361670.270933
+      "latency_ms": 346.5,
+      "last_seen": 1791362985.5009205
     },
     "play.spacee.xyz:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1791361670.270933,
-      "latency_ms": 976.3
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1791362985.5009205
     },
     "meow.its-work.ru:443": {
       "strikes": 2,
