@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-10-07T00:31:31",
+  "updated_at": "2026-10-07T00:58:16",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 228.1,
-      "last_seen": 1791333091.5718274
+      "latency_ms": 312.5,
+      "last_seen": 1791334696.040894
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 264.6,
-      "last_seen": 1791333091.5718274
+      "latency_ms": 325.0,
+      "last_seen": 1791334696.040894
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791333091.5718274,
-      "latency_ms": 273.3
+      "last_seen": 1791334696.040894,
+      "latency_ms": 335.6
     },
     "77.239.105.219:443": {
       "strikes": 0,
