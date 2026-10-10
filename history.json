@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-10-10T20:01:14",
+  "updated_at": "2026-10-10T20:20:22",
   "health": {
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791662474.2183225,
-      "latency_ms": 215.1
+      "last_seen": 1791663622.2787638,
+      "latency_ms": 213.2
     },
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 221.2,
-      "last_seen": 1791662474.2183225
+      "latency_ms": 223.7,
+      "last_seen": 1791663622.2787638
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791662474.2183225,
-      "latency_ms": 220.4
+      "last_seen": 1791663622.2787638,
+      "latency_ms": 229.2
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1791662474.2183225,
-      "latency_ms": 227.8
+      "last_seen": 1791663622.2787638,
+      "latency_ms": 232.7
     },
     "connect.mishutkin.click:443": {
       "strikes": 2,
