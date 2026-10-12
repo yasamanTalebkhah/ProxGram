@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-12T21:22:44",
+  "fetched_at": "2026-10-12T21:43:08",
   "rates": {
     "usd": 262600.0,
     "eur": 293110.0,
@@ -7,20 +7,20 @@
     "usdt": 259932.0,
     "gold_18": 25961900.0,
     "gold_24": 34615600.0,
-    "emami": 263550000.0,
+    "emami": 263575000.0,
     "bahar": 256060000.0,
     "nim": 139670000.0,
     "rob": 73880000.0,
     "gerami": 37000000.0,
     "abshodeh": 112512000.0,
-    "ons_gold": 4170.46,
-    "ons_silver": 60.24,
+    "ons_gold": 4171.88,
+    "ons_silver": 60.3,
     "bubble_bahar": 1616000.0,
     "bubble_nim": 10874000.0,
     "bubble_rob": 9480000.0,
     "bubble_gerami": 5324000.0,
     "value_emami": 253378200.0,
-    "bubble_emami": 10171800.0,
+    "bubble_emami": 10196800.0,
     "value_abshodeh": 112992674.215,
     "bubble_abshodeh": -480674.2150000036
   }
