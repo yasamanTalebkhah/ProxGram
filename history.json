@@ -1,41 +1,41 @@
 {
-  "updated_at": "2026-10-16T11:01:32",
+  "updated_at": "2026-10-16T15:20:52",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 344.7,
-      "last_seen": 1792148492.4726987
+      "latency_ms": 287.7,
+      "last_seen": 1792164052.9056432
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792148492.4726987,
-      "latency_ms": 337.3
+      "last_seen": 1792164052.9056432,
+      "latency_ms": 304.3
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792148492.4726987,
-      "latency_ms": 359.3
+      "last_seen": 1792164052.9056432,
+      "latency_ms": 287.4
     },
     "russia.its-work.ru:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792148492.4726987,
-      "latency_ms": 870.3
+      "last_seen": 1792164052.9056432,
+      "latency_ms": 1042.4
     },
     "57.131.194.46:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 349.8,
-      "last_seen": 1792148492.4726987
+      "latency_ms": 288.2,
+      "last_seen": 1792164052.9056432
     },
     "ru2.replayeye.cc:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 493.3,
-      "last_seen": 1792148492.4726987
+      "latency_ms": 418.9,
+      "last_seen": 1792164052.9056432
     },
     "79.137.196.223:2053": {
       "strikes": 0,
