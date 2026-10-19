@@ -1,23 +1,35 @@
 {
-  "updated_at": "2026-10-19T14:02:35",
+  "updated_at": "2026-10-19T19:50:00",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 339.9,
-      "last_seen": 1792418555.784746
+      "latency_ms": 369.3,
+      "last_seen": 1792439400.2249904
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792418555.784746,
-      "latency_ms": 350.0
+      "last_seen": 1792439400.2249904,
+      "latency_ms": 372.8
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792418555.784746,
-      "latency_ms": 345.0
+      "last_seen": 1792439400.2249904,
+      "latency_ms": 350.0
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 327.0,
+      "last_seen": 1792439400.2249904
+    },
+    "russia.its-work.ru:443": {
+      "strikes": 2,
+      "alive": false,
+      "last_seen": 1792439400.2249904,
+      "purged": true
     },
     "57.131.194.46:443": {
       "strikes": 0,
@@ -37,22 +49,11 @@
       "last_seen": 1792418555.784746,
       "latency_ms": 345.2
     },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 334.0,
-      "last_seen": 1792418555.784746
-    },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1792418555.784746,
       "latency_ms": 343.5
-    },
-    "russia.its-work.ru:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1792329488.1523838
     },
     "connect.mishutkin.click:443": {
       "strikes": 2,
