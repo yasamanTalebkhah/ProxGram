@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-10-19T23:09:55",
+  "updated_at": "2026-10-20T01:50:13",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 223.9,
-      "last_seen": 1792451395.5735836
+      "latency_ms": 232.4,
+      "last_seen": 1792461013.5492542
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792451395.5735836,
-      "latency_ms": 223.9
+      "last_seen": 1792461013.5492542,
+      "latency_ms": 225.1
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792451395.5735836,
-      "latency_ms": 228.4
+      "last_seen": 1792461013.5492542,
+      "latency_ms": 234.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 205.7,
-      "last_seen": 1792451395.5735836
+      "latency_ms": 201.6,
+      "last_seen": 1792461013.5492542
     },
     "russia.its-work.ru:443": {
       "strikes": 2,
