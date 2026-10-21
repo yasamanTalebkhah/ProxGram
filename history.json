@@ -1,41 +1,41 @@
 {
-  "updated_at": "2026-10-21T13:01:06",
+  "updated_at": "2026-10-21T17:59:00",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 226.3,
-      "last_seen": 1792587666.2502983
+      "latency_ms": 224.0,
+      "last_seen": 1792605540.5832446
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792587666.2502983,
-      "latency_ms": 221.2
+      "last_seen": 1792605540.5832446,
+      "latency_ms": 223.7
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792587666.2502983,
-      "latency_ms": 237.6
+      "last_seen": 1792605540.5832446,
+      "latency_ms": 229.8
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 222.7,
-      "last_seen": 1792587666.2502983
+      "latency_ms": 220.6,
+      "last_seen": 1792605540.5832446
     },
     "fast.mishutkin.click:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 272.3,
-      "last_seen": 1792587666.2502983
+      "latency_ms": 252.6,
+      "last_seen": 1792605540.5832446
     },
     "puppy.sexycapybara.xyz:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 1793.7,
-      "last_seen": 1792587666.2502983
+      "latency_ms": 1738.4,
+      "last_seen": 1792605540.5832446
     },
     "russia.its-work.ru:443": {
       "strikes": 2,
