@@ -1,35 +1,35 @@
 {
-  "updated_at": "2026-10-23T22:21:46",
+  "updated_at": "2026-10-24T00:52:54",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 222.3,
-      "last_seen": 1792794106.1976361
+      "latency_ms": 298.7,
+      "last_seen": 1792803174.7212734
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792794106.1976361,
-      "latency_ms": 222.5
+      "last_seen": 1792803174.7212734,
+      "latency_ms": 299.3
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792794106.1976361,
-      "latency_ms": 231.8
+      "last_seen": 1792803174.7212734,
+      "latency_ms": 308.3
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 201.2,
-      "last_seen": 1792794106.1976361
+      "latency_ms": 266.6,
+      "last_seen": 1792803174.7212734
     },
     "puppy.sexycapybara.xyz:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1792794106.1976361,
-      "latency_ms": 437.8
+      "last_seen": 1792803174.7212734,
+      "latency_ms": 522.2
     },
     "fast.mishutkin.click:443": {
       "strikes": 0,
