@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-10-29T14:27:25",
+  "updated_at": "2026-10-29T19:47:26",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 224.7,
-      "last_seen": 1793284045.3341777
+      "latency_ms": 233.5,
+      "last_seen": 1793303246.775261
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793284045.3341777,
-      "latency_ms": 224.9
+      "last_seen": 1793303246.775261,
+      "latency_ms": 232.9
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793284045.3341777,
-      "latency_ms": 232.9
+      "last_seen": 1793303246.775261,
+      "latency_ms": 242.1
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793284045.3341777,
-      "latency_ms": 204.8
+      "last_seen": 1793303246.775261,
+      "latency_ms": 207.4
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 280.1,
+      "last_seen": 1793303246.775261
+    },
+    "fast.mishutkin.click:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 278.9,
+      "last_seen": 1793303246.775261
+    },
+    "elite.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 280.1,
+      "last_seen": 1793303246.775261
+    },
+    "ultra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 280.8,
+      "last_seen": 1793303246.775261
     },
     "turbo.telehelp.top:443": {
       "strikes": 0,
@@ -37,12 +61,6 @@
       "latency_ms": 254.2,
       "last_seen": 1793284045.3341777
     },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 256.7,
-      "last_seen": 1793284045.3341777
-    },
     "high.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -54,12 +72,6 @@
       "alive": false,
       "last_seen": 1792848941.2176223,
       "purged": true
-    },
-    "fast.mishutkin.click:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 366.4,
-      "last_seen": 1792627802.6732523
     },
     "russia.its-work.ru:443": {
       "strikes": 2,
