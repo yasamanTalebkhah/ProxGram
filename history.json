@@ -1,35 +1,49 @@
 {
-  "updated_at": "2026-10-30T09:52:10",
+  "updated_at": "2026-10-30T16:24:38",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 228.3,
-      "last_seen": 1793353930.175906
+      "latency_ms": 294.9,
+      "last_seen": 1793377478.2060413
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793353930.175906,
-      "latency_ms": 227.2
+      "last_seen": 1793377478.2060413,
+      "latency_ms": 293.2
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793353930.175906,
-      "latency_ms": 232.1
+      "last_seen": 1793377478.2060413,
+      "latency_ms": 315.7
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793353930.175906,
-      "latency_ms": 211.7
+      "last_seen": 1793377478.2060413,
+      "latency_ms": 267.0
     },
     "elite.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 246.6,
-      "last_seen": 1793353930.175906
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793377478.2060413
+    },
+    "ultra.mishutkin.click:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793377478.2060413
+    },
+    "fast.mishutkin.click:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793377478.2060413
+    },
+    "ultra.telehelp.top:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793377478.2060413
     },
     "max.mishutkin.click:443": {
       "strikes": 0,
@@ -43,29 +57,11 @@
       "latency_ms": 256.3,
       "last_seen": 1793353930.175906
     },
-    "ultra.mishutkin.click:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 257.2,
-      "last_seen": 1793353930.175906
-    },
     "extra.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 369.6,
       "last_seen": 1793317130.675921
-    },
-    "fast.mishutkin.click:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 356.2,
-      "last_seen": 1793317130.675921
-    },
-    "ultra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 280.8,
-      "last_seen": 1793303246.775261
     },
     "turbo.telehelp.top:443": {
       "strikes": 0,
