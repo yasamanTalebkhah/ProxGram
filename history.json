@@ -1,78 +1,78 @@
 {
-  "updated_at": "2026-10-30T16:24:38",
+  "updated_at": "2026-10-30T20:58:00",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 294.9,
-      "last_seen": 1793377478.2060413
+      "latency_ms": 317.8,
+      "last_seen": 1793393880.071069
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793377478.2060413,
-      "latency_ms": 293.2
+      "last_seen": 1793393880.071069,
+      "latency_ms": 320.0
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793377478.2060413,
-      "latency_ms": 315.7
+      "last_seen": 1793393880.071069,
+      "latency_ms": 321.1
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793377478.2060413,
-      "latency_ms": 267.0
+      "last_seen": 1793393880.071069,
+      "latency_ms": 319.5
     },
     "elite.telehelp.top:443": {
-      "strikes": 1,
+      "strikes": 2,
       "alive": false,
-      "last_seen": 1793377478.2060413
+      "last_seen": 1793393880.071069,
+      "purged": true
     },
     "ultra.mishutkin.click:443": {
-      "strikes": 1,
+      "strikes": 2,
       "alive": false,
-      "last_seen": 1793377478.2060413
+      "last_seen": 1793393880.071069,
+      "purged": true
     },
     "fast.mishutkin.click:443": {
-      "strikes": 1,
+      "strikes": 2,
       "alive": false,
-      "last_seen": 1793377478.2060413
+      "last_seen": 1793393880.071069,
+      "purged": true
     },
     "ultra.telehelp.top:443": {
-      "strikes": 1,
+      "strikes": 2,
       "alive": false,
-      "last_seen": 1793377478.2060413
+      "last_seen": 1793393880.071069,
+      "purged": true
     },
     "max.mishutkin.click:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 351.0,
-      "last_seen": 1793353930.175906
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793393880.071069
     },
     "high.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 256.3,
-      "last_seen": 1793353930.175906
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793393880.071069
     },
     "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 369.6,
-      "last_seen": 1793317130.675921
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793393880.071069
+    },
+    "fast.telehelp.top:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793393880.071069
     },
     "turbo.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 251.0,
-      "last_seen": 1793284045.3341777
-    },
-    "fast.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 254.2,
       "last_seen": 1793284045.3341777
     },
     "puppy.sexycapybara.xyz:443": {
