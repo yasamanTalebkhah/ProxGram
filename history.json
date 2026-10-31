@@ -1,29 +1,47 @@
 {
-  "updated_at": "2026-10-31T17:24:16",
+  "updated_at": "2026-10-31T20:35:00",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 291.9,
-      "last_seen": 1793467456.3626015
+      "latency_ms": 288.7,
+      "last_seen": 1793478900.6252544
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793467456.3626015,
-      "latency_ms": 300.9
+      "last_seen": 1793478900.6252544,
+      "latency_ms": 281.5
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793467456.3626015,
-      "latency_ms": 304.9
+      "last_seen": 1793478900.6252544,
+      "latency_ms": 285.5
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793467456.3626015,
-      "latency_ms": 273.5
+      "last_seen": 1793478900.6252544,
+      "latency_ms": 285.7
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793478900.6252544,
+      "latency_ms": 291.2
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793478900.6252544,
+      "latency_ms": 288.0
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793478900.6252544,
+      "latency_ms": 526.2
     },
     "turbo.telehelp.top:443": {
       "strikes": 0,
@@ -31,24 +49,7 @@
       "last_seen": 1793467456.3626015,
       "latency_ms": 334.5
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1793467456.3626015,
-      "latency_ms": 267.1
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1793467456.3626015,
-      "latency_ms": 304.8
-    },
     "max.mishutkin.click:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1793427483.3425584
-    },
-    "extra.telehelp.top:443": {
       "strikes": 1,
       "alive": false,
       "last_seen": 1793427483.3425584
