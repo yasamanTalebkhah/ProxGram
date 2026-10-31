@@ -1,29 +1,46 @@
 {
-  "updated_at": "2026-10-31T06:18:03",
+  "updated_at": "2026-10-31T12:48:49",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 296.9,
-      "last_seen": 1793427483.3425584
+      "latency_ms": 270.6,
+      "last_seen": 1793450929.4846516
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793427483.3425584,
-      "latency_ms": 297.1
+      "last_seen": 1793450929.4846516,
+      "latency_ms": 270.2
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793427483.3425584,
-      "latency_ms": 299.4
+      "last_seen": 1793450929.4846516,
+      "latency_ms": 276.8
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793427483.3425584,
-      "latency_ms": 288.4
+      "last_seen": 1793450929.4846516,
+      "latency_ms": 274.0
+    },
+    "turbo.telehelp.top:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1793450929.4846516
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793450929.4846516,
+      "latency_ms": 246.6
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793450929.4846516,
+      "latency_ms": 252.9
     },
     "max.mishutkin.click:443": {
       "strikes": 1,
@@ -70,12 +87,6 @@
       "last_seen": 1793393880.071069,
       "purged": true
     },
-    "turbo.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 251.0,
-      "last_seen": 1793284045.3341777
-    },
     "puppy.sexycapybara.xyz:443": {
       "strikes": 2,
       "alive": false,
@@ -99,18 +110,6 @@
       "alive": true,
       "latency_ms": 440.1,
       "last_seen": 1792418555.784746
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1792418555.784746,
-      "latency_ms": 345.2
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1792418555.784746,
-      "latency_ms": 343.5
     },
     "connect.mishutkin.click:443": {
       "strikes": 2,
