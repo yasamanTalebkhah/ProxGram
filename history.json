@@ -1,46 +1,47 @@
 {
-  "updated_at": "2026-11-01T16:27:09",
+  "updated_at": "2026-11-01T20:44:32",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 318.9,
-      "last_seen": 1793550429.55238
+      "latency_ms": 259.0,
+      "last_seen": 1793565872.3467646
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793550429.55238,
-      "latency_ms": 292.8
+      "last_seen": 1793565872.3467646,
+      "latency_ms": 260.0
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793550429.55238,
-      "latency_ms": 326.6
+      "last_seen": 1793565872.3467646,
+      "latency_ms": 231.4
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793550429.55238,
-      "latency_ms": 317.4
+      "last_seen": 1793565872.3467646,
+      "latency_ms": 241.9
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793550429.55238,
-      "latency_ms": 324.1
+      "last_seen": 1793565872.3467646,
+      "latency_ms": 234.9
     },
     "extra.telehelp.top:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1793550429.55238
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793565872.3467646,
+      "latency_ms": 299.6
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793550429.55238,
-      "latency_ms": 300.6
+      "last_seen": 1793565872.3467646,
+      "latency_ms": 255.7
     },
     "turbo.telehelp.top:443": {
       "strikes": 1,
