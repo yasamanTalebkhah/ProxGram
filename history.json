@@ -1,53 +1,59 @@
 {
-  "updated_at": "2026-11-04T18:39:22",
+  "updated_at": "2026-11-04T23:56:05",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 224.4,
-      "last_seen": 1793817562.2730548
+      "latency_ms": 293.4,
+      "last_seen": 1793836565.3867567
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793817562.2730548,
-      "latency_ms": 258.0
+      "last_seen": 1793836565.3867567,
+      "latency_ms": 305.5
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793817562.2730548,
-      "latency_ms": 210.4
+      "last_seen": 1793836565.3867567,
+      "latency_ms": 296.7
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793817562.2730548,
-      "latency_ms": 217.4
+      "last_seen": 1793836565.3867567,
+      "latency_ms": 297.2
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793817562.2730548,
-      "latency_ms": 230.0
+      "last_seen": 1793836565.3867567,
+      "latency_ms": 297.9
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793817562.2730548,
-      "latency_ms": 228.6
+      "last_seen": 1793836565.3867567,
+      "latency_ms": 304.6
+    },
+    "newnvmb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 395.6,
+      "last_seen": 1793836565.3867567
+    },
+    "lemi92.foxglade.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 368.8,
+      "last_seen": 1793836565.3867567
     },
     "turbo.telehelp.top:443": {
       "strikes": 2,
       "alive": false,
       "last_seen": 1793817562.2730548,
       "purged": true
-    },
-    "newnvmb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 295.9,
-      "last_seen": 1793790703.4421659
     },
     "extra.telehelp.top:443": {
       "strikes": 0,
