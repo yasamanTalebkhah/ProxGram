@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-11-05T05:49:04",
+  "updated_at": "2026-11-05T13:31:06",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 325.3,
-      "last_seen": 1793857744.1954277
+      "latency_ms": 231.8,
+      "last_seen": 1793885466.6123533
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793857744.1954277,
-      "latency_ms": 317.6
+      "last_seen": 1793885466.6123533,
+      "latency_ms": 227.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793857744.1954277,
-      "latency_ms": 321.4
+      "last_seen": 1793885466.6123533,
+      "latency_ms": 217.5
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793857744.1954277,
-      "latency_ms": 335.1
+      "last_seen": 1793885466.6123533,
+      "latency_ms": 216.9
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793857744.1954277,
-      "latency_ms": 343.9
+      "last_seen": 1793885466.6123533,
+      "latency_ms": 217.5
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793857744.1954277,
-      "latency_ms": 325.8
+      "last_seen": 1793885466.6123533,
+      "latency_ms": 233.1
+    },
+    "newnvmb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 251.9,
+      "last_seen": 1793885466.6123533
+    },
+    "high.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793885466.6123533,
+      "latency_ms": 253.7
     },
     "lemi92.foxglade.xyz:8443": {
       "strikes": 0,
@@ -48,12 +60,6 @@
       "alive": true,
       "latency_ms": 521.4,
       "last_seen": 1793857744.1954277
-    },
-    "newnvmb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 395.6,
-      "last_seen": 1793836565.3867567
     },
     "turbo.telehelp.top:443": {
       "strikes": 2,
@@ -78,12 +84,6 @@
       "alive": false,
       "last_seen": 1793550429.55238,
       "purged": true
-    },
-    "high.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1793550429.55238,
-      "latency_ms": 629.4
     },
     "elite.telehelp.top:443": {
       "strikes": 2,
