@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-11-05T13:31:06",
+  "updated_at": "2026-11-05T20:47:58",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 231.8,
-      "last_seen": 1793885466.6123533
+      "latency_ms": 295.5,
+      "last_seen": 1793911678.219878
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793885466.6123533,
-      "latency_ms": 227.4
+      "last_seen": 1793911678.219878,
+      "latency_ms": 292.9
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793885466.6123533,
-      "latency_ms": 217.5
+      "last_seen": 1793911678.219878,
+      "latency_ms": 284.7
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793885466.6123533,
-      "latency_ms": 216.9
+      "last_seen": 1793911678.219878,
+      "latency_ms": 295.5
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793885466.6123533,
-      "latency_ms": 217.5
+      "last_seen": 1793911678.219878,
+      "latency_ms": 291.4
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793885466.6123533,
-      "latency_ms": 233.1
+      "last_seen": 1793911678.219878,
+      "latency_ms": 299.5
+    },
+    "tg.limbovpn.com:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 308.8,
+      "last_seen": 1793911678.219878
+    },
+    "nema81.tidelark.cc:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 312.8,
+      "last_seen": 1793911678.219878
     },
     "newnvmb.telehelp.top:443": {
       "strikes": 0,
