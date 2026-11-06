@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-11-05T20:47:58",
+  "updated_at": "2026-11-06T01:10:34",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 295.5,
-      "last_seen": 1793911678.219878
+      "latency_ms": 223.2,
+      "last_seen": 1793927434.7356594
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793911678.219878,
-      "latency_ms": 292.9
+      "last_seen": 1793927434.7356594,
+      "latency_ms": 226.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793911678.219878,
-      "latency_ms": 284.7
+      "last_seen": 1793927434.7356594,
+      "latency_ms": 200.7
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793911678.219878,
-      "latency_ms": 295.5
+      "last_seen": 1793927434.7356594,
+      "latency_ms": 207.3
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793911678.219878,
-      "latency_ms": 291.4
+      "last_seen": 1793927434.7356594,
+      "latency_ms": 217.7
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793911678.219878,
-      "latency_ms": 299.5
+      "last_seen": 1793927434.7356594,
+      "latency_ms": 228.8
     },
     "tg.limbovpn.com:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 308.8,
-      "last_seen": 1793911678.219878
+      "latency_ms": 233.7,
+      "last_seen": 1793927434.7356594
+    },
+    "kane32.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 240.2,
+      "last_seen": 1793927434.7356594
     },
     "nema81.tidelark.cc:8443": {
       "strikes": 0,
