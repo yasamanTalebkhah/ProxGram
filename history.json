@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-11-06T01:10:34",
+  "updated_at": "2026-11-06T07:56:02",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 223.2,
-      "last_seen": 1793927434.7356594
+      "latency_ms": 322.6,
+      "last_seen": 1793951762.1504903
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793927434.7356594,
-      "latency_ms": 226.4
+      "last_seen": 1793951762.1504903,
+      "latency_ms": 327.9
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793927434.7356594,
-      "latency_ms": 200.7
+      "last_seen": 1793951762.1504903,
+      "latency_ms": 316.8
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793927434.7356594,
-      "latency_ms": 207.3
+      "last_seen": 1793951762.1504903,
+      "latency_ms": 323.6
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793927434.7356594,
-      "latency_ms": 217.7
+      "last_seen": 1793951762.1504903,
+      "latency_ms": 315.2
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793927434.7356594,
-      "latency_ms": 228.8
+      "last_seen": 1793951762.1504903,
+      "latency_ms": 318.5
+    },
+    "high.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793951762.1504903,
+      "latency_ms": 421.1
+    },
+    "zoto32.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 387.5,
+      "last_seen": 1793951762.1504903
     },
     "tg.limbovpn.com:443": {
       "strikes": 0,
@@ -60,12 +72,6 @@
       "alive": true,
       "latency_ms": 251.9,
       "last_seen": 1793885466.6123533
-    },
-    "high.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1793885466.6123533,
-      "latency_ms": 253.7
     },
     "lemi92.foxglade.xyz:8443": {
       "strikes": 0,
