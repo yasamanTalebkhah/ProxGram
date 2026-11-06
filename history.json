@@ -1,41 +1,53 @@
 {
-  "updated_at": "2026-11-06T07:56:02",
+  "updated_at": "2026-11-06T15:46:28",
   "health": {
     "85.9.221.39:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 322.6,
-      "last_seen": 1793951762.1504903
+      "latency_ms": 287.7,
+      "last_seen": 1793979988.2910013
     },
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793951762.1504903,
-      "latency_ms": 327.9
+      "last_seen": 1793979988.2910013,
+      "latency_ms": 303.5
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793951762.1504903,
-      "latency_ms": 316.8
+      "last_seen": 1793979988.2910013,
+      "latency_ms": 293.2
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793951762.1504903,
-      "latency_ms": 323.6
+      "last_seen": 1793979988.2910013,
+      "latency_ms": 306.8
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793951762.1504903,
-      "latency_ms": 315.2
+      "last_seen": 1793979988.2910013,
+      "latency_ms": 287.3
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793951762.1504903,
-      "latency_ms": 318.5
+      "last_seen": 1793979988.2910013,
+      "latency_ms": 312.1
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1793979988.2910013,
+      "latency_ms": 375.4
+    },
+    "kalene97.fernlark.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 365.5,
+      "last_seen": 1793979988.2910013
     },
     "high.telehelp.top:443": {
       "strikes": 0,
@@ -90,12 +102,6 @@
       "alive": false,
       "last_seen": 1793817562.2730548,
       "purged": true
-    },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1793762197.9612052,
-      "latency_ms": 278.8
     },
     "max.mishutkin.click:443": {
       "strikes": 2,
