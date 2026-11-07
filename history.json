@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-11-07T00:53:22",
+  "updated_at": "2026-11-07T06:48:08",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794012802.7371984,
-      "latency_ms": 297.4
+      "last_seen": 1794034088.6078756,
+      "latency_ms": 230.7
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794012802.7371984,
-      "latency_ms": 261.7
+      "last_seen": 1794034088.6078756,
+      "latency_ms": 214.7
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794012802.7371984,
-      "latency_ms": 269.6
+      "last_seen": 1794034088.6078756,
+      "latency_ms": 215.1
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794012802.7371984,
-      "latency_ms": 265.0
+      "last_seen": 1794034088.6078756,
+      "latency_ms": 214.1
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794012802.7371984,
-      "latency_ms": 298.6
+      "last_seen": 1794034088.6078756,
+      "latency_ms": 232.7
+    },
+    "lemi92.foxglade.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 252.9,
+      "last_seen": 1794034088.6078756
+    },
+    "kane32.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 245.5,
+      "last_seen": 1794034088.6078756
+    },
+    "tolera44.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 252.8,
+      "last_seen": 1794034088.6078756
     },
     "extra.telehelp.top:443": {
       "strikes": 0,
@@ -52,12 +70,6 @@
     "high.telehelp.top:443": {
       "strikes": 1,
       "alive": false,
-      "last_seen": 1793999191.2552984
-    },
-    "lemi92.foxglade.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 311.6,
       "last_seen": 1793999191.2552984
     },
     "wgram.telehelp.top:443": {
@@ -87,12 +99,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 233.7,
-      "last_seen": 1793927434.7356594
-    },
-    "kane32.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 240.2,
       "last_seen": 1793927434.7356594
     },
     "nema81.tidelark.cc:8443": {
