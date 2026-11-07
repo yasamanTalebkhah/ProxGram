@@ -1,35 +1,59 @@
 {
-  "updated_at": "2026-11-07T06:48:08",
+  "updated_at": "2026-11-07T13:36:55",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794034088.6078756,
-      "latency_ms": 230.7
+      "last_seen": 1794058615.879077,
+      "latency_ms": 322.6
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794034088.6078756,
-      "latency_ms": 214.7
+      "last_seen": 1794058615.879077,
+      "latency_ms": 333.1
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794058615.879077,
+      "latency_ms": 329.0
+    },
+    "87.58.149.247:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794058615.879077,
+      "latency_ms": 317.5
+    },
+    "porilo37.foxglade.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 356.5,
+      "last_seen": 1794058615.879077
+    },
+    "lozo34.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 367.2,
+      "last_seen": 1794058615.879077
+    },
+    "mari74.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 368.4,
+      "last_seen": 1794058615.879077
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 374.7,
+      "last_seen": 1794058615.879077
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1794034088.6078756,
       "latency_ms": 215.1
-    },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794034088.6078756,
-      "latency_ms": 214.1
-    },
-    "87.58.149.247:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794034088.6078756,
-      "latency_ms": 232.7
     },
     "lemi92.foxglade.xyz:8443": {
       "strikes": 0,
@@ -54,12 +78,6 @@
       "alive": true,
       "last_seen": 1794012802.7371984,
       "latency_ms": 332.5
-    },
-    "porilo37.foxglade.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 334.1,
-      "last_seen": 1794012802.7371984
     },
     "rimi99.birchquay.xyz:8443": {
       "strikes": 0,
