@@ -1,41 +1,51 @@
 {
-  "updated_at": "2026-11-07T18:18:12",
+  "updated_at": "2026-11-07T22:02:12",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794075492.7551332,
-      "latency_ms": 354.4
+      "last_seen": 1794088932.4876761,
+      "latency_ms": 292.2
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794075492.7551332,
-      "latency_ms": 358.4
+      "last_seen": 1794088932.4876761,
+      "latency_ms": 264.3
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794075492.7551332,
-      "latency_ms": 357.6
+      "last_seen": 1794088932.4876761,
+      "latency_ms": 258.8
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794075492.7551332,
-      "latency_ms": 360.0
+      "last_seen": 1794088932.4876761,
+      "latency_ms": 302.8
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794088932.4876761,
+      "latency_ms": 286.5
+    },
+    "nema81.tidelark.cc:8443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1794088932.4876761
+    },
+    "lomile95.saltfern.xyz:8443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1794088932.4876761
     },
     "lozo34.copperwren.click:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 391.6,
       "last_seen": 1794075492.7551332
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794075492.7551332,
-      "latency_ms": 375.9
     },
     "kane32.mosswren.vip:8443": {
       "strikes": 0,
@@ -124,12 +134,6 @@
       "alive": true,
       "latency_ms": 233.7,
       "last_seen": 1793927434.7356594
-    },
-    "nema81.tidelark.cc:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 312.8,
-      "last_seen": 1793911678.219878
     },
     "tolega24.tidalbirch.sbs:8443": {
       "strikes": 0,
