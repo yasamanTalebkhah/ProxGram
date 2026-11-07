@@ -1,40 +1,53 @@
 {
-  "updated_at": "2026-11-06T21:06:31",
+  "updated_at": "2026-11-07T00:53:22",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793999191.2552984,
-      "latency_ms": 296.3
+      "last_seen": 1794012802.7371984,
+      "latency_ms": 297.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793999191.2552984,
-      "latency_ms": 257.5
+      "last_seen": 1794012802.7371984,
+      "latency_ms": 261.7
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793999191.2552984,
-      "latency_ms": 269.3
+      "last_seen": 1794012802.7371984,
+      "latency_ms": 269.6
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793999191.2552984,
-      "latency_ms": 267.1
+      "last_seen": 1794012802.7371984,
+      "latency_ms": 265.0
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1793999191.2552984,
-      "latency_ms": 302.7
+      "last_seen": 1794012802.7371984,
+      "latency_ms": 298.6
     },
     "extra.telehelp.top:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1793999191.2552984
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794012802.7371984,
+      "latency_ms": 332.5
+    },
+    "porilo37.foxglade.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 334.1,
+      "last_seen": 1794012802.7371984
+    },
+    "rimi99.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 332.5,
+      "last_seen": 1794012802.7371984
     },
     "high.telehelp.top:443": {
       "strikes": 1,
@@ -50,18 +63,6 @@
     "wgram.telehelp.top:443": {
       "strikes": 1,
       "alive": false,
-      "last_seen": 1793999191.2552984
-    },
-    "porilo37.foxglade.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 326.8,
-      "last_seen": 1793999191.2552984
-    },
-    "rimi99.birchquay.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 335.9,
       "last_seen": 1793999191.2552984
     },
     "85.9.221.39:443": {
