@@ -1,40 +1,58 @@
 {
-  "updated_at": "2026-11-07T13:36:55",
+  "updated_at": "2026-11-07T18:18:12",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794058615.879077,
-      "latency_ms": 322.6
+      "last_seen": 1794075492.7551332,
+      "latency_ms": 354.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794058615.879077,
-      "latency_ms": 333.1
+      "last_seen": 1794075492.7551332,
+      "latency_ms": 358.4
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794058615.879077,
-      "latency_ms": 329.0
+      "last_seen": 1794075492.7551332,
+      "latency_ms": 357.6
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794058615.879077,
-      "latency_ms": 317.5
+      "last_seen": 1794075492.7551332,
+      "latency_ms": 360.0
+    },
+    "lozo34.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 391.6,
+      "last_seen": 1794075492.7551332
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794075492.7551332,
+      "latency_ms": 375.9
+    },
+    "kane32.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 383.3,
+      "last_seen": 1794075492.7551332
+    },
+    "newnvmb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 393.5,
+      "last_seen": 1794075492.7551332
     },
     "porilo37.foxglade.xyz:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 356.5,
-      "last_seen": 1794058615.879077
-    },
-    "lozo34.copperwren.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 367.2,
       "last_seen": 1794058615.879077
     },
     "mari74.birchquay.xyz:8443": {
@@ -49,22 +67,10 @@
       "latency_ms": 374.7,
       "last_seen": 1794058615.879077
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794034088.6078756,
-      "latency_ms": 215.1
-    },
     "lemi92.foxglade.xyz:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 252.9,
-      "last_seen": 1794034088.6078756
-    },
-    "kane32.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 245.5,
       "last_seen": 1794034088.6078756
     },
     "tolera44.copperwren.click:8443": {
@@ -124,12 +130,6 @@
       "alive": true,
       "latency_ms": 312.8,
       "last_seen": 1793911678.219878
-    },
-    "newnvmb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 251.9,
-      "last_seen": 1793885466.6123533
     },
     "tolega24.tidalbirch.sbs:8443": {
       "strikes": 0,
