@@ -1,45 +1,47 @@
 {
-  "updated_at": "2026-11-07T22:02:12",
+  "updated_at": "2026-11-08T01:19:59",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794088932.4876761,
-      "latency_ms": 292.2
+      "last_seen": 1794100799.346917,
+      "latency_ms": 288.8
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794088932.4876761,
-      "latency_ms": 264.3
+      "last_seen": 1794100799.346917,
+      "latency_ms": 287.0
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794088932.4876761,
-      "latency_ms": 258.8
+      "last_seen": 1794100799.346917,
+      "latency_ms": 287.1
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794088932.4876761,
-      "latency_ms": 302.8
+      "last_seen": 1794100799.346917,
+      "latency_ms": 288.3
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794088932.4876761,
-      "latency_ms": 286.5
+      "last_seen": 1794100799.346917,
+      "latency_ms": 301.0
     },
     "nema81.tidelark.cc:8443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1794088932.4876761
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794100799.346917,
+      "latency_ms": 347.8
     },
     "lomile95.saltfern.xyz:8443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1794088932.4876761
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794100799.346917,
+      "latency_ms": 361.5
     },
     "lozo34.copperwren.click:8443": {
       "strikes": 0,
