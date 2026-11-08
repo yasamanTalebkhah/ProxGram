@@ -1,53 +1,64 @@
 {
-  "updated_at": "2026-11-08T01:19:59",
+  "updated_at": "2026-11-08T07:33:09",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794100799.346917,
-      "latency_ms": 288.8
+      "last_seen": 1794123189.117531,
+      "latency_ms": 335.9
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794100799.346917,
-      "latency_ms": 287.0
+      "last_seen": 1794123189.117531,
+      "latency_ms": 316.5
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794100799.346917,
-      "latency_ms": 287.1
+      "last_seen": 1794123189.117531,
+      "latency_ms": 325.1
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794100799.346917,
-      "latency_ms": 288.3
+      "last_seen": 1794123189.117531,
+      "latency_ms": 361.4
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794100799.346917,
-      "latency_ms": 301.0
+      "last_seen": 1794123189.117531,
+      "latency_ms": 316.0
+    },
+    "lomile95.saltfern.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794123189.117531,
+      "latency_ms": 372.6
+    },
+    "lozo34.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 366.4,
+      "last_seen": 1794123189.117531
+    },
+    "tolera44.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 379.1,
+      "last_seen": 1794123189.117531
+    },
+    "apex.telehelp.top:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1794123189.117531
     },
     "nema81.tidelark.cc:8443": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1794100799.346917,
       "latency_ms": 347.8
-    },
-    "lomile95.saltfern.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794100799.346917,
-      "latency_ms": 361.5
-    },
-    "lozo34.copperwren.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 391.6,
-      "last_seen": 1794075492.7551332
     },
     "kane32.mosswren.vip:8443": {
       "strikes": 0,
@@ -83,12 +94,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 252.9,
-      "last_seen": 1794034088.6078756
-    },
-    "tolera44.copperwren.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 252.8,
       "last_seen": 1794034088.6078756
     },
     "extra.telehelp.top:443": {
