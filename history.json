@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-08T19:01:49",
+  "updated_at": "2026-11-08T22:48:47",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794164509.316776,
-      "latency_ms": 277.5
+      "last_seen": 1794178127.4942417,
+      "latency_ms": 247.3
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794164509.316776,
-      "latency_ms": 251.0
+      "last_seen": 1794178127.4942417,
+      "latency_ms": 239.7
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794164509.316776,
-      "latency_ms": 245.1
+      "last_seen": 1794178127.4942417,
+      "latency_ms": 225.7
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794164509.316776,
-      "latency_ms": 290.2
+      "last_seen": 1794178127.4942417,
+      "latency_ms": 255.5
+    },
+    "zovi45.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 271.9,
+      "last_seen": 1794178127.4942417
+    },
+    "nyvivi97.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 276.3,
+      "last_seen": 1794178127.4942417
+    },
+    "teo.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 286.0,
+      "last_seen": 1794178127.4942417
+    },
+    "magaga67.mossharbor.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 288.5,
+      "last_seen": 1794178127.4942417
     },
     "79.137.196.223:2053": {
       "strikes": 0,
@@ -53,12 +77,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 359.0,
-      "last_seen": 1794148192.4358342
-    },
-    "zovi45.quietfjord.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 365.5,
       "last_seen": 1794148192.4358342
     },
     "lomile95.saltfern.xyz:8443": {
