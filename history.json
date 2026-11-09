@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-09T02:06:27",
+  "updated_at": "2026-11-09T09:42:59",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794189987.2945638,
-      "latency_ms": 325.7
+      "last_seen": 1794217379.8977768,
+      "latency_ms": 270.3
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794189987.2945638,
-      "latency_ms": 313.4
+      "last_seen": 1794217379.8977768,
+      "latency_ms": 237.4
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794189987.2945638,
-      "latency_ms": 317.2
+      "last_seen": 1794217379.8977768,
+      "latency_ms": 242.8
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794189987.2945638,
-      "latency_ms": 324.2
+      "last_seen": 1794217379.8977768,
+      "latency_ms": 256.3
+    },
+    "newnvmb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 302.4,
+      "last_seen": 1794217379.8977768
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 321.4,
+      "last_seen": 1794217379.8977768
+    },
+    "high.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794217379.8977768,
+      "latency_ms": 325.3
+    },
+    "nova.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 317.4,
+      "last_seen": 1794217379.8977768
     },
     "nyvivi97.quietfjord.click:8443": {
       "strikes": 0,
@@ -85,12 +109,6 @@
       "latency_ms": 305.7,
       "last_seen": 1794164509.316776
     },
-    "newnvmb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 359.0,
-      "last_seen": 1794148192.4358342
-    },
     "lomile95.saltfern.xyz:8443": {
       "strikes": 0,
       "alive": true,
@@ -120,12 +138,6 @@
       "latency_ms": 368.4,
       "last_seen": 1794058615.879077
     },
-    "ru1.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 374.7,
-      "last_seen": 1794058615.879077
-    },
     "lemi92.foxglade.xyz:8443": {
       "strikes": 0,
       "alive": true,
@@ -143,11 +155,6 @@
       "alive": true,
       "latency_ms": 332.5,
       "last_seen": 1794012802.7371984
-    },
-    "high.telehelp.top:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1793999191.2552984
     },
     "wgram.telehelp.top:443": {
       "strikes": 1,
