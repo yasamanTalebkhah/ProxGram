@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-08T22:48:47",
+  "updated_at": "2026-11-09T02:06:27",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794178127.4942417,
-      "latency_ms": 247.3
+      "last_seen": 1794189987.2945638,
+      "latency_ms": 325.7
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794178127.4942417,
-      "latency_ms": 239.7
+      "last_seen": 1794189987.2945638,
+      "latency_ms": 313.4
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794178127.4942417,
-      "latency_ms": 225.7
+      "last_seen": 1794189987.2945638,
+      "latency_ms": 317.2
     },
     "87.58.149.247:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794178127.4942417,
-      "latency_ms": 255.5
+      "last_seen": 1794189987.2945638,
+      "latency_ms": 324.2
+    },
+    "nyvivi97.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 357.0,
+      "last_seen": 1794189987.2945638
+    },
+    "magaga67.mossharbor.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 370.1,
+      "last_seen": 1794189987.2945638
+    },
+    "porilo37.foxglade.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 362.7,
+      "last_seen": 1794189987.2945638
+    },
+    "loto39.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 367.5,
+      "last_seen": 1794189987.2945638
     },
     "zovi45.quietfjord.click:8443": {
       "strikes": 0,
@@ -31,22 +55,10 @@
       "latency_ms": 271.9,
       "last_seen": 1794178127.4942417
     },
-    "nyvivi97.quietfjord.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 276.3,
-      "last_seen": 1794178127.4942417
-    },
     "teo.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 286.0,
-      "last_seen": 1794178127.4942417
-    },
-    "magaga67.mossharbor.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 288.5,
       "last_seen": 1794178127.4942417
     },
     "79.137.196.223:2053": {
@@ -101,12 +113,6 @@
       "alive": true,
       "last_seen": 1794100799.346917,
       "latency_ms": 347.8
-    },
-    "porilo37.foxglade.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 356.5,
-      "last_seen": 1794058615.879077
     },
     "mari74.birchquay.xyz:8443": {
       "strikes": 0,
