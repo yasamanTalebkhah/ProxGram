@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-11-09T09:42:59",
+  "updated_at": "2026-11-09T20:10:32",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794217379.8977768,
-      "latency_ms": 270.3
+      "last_seen": 1794255032.0014532,
+      "latency_ms": 296.5
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794217379.8977768,
-      "latency_ms": 237.4
+      "last_seen": 1794255032.0014532,
+      "latency_ms": 257.5
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794217379.8977768,
-      "latency_ms": 242.8
+      "last_seen": 1794255032.0014532,
+      "latency_ms": 268.7
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 322.1,
+      "last_seen": 1794255032.0014532
+    },
+    "kane32.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 330.0,
+      "last_seen": 1794255032.0014532
+    },
+    "io.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 321.0,
+      "last_seen": 1794255032.0014532
+    },
+    "inner.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 323.9,
+      "last_seen": 1794255032.0014532
+    },
+    "deto84.larchmere.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 324.7,
+      "last_seen": 1794255032.0014532
     },
     "87.58.149.247:443": {
       "strikes": 0,
@@ -29,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 302.4,
-      "last_seen": 1794217379.8977768
-    },
-    "ru1.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 321.4,
       "last_seen": 1794217379.8977768
     },
     "high.telehelp.top:443": {
@@ -95,12 +119,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 279.4,
-      "last_seen": 1794164509.316776
-    },
-    "kane32.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 295.7,
       "last_seen": 1794164509.316776
     },
     "vizozo81.fernlark.xyz:8443": {
