@@ -1,47 +1,59 @@
 {
-  "updated_at": "2026-11-10T02:45:11",
+  "updated_at": "2026-11-10T10:29:43",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794278711.2157295,
-      "latency_ms": 266.9
+      "last_seen": 1794306583.5809867,
+      "latency_ms": 294.7
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794278711.2157295,
-      "latency_ms": 258.0
+      "last_seen": 1794306583.5809867,
+      "latency_ms": 266.5
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794278711.2157295,
-      "latency_ms": 279.5
+      "last_seen": 1794306583.5809867,
+      "latency_ms": 260.8
     },
     "ru1.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 337.6,
-      "last_seen": 1794278711.2157295
+      "latency_ms": 332.2,
+      "last_seen": 1794306583.5809867
+    },
+    "87.58.149.247:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794306583.5809867,
+      "latency_ms": 301.5
+    },
+    "apex.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794306583.5809867,
+      "latency_ms": 341.9
+    },
+    "teo.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 343.1,
+      "last_seen": 1794306583.5809867
+    },
+    "fast.webproxy.lol:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 318.0,
+      "last_seen": 1794306583.5809867
     },
     "inner.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 335.5,
       "last_seen": 1794278711.2157295
-    },
-    "87.58.149.247:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794278711.2157295,
-      "latency_ms": 292.3
-    },
-    "apex.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794278711.2157295,
-      "latency_ms": 338.5
     },
     "extra.telehelp.top:443": {
       "strikes": 0,
@@ -118,12 +130,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 271.9,
-      "last_seen": 1794178127.4942417
-    },
-    "teo.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 286.0,
       "last_seen": 1794178127.4942417
     },
     "79.137.196.223:2053": {
