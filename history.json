@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-10T18:10:04",
+  "updated_at": "2026-11-10T23:22:34",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794334204.3414798,
-      "latency_ms": 319.3
+      "last_seen": 1794352954.3462942,
+      "latency_ms": 334.3
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794334204.3414798,
-      "latency_ms": 337.3
+      "last_seen": 1794352954.3462942,
+      "latency_ms": 321.4
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794334204.3414798,
-      "latency_ms": 335.6
+      "last_seen": 1794352954.3462942,
+      "latency_ms": 321.1
     },
     "ru1.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 381.3,
-      "last_seen": 1794334204.3414798
+      "latency_ms": 367.1,
+      "last_seen": 1794352954.3462942
+    },
+    "high.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794352954.3462942,
+      "latency_ms": 371.3
+    },
+    "nova.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 367.7,
+      "last_seen": 1794352954.3462942
+    },
+    "ghost.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 372.0,
+      "last_seen": 1794352954.3462942
+    },
+    "amb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 426.5,
+      "last_seen": 1794352954.3462942
     },
     "teo.telehelp.top:443": {
       "strikes": 0,
@@ -36,12 +60,6 @@
       "alive": true,
       "last_seen": 1794334204.3414798,
       "latency_ms": 374.0
-    },
-    "high.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794334204.3414798,
-      "latency_ms": 364.8
     },
     "wgram.telehelp.top:443": {
       "strikes": 0,
@@ -100,12 +118,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 302.4,
-      "last_seen": 1794217379.8977768
-    },
-    "nova.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 317.4,
       "last_seen": 1794217379.8977768
     },
     "nyvivi97.quietfjord.click:8443": {
