@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-11T02:53:34",
+  "updated_at": "2026-11-11T10:16:16",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794365614.3610075,
-      "latency_ms": 223.6
+      "last_seen": 1794392176.5252523,
+      "latency_ms": 322.1
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794365614.3610075,
-      "latency_ms": 204.3
+      "last_seen": 1794392176.5252523,
+      "latency_ms": 317.6
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794365614.3610075,
-      "latency_ms": 218.5
+      "last_seen": 1794392176.5252523,
+      "latency_ms": 322.6
     },
     "ru1.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 248.2,
-      "last_seen": 1794365614.3610075
+      "latency_ms": 387.8,
+      "last_seen": 1794392176.5252523
+    },
+    "apex.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794392176.5252523,
+      "latency_ms": 385.7
+    },
+    "newnvmb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 377.4,
+      "last_seen": 1794392176.5252523
+    },
+    "star.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 361.3,
+      "last_seen": 1794392176.5252523
+    },
+    "mtpr.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 383.3,
+      "last_seen": 1794392176.5252523
     },
     "high.telehelp.top:443": {
       "strikes": 0,
@@ -73,12 +97,6 @@
       "last_seen": 1794306583.5809867,
       "latency_ms": 301.5
     },
-    "apex.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794306583.5809867,
-      "latency_ms": 341.9
-    },
     "fast.webproxy.lol:443": {
       "strikes": 0,
       "alive": true,
@@ -113,12 +131,6 @@
       "alive": true,
       "latency_ms": 324.7,
       "last_seen": 1794255032.0014532
-    },
-    "newnvmb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 302.4,
-      "last_seen": 1794217379.8977768
     },
     "nyvivi97.quietfjord.click:8443": {
       "strikes": 0,
