@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-11-11T17:56:15",
+  "updated_at": "2026-11-12T00:17:19",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794419775.538663,
-      "latency_ms": 236.8
+      "last_seen": 1794442639.4233615,
+      "latency_ms": 337.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794419775.538663,
-      "latency_ms": 222.9
+      "last_seen": 1794442639.4233615,
+      "latency_ms": 332.8
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794419775.538663,
-      "latency_ms": 229.0
+      "last_seen": 1794442639.4233615,
+      "latency_ms": 331.5
+    },
+    "ghost.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 397.3,
+      "last_seen": 1794442639.4233615
+    },
+    "io.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 393.7,
+      "last_seen": 1794442639.4233615
+    },
+    "star.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 386.8,
+      "last_seen": 1794442639.4233615
+    },
+    "amb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 385.0,
+      "last_seen": 1794442639.4233615
+    },
+    "mega.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 392.5,
+      "last_seen": 1794442639.4233615
     },
     "newnvmb.telehelp.top:443": {
       "strikes": 0,
@@ -25,22 +55,10 @@
       "latency_ms": 274.4,
       "last_seen": 1794419775.538663
     },
-    "ghost.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 275.1,
-      "last_seen": 1794419775.538663
-    },
     "teo.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 287.2,
-      "last_seen": 1794419775.538663
-    },
-    "io.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 291.6,
       "last_seen": 1794419775.538663
     },
     "exp.telehelp.top:443": {
@@ -61,12 +79,6 @@
       "last_seen": 1794392176.5252523,
       "latency_ms": 385.7
     },
-    "star.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 361.3,
-      "last_seen": 1794392176.5252523
-    },
     "mtpr.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -83,12 +95,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 251.1,
-      "last_seen": 1794365614.3610075
-    },
-    "amb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 255.5,
       "last_seen": 1794365614.3610075
     },
     "extra.telehelp.top:443": {
