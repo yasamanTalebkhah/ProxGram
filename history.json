@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-11-13T17:38:54",
+  "updated_at": "2026-11-13T22:52:57",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794591534.431083,
-      "latency_ms": 265.6
+      "last_seen": 1794610377.5394602,
+      "latency_ms": 286.7
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794591534.431083,
-      "latency_ms": 261.9
+      "last_seen": 1794610377.5394602,
+      "latency_ms": 290.3
+    },
+    "79.137.196.223:8443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794610377.5394602,
+      "latency_ms": 291.8
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794610377.5394602,
+      "latency_ms": 292.5
+    },
+    "tg.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 351.9,
+      "last_seen": 1794610377.5394602
+    },
+    "ghost.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 355.4,
+      "last_seen": 1794610377.5394602
+    },
+    "inner.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 351.8,
+      "last_seen": 1794610377.5394602
+    },
+    "fly.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 348.9,
+      "last_seen": 1794610377.5394602
     },
     "ru1.telehelp.top:443": {
       "strikes": 0,
@@ -25,12 +61,6 @@
       "last_seen": 1794591534.431083,
       "latency_ms": 305.8
     },
-    "79.137.196.223:8443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794591534.431083,
-      "latency_ms": 255.5
-    },
     "flash.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -42,18 +72,6 @@
       "alive": true,
       "latency_ms": 301.9,
       "last_seen": 1794591534.431083
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794591534.431083,
-      "latency_ms": 253.9
-    },
-    "tg.proxynet.tech:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 311.4,
-      "last_seen": 1794564027.6023927
     },
     "w.prxtg.top:443": {
       "strikes": 0,
@@ -127,12 +145,6 @@
       "latency_ms": 266.6,
       "last_seen": 1794499683.7045
     },
-    "ghost.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 275.2,
-      "last_seen": 1794468343.9753492
-    },
     "mtpr.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -186,12 +198,6 @@
       "alive": true,
       "latency_ms": 318.0,
       "last_seen": 1794306583.5809867
-    },
-    "inner.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 335.5,
-      "last_seen": 1794278711.2157295
     },
     "130.210.28.61:8443": {
       "strikes": 1,
