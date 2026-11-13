@@ -1,47 +1,53 @@
 {
-  "updated_at": "2026-11-12T22:14:10",
+  "updated_at": "2026-11-13T02:40:05",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794521650.1674023,
-      "latency_ms": 242.6
+      "last_seen": 1794537605.7347083,
+      "latency_ms": 273.9
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794521650.1674023,
-      "latency_ms": 225.1
+      "last_seen": 1794537605.7347083,
+      "latency_ms": 252.6
     },
     "star.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 302.4,
-      "last_seen": 1794521650.1674023
+      "latency_ms": 318.4,
+      "last_seen": 1794537605.7347083
     },
     "apex.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794521650.1674023,
-      "latency_ms": 272.0
+      "last_seen": 1794537605.7347083,
+      "latency_ms": 334.1
     },
     "extra.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794521650.1674023,
-      "latency_ms": 296.1
+      "last_seen": 1794537605.7347083,
+      "latency_ms": 350.3
     },
     "tg.proxynet.tech:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 288.5,
-      "last_seen": 1794521650.1674023
+      "latency_ms": 306.9,
+      "last_seen": 1794537605.7347083
     },
     "male71.foxglade.xyz:8443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 475.2,
-      "last_seen": 1794521650.1674023
+      "latency_ms": 526.5,
+      "last_seen": 1794537605.7347083
+    },
+    "deto22.larchmere.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 532.2,
+      "last_seen": 1794537605.7347083
     },
     "razora52.fernlark.xyz:8443": {
       "strikes": 0,
