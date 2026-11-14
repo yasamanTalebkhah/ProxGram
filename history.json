@@ -1,35 +1,53 @@
 {
-  "updated_at": "2026-11-13T22:52:57",
+  "updated_at": "2026-11-14T02:52:48",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794610377.5394602,
-      "latency_ms": 286.7
+      "last_seen": 1794624768.5355623,
+      "latency_ms": 329.1
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794610377.5394602,
-      "latency_ms": 290.3
+      "last_seen": 1794624768.5355623,
+      "latency_ms": 318.8
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794610377.5394602,
-      "latency_ms": 291.8
+      "last_seen": 1794624768.5355623,
+      "latency_ms": 325.4
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794610377.5394602,
-      "latency_ms": 292.5
+      "last_seen": 1794624768.5355623,
+      "latency_ms": 321.0
     },
     "tg.proxynet.tech:443": {
       "strikes": 0,
       "alive": true,
-      "latency_ms": 351.9,
-      "last_seen": 1794610377.5394602
+      "latency_ms": 371.1,
+      "last_seen": 1794624768.5355623
+    },
+    "flash.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 373.0,
+      "last_seen": 1794624768.5355623
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794624768.5355623,
+      "latency_ms": 362.4
+    },
+    "gram.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 403.2,
+      "last_seen": 1794624768.5355623
     },
     "ghost.telehelp.top:443": {
       "strikes": 0,
@@ -60,12 +78,6 @@
       "alive": true,
       "last_seen": 1794591534.431083,
       "latency_ms": 305.8
-    },
-    "flash.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 308.5,
-      "last_seen": 1794591534.431083
     },
     "nova.telehelp.top:443": {
       "strikes": 0,
@@ -114,12 +126,6 @@
       "alive": true,
       "last_seen": 1794537605.7347083,
       "latency_ms": 334.1
-    },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794537605.7347083,
-      "latency_ms": 350.3
     },
     "male71.foxglade.xyz:8443": {
       "strikes": 0,
