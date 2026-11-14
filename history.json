@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-14T09:44:52",
+  "updated_at": "2026-11-14T16:09:50",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794649492.618083,
-      "latency_ms": 221.4
+      "last_seen": 1794672590.1783788,
+      "latency_ms": 344.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794649492.618083,
-      "latency_ms": 202.6
+      "last_seen": 1794672590.1783788,
+      "latency_ms": 354.1
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794649492.618083,
-      "latency_ms": 203.5
+      "last_seen": 1794672590.1783788,
+      "latency_ms": 371.5
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794649492.618083,
-      "latency_ms": 227.5
+      "last_seen": 1794672590.1783788,
+      "latency_ms": 377.6
+    },
+    "nova.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 373.0,
+      "last_seen": 1794672590.1783788
+    },
+    "razora52.fernlark.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 377.5,
+      "last_seen": 1794672590.1783788
+    },
+    "mtpr.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 376.6,
+      "last_seen": 1794672590.1783788
+    },
+    "vizozo81.fernlark.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 377.2,
+      "last_seen": 1794672590.1783788
     },
     "ghost.telehelp.top:443": {
       "strikes": 0,
@@ -85,12 +109,6 @@
       "last_seen": 1794591534.431083,
       "latency_ms": 305.8
     },
-    "nova.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 301.9,
-      "last_seen": 1794591534.431083
-    },
     "w.prxtg.top:443": {
       "strikes": 0,
       "alive": true,
@@ -145,23 +163,11 @@
       "latency_ms": 532.2,
       "last_seen": 1794537605.7347083
     },
-    "razora52.fernlark.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 473.4,
-      "last_seen": 1794521650.1674023
-    },
     "newnvmb.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 266.6,
       "last_seen": 1794499683.7045
-    },
-    "mtpr.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 273.4,
-      "last_seen": 1794468343.9753492
     },
     "wgram.telehelp.top:443": {
       "strikes": 0,
@@ -256,12 +262,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 279.4,
-      "last_seen": 1794164509.316776
-    },
-    "vizozo81.fernlark.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 305.7,
       "last_seen": 1794164509.316776
     },
     "lomile95.saltfern.xyz:8443": {
