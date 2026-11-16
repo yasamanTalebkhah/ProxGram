@@ -1,29 +1,59 @@
 {
-  "updated_at": "2026-11-16T12:20:13",
+  "updated_at": "2026-11-16T22:23:17",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794831613.8897076,
-      "latency_ms": 235.5
+      "last_seen": 1794867797.7937076,
+      "latency_ms": 235.6
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794831613.8897076,
-      "latency_ms": 212.8
+      "last_seen": 1794867797.7937076,
+      "latency_ms": 204.5
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794867797.7937076,
+      "latency_ms": 205.6
+    },
+    "ext.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 268.8,
+      "last_seen": 1794867797.7937076
+    },
+    "razora52.fernlark.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 271.2,
+      "last_seen": 1794867797.7937076
+    },
+    "w.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 266.8,
+      "last_seen": 1794867797.7937076
+    },
+    "rimi99.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 278.1,
+      "last_seen": 1794867797.7937076
+    },
+    "gram.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 266.8,
+      "last_seen": 1794867797.7937076
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1794831613.8897076,
       "latency_ms": 211.2
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794831613.8897076,
-      "latency_ms": 221.9
     },
     "ghost.telehelp.top:443": {
       "strikes": 0,
@@ -85,12 +115,6 @@
       "latency_ms": 336.0,
       "last_seen": 1794753287.0637405
     },
-    "ext.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 328.0,
-      "last_seen": 1794753287.0637405
-    },
     "fast.prxtg.top:443": {
       "strikes": 0,
       "alive": true,
@@ -127,12 +151,6 @@
       "latency_ms": 359.4,
       "last_seen": 1794689009.5930803
     },
-    "razora52.fernlark.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 377.5,
-      "last_seen": 1794672590.1783788
-    },
     "vizozo81.fernlark.xyz:8443": {
       "strikes": 0,
       "alive": true,
@@ -168,12 +186,6 @@
       "alive": true,
       "latency_ms": 403.2,
       "last_seen": 1794624768.5355623
-    },
-    "w.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 413.0,
-      "last_seen": 1794564027.6023927
     },
     "garazo91.birchquay.xyz:8443": {
       "strikes": 0,
@@ -323,12 +335,6 @@
       "alive": true,
       "latency_ms": 252.9,
       "last_seen": 1794034088.6078756
-    },
-    "rimi99.birchquay.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 332.5,
-      "last_seen": 1794012802.7371984
     },
     "85.9.221.39:443": {
       "strikes": 0,
