@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-11-17T04:41:10",
+  "updated_at": "2026-11-17T13:53:02",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794890470.190064,
-      "latency_ms": 384.8
+      "last_seen": 1794923582.0889416,
+      "latency_ms": 346.7
+    },
+    "rimi99.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 427.6,
+      "last_seen": 1794923582.0889416
+    },
+    "w.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 391.4,
+      "last_seen": 1794923582.0889416
+    },
+    "top.fastprx.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 397.6,
+      "last_seen": 1794923582.0889416
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 403.1,
+      "last_seen": 1794923582.0889416
+    },
+    "tg.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 384.8,
+      "last_seen": 1794923582.0889416
+    },
+    "gram.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 396.1,
+      "last_seen": 1794923582.0889416
+    },
+    "srv-oowshw.smbiran.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 383.7,
+      "last_seen": 1794923582.0889416
     },
     "79.137.196.223:443": {
       "strikes": 0,
@@ -18,12 +60,6 @@
       "alive": true,
       "last_seen": 1794890470.190064,
       "latency_ms": 353.5
-    },
-    "rimi99.birchquay.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 432.0,
-      "last_seen": 1794890470.190064
     },
     "gram.proxynet.tech:443": {
       "strikes": 0,
@@ -59,12 +95,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 271.2,
-      "last_seen": 1794867797.7937076
-    },
-    "w.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 266.8,
       "last_seen": 1794867797.7937076
     },
     "79.137.196.223:8443": {
@@ -121,12 +151,6 @@
       "latency_ms": 356.2,
       "last_seen": 1794786680.400603
     },
-    "top.fastprx.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 249.4,
-      "last_seen": 1794772575.319072
-    },
     "mtpr.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -181,29 +205,11 @@
       "latency_ms": 248.1,
       "last_seen": 1794649492.618083
     },
-    "ru1.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 246.3,
-      "last_seen": 1794649492.618083
-    },
-    "tg.proxynet.tech:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 371.1,
-      "last_seen": 1794624768.5355623
-    },
     "extra.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1794624768.5355623,
       "latency_ms": 362.4
-    },
-    "gram.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 403.2,
-      "last_seen": 1794624768.5355623
     },
     "garazo91.birchquay.xyz:8443": {
       "strikes": 0,
