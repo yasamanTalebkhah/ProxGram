@@ -1,11 +1,53 @@
 {
-  "updated_at": "2026-11-17T13:53:02",
+  "updated_at": "2026-11-17T21:59:20",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794923582.0889416,
-      "latency_ms": 346.7
+      "last_seen": 1794952760.449143,
+      "latency_ms": 233.5
+    },
+    "top.fastprx.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 360.2,
+      "last_seen": 1794952760.449143
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794952760.449143,
+      "latency_ms": 207.5
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794952760.449143,
+      "latency_ms": 212.9
+    },
+    "ghost.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 282.4,
+      "last_seen": 1794952760.449143
+    },
+    "fast.webproxy.lol:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 297.4,
+      "last_seen": 1794952760.449143
+    },
+    "max.fastprx.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 271.1,
+      "last_seen": 1794952760.449143
+    },
+    "red.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 270.9,
+      "last_seen": 1794952760.449143
     },
     "rimi99.birchquay.xyz:8443": {
       "strikes": 0,
@@ -17,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 391.4,
-      "last_seen": 1794923582.0889416
-    },
-    "top.fastprx.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 397.6,
       "last_seen": 1794923582.0889416
     },
     "ru1.telehelp.top:443": {
@@ -48,18 +84,6 @@
       "alive": true,
       "latency_ms": 383.7,
       "last_seen": 1794923582.0889416
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794890470.190064,
-      "latency_ms": 338.5
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794890470.190064,
-      "latency_ms": 353.5
     },
     "gram.proxynet.tech:443": {
       "strikes": 0,
@@ -102,12 +126,6 @@
       "alive": true,
       "last_seen": 1794831613.8897076,
       "latency_ms": 211.2
-    },
-    "ghost.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 276.9,
-      "last_seen": 1794831613.8897076
     },
     "high.telehelp.top:443": {
       "strikes": 0,
@@ -270,12 +288,6 @@
       "alive": true,
       "last_seen": 1794306583.5809867,
       "latency_ms": 301.5
-    },
-    "fast.webproxy.lol:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 318.0,
-      "last_seen": 1794306583.5809867
     },
     "130.210.28.61:8443": {
       "strikes": 1,
