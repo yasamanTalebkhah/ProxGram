@@ -1,23 +1,53 @@
 {
-  "updated_at": "2026-11-16T22:23:17",
+  "updated_at": "2026-11-17T04:41:10",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794867797.7937076,
-      "latency_ms": 235.6
+      "last_seen": 1794890470.190064,
+      "latency_ms": 384.8
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794867797.7937076,
-      "latency_ms": 204.5
+      "last_seen": 1794890470.190064,
+      "latency_ms": 338.5
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794867797.7937076,
-      "latency_ms": 205.6
+      "last_seen": 1794890470.190064,
+      "latency_ms": 353.5
+    },
+    "rimi99.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 432.0,
+      "last_seen": 1794890470.190064
+    },
+    "gram.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 415.6,
+      "last_seen": 1794890470.190064
+    },
+    "zovi45.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 438.3,
+      "last_seen": 1794890470.190064
+    },
+    "zoto32.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 434.0,
+      "last_seen": 1794890470.190064
+    },
+    "susumi78.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 431.5,
+      "last_seen": 1794890470.190064
     },
     "ext.telehelp.top:443": {
       "strikes": 0,
@@ -32,18 +62,6 @@
       "last_seen": 1794867797.7937076
     },
     "w.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 266.8,
-      "last_seen": 1794867797.7937076
-    },
-    "rimi99.birchquay.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 278.1,
-      "last_seen": 1794867797.7937076
-    },
-    "gram.proxynet.tech:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 266.8,
@@ -294,12 +312,6 @@
       "latency_ms": 367.5,
       "last_seen": 1794189987.2945638
     },
-    "zovi45.quietfjord.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 271.9,
-      "last_seen": 1794178127.4942417
-    },
     "tolera44.copperwren.click:8443": {
       "strikes": 0,
       "alive": true,
@@ -347,12 +359,6 @@
       "alive": true,
       "latency_ms": 365.5,
       "last_seen": 1793979988.2910013
-    },
-    "zoto32.copperwren.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 387.5,
-      "last_seen": 1793951762.1504903
     },
     "tg.limbovpn.com:443": {
       "strikes": 0,
