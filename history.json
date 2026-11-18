@@ -1,23 +1,58 @@
 {
-  "updated_at": "2026-11-18T12:14:11",
+  "updated_at": "2026-11-18T20:39:31",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795004051.1979377,
-      "latency_ms": 280.9
+      "last_seen": 1795034371.4270852,
+      "latency_ms": 222.6
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795004051.1979377,
-      "latency_ms": 312.8
+      "last_seen": 1795034371.4270852,
+      "latency_ms": 205.8
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795004051.1979377,
-      "latency_ms": 301.9
+      "last_seen": 1795034371.4270852,
+      "latency_ms": 218.2
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795034371.4270852,
+      "latency_ms": 262.1
+    },
+    "gram.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 264.2,
+      "last_seen": 1795034371.4270852
+    },
+    "ext.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 265.8,
+      "last_seen": 1795034371.4270852
+    },
+    "exp.telehelp.top:443": {
+      "strikes": 1,
+      "alive": false,
+      "last_seen": 1795034371.4270852
+    },
+    "io.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 258.8,
+      "last_seen": 1795034371.4270852
+    },
+    "rocket.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 264.2,
+      "last_seen": 1795034371.4270852
     },
     "gram.proxynet.tech:443": {
       "strikes": 1,
@@ -29,12 +64,6 @@
       "alive": true,
       "latency_ms": 346.3,
       "last_seen": 1795004051.1979377
-    },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795004051.1979377,
-      "latency_ms": 340.8
     },
     "newnvmb.telehelp.top:443": {
       "strikes": 0,
@@ -132,12 +161,6 @@
       "latency_ms": 403.1,
       "last_seen": 1794923582.0889416
     },
-    "gram.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 396.1,
-      "last_seen": 1794923582.0889416
-    },
     "srv-oowshw.smbiran.shop:443": {
       "strikes": 0,
       "alive": true,
@@ -161,12 +184,6 @@
       "alive": true,
       "latency_ms": 431.5,
       "last_seen": 1794890470.190064
-    },
-    "ext.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 268.8,
-      "last_seen": 1794867797.7937076
     },
     "razora52.fernlark.xyz:8443": {
       "strikes": 0,
@@ -216,12 +233,6 @@
       "latency_ms": 301.1,
       "last_seen": 1794801127.2336762
     },
-    "exp.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 356.2,
-      "last_seen": 1794786680.400603
-    },
     "fast.prxtg.top:443": {
       "strikes": 0,
       "alive": true,
@@ -239,12 +250,6 @@
       "alive": true,
       "latency_ms": 269.5,
       "last_seen": 1794725744.5983884
-    },
-    "io.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 360.3,
-      "last_seen": 1794702193.1465986
     },
     "star.telehelp.top:443": {
       "strikes": 0,
