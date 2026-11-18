@@ -1,29 +1,59 @@
 {
-  "updated_at": "2026-11-17T21:59:20",
+  "updated_at": "2026-11-18T03:37:06",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1794952760.449143,
-      "latency_ms": 233.5
+      "last_seen": 1794973026.088898,
+      "latency_ms": 275.1
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794973026.088898,
+      "latency_ms": 251.5
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1794973026.088898,
+      "latency_ms": 280.1
+    },
+    "tg.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 317.3,
+      "last_seen": 1794973026.088898
+    },
+    "kane32.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 308.9,
+      "last_seen": 1794973026.088898
+    },
+    "mikany52.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 313.8,
+      "last_seen": 1794973026.088898
+    },
+    "ganemi87.tidelark.cc:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 316.4,
+      "last_seen": 1794973026.088898
+    },
+    "podevi72.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 312.7,
+      "last_seen": 1794973026.088898
     },
     "top.fastprx.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 360.2,
       "last_seen": 1794952760.449143
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794952760.449143,
-      "latency_ms": 207.5
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1794952760.449143,
-      "latency_ms": 212.9
     },
     "ghost.telehelp.top:443": {
       "strikes": 0,
@@ -65,12 +95,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 403.1,
-      "last_seen": 1794923582.0889416
-    },
-    "tg.proxynet.tech:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 384.8,
       "last_seen": 1794923582.0889416
     },
     "gram.prxtg.top:443": {
@@ -293,12 +317,6 @@
       "strikes": 1,
       "alive": false,
       "last_seen": 1794278711.2157295
-    },
-    "kane32.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 330.0,
-      "last_seen": 1794255032.0014532
     },
     "deto84.larchmere.xyz:8443": {
       "strikes": 0,
