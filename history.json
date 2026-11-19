@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-11-19T10:09:47",
+  "updated_at": "2026-11-19T18:58:49",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795082987.5533214,
-      "latency_ms": 245.1
+      "last_seen": 1795114729.509143,
+      "latency_ms": 224.9
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795082987.5533214,
-      "latency_ms": 247.6
+      "last_seen": 1795114729.509143,
+      "latency_ms": 226.2
+    },
+    "max.fastprx.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 265.6,
+      "last_seen": 1795114729.509143
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795114729.509143,
+      "latency_ms": 224.8
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795114729.509143,
+      "latency_ms": 261.6
+    },
+    "gram.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795114729.509143,
+      "latency_ms": 250.0
+    },
+    "rimi88.fernlark.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 265.8,
+      "last_seen": 1795114729.509143
+    },
+    "ghost.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 257.1,
+      "last_seen": 1795114729.509143
     },
     "mega.telehelp.top:443": {
       "strikes": 0,
@@ -23,12 +59,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 270.8,
-      "last_seen": 1795082987.5533214
-    },
-    "max.fastprx.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 266.3,
       "last_seen": 1795082987.5533214
     },
     "lori58.quillmarsh.xyz:8443": {
@@ -48,12 +78,6 @@
       "alive": true,
       "latency_ms": 262.8,
       "last_seen": 1795082987.5533214
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795053598.8708217,
-      "latency_ms": 229.2
     },
     "gram.prxtg.top:443": {
       "strikes": 0,
@@ -79,12 +103,6 @@
       "last_seen": 1795053598.8708217,
       "latency_ms": 269.4
     },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795034371.4270852,
-      "latency_ms": 262.1
-    },
     "ext.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -108,21 +126,10 @@
       "latency_ms": 264.2,
       "last_seen": 1795034371.4270852
     },
-    "gram.proxynet.tech:443": {
-      "strikes": 1,
-      "alive": false,
-      "last_seen": 1795004051.1979377
-    },
     "mtpr.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 346.3,
-      "last_seen": 1795004051.1979377
-    },
-    "rimi88.fernlark.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 344.5,
       "last_seen": 1795004051.1979377
     },
     "tg.proxynet.tech:443": {
@@ -159,12 +166,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 360.2,
-      "last_seen": 1794952760.449143
-    },
-    "ghost.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 282.4,
       "last_seen": 1794952760.449143
     },
     "fast.webproxy.lol:443": {
