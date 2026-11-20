@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-11-20T17:14:27",
+  "updated_at": "2026-11-20T23:09:24",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795194867.3790646,
-      "latency_ms": 237.3
+      "last_seen": 1795216164.1140277,
+      "latency_ms": 270.0
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795194867.3790646,
-      "latency_ms": 230.9
+      "last_seen": 1795216164.1140277,
+      "latency_ms": 269.8
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795216164.1140277,
+      "latency_ms": 264.7
+    },
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795216164.1140277,
+      "latency_ms": 320.3
+    },
+    "magaga67.mossharbor.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 325.9,
+      "last_seen": 1795216164.1140277
+    },
+    "demi53.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 312.0,
+      "last_seen": 1795216164.1140277
+    },
+    "pode92.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 316.5,
+      "last_seen": 1795216164.1140277
+    },
+    "pixel.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 322.4,
+      "last_seen": 1795216164.1140277
     },
     "gram.prxtg.top:443": {
       "strikes": 0,
@@ -48,18 +84,6 @@
       "alive": true,
       "latency_ms": 274.2,
       "last_seen": 1795194867.3790646
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795163634.987503,
-      "latency_ms": 351.0
-    },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795163634.987503,
-      "latency_ms": 404.4
     },
     "newnvmb.telehelp.top:443": {
       "strikes": 0,
@@ -357,12 +381,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 357.0,
-      "last_seen": 1794189987.2945638
-    },
-    "magaga67.mossharbor.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 370.1,
       "last_seen": 1794189987.2945638
     },
     "porilo37.foxglade.xyz:8443": {
