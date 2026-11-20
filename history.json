@@ -1,17 +1,53 @@
 {
-  "updated_at": "2026-11-19T18:58:49",
+  "updated_at": "2026-11-20T01:10:32",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795114729.509143,
-      "latency_ms": 224.9
+      "last_seen": 1795137032.6139886,
+      "latency_ms": 347.0
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795114729.509143,
-      "latency_ms": 226.2
+      "last_seen": 1795137032.6139886,
+      "latency_ms": 318.4
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795137032.6139886,
+      "latency_ms": 343.1
+    },
+    "gram.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795137032.6139886,
+      "latency_ms": 418.4
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 426.2,
+      "last_seen": 1795137032.6139886
+    },
+    "srv-oowshw.smbiran.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 412.7,
+      "last_seen": 1795137032.6139886
+    },
+    "amb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 409.0,
+      "last_seen": 1795137032.6139886
+    },
+    "loto39.copperwren.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 405.1,
+      "last_seen": 1795137032.6139886
     },
     "max.fastprx.top:443": {
       "strikes": 0,
@@ -19,23 +55,11 @@
       "latency_ms": 265.6,
       "last_seen": 1795114729.509143
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795114729.509143,
-      "latency_ms": 224.8
-    },
     "extra.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1795114729.509143,
       "latency_ms": 261.6
-    },
-    "gram.proxynet.tech:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795114729.509143,
-      "latency_ms": 250.0
     },
     "rimi88.fernlark.xyz:8443": {
       "strikes": 0,
@@ -192,18 +216,6 @@
       "latency_ms": 391.4,
       "last_seen": 1794923582.0889416
     },
-    "ru1.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 403.1,
-      "last_seen": 1794923582.0889416
-    },
-    "srv-oowshw.smbiran.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 383.7,
-      "last_seen": 1794923582.0889416
-    },
     "zovi45.quietfjord.click:8443": {
       "strikes": 0,
       "alive": true,
@@ -275,12 +287,6 @@
       "alive": true,
       "last_seen": 1794725744.5983884,
       "latency_ms": 269.0
-    },
-    "amb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 269.5,
-      "last_seen": 1794725744.5983884
     },
     "star.telehelp.top:443": {
       "strikes": 0,
@@ -363,12 +369,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 362.7,
-      "last_seen": 1794189987.2945638
-    },
-    "loto39.copperwren.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 367.5,
       "last_seen": 1794189987.2945638
     },
     "tolera44.copperwren.click:8443": {
