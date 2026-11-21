@@ -1,29 +1,59 @@
 {
-  "updated_at": "2026-11-21T19:39:42",
+  "updated_at": "2026-11-21T23:55:51",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795289982.9332585,
-      "latency_ms": 262.5
+      "last_seen": 1795305351.6375651,
+      "latency_ms": 396.7
+    },
+    "79.137.196.223:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795305351.6375651,
+      "latency_ms": 374.4
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795305351.6375651,
+      "latency_ms": 376.8
+    },
+    "demi53.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 443.1,
+      "last_seen": 1795305351.6375651
+    },
+    "gram.proxynet.tech:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795305351.6375651,
+      "latency_ms": 430.5
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 445.4,
+      "last_seen": 1795305351.6375651
+    },
+    "rimi99.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 443.2,
+      "last_seen": 1795305351.6375651
+    },
+    "dele89.quillmarsh.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 436.6,
+      "last_seen": 1795305351.6375651
     },
     "net88.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 294.9,
       "last_seen": 1795289982.9332585
-    },
-    "79.137.196.223:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795289982.9332585,
-      "latency_ms": 261.2
-    },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795289982.9332585,
-      "latency_ms": 241.5
     },
     "pixel.telehelp.top:443": {
       "strikes": 0,
@@ -115,12 +145,6 @@
       "latency_ms": 325.9,
       "last_seen": 1795216164.1140277
     },
-    "demi53.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 312.0,
-      "last_seen": 1795216164.1140277
-    },
     "pode92.copperwren.click:8443": {
       "strikes": 0,
       "alive": true,
@@ -156,18 +180,6 @@
       "alive": true,
       "latency_ms": 402.6,
       "last_seen": 1795163634.987503
-    },
-    "gram.proxynet.tech:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795137032.6139886,
-      "latency_ms": 418.4
-    },
-    "ru1.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 426.2,
-      "last_seen": 1795137032.6139886
     },
     "srv-oowshw.smbiran.shop:443": {
       "strikes": 0,
@@ -293,12 +305,6 @@
       "alive": true,
       "latency_ms": 297.4,
       "last_seen": 1794952760.449143
-    },
-    "rimi99.birchquay.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 427.6,
-      "last_seen": 1794923582.0889416
     },
     "zovi45.quietfjord.click:8443": {
       "strikes": 0,
