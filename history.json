@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-23T08:57:46",
+  "updated_at": "2026-11-23T21:10:10",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795424266.6251016,
-      "latency_ms": 299.2
+      "last_seen": 1795468210.041269,
+      "latency_ms": 341.4
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795424266.6251016,
-      "latency_ms": 284.3
+      "last_seen": 1795468210.041269,
+      "latency_ms": 350.3
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795424266.6251016,
-      "latency_ms": 287.8
+      "last_seen": 1795468210.041269,
+      "latency_ms": 332.4
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795424266.6251016,
-      "latency_ms": 310.6
+      "last_seen": 1795468210.041269,
+      "latency_ms": 329.0
+    },
+    "demi53.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 371.7,
+      "last_seen": 1795468210.041269
+    },
+    "pixel.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 372.3,
+      "last_seen": 1795468210.041269
+    },
+    "mega.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 375.5,
+      "last_seen": 1795468210.041269
+    },
+    "kane32.mosswren.vip:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 373.3,
+      "last_seen": 1795468210.041269
     },
     "gram.proxynet.tech:443": {
       "strikes": 0,
@@ -139,12 +163,6 @@
       "last_seen": 1795326156.6496158,
       "latency_ms": 398.9
     },
-    "demi53.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 443.1,
-      "last_seen": 1795305351.6375651
-    },
     "rimi99.birchquay.xyz:8443": {
       "strikes": 0,
       "alive": true,
@@ -156,12 +174,6 @@
       "alive": true,
       "latency_ms": 436.6,
       "last_seen": 1795305351.6375651
-    },
-    "pixel.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 296.4,
-      "last_seen": 1795289982.9332585
     },
     "high.telehelp.top:443": {
       "strikes": 0,
@@ -204,12 +216,6 @@
       "alive": true,
       "latency_ms": 316.5,
       "last_seen": 1795216164.1140277
-    },
-    "mega.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 268.2,
-      "last_seen": 1795194867.3790646
     },
     "fast.prxtg.top:443": {
       "strikes": 0,
@@ -275,12 +281,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 317.3,
-      "last_seen": 1794973026.088898
-    },
-    "kane32.mosswren.vip:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 308.9,
       "last_seen": 1794973026.088898
     },
     "mikany52.quietfjord.click:8443": {
