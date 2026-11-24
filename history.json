@@ -1,29 +1,53 @@
 {
-  "updated_at": "2026-11-23T21:10:10",
+  "updated_at": "2026-11-24T05:19:29",
   "health": {
     "212.147.241.136:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795468210.041269,
-      "latency_ms": 341.4
+      "last_seen": 1795497569.4881508,
+      "latency_ms": 218.5
     },
     "79.137.196.223:443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795468210.041269,
-      "latency_ms": 350.3
+      "last_seen": 1795497569.4881508,
+      "latency_ms": 223.3
     },
     "79.137.196.223:2053": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795468210.041269,
-      "latency_ms": 332.4
+      "last_seen": 1795497569.4881508,
+      "latency_ms": 216.4
     },
     "79.137.196.223:8443": {
       "strikes": 0,
       "alive": true,
-      "last_seen": 1795468210.041269,
-      "latency_ms": 329.0
+      "last_seen": 1795497569.4881508,
+      "latency_ms": 212.6
+    },
+    "srv-oowshw.smbiran.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 228.3,
+      "last_seen": 1795497569.4881508
+    },
+    "dele89.quillmarsh.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 261.0,
+      "last_seen": 1795497569.4881508
+    },
+    "susumi78.birchquay.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 259.2,
+      "last_seen": 1795497569.4881508
+    },
+    "lomizo36.fernlark.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 259.8,
+      "last_seen": 1795497569.4881508
     },
     "demi53.mosswren.vip:8443": {
       "strikes": 0,
@@ -65,12 +89,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 373.3,
-      "last_seen": 1795424266.6251016
-    },
-    "srv-oowshw.smbiran.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 374.1,
       "last_seen": 1795424266.6251016
     },
     "wgram.telehelp.top:443": {
@@ -167,12 +185,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 443.2,
-      "last_seen": 1795305351.6375651
-    },
-    "dele89.quillmarsh.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 436.6,
       "last_seen": 1795305351.6375651
     },
     "high.telehelp.top:443": {
@@ -323,12 +335,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 434.0,
-      "last_seen": 1794890470.190064
-    },
-    "susumi78.birchquay.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 431.5,
       "last_seen": 1794890470.190064
     },
     "razora52.fernlark.xyz:8443": {
