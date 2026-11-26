@@ -1,6 +1,54 @@
 {
-  "updated_at": "2026-11-26T11:01:22",
+  "updated_at": "2026-11-26T20:05:43",
   "health": {
+    "net88.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 263.8,
+      "last_seen": 1795723543.82996
+    },
+    "gram.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 257.1,
+      "last_seen": 1795723543.82996
+    },
+    "mikany52.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 270.2,
+      "last_seen": 1795723543.82996
+    },
+    "derima87.quietfjord.click:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 277.6,
+      "last_seen": 1795723543.82996
+    },
+    "orbit.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 259.7,
+      "last_seen": 1795723543.82996
+    },
+    "exp.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795723543.82996,
+      "latency_ms": 263.1
+    },
+    "deto84.larchmere.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 261.8,
+      "last_seen": 1795723543.82996
+    },
+    "tg24.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 263.8,
+      "last_seen": 1795723543.82996
+    },
     "w.prxtg.top:443": {
       "strikes": 0,
       "alive": true,
@@ -61,40 +109,16 @@
       "latency_ms": 431.4,
       "last_seen": 1795659254.9357176
     },
-    "net88.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 467.6,
-      "last_seen": 1795659254.9357176
-    },
     "fast.webproxy.lol:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 455.6,
       "last_seen": 1795659254.9357176
     },
-    "gram.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 459.7,
-      "last_seen": 1795659254.9357176
-    },
-    "mikany52.quietfjord.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 646.7,
-      "last_seen": 1795659254.9357176
-    },
     "deto22.larchmere.xyz:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 560.6,
-      "last_seen": 1795659254.9357176
-    },
-    "derima87.quietfjord.click:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 714.8,
       "last_seen": 1795659254.9357176
     },
     "apex.telehelp.top:443": {
@@ -133,23 +157,11 @@
       "last_seen": 1795597539.077782,
       "latency_ms": 388.3
     },
-    "orbit.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 404.7,
-      "last_seen": 1795597539.077782
-    },
     "teo.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 387.3,
       "last_seen": 1795597539.077782
-    },
-    "exp.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795597539.077782,
-      "latency_ms": 389.9
     },
     "inner.telehelp.top:443": {
       "strikes": 0,
@@ -312,12 +324,6 @@
       "alive": true,
       "latency_ms": 265.8,
       "last_seen": 1795114729.509143
-    },
-    "deto84.larchmere.xyz:8443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 270.8,
-      "last_seen": 1795082987.5533214
     },
     "lori58.quillmarsh.xyz:8443": {
       "strikes": 0,
