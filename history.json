@@ -1,6 +1,54 @@
 {
-  "updated_at": "2026-11-27T02:49:17",
+  "updated_at": "2026-11-27T11:28:52",
   "health": {
+    "orbit.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 248.2,
+      "last_seen": 1795778932.6703718
+    },
+    "exp.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795778932.6703718,
+      "latency_ms": 251.5
+    },
+    "tg24.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 259.2,
+      "last_seen": 1795778932.6703718
+    },
+    "star.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 244.4,
+      "last_seen": 1795778932.6703718
+    },
+    "teo.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 250.6,
+      "last_seen": 1795778932.6703718
+    },
+    "srv-oowshw.smbiran.shop:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 260.8,
+      "last_seen": 1795778932.6703718
+    },
+    "ghost.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 262.1,
+      "last_seen": 1795778932.6703718
+    },
+    "vinyga35.quillmarsh.xyz:8443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 296.5,
+      "last_seen": 1795778932.6703718
+    },
     "extra.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -73,28 +121,10 @@
       "latency_ms": 277.6,
       "last_seen": 1795723543.82996
     },
-    "orbit.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 259.7,
-      "last_seen": 1795723543.82996
-    },
-    "exp.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795723543.82996,
-      "latency_ms": 263.1
-    },
     "deto84.larchmere.xyz:8443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 261.8,
-      "last_seen": 1795723543.82996
-    },
-    "tg24.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 263.8,
       "last_seen": 1795723543.82996
     },
     "w.prxtg.top:443": {
@@ -139,12 +169,6 @@
       "latency_ms": 277.4,
       "last_seen": 1795690882.693808
     },
-    "star.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 431.4,
-      "last_seen": 1795659254.9357176
-    },
     "fast.webproxy.lol:443": {
       "strikes": 0,
       "alive": true,
@@ -175,12 +199,6 @@
       "last_seen": 1795597539.077782,
       "latency_ms": 388.3
     },
-    "teo.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 387.3,
-      "last_seen": 1795597539.077782
-    },
     "inner.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -204,12 +222,6 @@
       "alive": true,
       "latency_ms": 379.5,
       "last_seen": 1795566841.287042
-    },
-    "srv-oowshw.smbiran.shop:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 269.8,
-      "last_seen": 1795536069.6062942
     },
     "porilo37.foxglade.xyz:8443": {
       "strikes": 0,
@@ -293,12 +305,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 383.2,
-      "last_seen": 1795379294.6106849
-    },
-    "ghost.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 361.9,
       "last_seen": 1795379294.6106849
     },
     "rimi99.birchquay.xyz:8443": {
