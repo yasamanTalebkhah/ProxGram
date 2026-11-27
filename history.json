@@ -1,6 +1,54 @@
 {
-  "updated_at": "2026-11-26T20:05:43",
+  "updated_at": "2026-11-27T02:49:17",
   "health": {
+    "extra.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795747757.8959286,
+      "latency_ms": 298.7
+    },
+    "79.137.196.223:2053": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795747757.8959286,
+      "latency_ms": 254.5
+    },
+    "newnvmb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 294.3,
+      "last_seen": 1795747757.8959286
+    },
+    "ru1.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 291.3,
+      "last_seen": 1795747757.8959286
+    },
+    "tg.prxtg.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 297.3,
+      "last_seen": 1795747757.8959286
+    },
+    "nova.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 294.6,
+      "last_seen": 1795747757.8959286
+    },
+    "red.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 294.3,
+      "last_seen": 1795747757.8959286
+    },
+    "top.fastprx.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 301.6,
+      "last_seen": 1795747757.8959286
+    },
     "net88.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -55,12 +103,6 @@
       "latency_ms": 277.3,
       "last_seen": 1795690882.693808
     },
-    "extra.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795690882.693808,
-      "latency_ms": 278.0
-    },
     "fast.prxtg.top:443": {
       "strikes": 0,
       "alive": true,
@@ -97,12 +139,6 @@
       "latency_ms": 277.4,
       "last_seen": 1795690882.693808
     },
-    "79.137.196.223:2053": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795659254.9357176,
-      "latency_ms": 316.8
-    },
     "star.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -126,24 +162,6 @@
       "alive": true,
       "last_seen": 1795633900.3508291,
       "latency_ms": 356.6
-    },
-    "newnvmb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 357.1,
-      "last_seen": 1795633900.3508291
-    },
-    "ru1.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 366.4,
-      "last_seen": 1795633900.3508291
-    },
-    "tg.prxtg.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 361.6,
-      "last_seen": 1795633900.3508291
     },
     "212.147.241.136:443": {
       "strikes": 0,
@@ -271,12 +289,6 @@
       "last_seen": 1795395922.5724301,
       "latency_ms": 271.2
     },
-    "nova.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 275.5,
-      "last_seen": 1795395922.5724301
-    },
     "flash.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -294,12 +306,6 @@
       "alive": true,
       "latency_ms": 443.2,
       "last_seen": 1795305351.6375651
-    },
-    "red.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 366.3,
-      "last_seen": 1795233481.1188307
     },
     "magaga67.mossharbor.xyz:8443": {
       "strikes": 0,
@@ -366,12 +372,6 @@
       "alive": true,
       "latency_ms": 312.7,
       "last_seen": 1794973026.088898
-    },
-    "top.fastprx.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 360.2,
-      "last_seen": 1794952760.449143
     },
     "zovi45.quietfjord.click:8443": {
       "strikes": 0,
