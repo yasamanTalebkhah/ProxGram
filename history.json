@@ -1,6 +1,54 @@
 {
-  "updated_at": "2026-11-28T02:46:08",
+  "updated_at": "2026-11-28T10:56:14",
   "health": {
+    "apex.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "last_seen": 1795863374.0988717,
+      "latency_ms": 393.3
+    },
+    "io.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 384.1,
+      "last_seen": 1795863374.0988717
+    },
+    "hex.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 382.8,
+      "last_seen": 1795863374.0988717
+    },
+    "ext.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 394.6,
+      "last_seen": 1795863374.0988717
+    },
+    "nova.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 396.2,
+      "last_seen": 1795863374.0988717
+    },
+    "fly.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 394.9,
+      "last_seen": 1795863374.0988717
+    },
+    "amb.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 382.4,
+      "last_seen": 1795863374.0988717
+    },
+    "rocket.telehelp.top:443": {
+      "strikes": 0,
+      "alive": true,
+      "latency_ms": 391.9,
+      "last_seen": 1795863374.0988717
+    },
     "orbit.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
@@ -61,35 +109,11 @@
       "latency_ms": 301.2,
       "last_seen": 1795810475.9987192
     },
-    "apex.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "last_seen": 1795810475.9987192,
-      "latency_ms": 300.1
-    },
-    "io.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 297.9,
-      "last_seen": 1795810475.9987192
-    },
-    "hex.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 300.7,
-      "last_seen": 1795810475.9987192
-    },
     "wgram.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "last_seen": 1795810475.9987192,
       "latency_ms": 289.8
-    },
-    "ext.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 295.7,
-      "last_seen": 1795810475.9987192
     },
     "star.telehelp.top:443": {
       "strikes": 0,
@@ -113,12 +137,6 @@
       "strikes": 0,
       "alive": true,
       "latency_ms": 297.3,
-      "last_seen": 1795747757.8959286
-    },
-    "nova.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 294.6,
       "last_seen": 1795747757.8959286
     },
     "red.telehelp.top:443": {
@@ -175,22 +193,10 @@
       "latency_ms": 273.1,
       "last_seen": 1795690882.693808
     },
-    "fly.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 271.1,
-      "last_seen": 1795690882.693808
-    },
     "mtpr.telehelp.top:443": {
       "strikes": 0,
       "alive": true,
       "latency_ms": 277.7,
-      "last_seen": 1795690882.693808
-    },
-    "amb.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 275.7,
       "last_seen": 1795690882.693808
     },
     "delene17.saltfern.xyz:8443": {
@@ -354,12 +360,6 @@
       "alive": true,
       "latency_ms": 262.8,
       "last_seen": 1795082987.5533214
-    },
-    "rocket.telehelp.top:443": {
-      "strikes": 0,
-      "alive": true,
-      "latency_ms": 264.2,
-      "last_seen": 1795034371.4270852
     },
     "tg.proxynet.tech:443": {
       "strikes": 0,
